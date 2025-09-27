@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./assets/styles/app.css";
 import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
 	/*
@@ -13,7 +14,7 @@ const App = () => {
 			<Routes>
 				<Route index element={<Home />}></Route>
 				{/*Missed routes*/}
-				<Route path="*" />
+				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</BrowserRouter>
 	);
