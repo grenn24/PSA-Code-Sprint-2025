@@ -11,6 +11,7 @@ const App = () => {
 	*/
 	return (
 		<BrowserRouter>
+			<title>CargoLens</title>
 			<Routes>
 				<Route index element={<Home />}></Route>
 				{/*Missed routes*/}
