@@ -1,0 +1,32 @@
+# Docker compose file for running previously built images in a network bridge
+
+services:
+  # Run backend api server
+  backend:
+    image: template-backend:1.0.0  # Use pre-built image
+    networks:
+      - app-network
+    volumes:
+      - ./logs/:/backend/logs/ # api log files
+    environment:
+      NODE_ENV: production
+
+  # Run nginx server serving static files
+  nginx:
+    image: template-nginx:1.0.0  
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - app-network
+    volumes:
+      - ./certbot-challenges/:/usr/share/nginx/html/.well-known/acme-challenge/ # acme challenge files
+      - ./ssl/:/etc/nginx/ssl/ # ssl certs
+      - ./seo/:/usr/share/nginx/html/seo/ # seo files
+      - ./logs/:/var/log/nginx/ # access log files
+    depends_on:
+      - backend
+
+networks:
+  app-network:
+    driver: bridge
