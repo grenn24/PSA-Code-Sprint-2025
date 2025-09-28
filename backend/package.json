@@ -11,7 +11,7 @@
 		"prestart": "npm run build",
 		"start": "node dist/app.js",
 		"dev": "set NODE_ENV=development&& nodemon app.ts",
-		"build": "set NODE_ENV=production&& npx eslint . --fix && npx tsc -b",
+		"build": "set NODE_ENV=production&& npx tsc -b",
 		"lint": "npx eslint .",
 		"lint:fix": "npx eslint . --fix",
 		"format": "npx prettier --check \"**/*.{js,ts,jsx,tsx}\"",
