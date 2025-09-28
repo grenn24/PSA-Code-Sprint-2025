@@ -13,7 +13,7 @@ require("./startup/middlewares").default(app);
 require("./startup/routes").default(app);
 
 // Start the server
-const port = config.get("PORT") || 3000;
+const port = process.env.PORT || config.get("PORT") || 3000;
 app.listen(port, () => {
 	startupDebug(`Server running at http://localhost:${port}`);
 });

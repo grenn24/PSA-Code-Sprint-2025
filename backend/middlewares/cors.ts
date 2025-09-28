@@ -1,7 +1,10 @@
 import { Request, Response } from "express";
 
 export default function cors(request: Request, response: Response, next: any) {
-	const allowedOrigins = ["http://localhost:5173"];
+	const allowedOrigins = [
+		"http://localhost:5173",
+		"https://psa-code-sprint-2025.vercel.app",
+	];
 	const origin = request.header("Origin");
 	if (origin) {
 		allowedOrigins.includes(origin) &&
