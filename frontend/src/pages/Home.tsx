@@ -12,7 +12,12 @@ const Home = () => {
 	return (
 		<div>
 			Home
-			<Map markers={ports} />
+			<Map
+				markers={ports.map((port) => ({
+					title: port.name,
+					coordinates: port.coordinates,
+				}))}
+			/>
 		</div>
 	);
 };

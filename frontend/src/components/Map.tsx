@@ -14,7 +14,7 @@ type MapProps = {
 	markers?: MarkerData[];
 };
 
-const Map = ({ markers=[] }: MapProps) => {
+const Map = ({ markers = [] }: MapProps) => {
 	const mapRef = useRef<mapboxgl.Map | null>(null);
 	const mapContainerRef = useRef<HTMLDivElement>(null);
 	const markersRef = useRef<mapboxgl.Marker[]>([]); // keep track of current markers
@@ -48,7 +48,7 @@ const Map = ({ markers=[] }: MapProps) => {
 
 		// Add new markers
 		markers.forEach((m) => {
-			const marker = new mapboxgl.Marker()
+			const marker = new mapboxgl.Marker({ color: "rgba(154, 215, 47, 0.91)" })
 				.setLngLat([m.coordinates?.lng, m.coordinates?.lat])
 				.setPopup(
 					new mapboxgl.Popup().setHTML(`<h3>${m.title ?? ""}</h3>`)
