@@ -1,35 +1,44 @@
-import winston, { transports, format, ExceptionHandler } from "winston";
+import winston, { format, transports } from "winston";
 
-const { combine, timestamp, colorize, prettyPrint, simple, json, printf } =
-	format;
-const { Console, File } = transports;
-// catch uncaught errors that occur during runtime
+const { combine, timestamp, colorize, printf, json } = format;
+
 const logging = () => {
-	winston.createLogger({
-		format: combine(
-			colorize({ all: true }),
-			printf((info) => String(info.message))
-		),
-		exceptionHandlers: [
-			new Console({
+	const logger = winston.createLogger({
+		level: "info",
+		format: combine(timestamp(), json()),
+		transports: [
+			new transports.Console({
 				format: combine(
 					colorize({ all: true }),
-					printf((info) => String(info.message))
+					printf(
+						(info) =>
+							`${info.timestamp} [${info.level}]: ${info.message}`
+					)
 				),
 			}),
+			new transports.File({ filename: "logs/app.log" }),
 		],
-	});
-	winston.createLogger({
-		format: combine(timestamp(), json()),
 		exceptionHandlers: [
-			new File({
-				filename: "logs/uncaughtErrors.log",
-				format: combine(timestamp(), json()),
-			}),
+			new transports.File({ filename: "logs/exceptions.log" }),
+		],
+		rejectionHandlers: [
+			new transports.File({ filename: "logs/rejections.log" }),
 		],
 	});
+
 	process.on("unhandledRejection", (reason, promise) => {
-		throw new Error(`${promise} Rejected: ${reason}`);
+		if (reason instanceof Error) {
+			logger.error("Unhandled Rejection:", {
+				message: reason.message,
+				stack: reason.stack,
+				promise,
+			});
+		} else {
+			logger.error("Unhandled Rejection:", {
+				reason: JSON.stringify(reason),
+				promise,
+			});
+		}
 	});
 };
 

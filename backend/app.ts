@@ -2,7 +2,7 @@ import express from "express";
 import "dotenv/config";
 import config from "config";
 import createDebug from "debug";
-
+import dotenv from "dotenv";
 const startupDebug = createDebug("app:startup");
 const app = express();
 

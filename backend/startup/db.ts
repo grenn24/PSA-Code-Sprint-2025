@@ -1,16 +1,27 @@
 import mongoose from "mongoose";
 import config from "config";
 import createDebug from "debug";
-import {Express} from "express";
+import { Express } from "express";
+import logger from "../utilities/winston";
 
 const dbDebug = createDebug("db");
+const dbStartupDebug = createDebug("db:startup");
 
-const db = (app:Express) =>
-	mongoose
-		.connect(config.get("DATABASE_URL"))
-		.then((conn) => {dbDebug(`Connected to Database`);
+// Establish connection with mongodb, resolves with a mongoose instance
+const db = async (app?: Express) => {
+	try {
+		const conn = await mongoose.connect(config.get("DATABASE_URL"));
+		dbStartupDebug(
+			`Database is connected at ${config.get("DATABASE_URL")}`
+		);
+		if (app) {
 			app.locals.db = conn.connection;
-		})
-		.catch((err) => dbDebug(err));
+		}
+		return conn.connection;
+	} catch (err) {
+		dbDebug(err);
+		logger("/logs/db.log").verbose(err);
+	}
+};
 
 export default db;

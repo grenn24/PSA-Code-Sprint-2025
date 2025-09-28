@@ -22,12 +22,21 @@ export default function error(
 	}
 }
 
-export class HttpError {
-	status?: string | undefined;
+export class HttpError<T = any> {
+	errorCode: number; // http status code
+	status?: string;
 	message: string;
+	data?: T;
 
-	constructor(message: string, status: string | undefined = undefined) {
+	constructor(
+		message: string,
+		status: string | undefined = undefined,
+		errorCode: number | undefined = 400,
+		data?: T
+	) {
 		this.message = message;
 		this.status = status;
+		this.errorCode = errorCode;
+		this.data = data;
 	}
 }

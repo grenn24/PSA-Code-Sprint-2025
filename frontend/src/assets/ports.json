@@ -1,0 +1,16 @@
+[
+	{
+		"name": "Tuas Port",
+		"coordinates": {
+			"lat": 1.264,
+			"lng": 103.63
+		}
+	},
+	{
+		"name": "Pasir Panjang Terminal",
+		"coordinates": {
+			"lat": 1.2645,
+			"lng": 103.7520
+		}
+	}
+]

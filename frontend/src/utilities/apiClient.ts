@@ -1,30 +1,31 @@
+import { HttpStatusCode } from "@common/constants/statusCode";
+
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { v4 as uuidv4 } from "uuid";
 
-/*
-interface Response<T> {
-	response: AxiosResponse<T>;
-	abort: () => void;
-}
-*/
+import store from "../redux/store";
+import { enqueueMessage, setForbidden } from "src/redux/slices/error";
 
-class ApiClient {
+export class ApiClient {
 	private client: AxiosInstance;
+	private baseUrlClient: AxiosInstance;
 
 	constructor(
 		baseURL: string,
-		requestConfigInterceptor?: (config: AxiosRequestConfig<any>) => void,
-		responseErrorInterceptor?: (status: number, body: Object) => void
+		requestConfigInterceptor?: (config: AxiosRequestConfig) => void,
+		responseErrorInterceptor?: (status: number, body: object) => void
 	) {
 		const client = axios.create({
 			baseURL,
 			headers: {
-				"Content-Type": "application/json",
+				"Content-Type": "application/json", // dont include x-access-token as default headers (since it will change frequently)
+				Accept: "application/json",
 			},
 		});
 		client.interceptors.request.use(
 			(config) => {
 				// Do something before request is sent
-				requestConfigInterceptor && requestConfigInterceptor(config);
+				requestConfigInterceptor?.(config);
 				return config;
 			},
 			(err) => {
@@ -38,21 +39,38 @@ class ApiClient {
 		);
 		client.interceptors.response.use(
 			// http status code within 2xx
-			(response) => ({ body: response.data, ...response }),
+			(response) => {
+				return { body: response.data, ...response };
+			},
 			// http status code outside 2xx
 			(err) => {
 				// Error response received
 				if (err.response) {
-					console.log(err);
-					responseErrorInterceptor &&
-						responseErrorInterceptor(
-							err.response.status,
-							err.response.data
-						);
-					return Promise.reject({
-						body: err.response.data,
-						status: err.response.status,
-					});
+					const status = err.response?.status;
+					const body = err.response?.data;
+					if (status === HttpStatusCode.Forbidden) {
+						store.dispatch(setForbidden(true));
+					} else if (
+						status === HttpStatusCode.BadRequest &&
+						body?.status === "INVALID_ID"
+					) {
+						window.location.href = "/";
+					}
+					responseErrorInterceptor?.(
+						err.response.status,
+						err.response.data
+					);
+					if (status !== 404 && status !== 403 && status !== 401) {
+						console.error("API request error:", {
+							status,
+							body,
+						});
+					}
+				} else if (err.name === "CancelledError") {
+					// Request aborted using AbortController signal
+					// console.error("Request was aborted");
+					// return undefined data for aborted requests
+					return { body: undefined, data: undefined };
 				} else if (err.request) {
 					// Request was made but no response was received
 					console.error("No response from server:" + err.request);
@@ -63,74 +81,402 @@ class ApiClient {
 							err.message
 					);
 				}
+				return Promise.reject({
+					body: err.response?.data,
+					status: err.response?.status,
+				});
 			}
 		);
 		this.client = client;
+		this.baseUrlClient = axios.create({
+			baseURL: import.meta.env.VITE_BACKEND_BASEURL,
+		});
 	}
 
 	// GET request
-	public get<T>(
+	public async get<T>(
 		url: string,
 		config?: AxiosRequestConfig
 	): Promise<AxiosResponse<T>> {
-		const response = this.client.get<T>(url, {
-			withCredentials: true,
-			...config,
-		});
-		return response;
+		try {
+			const response = await this.client.get<T>(url, {
+				withCredentials: true,
+				...config,
+				headers: {
+					...config?.headers,
+					"X-Access-Token": sessionStorage.getItem("X-Access-Token"),
+				},
+			});
+			return response;
+		} catch (err) {
+			// Missing or invalid access token (401 Unauthorised)
+			if (err.status === HttpStatusCode.Unauthorized) {
+				try {
+					await this.baseUrlClient
+						.get("/auth/refresh-access-token")
+						.then((res) => {
+							const { headers } = res;
+							sessionStorage.removeItem("X-Access-Token");
+							sessionStorage.setItem(
+								"X-Access-Token",
+								headers["x-access-token"]
+							);
+							return res;
+						})
+						.catch(({ status }) => {
+							if (status === 400) {
+								store.dispatch(
+									enqueueMessage({
+										content:
+											"Session expired, please log in again.",
+										type: "warning",
+										variant: "snackbar",
+									})
+								);
+								const queryParams = window.location.search;
+								window.location.href = `/account/log-in${queryParams}`;
+							}
+						});
+
+					const response = await this.client.get<T>(url, {
+						withCredentials: true,
+						...config,
+						headers: {
+							...config?.headers,
+							"X-Access-Token":
+								sessionStorage.getItem("X-Access-Token"),
+						},
+					});
+					return response;
+				} catch (err) {
+					// Missing or invalid refresh token
+					if (
+						err.status === 400 &&
+						err.body?.status === "INVALID_REFRESH_TOKEN"
+					) {
+						window.location.href = "/";
+					}
+					throw err;
+				}
+			}
+			throw err;
+		}
 	}
 
 	// POST request
-	public post<T, R>(
+	public async post<T, R>(
 		url: string,
 		data: T,
 		config?: AxiosRequestConfig
 	): Promise<AxiosResponse<R>> {
-		return this.client.post<T, AxiosResponse<R>>(url, data, {
-			withCredentials: true,
-			...config,
-		});
+		try {
+			const response = await this.client.post<T, AxiosResponse<R>>(
+				url,
+				data,
+				{
+					withCredentials: true,
+					...config,
+					headers: {
+						...config?.headers,
+						"X-Access-Token":
+							sessionStorage.getItem("X-Access-Token"),
+					},
+				}
+			);
+			return response;
+		} catch (err) {
+			// Missing or invalid access token (401 Unauthorised)
+			if (err.status === HttpStatusCode.Unauthorized) {
+				try {
+					await this.baseUrlClient
+						.get("/auth/refresh-access-token")
+						.then((res) => {
+							const { headers } = res;
+							sessionStorage.removeItem("X-Access-Token");
+							sessionStorage.setItem(
+								"X-Access-Token",
+								headers["x-access-token"]
+							);
+							return res;
+						})
+						.catch(({ status }) => {
+							if (status === 400) {
+								store.dispatch(
+									enqueueMessage({
+										content:
+											"Session expired, please log in again.",
+										type: "warning",
+										variant: "snackbar",
+									})
+								);
+								const queryParams = window.location.search;
+								window.location.href = `/account/log-in${queryParams}`;
+							}
+						});
+
+					const response = this.client.post<T, AxiosResponse<R>>(
+						url,
+						data,
+						{
+							withCredentials: true,
+							...config,
+							headers: {
+								...config?.headers,
+								"X-Access-Token":
+									sessionStorage.getItem("X-Access-Token"),
+							},
+						}
+					);
+					return response;
+				} catch (err) {
+					// Missing or invalid refresh token
+					if (
+						err.status === 400 &&
+						err.body?.status === "INVALID_REFRESH_TOKEN"
+					) {
+						window.location.href = "/";
+					}
+					throw err;
+				}
+			}
+			throw err;
+		}
 	}
 
 	// PUT request
-	public put<T, R>(
+	public async put<T, R>(
 		url: string,
 		data: T,
 		config?: AxiosRequestConfig
 	): Promise<AxiosResponse<R>> {
-		return this.client.put<T, AxiosResponse<R>>(url, data, {
-			withCredentials: true,
-			...config,
-		});
-	}
+		try {
+			const response = await this.client.put<T, AxiosResponse<R>>(
+				url,
+				data,
+				{
+					withCredentials: true,
+					...config,
+					headers: {
+						...config?.headers,
+						"X-Access-Token":
+							sessionStorage.getItem("X-Access-Token"),
+					},
+				}
+			);
+			return response;
+		} catch (err) {
+			// Missing or invalid access token (401 Unauthorised)
+			if (err.status === HttpStatusCode.Unauthorized) {
+				try {
+					await this.baseUrlClient
+						.get("/auth/refresh-access-token")
+						.then((res) => {
+							const { headers } = res;
+							sessionStorage.removeItem("X-Access-Token");
+							sessionStorage.setItem(
+								"X-Access-Token",
+								headers["x-access-token"]
+							);
+							return res;
+						})
+						.catch(({ status }) => {
+							if (status === 400) {
+								store.dispatch(
+									enqueueMessage({
+										content:
+											"Session expired, please log in again.",
+										type: "warning",
+										variant: "snackbar",
+									})
+								);
+								const queryParams = window.location.search;
+								window.location.href = `/account/log-in${queryParams}`;
+							}
+						});
 
-	// DELETE request
-	public delete<T>(
-		url: string,
-		config?: AxiosRequestConfig
-	): Promise<AxiosResponse<T>> {
-		return this.client.delete<T>(url, { withCredentials: true, ...config });
+					const response = await this.client.put<T, AxiosResponse<R>>(
+						url,
+						data,
+						{
+							withCredentials: true,
+							...config,
+							headers: {
+								...config?.headers,
+								"X-Access-Token":
+									sessionStorage.getItem("X-Access-Token"),
+							},
+						}
+					);
+					return response;
+				} catch (err) {
+					// Missing or invalid refresh token
+					if (
+						err.status === 400 &&
+						err.body?.status === "INVALID_REFRESH_TOKEN"
+					) {
+						window.location.href = "/";
+					}
+					throw err;
+				}
+			}
+			throw err;
+		}
 	}
 
 	// PATCH request
-	public patch<T, R>(
+	public async patch<T, R>(
 		url: string,
 		data: T,
 		config?: AxiosRequestConfig
 	): Promise<AxiosResponse<R>> {
-		return this.client.patch<T, AxiosResponse<R>>(url, data, {
-			withCredentials: true,
-			...config,
-		});
+		try {
+			const response = await this.client.patch<T, AxiosResponse<R>>(
+				url,
+				data,
+				{
+					withCredentials: true,
+					...config,
+					headers: {
+						...config?.headers,
+						"X-Access-Token":
+							sessionStorage.getItem("X-Access-Token"),
+					},
+				}
+			);
+			return response;
+		} catch (err) {
+			// Missing or invalid access token (401 Unauthorised)
+			if (err.status === HttpStatusCode.Unauthorized) {
+				try {
+					await this.baseUrlClient
+						.get("/auth/refresh-access-token")
+						.then((res) => {
+							const { headers } = res;
+							sessionStorage.removeItem("X-Access-Token");
+							sessionStorage.setItem(
+								"X-Access-Token",
+								headers["x-access-token"]
+							);
+							return res;
+						})
+						.catch(({ status }) => {
+							if (status === 400) {
+								store.dispatch(
+									enqueueMessage({
+										content:
+											"Session expired, please log in again.",
+										type: "warning",
+										variant: "snackbar",
+									})
+								);
+								const queryParams = window.location.search;
+								window.location.href = `/account/log-in${queryParams}`;
+							}
+						});
+
+					const response = await this.client.patch<
+						T,
+						AxiosResponse<R>
+					>(url, data, {
+						withCredentials: true,
+						...config,
+						headers: {
+							...config?.headers,
+							"X-Access-Token":
+								sessionStorage.getItem("X-Access-Token"),
+						},
+					});
+					return response;
+				} catch (err) {
+					// Missing or invalid refresh token
+					if (
+						err.status === 400 &&
+						err.body?.status === "INVALID_REFRESH_TOKEN"
+					) {
+						window.location.href = "/";
+					}
+					throw err;
+				}
+			}
+			throw err;
+		}
+	}
+
+	// DELETE request
+	public async delete<T>(
+		url: string,
+		config?: AxiosRequestConfig
+	): Promise<AxiosResponse<T>> {
+		try {
+			const response = await this.client.delete<T>(url, {
+				withCredentials: true,
+				...config,
+				headers: {
+					...config?.headers,
+					"X-Access-Token": sessionStorage.getItem("X-Access-Token"),
+				},
+			});
+			return response;
+		} catch (err) {
+			// Missing or invalid access token (401 Unauthorised)
+			if (err.status === HttpStatusCode.Unauthorized) {
+				try {
+					await this.baseUrlClient
+						.get("/auth/refresh-access-token")
+						.then((res) => {
+							const { headers } = res;
+							sessionStorage.removeItem("X-Access-Token");
+							sessionStorage.setItem(
+								"X-Access-Token",
+								headers["x-access-token"]
+							);
+							return res;
+						})
+						.catch(({ status }) => {
+							if (status === 400) {
+								store.dispatch(
+									enqueueMessage({
+										content:
+											"Session expired, please log in again.",
+										type: "warning",
+										variant: "snackbar",
+									})
+								);
+								const queryParams = window.location.search;
+								window.location.href = `/account/log-in${queryParams}`;
+							}
+						});
+
+					const response = await this.client.delete<T>(url, {
+						withCredentials: true,
+						...config,
+						headers: {
+							...config?.headers,
+							"X-Access-Token":
+								sessionStorage.getItem("X-Access-Token"),
+						},
+					});
+					return response;
+				} catch (err) {
+					// Missing or invalid refresh token
+					if (
+						err.status === 400 &&
+						err.body?.status === "INVALID_REFRESH_TOKEN"
+					) {
+						window.location.href = "/";
+					}
+					throw err;
+				}
+			}
+			throw err;
+		}
 	}
 }
 
 const createApiClient = (
 	parentPath: string,
-	requestConfigInterceptor: (
-		config: AxiosRequestConfig<any>
-	) => void = () => {},
-	responseErrorInterceptor: (status: number, body: Object) => void = () => {}
+	requestConfigInterceptor: (config: AxiosRequestConfig) => void = () => {},
+	responseErrorInterceptor: (status: number, body: object) => void = () => {}
 ) =>
 	new ApiClient(
 		import.meta.env.VITE_BACKEND_BASEURL + parentPath,
@@ -138,3 +484,96 @@ const createApiClient = (
 		responseErrorInterceptor
 	);
 export default createApiClient;
+
+// only for api client requests
+export const handleApiRequest = async <T>(
+	request: Promise<AxiosResponse<T>>,
+	errorHandler?: (status: number, body) => void,
+	shouldShowErrorSnackbar:
+		| boolean
+		| ((status: number, body) => boolean) = true
+): Promise<{
+	isSuccess: boolean;
+	data?: T;
+	body?: T;
+	status?: number;
+}> => {
+	try {
+		const res = await request;
+		return {
+			isSuccess: true,
+			data: res.data,
+			body: res.data,
+			status: res.status,
+		};
+	} catch (err) {
+		console.error(err);
+		errorHandler?.(err?.status, err?.body);
+
+		// Call function when needed
+		const showErrorSnackbar =
+			typeof shouldShowErrorSnackbar === "function"
+				? shouldShowErrorSnackbar(err?.status, err?.body)
+				: shouldShowErrorSnackbar;
+
+		// If error has no status then skip
+		if (showErrorSnackbar && err?.status) {
+			switch (err?.status) {
+				case HttpStatusCode.BadRequest:
+					store.dispatch(
+						enqueueMessage({
+							content:
+								"Oops! Something looks off with your request.",
+							type: "error",
+							variant: "snackbar",
+							key: uuidv4(),
+						})
+					);
+					break;
+				case HttpStatusCode.Unauthorized:
+					store.dispatch(
+						enqueueMessage({
+							content: "You are not authorised.",
+							type: "error",
+							variant: "snackbar",
+							key: uuidv4(),
+						})
+					);
+					break;
+				case HttpStatusCode.Forbidden:
+					store.dispatch(
+						enqueueMessage({
+							content: "You do not have permission.",
+							type: "error",
+							variant: "snackbar",
+							key: uuidv4(),
+						})
+					);
+					break;
+				case HttpStatusCode.InternalServerError:
+					store.dispatch(
+						enqueueMessage({
+							content:
+								"Internal server error. Please try again later.",
+							type: "error",
+							variant: "snackbar",
+							key: uuidv4(),
+						})
+					);
+					break;
+				default:
+					store.dispatch(
+						enqueueMessage({
+							content: "Something went wrong.",
+							type: "error",
+							variant: "snackbar",
+							key: uuidv4(),
+						})
+					);
+			}
+		}
+		return {
+			isSuccess: false,
+		};
+	}
+};

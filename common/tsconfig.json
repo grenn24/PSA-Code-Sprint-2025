@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+		"outDir": "dist",
+
+		"target": "ES2020",
+		"module": "commonjs",
+
+		"noEmit": false,
+		"composite": true,
+
+		"strict": true,
+		"esModuleInterop": true,
+		"declaration": true,
+		"declarationMap": true,
+		"skipLibCheck": true
+	},
+	"include": ["./**/*.ts", "./**/*.d.ts"]
+}
