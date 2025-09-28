@@ -1,0 +1,4 @@
+{
+	"NODE_ENV": "production",
+	"DATABASE_URL": "${DB_HOST}"
+}

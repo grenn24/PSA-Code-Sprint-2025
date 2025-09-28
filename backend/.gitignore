@@ -1,5 +1,4 @@
 node_modules
 .env
 config/development.json
-config/production.json
 dist/
