@@ -19,6 +19,7 @@ const db = async (app?: Express) => {
 		}
 		return conn.connection;
 	} catch (err) {
+		console.log(err)
 		dbDebug(err);
 		logger("/logs/db.log").verbose(err);
 	}
