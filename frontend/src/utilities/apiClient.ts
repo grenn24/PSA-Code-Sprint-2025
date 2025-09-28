@@ -20,7 +20,6 @@ export class ApiClient {
 			headers: {
 				"Content-Type": "application/json", // dont include x-access-token as default headers (since it will change frequently)
 				Accept: "application/json",
-				Origin: "https://psa-code-sprint-2025.vercel.app",
 			},
 		});
 		client.interceptors.request.use(
