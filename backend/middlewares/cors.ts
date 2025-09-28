@@ -12,8 +12,6 @@ export default function cors(
 		"https://psa-code-sprint-2025.vercel.app",
 	];
 	const origin = request.header("Origin");
-	//runtimeDebug(`Origin: ${origin}`);
-
 	if (origin && allowedOrigins.includes(origin)) {
 		response.setHeader("Access-Control-Allow-Origin", origin);
 	}
