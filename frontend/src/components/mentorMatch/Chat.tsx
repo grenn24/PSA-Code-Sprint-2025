@@ -25,14 +25,11 @@ const dummyChats = [
 ];
 
 const Chat = () => {
-	const [selectedChat, setSelectedChat] = useState(null);
+	const [selectedChatID, setSelectedChatID] = useState<number | null>(null);
 	const [input, setInput] = useState("");
 
 	const sendMessage = () => {
-		if (input.trim() === "" || !selectedChat) return;
-
-		selectedChat.messages.push({ sender: "user", text: input });
-		setInput("");
+	
 	};
 
 	return (
@@ -47,9 +44,9 @@ const Chat = () => {
 				{dummyChats.map((chat) => (
 					<div
 						key={chat.id}
-						onClick={() => setSelectedChat(chat)}
+						onClick={() => setSelectedChatID(chat.id)}
 						className={`flex items-center gap-3 p-4 cursor-pointer transition-colors ${
-							selectedChat?.id === chat.id
+							selectedChatID === chat.id
 								? "bg-indigo-50"
 								: "hover:bg-gray-50"
 						}`}
@@ -73,10 +70,10 @@ const Chat = () => {
 
 			{/* Chat Window */}
 			<div className="flex-1 flex flex-col">
-				{selectedChat ? (
+				{selectedChatID ? (
 					<>
 						<div className="flex-1 p-4 overflow-y-auto space-y-3">
-							{selectedChat.messages.map((msg, i) => (
+							{dummyChats.find((c) => c.id === selectedChatID)?.messages.map((msg, i) => (
 								<div
 									key={i}
 									className={`flex ${
