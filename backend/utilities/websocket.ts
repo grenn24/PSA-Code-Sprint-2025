@@ -60,7 +60,7 @@ class WebsocketService {
 		});
 		this.backendWSS = backendWSS;
 		const url = `${
-			config.get("PROTOCOL") === "https" ? "wss" : "ws"
+			config.get("NODE_ENV") === "production" ? "wss" : "ws"
 		}://${config.get("HOST")}/api`;
 		wsStartupDebug(`WebSocket server is running at ${url}`);
 		return server;

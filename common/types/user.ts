@@ -24,10 +24,11 @@ export interface User {
 		createdAt?: Date;
 	}[];
 	careerPath?: {
+		_id?: string;
 		position: string;
-		progress?: number;
+		progress: number;
 		startedAt?: Date;
 		endedAt?: Date;
-		skillsRequired?: string[];
+		skillsRequired: string[];
 	}[];
 }

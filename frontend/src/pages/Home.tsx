@@ -48,23 +48,18 @@ const Home = () => {
 	const { user: initialUserData } = useAppSelector((state) => state.user);
 	const [user, setUser] = useState(initialUserData);
 	useEffect(() => {
-		userService.getUserByID(user._id).then(setUser);
+		userService.getUserByID(user?._id).then(setUser);
 	}, []);
-	console.log(
-		user.skills.map((skill) => ({
-			name: skill.name,
-			value: skill.level,
-		}))
-	);
+
 	return (
 		<div className="min-h-dvh bg-gray-50 p-8 space-y-10 font-roboto">
 			{/* Header */}
 			<div className="flex justify-between items-center">
 				<div>
 					<h1 className="text-3xl font-bold text-gray-900 font-inter">
-						Welcome Back, {user.name}!
+						Welcome Back, {user?.name}!
 					</h1>
-					<p className="text-gray-600 text-xl">{user.position}</p>
+					<p className="text-gray-600 text-xl">{user?.position}</p>
 				</div>
 			</div>
 
@@ -76,7 +71,7 @@ const Home = () => {
 						{/* Vertical line */}
 						<div className="absolute left-1 top-0 bottom-0 w-1 bg-gray-200"></div>
 
-						{user.careerPath?.map((role) => {
+						{user?.careerPath?.map((role) => {
 							const isCompleted = role.progress === 100;
 							const isCurrent =
 								role.progress > 0 && role.progress < 100;
@@ -84,7 +79,7 @@ const Home = () => {
 
 							return (
 								<div
-									key={role._id}
+									key={role?._id}
 									className="relative flex items-start mb-8"
 								>
 									{/* Dot */}
@@ -163,7 +158,7 @@ const Home = () => {
 				{/* Skills */}
 				<Card title="Skills Progress" className="col-span-2">
 					<ResponsiveContainer width="100%" height={220}>
-						<BarChart data={user.skills}>
+						<BarChart data={user?.skills}>
 							<XAxis dataKey="name" stroke="#9CA3AF" />
 							<YAxis stroke="#9CA3AF" />
 							<Tooltip />
