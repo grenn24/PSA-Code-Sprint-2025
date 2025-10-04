@@ -1,8 +1,8 @@
 import express, { Express } from "express";
-import route1 from "../routes/route1";
-import auth from "../routes/auth";
-import error from "../middlewares/error";
-import portRouter from "../routes/port";
+import route1 from "../routes/route1.js";
+import auth from "../routes/auth.js";
+import error from "../middlewares/error.js";
+import userRouter from "../routes/user.js";
 
 const routes = (app: Express) => {
 	const apiRouter = express.Router();
@@ -14,7 +14,7 @@ const routes = (app: Express) => {
 	// Auth-related routes
 	apiRouter.use("/auth", auth);
 
-	apiRouter.use("/port", portRouter);
+	apiRouter.use("/user", userRouter);
 
 	// Log errors
 	apiRouter.use(error);

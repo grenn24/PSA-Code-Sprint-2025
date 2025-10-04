@@ -1,4 +1,4 @@
-import db from "../startup/db";
+import db from "../startup/db.js";
 
 async function clear() {
 	try {

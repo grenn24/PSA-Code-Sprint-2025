@@ -1,5 +1,5 @@
 import createDebug from "debug";
-import logger from "../utilities/winston";
+import logger from "../utilities/winston.js";
 
 // log uncaught errors to console
 

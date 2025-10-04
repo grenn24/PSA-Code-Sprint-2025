@@ -4,7 +4,7 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { v4 as uuidv4 } from "uuid";
 
 import store from "../redux/store";
-import { enqueueMessage, setForbidden } from "src/redux/slices/error";
+import { enqueueMessage, setForbidden } from "../redux/slices/error";
 
 export class ApiClient {
 	private client: AxiosInstance;
@@ -110,54 +110,16 @@ export class ApiClient {
 			return response;
 		} catch (err) {
 			// Missing or invalid access token (401 Unauthorised)
-			if (err.status === HttpStatusCode.Unauthorized) {
-				try {
-					await this.baseUrlClient
-						.get("/auth/refresh-access-token")
-						.then((res) => {
-							const { headers } = res;
-							sessionStorage.removeItem("X-Access-Token");
-							sessionStorage.setItem(
-								"X-Access-Token",
-								headers["x-access-token"]
-							);
-							return res;
-						})
-						.catch(({ status }) => {
-							if (status === 400) {
-								store.dispatch(
-									enqueueMessage({
-										content:
-											"Session expired, please log in again.",
-										type: "warning",
-										variant: "snackbar",
-									})
-								);
-								const queryParams = window.location.search;
-								window.location.href = `/account/log-in${queryParams}`;
-							}
-						});
-
-					const response = await this.client.get<T>(url, {
-						withCredentials: true,
-						...config,
-						headers: {
-							...config?.headers,
-							"X-Access-Token":
-								sessionStorage.getItem("X-Access-Token"),
-						},
-					});
-					return response;
-				} catch (err) {
-					// Missing or invalid refresh token
-					if (
-						err.status === 400 &&
-						err.body?.status === "INVALID_REFRESH_TOKEN"
-					) {
-						window.location.href = "/";
-					}
-					throw err;
-				}
+			if (err.status === HttpStatusCode.Unauthorized && err.body === "INVALID_ACCESS_TOKEN") {
+				store.dispatch(
+					enqueueMessage({
+						content: "Session expired, please log in again.",
+						type: "warning",
+						variant: "snackbar",
+					})
+				);
+				const queryParams = window.location.search;
+				window.location.href = `/log-in${queryParams}`;
 			}
 			throw err;
 		}
@@ -186,58 +148,16 @@ export class ApiClient {
 			return response;
 		} catch (err) {
 			// Missing or invalid access token (401 Unauthorised)
-			if (err.status === HttpStatusCode.Unauthorized) {
-				try {
-					await this.baseUrlClient
-						.get("/auth/refresh-access-token")
-						.then((res) => {
-							const { headers } = res;
-							sessionStorage.removeItem("X-Access-Token");
-							sessionStorage.setItem(
-								"X-Access-Token",
-								headers["x-access-token"]
-							);
-							return res;
-						})
-						.catch(({ status }) => {
-							if (status === 400) {
-								store.dispatch(
-									enqueueMessage({
-										content:
-											"Session expired, please log in again.",
-										type: "warning",
-										variant: "snackbar",
-									})
-								);
-								const queryParams = window.location.search;
-								window.location.href = `/account/log-in${queryParams}`;
-							}
-						});
-
-					const response = this.client.post<T, AxiosResponse<R>>(
-						url,
-						data,
-						{
-							withCredentials: true,
-							...config,
-							headers: {
-								...config?.headers,
-								"X-Access-Token":
-									sessionStorage.getItem("X-Access-Token"),
-							},
-						}
-					);
-					return response;
-				} catch (err) {
-					// Missing or invalid refresh token
-					if (
-						err.status === 400 &&
-						err.body?.status === "INVALID_REFRESH_TOKEN"
-					) {
-						window.location.href = "/";
-					}
-					throw err;
-				}
+			if (err.status === HttpStatusCode.Unauthorized && err.body === "INVALID_ACCESS_TOKEN") {
+				store.dispatch(
+					enqueueMessage({
+						content: "Session expired, please log in again.",
+						type: "warning",
+						variant: "snackbar",
+					})
+				);
+				const queryParams = window.location.search;
+				window.location.href = `/log-in${queryParams}`;
 			}
 			throw err;
 		}
@@ -266,58 +186,16 @@ export class ApiClient {
 			return response;
 		} catch (err) {
 			// Missing or invalid access token (401 Unauthorised)
-			if (err.status === HttpStatusCode.Unauthorized) {
-				try {
-					await this.baseUrlClient
-						.get("/auth/refresh-access-token")
-						.then((res) => {
-							const { headers } = res;
-							sessionStorage.removeItem("X-Access-Token");
-							sessionStorage.setItem(
-								"X-Access-Token",
-								headers["x-access-token"]
-							);
-							return res;
-						})
-						.catch(({ status }) => {
-							if (status === 400) {
-								store.dispatch(
-									enqueueMessage({
-										content:
-											"Session expired, please log in again.",
-										type: "warning",
-										variant: "snackbar",
-									})
-								);
-								const queryParams = window.location.search;
-								window.location.href = `/account/log-in${queryParams}`;
-							}
-						});
-
-					const response = await this.client.put<T, AxiosResponse<R>>(
-						url,
-						data,
-						{
-							withCredentials: true,
-							...config,
-							headers: {
-								...config?.headers,
-								"X-Access-Token":
-									sessionStorage.getItem("X-Access-Token"),
-							},
-						}
-					);
-					return response;
-				} catch (err) {
-					// Missing or invalid refresh token
-					if (
-						err.status === 400 &&
-						err.body?.status === "INVALID_REFRESH_TOKEN"
-					) {
-						window.location.href = "/";
-					}
-					throw err;
-				}
+			if (err.status === HttpStatusCode.Unauthorized && err.body === "INVALID_ACCESS_TOKEN") {
+				store.dispatch(
+					enqueueMessage({
+						content: "Session expired, please log in again.",
+						type: "warning",
+						variant: "snackbar",
+					})
+				);
+				const queryParams = window.location.search;
+				window.location.href = `/log-in${queryParams}`;
 			}
 			throw err;
 		}
@@ -346,57 +224,16 @@ export class ApiClient {
 			return response;
 		} catch (err) {
 			// Missing or invalid access token (401 Unauthorised)
-			if (err.status === HttpStatusCode.Unauthorized) {
-				try {
-					await this.baseUrlClient
-						.get("/auth/refresh-access-token")
-						.then((res) => {
-							const { headers } = res;
-							sessionStorage.removeItem("X-Access-Token");
-							sessionStorage.setItem(
-								"X-Access-Token",
-								headers["x-access-token"]
-							);
-							return res;
-						})
-						.catch(({ status }) => {
-							if (status === 400) {
-								store.dispatch(
-									enqueueMessage({
-										content:
-											"Session expired, please log in again.",
-										type: "warning",
-										variant: "snackbar",
-									})
-								);
-								const queryParams = window.location.search;
-								window.location.href = `/account/log-in${queryParams}`;
-							}
-						});
-
-					const response = await this.client.patch<
-						T,
-						AxiosResponse<R>
-					>(url, data, {
-						withCredentials: true,
-						...config,
-						headers: {
-							...config?.headers,
-							"X-Access-Token":
-								sessionStorage.getItem("X-Access-Token"),
-						},
-					});
-					return response;
-				} catch (err) {
-					// Missing or invalid refresh token
-					if (
-						err.status === 400 &&
-						err.body?.status === "INVALID_REFRESH_TOKEN"
-					) {
-						window.location.href = "/";
-					}
-					throw err;
-				}
+			if (err.status === HttpStatusCode.Unauthorized && err.body === "INVALID_ACCESS_TOKEN") {
+				store.dispatch(
+					enqueueMessage({
+						content: "Session expired, please log in again.",
+						type: "warning",
+						variant: "snackbar",
+					})
+				);
+				const queryParams = window.location.search;
+				window.location.href = `/log-in${queryParams}`;
 			}
 			throw err;
 		}
@@ -419,54 +256,16 @@ export class ApiClient {
 			return response;
 		} catch (err) {
 			// Missing or invalid access token (401 Unauthorised)
-			if (err.status === HttpStatusCode.Unauthorized) {
-				try {
-					await this.baseUrlClient
-						.get("/auth/refresh-access-token")
-						.then((res) => {
-							const { headers } = res;
-							sessionStorage.removeItem("X-Access-Token");
-							sessionStorage.setItem(
-								"X-Access-Token",
-								headers["x-access-token"]
-							);
-							return res;
-						})
-						.catch(({ status }) => {
-							if (status === 400) {
-								store.dispatch(
-									enqueueMessage({
-										content:
-											"Session expired, please log in again.",
-										type: "warning",
-										variant: "snackbar",
-									})
-								);
-								const queryParams = window.location.search;
-								window.location.href = `/account/log-in${queryParams}`;
-							}
-						});
-
-					const response = await this.client.delete<T>(url, {
-						withCredentials: true,
-						...config,
-						headers: {
-							...config?.headers,
-							"X-Access-Token":
-								sessionStorage.getItem("X-Access-Token"),
-						},
-					});
-					return response;
-				} catch (err) {
-					// Missing or invalid refresh token
-					if (
-						err.status === 400 &&
-						err.body?.status === "INVALID_REFRESH_TOKEN"
-					) {
-						window.location.href = "/";
-					}
-					throw err;
-				}
+			if (err.status === HttpStatusCode.Unauthorized && err.body === "INVALID_ACCESS_TOKEN") {
+				store.dispatch(
+					enqueueMessage({
+						content: "Session expired, please log in again.",
+						type: "warning",
+						variant: "snackbar",
+					})
+				);
+				const queryParams = window.location.search;
+				window.location.href = `/log-in${queryParams}`;
 			}
 			throw err;
 		}

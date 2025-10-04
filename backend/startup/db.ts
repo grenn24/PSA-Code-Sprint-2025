@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import config from "config";
 import createDebug from "debug";
 import { Express } from "express";
-import logger from "../utilities/winston";
+import logger from "../utilities/winston.js";
 
 const dbDebug = createDebug("db");
 const dbStartupDebug = createDebug("db:startup");
@@ -19,7 +19,7 @@ const db = async (app?: Express) => {
 		}
 		return conn.connection;
 	} catch (err) {
-		console.log(err)
+		console.log(err);
 		dbDebug(err);
 		logger("/logs/db.log").verbose(err);
 	}

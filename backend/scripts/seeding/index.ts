@@ -1,10 +1,12 @@
-import db from "../../startup/db";
-import { seedPorts } from "./port";
+import db from "../../startup/db.js";
+import { seedUsers } from "./user.js";
+import "dotenv/config";
+import config from "config";
 
 async function seed() {
 	try {
 		const conn = await db();
-		await seedPorts();
+		await seedUsers();
 		conn?.close();
 		console.log("Database seeded successfully");
 	} catch (err) {

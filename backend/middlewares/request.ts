@@ -1,11 +1,33 @@
+import { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
+import { HttpError } from "./error.js";
 
-export function getID(request: any, response: any, next: any) {
-	const _id = request.params.ID;
-	// Check object id format
-	if (_id && !mongoose.Types.ObjectId.isValid(_id)) {
-		return response.status(400).send({ message: "Invalid user ID format" });
-	}
-	response.locals._id = _id;
-	next();
-}
+export const getID =
+	(queryParams: string[] = ["ID"]) =>
+	(request: Request, response: Response, next: NextFunction) => {
+		if (queryParams.length === 0) {
+			next();
+			return;
+		}
+		for (const queryParam of queryParams) {
+			const id = request.params[queryParam];
+			if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+				const err = new HttpError(
+					"Missing or invalid object id parameter",
+					"INVALID_ID",
+					400
+				);
+				response.status(400).send(err);
+				return;
+			}
+			if (queryParam === "ID") {
+				response.locals._id = id;
+			} else {
+				response.locals[queryParam] = id;
+			}
+		}
+		if (!response.locals._id) {
+			response.locals._id = request.params[queryParams[0]];
+		}
+		next();
+	};

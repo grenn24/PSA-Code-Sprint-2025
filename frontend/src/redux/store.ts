@@ -6,6 +6,7 @@ import persistReducer from "redux-persist/lib/persistReducer";
 import storage from "redux-persist/lib/storage";
 import errorSliceReducer from "./slices/error.ts";
 import localeSliceReducer from "./slices/locale.ts";
+import userSliceReducer from "./slices/user.ts";
 
 // Enable map state variables
 enableMapSet();
@@ -13,14 +14,13 @@ enableMapSet();
 const persistConfig = {
 	key: "root",
 	storage,
-	whitelist: [
-		"locale",
-	], // persisted slices
+	whitelist: ["locale", "user"],
 };
 
 const rootReducer = combineReducers({
 	locale: localeSliceReducer,
 	error: errorSliceReducer,
+	user: userSliceReducer,
 });
 
 const persistedRootReducer = persistReducer(persistConfig, rootReducer);

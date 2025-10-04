@@ -1,25 +1,7 @@
-*,
-*::before,
-*::after {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	-webkit-tap-highlight-color: transparent;
-}
+@import "tailwindcss";
 
 ::-webkit-scrollbar {
 	display: none;
-}
-
-body {
-	min-height: 100dvh;
-	min-width: 100dvw;
-	font-family: "Arial", sans-serif;
-	line-height: 1.6;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	height: 100dvh;
 }
 
 input:-webkit-autofill,

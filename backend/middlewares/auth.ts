@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import config from "config";
 
 const auth =
-	(role: "User" | "Admin") => (request: any, response: any, next: any) => {
+	(role: "user" | "admin") => (request: any, response: any, next: any) => {
 		const accessToken = request.header("X-Access-Token");
 		try {
 			// Access token missing
@@ -15,8 +15,8 @@ const auth =
 			const payload = jwt.verify(accessToken, config.get("SECRET_KEY"));
 			if (
 				typeof payload !== "string" &&
-				payload.role === "User" &&
-				role === "Admin"
+				payload.role === "user" &&
+				role === "admin"
 			) {
 				// Insufficient user permissions
 				return response
@@ -25,10 +25,7 @@ const auth =
 			}
 			// Pass userID payload to next controller
 			if (typeof payload != "string") {
-				response.locals.user = {
-					userID: payload?.userID,
-					role: payload?.role,
-				};
+				response.locals.user = payload;
 			}
 			next();
 		} catch (err) {
@@ -39,23 +36,5 @@ const auth =
 			});
 		}
 	};
-
-export function validateRefreshToken(refreshToken: string) {
-	try {
-		const payload = jwt.verify(
-			refreshToken,
-			config.get("SECRET_KEY") as string
-		);
-		if (typeof payload !== "string") {
-			if (payload.type !== "refreshToken") {
-				return false;
-			} else {
-				return payload;
-			}
-		}
-	} catch (err) {
-		return false;
-	}
-}
 
 export default auth;

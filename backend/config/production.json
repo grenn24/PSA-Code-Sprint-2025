@@ -1,5 +1,7 @@
 {
 	"NODE_ENV": "production",
-	"DATABASE_URL": "DATABASE_URL",
-	"PORT": 3000
+	"PORT": 3000,
+	"PROTOCOL": "https",
+	"HOST": "journey-wonder.com",
+	"BASE_URL": "https://journey-wonder.com"
 }

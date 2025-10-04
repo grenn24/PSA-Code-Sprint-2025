@@ -1,8 +1,7 @@
 import express, { Express } from "express";
 import morgan from "morgan";
-import cors from "../middlewares/cors";
+import cors from "../middlewares/cors.js";
 import cookieParser from "cookie-parser";
-import config from "config";
 
 const middlewares = (app: Express) => {
 	// middlewares
