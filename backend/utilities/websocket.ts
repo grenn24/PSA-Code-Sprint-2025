@@ -7,6 +7,7 @@ import { Express } from "express";
 import WebSocket, { WebSocketServer } from "ws";
 import authService from "../services/auth.js";
 import userService from "../services/user.js";
+import User from "../models/user.js";
 
 const wsDebug = createDebug("websocket");
 const wsStartupDebug = createDebug("websocket:startup");
@@ -43,11 +44,19 @@ class WebsocketService {
 				);
 				return;
 			}
+
+			const user = await User.findById(payload.id).exec();
+			if (!user) {
+				frontendWS.close(
+					WebsocketCloseCode.NotFound,
+					"User does not exist"
+				);
+				return;
+			}
 			this.frontendWS.set(payload.id, frontendWS);
-			// Send notifications on initial connection
 			this.sendTo(payload.id, {
 				type: "NOTIFICATIONS",
-				data: await userService.getNotifications(payload.id),
+				data: user.notifications,
 				timestamp: new Date().toISOString(),
 			});
 			frontendWS.on("message", (message) => {
