@@ -17,7 +17,6 @@ const startup = (app: Express) => {
 	routes(app);
 
 	const server = websocket(app);
-
 	const port = process.env.PORT || config.get("PORT") || 3000;
 	server?.listen(port, () => {
 		appDebug(`Backend api server is running at ${config.get("BASE_URL")}`);

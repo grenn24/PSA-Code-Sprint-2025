@@ -1,7 +1,6 @@
 import { faker } from "@faker-js/faker";
 import User from "../../models/user.js";
 
-
 const skillsPool = [
 	"Data Analytics",
 	"Data Management",
@@ -58,77 +57,84 @@ function generateNotifications() {
 	}));
 }
 
-const users = Array.from({ length: 500 }).map(() => ({
-	name: faker.person.fullName(),
-	email: faker.internet.email(),
-	avatar: faker.image.avatar(),
-	bio: faker.person.bio(),
-	position: faker.person.jobTitle(),
-	role: "user",
-	password: "$2b$10$TS8eBH1GUf7F3haX1WnX9uqVCzYW9f4ig5abjp4fEMUVkdrqrh91a",
-	subordinates: [],
-	experienceLevel: getRandomInt(0, 25),
-	mentorshipRequests: [],
-	skills: generateRandomSkills(),
-	notifications: generateNotifications(),
-	careerPath: generateCareerPath(),
-}));
-
-users.push({
-	name: "Gren",
-	email: "gren@gmail.com",
-	position: "Operations Analyst",
-	role: "user",
-	bio: faker.person.bio(),
-	password: "$2b$10$TS8eBH1GUf7F3haX1WnX9uqVCzYW9f4ig5abjp4fEMUVkdrqrh91a",
-	subordinates: [],
-	experienceLevel: 2,
-	mentorshipRequests: [],
-	avatar: "https://avatars.githubusercontent.com/u/126308058?v=4",
-	skills: [
-		{
-			name: "Software Engineer",
-			level: 60,
-		},
-		{
-			name: "AI Engineer",
-			level: 50,
-		},
-	],
-	notifications: [
-		{
-			message: "Welcome to PSA Horizon!",
-			read: false,
-		},
-	],
-	careerPath: [
-		{
-			position: "Junior Operations Analyst",
-			progress: 100,
-			startedAt: "2023-01-01T00:00:00.000Z",
-			endedAt: "2023-12-31T00:00:00.000Z",
-			skillsRequired: ["Data Analysis", "Excel", "Basic Logistics"],
-			_id: "68e0fa5fb8980e66e106acae",
-		},
-		{
-			position: "Operations Analyst",
-			progress: 65,
-			startedAt: "2024-01-01T00:00:00.000Z",
-			skillsRequired: ["Advanced Data Analysis", "Process Optimization"],
-			_id: "68e0fa5fb8980e66e106acaf",
-		},
-		{
-			position: "Senior Operations Analyst",
-			progress: 0,
-			skillsRequired: ["Leadership", "Supply Chain Management"],
-			_id: "68e0fa5fb8980e66e106acb0",
-		},
-	],
-});
+const generateUsers = () => {
+	const users = Array.from({ length: 500 }).map(() => ({
+		name: faker.person.fullName(),
+		email: faker.internet.email(),
+		avatar: faker.image.avatar(),
+		bio: faker.person.bio(),
+		position: faker.person.jobTitle(),
+		role: "user",
+		password:
+			"$2b$10$TS8eBH1GUf7F3haX1WnX9uqVCzYW9f4ig5abjp4fEMUVkdrqrh91a",
+		subordinates: [],
+		experienceLevel: getRandomInt(0, 25),
+		mentorshipRequests: [],
+		skills: generateRandomSkills(),
+		notifications: generateNotifications(),
+		careerPath: generateCareerPath(),
+	}));
+	users.push({
+		name: "Gren",
+		email: "gren@gmail.com",
+		position: "Operations Analyst",
+		role: "user",
+		bio: faker.person.bio(),
+		password:
+			"$2b$10$TS8eBH1GUf7F3haX1WnX9uqVCzYW9f4ig5abjp4fEMUVkdrqrh91a",
+		subordinates: [],
+		experienceLevel: 2,
+		mentorshipRequests: [],
+		avatar: "https://avatars.githubusercontent.com/u/126308058?v=4",
+		skills: [
+			{
+				name: "Software Engineer",
+				level: 60,
+			},
+			{
+				name: "AI Engineer",
+				level: 50,
+			},
+		],
+		notifications: [
+			{
+				message: "Welcome to PSA Horizon!",
+				read: false,
+			},
+		],
+		careerPath: [
+			{
+				position: "Junior Operations Analyst",
+				progress: 100,
+				startedAt: "2023-01-01T00:00:00.000Z",
+				endedAt: "2023-12-31T00:00:00.000Z",
+				skillsRequired: ["Data Analysis", "Excel", "Basic Logistics"],
+				_id: "68e0fa5fb8980e66e106acae",
+			},
+			{
+				position: "Operations Analyst",
+				progress: 65,
+				startedAt: "2024-01-01T00:00:00.000Z",
+				skillsRequired: [
+					"Advanced Data Analysis",
+					"Process Optimization",
+				],
+				_id: "68e0fa5fb8980e66e106acaf",
+			},
+			{
+				position: "Senior Operations Analyst",
+				progress: 0,
+				skillsRequired: ["Leadership", "Supply Chain Management"],
+				_id: "68e0fa5fb8980e66e106acb0",
+			},
+		],
+	});
+	return users;
+};
 
 export async function seedUsers() {
 	try {
-		await User.insertMany(users);
+		await User.insertMany(generateUsers());
 		console.log("Users seeded successfully");
 	} catch (err) {
 		console.error("Error inserting users:", err);
