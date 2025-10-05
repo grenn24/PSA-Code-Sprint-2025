@@ -31,5 +31,5 @@ export default {
         }),
         typescript({ tsconfig: './tsconfig.json' })
     ],
-    external: [...builtins],
+    external: [...builtins, 'mongodb'],
 };
