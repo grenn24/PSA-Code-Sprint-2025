@@ -1,33 +1,48 @@
 import { User } from "@common/types/user";
-import { PlusIcon } from "@heroicons/react/24/outline";
+import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 import { useAppSelector } from "redux/store";
+import FeedbackModalContent from "./FeedbackModalContent";
+import MoodUpdateModalContent from "./MoodUpdateModalContent";
+import FeedbackRequestModalContent from "./FeedbackRequestModalContent";
 
 interface Prop {
 	recipient: User;
+	sendMessage: (
+		content: string,
+		type?:
+			| "text"
+			| "file"
+			| "tip"
+			| "quiz"
+			| "poll"
+			| "feedback"
+			| "feedbackRequest"
+			| "question"
+			| "moodUpdate"
+			| "wellbeingPrompt",
+		metadata?: Record<string, any>
+	) => Promise<void>;
 }
-export const ChatMenuButton = ({ recipient }: Prop) => {
-    
+
+export const ChatMenuButton = ({ recipient, sendMessage }: Prop) => {
 	const { user } = useAppSelector((state) => state.user);
 	const [openChatMenu, setOpenChatMenu] = useState(false);
+	const [openMenuModal, setOpenMenuModal] = useState<string | null>(null);
+	const [inputValues, setInputValues] = useState<Record<string, any>>({});
 	const chatMenuRef = useRef<HTMLDivElement>(null);
 
-        useEffect(() => {
-            function handleClickOutside(event: MouseEvent) {
-        
-                if (
-                    chatMenuRef.current &&
-                    !chatMenuRef.current.contains(event.target as Node)
-                ) {
-                    setOpenChatMenu(false);
-                }
-            }
-            if ( openChatMenu)
-                document.addEventListener("mousedown", handleClickOutside);
-            return () =>
-                document.removeEventListener("mousedown", handleClickOutside);
-        }, [ openChatMenu]);
+	const isMentor = user?.mentees.some(
+		(mentee) => mentee._id === recipient._id
+	);
+
+	const openModal = (type: string) => {
+		setOpenMenuModal(type);
+		setOpenChatMenu(false);
+		setInputValues({});
+	};
+
 	return (
 		<div className="relative">
 			<button
@@ -37,58 +52,222 @@ export const ChatMenuButton = ({ recipient }: Prop) => {
 				<PlusIcon className="w-5 h-5" />
 			</button>
 
+			{/* Chat Menu */}
 			<AnimatePresence>
 				{openChatMenu && (
 					<motion.div
 						ref={chatMenuRef}
-						initial={{
-							opacity: 0,
-							y: 10,
-							scale: 0.95,
-						}}
-						animate={{
-							opacity: 1,
-							y: 0,
-							scale: 1,
-						}}
-						exit={{
-							opacity: 0,
-							y: 10,
-							scale: 0.95,
-						}}
-						className="absolute bottom-12 right-0 w-56 bg-white/60 backdrop-blur-md shadow-xl border border-gray-200 rounded-xl p-2 flex flex-col z-50"
+						initial={{ opacity: 0, y: 10, scale: 0.95 }}
+						animate={{ opacity: 1, y: 0, scale: 1 }}
+						exit={{ opacity: 0, y: 10, scale: 0.95 }}
+						className="absolute bottom-12 w-60 bg-white/70 backdrop-blur-md shadow-xl border border-gray-200 rounded-xl p-2 flex flex-col z-50"
 					>
-						{user?.mentees.find(
-							(mentee) => mentee._id === recipient._id
-						) ? (
-							// 💼 Mentor menu
+						{isMentor ? (
 							<>
-								<MenuItem label="📁 Share file" />
-								<MenuItem label="💡 Share a quick tip" />
-								<MenuItem label="🧠 Start a quiz" />
-								<MenuItem label="📊 Start a poll" />
-								<MenuItem label="📝 Give feedback" />
-								<MenuItem label="💬 Wellbeing checks" />
+								<MenuItem
+									label="📁 Share file"
+									onClick={() => openModal("file")}
+								/>
+								<MenuItem
+									label="💡 Share a quick tip"
+									onClick={() => openModal("tip")}
+								/>
+								<MenuItem
+									label="🧠 Start a quiz"
+									onClick={() => openModal("quiz")}
+								/>
+								<MenuItem
+									label="📊 Start a poll"
+									onClick={() => openModal("poll")}
+								/>
+								<MenuItem
+									label="📝 Give feedback"
+									onClick={() => openModal("Feedback")}
+								/>
+								<MenuItem
+									label="💬 Wellbeing checks"
+									onClick={() => openModal("wellbeingPrompt")}
+								/>
 							</>
 						) : (
-							// 🎓 Mentee menu
 							<>
-								<MenuItem label="📁 Share file" />
-								<MenuItem label="❓ Ask a question" />
-								<MenuItem label="📨 Request feedback" />
-								<MenuItem label="📝 Give feedback" />
-								<MenuItem label="🙂 Mood / status update" />
+								<MenuItem
+									label="📁 Share file"
+									onClick={() => openModal("file")}
+								/>
+								<MenuItem
+									label="📨 Request feedback"
+									onClick={() =>
+										openModal("Request for Feedback")
+									}
+								/>
+								<MenuItem
+									label="📝 Give feedback"
+									onClick={() => openModal("Feedback")}
+								/>
+								<MenuItem
+									label="🙂 Mood / status update"
+									onClick={() => openModal("Mood Update")}
+								/>
 							</>
 						)}
 					</motion.div>
 				)}
 			</AnimatePresence>
+
+			{/* Modal */}
+			{openMenuModal && (
+				<ChatMenuModal
+					type={openMenuModal}
+					inputValues={inputValues}
+					setInputValues={setInputValues}
+					sendMessage={sendMessage}
+					closeModal={() => setOpenMenuModal(null)}
+				/>
+			)}
 		</div>
 	);
 };
 
-const MenuItem = ({ label }: { label: string }) => (
-	<button className="text-left text-sm text-gray-700 hover:bg-indigo-50 rounded-lg px-3 py-2 transition">
+const MenuItem = ({
+	label,
+	onClick,
+}: {
+	label: string;
+	onClick: () => void;
+}) => (
+	<button
+		onClick={onClick}
+		className="text-left text-md text-gray-800 hover:bg-indigo-50 rounded-lg px-3 py-2 transition whitespace-pre-wrap"
+	>
 		{label}
 	</button>
 );
+
+interface ModalProps {
+	type: string | null;
+	inputValues: Record<string, any>;
+	setInputValues: React.Dispatch<React.SetStateAction<Record<string, any>>>;
+	sendMessage: (
+		content: string,
+		type?:
+			| "text"
+			| "file"
+			| "tip"
+			| "quiz"
+			| "poll"
+			| "feedback"
+			| "feedbackRequest"
+			| "question"
+			| "moodUpdate"
+			| "wellbeingPrompt",
+		metadata?: Record<string, any>
+	) => Promise<void>;
+	closeModal: () => void;
+}
+export const ChatMenuModal = ({
+	type,
+	inputValues,
+	setInputValues,
+	sendMessage,
+	closeModal,
+}: ModalProps) => {
+	const renderContent = () => {
+		switch (type) {
+			case "tip":
+				return (
+					<textarea
+						className="border p-3 rounded w-full"
+						placeholder="Enter a quick tip"
+						value={inputValues.tip || ""}
+						onChange={(e) =>
+							setInputValues({
+								...inputValues,
+								tip: e.target.value,
+							})
+						}
+					/>
+				);
+			case "quiz":
+			case "poll":
+				return (
+					<div className="flex flex-col gap-2">
+						<input
+							className="border px-3 py-2 rounded"
+							placeholder={`${type} question`}
+							value={inputValues.question || ""}
+							onChange={(e) =>
+								setInputValues({
+									...inputValues,
+									question: e.target.value,
+								})
+							}
+						/>
+						{[0, 1, 2].map((i) => (
+							<input
+								key={i}
+								className="border px-3 py-2 rounded"
+								placeholder={`Option ${i + 1}`}
+								value={inputValues.options?.[i] || ""}
+								onChange={(e) => {
+									const options = [
+										...(inputValues.options || []),
+									];
+									options[i] = e.target.value;
+									setInputValues({ ...inputValues, options });
+								}}
+							/>
+						))}
+					</div>
+				);
+			case "Request for Feedback":
+				return (
+				<FeedbackRequestModalContent sendMessage={sendMessage} setOpenMenuModal={closeModal} />
+				);
+			case "Feedback":
+				return (
+					<FeedbackModalContent
+						sendMessage={sendMessage}
+						setOpenMenuModal={closeModal}
+					/>
+				);
+			case "Mood Update":
+				return (
+					<MoodUpdateModalContent
+						sendMessage={sendMessage}
+						setOpenMenuModal={closeModal}
+					/>
+				);
+			default:
+				return null;
+		}
+	};
+
+	return (
+		<AnimatePresence>
+			{type && (
+				<motion.div
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+				>
+					<motion.div
+						initial={{ scale: 0.95, y: 20 }}
+						animate={{ scale: 1, y: 0 }}
+						exit={{ scale: 0.95, y: 20 }}
+						className="bg-white rounded-xl shadow-lg p-4 w-xl max-w-full flex flex-col gap-4"
+					>
+						<div className="flex justify-between items-center">
+							<h2 className="font-semibold text-xl">{type}</h2>
+							<button onClick={closeModal}>
+								<XMarkIcon className="w-5 h-5 text-gray-500 hover:text-gray-700" />
+							</button>
+						</div>
+						{renderContent()}
+					</motion.div>
+				</motion.div>
+			)}
+		</AnimatePresence>
+	);
+};

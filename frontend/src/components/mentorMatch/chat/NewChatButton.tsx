@@ -1,41 +1,43 @@
-import { Chat } from '@common/types/chat';
-import { MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/24/outline';
-import { AnimatePresence, motion } from 'framer-motion';
-import React, { useRef, useState } from 'react'
-import { useAppSelector } from 'redux/store';
-import chatService from 'services/chat';
+import { Chat } from "@common/types/chat";
+import { MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { AnimatePresence, motion } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
+import { useAppSelector } from "redux/store";
+import chatService from "services/chat";
+import userService from "services/user";
 
 interface Prop {
-    chats: Chat[];
-    setChats: React.Dispatch<React.SetStateAction<Chat[]>>;
-    setSelectedChatID: React.Dispatch<React.SetStateAction<string | null>>;
+	chats: Chat[];
+	setChats: React.Dispatch<React.SetStateAction<Chat[]>>;
+	setSelectedChatID: React.Dispatch<React.SetStateAction<string | null>>;
 }
-const NewChatButton = ({chats, setChats, setSelectedChatID}: Prop) => {
-    const {user} = useAppSelector((state) => state.user);
-    const newChatDropdownRef = useRef<HTMLDivElement>(null);
-    const [showNewChat, setShowNewChat] = useState(false);
-    const [searchMentorValue, setSearchMentorValue] = useState("");
+const NewChatButton = ({ chats, setChats, setSelectedChatID }: Prop) => {
+	const { user } = useAppSelector((state) => state.user);
 
-    	const handleNewChatClick = async (recipientID: string) => {
-			const existingChat = chats.find((chat) =>
-				chat.participants.some((p) => p._id === recipientID)
-			);
+	const newChatDropdownRef = useRef<HTMLDivElement>(null);
+	const [showNewChat, setShowNewChat] = useState(false);
+	const [searchMentorValue, setSearchMentorValue] = useState("");
 
-			if (existingChat?._id) {
-				setSelectedChatID(existingChat._id);
-			} else if (user?._id) {
-				// create new chat
-				const newChat = await chatService.createChat([
-					user._id,
-					recipientID,
-				]);
-				setChats((prev) => [...prev, newChat]);
-				setSelectedChatID(newChat._id!);
-			}
-			setShowNewChat(false);
-		};
+	const handleNewChatClick = async (recipientID: string) => {
+		const existingChat = chats.find((chat) =>
+			chat.participants.some((p) => p._id === recipientID)
+		);
 
-  return (
+		if (existingChat?._id) {
+			setSelectedChatID(existingChat._id);
+		} else if (user?._id) {
+			// create new chat
+			const newChat = await chatService.createChat([
+				user._id,
+				recipientID,
+			]);
+			setChats((prev) => [...prev, newChat]);
+			setSelectedChatID(newChat._id!);
+		}
+		setShowNewChat(false);
+	};
+
+	return (
 		<div className="relative">
 			<button
 				onClick={() => setShowNewChat((prev) => !prev)}
@@ -134,7 +136,7 @@ const NewChatButton = ({chats, setChats, setSelectedChatID}: Prop) => {
 				)}
 			</AnimatePresence>
 		</div>
-  );
-}
+	);
+};
 
-export default NewChatButton
+export default NewChatButton;

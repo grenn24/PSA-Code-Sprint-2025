@@ -4,6 +4,7 @@ import Chat from "../models/chat.js";
 import User from "../models/user.js";
 import websocketService from "../utilities/websocket.js";
 import userService from "./user.js";
+import { Message } from "@common/types/chat.js";
 
 class ChatService {
 	async getChatByID(chatID: string) {
@@ -29,10 +30,14 @@ class ChatService {
 		{
 			sender: senderID,
 			content,
+			type = "text",
+			metadata = {},
 			createdAt,
 		}: {
 			sender: string;
 			content: string;
+			type?: Message["type"];
+			metadata?: Record<string, any>;
 			createdAt?: Date;
 		}
 	) {
@@ -44,6 +49,101 @@ class ChatService {
 				HttpStatusCode.NotFound
 			);
 		}
+
+		const chat = await Chat.findById(chatID);
+		if (!chat) {
+			throw new HttpError(
+				"Chat not found",
+				"NOT_FOUND",
+				HttpStatusCode.NotFound
+			);
+		}
+		const message = {
+			sender: sender._id,
+			content,
+			type,
+			metadata,
+			createdAt: createdAt || new Date(),
+		};
+
+		chat.messages.push(message);
+		await chat.save();
+
+		const newMessage = chat.messages[chat.messages.length - 1];
+
+		const recipientID = chat.participants
+			.filter((p) => !p.equals(sender._id))
+			.pop()
+			?.toString();
+
+		if (!recipientID) {
+			throw new HttpError(
+				"Recipient not found",
+				"NOT_FOUND",
+				HttpStatusCode.NotFound
+			);
+		}
+
+		let notificationMsg = `${sender.name} sent you a message`;
+
+		switch (type) {
+			case "file":
+				notificationMsg = `${sender.name} shared a file`;
+				break;
+			case "tip":
+				notificationMsg = `${sender.name} shared a quick tip`;
+				break;
+			case "quiz":
+				notificationMsg = `${sender.name} started a quiz`;
+				break;
+			case "poll":
+				notificationMsg = `${sender.name} created a poll`;
+				break;
+			case "feedback":
+				notificationMsg = `${sender.name} gave you feedback`;
+				break;
+			case "feedbackRequest":
+				notificationMsg = `${sender.name} requested feedback`;
+				break;
+			case "question":
+				notificationMsg = `${sender.name} asked a question`;
+				break;
+			case "moodUpdate":
+				notificationMsg = `${sender.name} shared a mood update`;
+				break;
+			case "wellbeingPrompt":
+				notificationMsg = `Wellbeing check-in from ${sender.name}`;
+				break;
+		}
+
+		await userService.addNotification(recipientID, notificationMsg);
+
+		websocketService.sendTo(recipientID, {
+			type: "NEW_CHAT_MESSAGE",
+			data: {
+				chatID: chat._id,
+				message: newMessage,
+			},
+			timestamp: new Date().toISOString(),
+		});
+
+		return newMessage;
+	}
+
+	async updateMessage(
+		updaterID: string,
+		messageID: string,
+		chatID: string,
+		{
+			content,
+			type,
+			metadata,
+		}: {
+			content: string;
+			type?: Message["type"];
+			metadata?: Record<string, any>;
+		}
+	) {
 		const chat = await Chat.findById(chatID);
 		if (!chat) {
 			throw new HttpError(
@@ -53,13 +153,27 @@ class ChatService {
 			);
 		}
 
-		chat.messages.push({ sender: sender._id, content, createdAt });
+		const message = chat.messages.id(messageID);
+		if (!message) {
+			throw new HttpError(
+				"Message not found",
+				"NOT_FOUND",
+				HttpStatusCode.NotFound
+			);
+		}
+
+		message.content = content;
+		if (type) {
+			message.type = type;
+		}
+		message.metadata = metadata;
 		await chat.save();
-		const newMessage = chat.messages[chat.messages.length - 1];
+
 		const recipientID = chat.participants
-			.filter((p) => !p.equals(sender._id))
+			.filter((p) => !p.equals(updaterID))
 			.pop()
 			?.toString();
+
 		if (!recipientID) {
 			throw new HttpError(
 				"Recipient not found",
@@ -67,22 +181,15 @@ class ChatService {
 				HttpStatusCode.NotFound
 			);
 		}
-
-		await userService.addNotification(
-			recipientID,
-			`${sender.name} just sent you a chat message`
-		);
-
 		websocketService.sendTo(recipientID, {
-			type: "CHAT_MESSAGE",
+			type: "CHAT_MESSAGE_UPDATE",
 			data: {
 				chatID: chat._id,
-				message: newMessage,
+				message: chat.messages.id(messageID),
 			},
 			timestamp: new Date().toISOString(),
 		});
-
-		return newMessage;
+		return message;
 	}
 
 	async createChat(participantIDs: string[]) {
@@ -138,7 +245,7 @@ class ChatService {
 		const recipient = updatedChat.participants
 			.filter((p) => !p._id?.equals(userID))
 			.pop();
-		console.log(recipient, userID);
+
 		if (!recipient) {
 			throw new HttpError(
 				"Recipient not found",
@@ -146,7 +253,7 @@ class ChatService {
 				HttpStatusCode.NotFound
 			);
 		}
-		console.log("sending ws", recipient._id);
+
 		websocketService.sendTo(recipient._id.toString(), {
 			type: "CHAT_MESSAGE_READ",
 			data: updatedChat,

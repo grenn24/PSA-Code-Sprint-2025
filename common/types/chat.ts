@@ -7,6 +7,18 @@ export interface Message {
 	createdAt?: Date;
 	read?: boolean;
 	readAt?: Date;
+	type:
+		| "text"
+		| "file"
+		| "tip"
+		| "quiz"
+		| "poll"
+		| "feedback"
+		| "feedbackRequest"
+		| "question"
+		| "moodUpdate"
+		| "wellbeingPrompt";
+	metadata: Record<string, any>;
 }
 
 export interface Chat {

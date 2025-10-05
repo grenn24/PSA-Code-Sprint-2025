@@ -12,6 +12,14 @@ chatRouter.post(
 	chatController.catchErrors(chatController.postMessage.bind(chatController))
 );
 
+chatRouter.put(
+	"/:chatID/message/:messageID",
+	getID(["chatID", "messageID"]),
+	auth("user"),
+	chatController.catchErrors(chatController.updateMessage.bind(chatController))
+);
+
+
 chatRouter.post(
 	"",
 	chatController.catchErrors(chatController.createChat.bind(chatController))

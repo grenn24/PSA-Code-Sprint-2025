@@ -1,7 +1,10 @@
 import { model, Schema } from "mongoose";
 
 const messageSchema = new Schema({
-	content: { type: String, required: true },
+	content: {
+		type: String,
+		default: "",
+	},
 	sender: { type: Schema.Types.ObjectId, ref: "User", required: true },
 	createdAt: { type: Date, default: Date.now },
 	read: { type: Boolean, default: false },
@@ -32,10 +35,10 @@ const chatSchema = new Schema({
 		type: [{ type: Schema.Types.ObjectId, ref: "User" }],
 		required: true,
 	},
-    messages: {
-        type: [messageSchema],
-        default: [],
-    },
+	messages: {
+		type: [messageSchema],
+		default: [],
+	},
 	createdAt: { type: Date, default: Date.now },
 });
 

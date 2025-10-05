@@ -11,6 +11,19 @@ class ChatController {
 		response.status(200).send(message);
 	}
 
+	async updateMessage(request: Request, response: Response) {
+		const updater = response.locals.user
+		const chatID = response.locals.chatID;
+		const messageID = response.locals.messageID;
+		const message = await chatService.updateMessage(
+			updater.id,
+			messageID,
+			chatID,
+			request.body
+		);
+		response.status(200).send(message);
+	}
+
 	async createChat(request: Request, response: Response) {
 		const chat = await chatService.createChat(request.body?.participants);
 		response.status(200).send(chat);

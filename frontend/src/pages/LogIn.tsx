@@ -77,11 +77,11 @@ const LogIn = () => {
 								inputMode="email"
 								value={email}
 								onChange={(e) => {
-                                    setError(null)
-                                    setEmail(e.target.value);
-                                }}
+									setError(null);
+									setEmail(e.target.value);
+								}}
 								required
-								className={`w-full pl-10 pr-4 py-3 rounded-2xl border focus:border-transparent ${
+								className={`w-full pl-10 pr-4 py-3 rounded-2xl border focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
 									error
 										? "border-red-400 focus:ring-red-500"
 										: "border-gray-300 focus:ring-blue-500"
@@ -100,11 +100,11 @@ const LogIn = () => {
 								inputMode="text"
 								value={password}
 								onChange={(e) => {
-                                    setError(null)
-                                    setPassword(e.target.value);
-                                }}
+									setError(null);
+									setPassword(e.target.value);
+								}}
 								required
-								className={`w-full pl-10 pr-4 py-3 rounded-2xl border focus:border-transparent ${
+								className={`w-full pl-10 pr-4 py-3 rounded-2xl border focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
 									error
 										? "border-red-400 focus:ring-red-500"
 										: "border-gray-300 focus:ring-blue-500"
