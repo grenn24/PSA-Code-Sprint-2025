@@ -64,6 +64,7 @@ export declare enum HttpStatusCode {
 }
 export declare enum WebsocketCloseCode {
     MissingAccessToken = 4001,
-    InvalidAccessToken = 4002
+    InvalidAccessToken = 4002,
+    NotFound = 4003
 }
 //# sourceMappingURL=statusCode.d.ts.map

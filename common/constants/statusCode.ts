@@ -75,4 +75,5 @@ export enum HttpStatusCode {
 export enum WebsocketCloseCode {
 	MissingAccessToken = 4001,
 	InvalidAccessToken = 4002,
+	NotFound = 4003,
 }

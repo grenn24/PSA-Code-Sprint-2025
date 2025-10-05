@@ -75,4 +75,5 @@ var WebsocketCloseCode;
 (function (WebsocketCloseCode) {
     WebsocketCloseCode[WebsocketCloseCode["MissingAccessToken"] = 4001] = "MissingAccessToken";
     WebsocketCloseCode[WebsocketCloseCode["InvalidAccessToken"] = 4002] = "InvalidAccessToken";
+    WebsocketCloseCode[WebsocketCloseCode["NotFound"] = 4003] = "NotFound";
 })(WebsocketCloseCode || (exports.WebsocketCloseCode = WebsocketCloseCode = {}));
