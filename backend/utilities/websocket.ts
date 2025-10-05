@@ -23,8 +23,6 @@ class WebsocketService {
 		const backendWSS = new WebSocketServer({ server, path: "/api" });
 
 		backendWSS.on("connection", async (frontendWS, req) => {
-			wsDebug(`New client connected`);
-
 			const url = new URL(req.url ?? "", `http://${req.headers.host}`);
 			const accessToken = url.searchParams.get("X-Access-Token");
 
@@ -53,6 +51,7 @@ class WebsocketService {
 				);
 				return;
 			}
+			wsDebug(`New client connected: ${user.email}`);
 			this.frontendWS.set(payload.id, frontendWS);
 			this.sendTo(payload.id, {
 				type: "NOTIFICATIONS",
