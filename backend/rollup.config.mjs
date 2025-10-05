@@ -31,5 +31,5 @@ export default {
         }),
         typescript({ tsconfig: './tsconfig.json' })
     ],
-    external: [...builtins, 'mongodb'],
+    external: [...builtins, 'mongodb', 'mongoose', 'winston', 'semver'],
 };
