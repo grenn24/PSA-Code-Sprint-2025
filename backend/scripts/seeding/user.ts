@@ -77,7 +77,7 @@ const generateUsers = () => {
 	users.push({
 		name: "Gren",
 		email: "gren@gmail.com",
-		position: "Operations Analyst",
+		position: "Software Engineer",
 		role: "user",
 		bio: faker.person.bio(),
 		password:
@@ -104,7 +104,7 @@ const generateUsers = () => {
 		],
 		careerPath: [
 			{
-				position: "Junior Operations Analyst",
+				position: "Junior Software Engineer",
 				progress: 100,
 				startedAt: "2023-01-01T00:00:00.000Z",
 				endedAt: "2023-12-31T00:00:00.000Z",
@@ -112,7 +112,7 @@ const generateUsers = () => {
 				_id: "68e0fa5fb8980e66e106acae",
 			},
 			{
-				position: "Operations Analyst",
+				position: "Software Engineer",
 				progress: 65,
 				startedAt: "2024-01-01T00:00:00.000Z",
 				skillsRequired: [
@@ -122,7 +122,7 @@ const generateUsers = () => {
 				_id: "68e0fa5fb8980e66e106acaf",
 			},
 			{
-				position: "Senior Operations Analyst",
+				position: "Senior Software Engineer",
 				progress: 0,
 				skillsRequired: ["Leadership", "Supply Chain Management"],
 				_id: "68e0fa5fb8980e66e106acb0",

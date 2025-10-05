@@ -64,6 +64,11 @@ class UserController {
 			.send(await userService.getTopMatchedMentors(userID, limit, page));
 	}
 
+	async getChats(request: Request, response: Response) {
+		const userID = response.locals._id;
+		response.status(200).send(await userService.getChats(userID));
+	}
+
 	catchErrors(handler) {
 		return async (
 			request: Request,

@@ -2,21 +2,24 @@ import { BellIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import websocketService from "../utilities/websocket";
 import { WebsocketMessage } from "@common/types/http";
-
-interface Notification {
-	message: string;
-	read: boolean;
-	createdAt: string;
-}
+import userService from "services/user";
+import { useAppSelector } from "redux/store";
+import { User } from "@common/types/user";
 
 const Notifications = () => {
-	const [notifications, setNotifications] = useState<Notification[]>([]);
+	const { user } = useAppSelector((state) => state.user);
+	const [notifications, setNotifications] = useState<User["notifications"]>(
+		[]
+	);
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 
 	useEffect(() => {
+		userService.getUserByID(user?._id).then((user) => {
+			setNotifications(user.notifications);
+		});
 		const handleMessage = (message: WebsocketMessage) => {
-			if (message.type === "NOTIFICATIONS") {
-				setNotifications(message.data);
+			if (message.type === "NEW_NOTIFICATION") {
+				setNotifications((prev) => [...prev, message.data]);
 			}
 		};
 

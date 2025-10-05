@@ -40,7 +40,6 @@ const Explore = () => {
 			),
 		],
 	};
-	console.log(mentors);
 	const toggleFilter = (category: string, option: string) => {
 		setSelectedFilters((prev) => {
 			const current = prev[category] || [];

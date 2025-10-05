@@ -9,7 +9,7 @@ import Chat from "../models/chat.js";
 class UserService {
 	// Get all users
 	async getAllUsers() {
-		return await User.find().exec();
+		return await User.find().populate("mentors").exec();
 	}
 
 	// Create a new user
@@ -111,8 +111,8 @@ class UserService {
 		const notifications = user.notifications;
 
 		websocketService.sendTo(userId, {
-			type: "NOTIFICATIONS",
-			data: notifications,
+			type: "NEW_NOTIFICATION",
+			data: notifications.pop(),
 			timestamp: new Date().toISOString(),
 		});
 
@@ -149,8 +149,8 @@ class UserService {
 		);
 	}
 
-	async getChats(userId: string) {
-		const user = await User.findById(userId);
+	async getChats(userID: string) {
+		const user = await User.findById(userID);
 		if (!user) {
 			throw new HttpError(
 				"User not found",
@@ -160,14 +160,16 @@ class UserService {
 		}
 		const chats = Chat.find({
 			participants: {
-				$in: [userId],
+				$in: [userID],
 			},
-		});
+		})
+			.populate("participants")
+			.exec();
 		return chats;
 	}
 
-	async getNotifications(userId: string) {
-		const user = await User.findById(userId);
+	async getNotifications(userID: string) {
+		const user = await User.findById(userID);
 		if (!user) {
 			throw new HttpError(
 				"User not found",

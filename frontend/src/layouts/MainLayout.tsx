@@ -44,7 +44,6 @@ const routes = [
 ];
 
 const MainLayout = () => {
-	useWebsocket();
 	const [open, setOpen] = useState(true);
 	const { isAuthenticated } = useAppSelector((state) => state.user);
 	const navigate = useNavigate();

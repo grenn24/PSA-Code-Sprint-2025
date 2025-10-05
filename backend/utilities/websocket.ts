@@ -6,7 +6,6 @@ import createDebug from "debug";
 import { Express } from "express";
 import WebSocket, { WebSocketServer } from "ws";
 import authService from "../services/auth.js";
-import userService from "../services/user.js";
 import User from "../models/user.js";
 
 const wsDebug = createDebug("websocket");
@@ -25,7 +24,6 @@ class WebsocketService {
 		backendWSS.on("connection", async (frontendWS, req) => {
 			const url = new URL(req.url ?? "", `http://${req.headers.host}`);
 			const accessToken = url.searchParams.get("X-Access-Token");
-
 			if (!accessToken) {
 				frontendWS.close(
 					WebsocketCloseCode.MissingAccessToken,
@@ -34,7 +32,6 @@ class WebsocketService {
 				return;
 			}
 			const payload = await authService.validateAccessToken(accessToken);
-
 			if (!payload) {
 				frontendWS.close(
 					WebsocketCloseCode.InvalidAccessToken,
@@ -42,8 +39,13 @@ class WebsocketService {
 				);
 				return;
 			}
-
-			const user = await User.findById(payload.id).exec();
+			const user = await User.findById(payload.id)
+				.populate("supervisor")
+				.populate("subordinates")
+				.populate("mentors")
+				.populate("mentees")
+				.populate("mentorshipRequests.sender")
+				.exec();
 			if (!user) {
 				frontendWS.close(
 					WebsocketCloseCode.NotFound,
@@ -51,18 +53,39 @@ class WebsocketService {
 				);
 				return;
 			}
+
 			wsDebug(`New client connected: ${user.email}`);
-			this.frontendWS.set(payload.id, frontendWS);
-			this.sendTo(payload.id, {
-				type: "NOTIFICATIONS",
-				data: user.notifications,
+
+			user.isOnline = true;
+			await user.save();
+			// Send a message to mentors and mentees
+			const statusUpdateRecipientIDs = [
+				...(user as any).mentors,
+				...user.mentees,
+			].map((user) => user._id);
+
+			this.sendTo(statusUpdateRecipientIDs, {
+				type: "USER_STATUS_UPDATE",
+				data: user,
 				timestamp: new Date().toISOString(),
 			});
+
+			this.frontendWS.set(payload.id, frontendWS);
+
 			frontendWS.on("message", (message) => {
-				wsDebug(`Received message from ${payload.id}: ${message}`);
+				wsDebug(`Received message from ${user.email}: ${message}`);
 			});
-			frontendWS.on("close", () => {
-				wsDebug(`Client disconnected: ${payload.id}`);
+			frontendWS.on("close", async () => {
+				wsDebug(`Client disconnected: ${user.email}`);
+				user.lastSeen = new Date();
+				user.isOnline = false;
+				await user.save();
+				this.sendTo(statusUpdateRecipientIDs, {
+					type: "USER_STATUS_UPDATE",
+					data: user,
+					timestamp: new Date().toISOString(),
+				});
+
 				this.frontendWS.delete(payload.id);
 			});
 		});
@@ -88,11 +111,14 @@ class WebsocketService {
 	}
 
 	// Send to specific client by JWT
-	sendTo(token: string, message: WebsocketMessage) {
-		const ws = this.frontendWS.get(token);
-		if (ws && ws.readyState === WebSocket.OPEN) {
-			ws.send(JSON.stringify(message));
-		}
+	sendTo(userID: string | string[], message: WebsocketMessage) {
+		const ids = Array.isArray(userID) ? userID : [userID];
+		ids.forEach((id) => {
+			const ws = this.frontendWS.get(id.toString());
+			if (ws && ws.readyState === WebSocket.OPEN) {
+				ws.send(JSON.stringify(message));
+			}
+		});
 	}
 
 	private getTokenFromRequest(req: import("http").IncomingMessage) {

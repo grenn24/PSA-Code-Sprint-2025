@@ -7,13 +7,19 @@ import NotFound from "./pages/NotFound";
 import MainLayout from "./layouts/MainLayout";
 import LogIn from "./pages/LogIn";
 import MentorMatch from "./pages/MentorMatch";
-
+import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
+import relativeTime from "dayjs/plugin/relativeTime";
+import { useWebsocket } from "utilities/hooks";
 const App = () => {
 	/*
 	const { globalTheme } = useAppSelector((state) => ({
 		globalTheme: state.theme.theme,
 	}));
 	*/
+	dayjs.extend(duration);
+	dayjs.extend(relativeTime);
+	useWebsocket();
 	return (
 		<BrowserRouter>
 			<title>PSA Horizon</title>

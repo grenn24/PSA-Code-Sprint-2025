@@ -50,6 +50,7 @@ class WebsocketService {
 
 	disconnect() {
 		if (this.backendWSS) {
+			console.log("closing");
 			this.backendWSS.close();
 		}
 	}
@@ -66,8 +67,16 @@ class WebsocketService {
 		this.listeners.push(listener);
 	}
 
+	addListeners(listeners: Listener[]) {
+		this.listeners.push(...listeners);
+	}
+
 	removeListener(listener: Listener) {
 		this.listeners = this.listeners.filter((h) => h !== listener);
+	}
+
+	removeListeners(listeners: Listener[]) {
+		this.listeners = this.listeners.filter((h) => !listeners.includes(h));
 	}
 }
 

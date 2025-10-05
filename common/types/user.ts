@@ -18,10 +18,10 @@ export interface User {
 	mentorshipRequests: { _id?: string; sender: User; message?: string }[];
 	mentors: User[];
 	mentees: User[];
-	notifications?: {
+	notifications: {
 		message: string;
-		read?: boolean;
-		createdAt?: Date;
+		read: boolean;
+		createdAt: Date;
 	}[];
 	careerPath?: {
 		_id?: string;
@@ -31,4 +31,6 @@ export interface User {
 		endedAt?: Date;
 		skillsRequired: string[];
 	}[];
+	lastSeen?: Date;
+	isOnline: boolean;
 }

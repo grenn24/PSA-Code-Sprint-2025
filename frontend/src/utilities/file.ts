@@ -3,7 +3,6 @@ import imageCompression from "browser-image-compression";
 export async function base64UrlToFile(base64Url: string, fileName: string) {
 	const type = base64Url.split(";")[0].split(":")[1];
 
-	console.log(base64Url);
 	const response = await fetch(base64Url);
 
 	const blob = new Blob([await response.blob()], { type: type });
@@ -72,7 +71,6 @@ export function generateFileURL(
 
 export function openFileInNewWindow(file: File) {
 	const url = generateFileURL(file);
-	console.log(url);
 	window.open(url);
 }
 

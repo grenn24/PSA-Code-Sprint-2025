@@ -1,6 +1,7 @@
 import createApiClient from "../utilities/apiClient";
 import store from "../redux/store";
 import { setIsAuthenticated, setUser } from "../redux/slices/user";
+import websocketService from "utilities/websocket";
 
 class AuthService {
 	apiClient = createApiClient("/auth");

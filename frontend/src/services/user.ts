@@ -1,3 +1,4 @@
+import { Chat } from "@common/types/chat";
 import createApiClient from "../utilities/apiClient";
 import { User } from "@common/types/user";
 
@@ -39,6 +40,11 @@ class UserService {
 			`/${mentorId}/mentor-requests`,
 			{ message }
 		);
+		return response.data;
+	}
+
+	async getChats(userID: string) {
+		const response = await this.apiClient.get<Chat[]>(`/${userID}/chats`);
 		return response.data;
 	}
 }

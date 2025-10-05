@@ -25,6 +25,14 @@ userRouter.get(
 	)
 );
 
+userRouter.get(
+	"/:ID/chats",
+	getID(),
+	userController.catchErrors(
+		userController.getChats.bind(userController)
+	)
+);
+
 userRouter.post(
 	"",
 	userController.catchErrors(userController.createUser.bind(userController))

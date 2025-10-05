@@ -41,16 +41,19 @@ const userSchema = new Schema({
 		type: [{ type: Schema.Types.ObjectId, ref: "User" }],
 		default: [],
 	},
-	notifications: [
-		{
-			message: {
-				type: String,
-				required: true,
+	notifications: {
+		type: [
+			{
+				message: {
+					type: String,
+					required: true,
+				},
+				read: { type: Boolean, default: false },
+				createdAt: { type: Date, default: Date.now },
 			},
-			read: { type: Boolean, default: false },
-			createdAt: { type: Date, default: Date.now },
-		},
-	],
+		],
+		default: [],
+	},
 	careerPath: [
 		{
 			position: {
@@ -73,6 +76,8 @@ const userSchema = new Schema({
 			},
 		},
 	],
+	lastSeen: { type: Date, default: null },
+	isOnline: { type: Boolean, default: false },
 });
 
 userSchema.virtual("mentors", {
@@ -80,6 +85,8 @@ userSchema.virtual("mentors", {
 	localField: "_id",
 	foreignField: "mentees",
 });
+userSchema.set("toObject", { virtuals: true });
+userSchema.set("toJSON", { virtuals: true });
 
 const User = model("User", userSchema);
 
