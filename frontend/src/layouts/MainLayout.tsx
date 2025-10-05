@@ -52,9 +52,9 @@ const MainLayout = () => {
 
 	useEffect(() => {
 		if (!isAuthenticated && location.pathname !== "/log-in") {
-			navigate("/log-in");
+			window.location.href = "/log-in";
 		}
-	}, [isAuthenticated, location.pathname, navigate]);
+	}, [isAuthenticated, location.pathname]);
 
 	return (
 		<div className="flex h-screen bg-gray-50">
