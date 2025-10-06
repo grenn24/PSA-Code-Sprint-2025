@@ -79,8 +79,8 @@ const QuizModalContent = ({
 		title.trim() !== "" &&
 		(questionType === "free"
 			? correctFreeTextAnswer.trim() !== ""
-			: options.some((o) => o.trim() !== "")) &&
-		correctMCQAnswers.length > 0;
+			: options.some((o) => o.trim() !== "") &&
+			  correctMCQAnswers.length > 0);
 
 	return (
 		<div className="flex flex-col gap-4">
@@ -210,6 +210,10 @@ const QuizModalContent = ({
 							questionType === "multiple"
 								? correctMCQAnswers
 								: [correctFreeTextAnswer],
+						results: {
+							correct: 0,
+							wrong: 0,
+						},
 					});
 					setOpenMenuModal(null);
 				}}

@@ -37,7 +37,7 @@ const routes = [
 		icon: <CalendarIcon className="w-6 h-6" />,
 	},
 	{
-		path: "/wellness",
+		path: "/wellness-buddy",
 		label: "WellnessBuddy",
 		icon: <ChatBubbleLeftRightIcon className="w-6 h-6" />,
 	},

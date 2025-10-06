@@ -41,7 +41,7 @@ const PollModalContent = ({
 
 	const handleOptionChange = (index: number, value: string) => {
 		const updated = [...options];
-		updated[index] = {label: value, voters: []};
+		updated[index] = { label: value, voters: [] };
 		setOptions(updated);
 	};
 
@@ -84,11 +84,11 @@ const PollModalContent = ({
 	};
 
 	const canSend =
-		question.trim() !== "" && options.some((opt) => opt.label.trim() !== "");
+		question.trim() !== "" &&
+		options.some((opt) => opt.label.trim() !== "");
 
 	return (
 		<div className="flex flex-col gap-4">
-			{/* 📝 Poll Question */}
 			<input
 				type="text"
 				placeholder="Poll Question"
@@ -96,28 +96,27 @@ const PollModalContent = ({
 				onChange={(e) => setQuestion(e.target.value)}
 				className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none"
 			/>
-
-			<div className="flex flex-col gap-3 max-h-96 overflow-y-auto">
-				{options.map((option, index) => (
-					<div
-						key={index}
-						className="flex flex-col gap-2 p-3 rounded-xl bg-gray-100"
-					>
-						<input
-							ref={(el) => {
-								inputRefs.current[index] = el;
-							}}
-							type="text"
-							placeholder={`Option ${index + 1}`}
-							value={option.label}
-							onChange={(e) =>
-								handleOptionChange(index, e.target.value)
-							}
-							onKeyDown={(e) => handleKeyPress(index, e)}
-							className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none"
-						/>
-					</div>
-				))}
+			<div className="flex flex-col gap-2 p-3 bg-gray-100 rounded-lg">
+				<p>Poll Options</p>
+				<div className="flex flex-col gap-3 max-h-96">
+					{options.map((option, index) => (
+						<div key={index} className="w-full">
+							<input
+								ref={(el) => {
+									inputRefs.current[index] = el;
+								}}
+								type="text"
+								placeholder={`Option ${index + 1}`}
+								value={option.label}
+								onChange={(e) =>
+									handleOptionChange(index, e.target.value)
+								}
+								onKeyDown={(e) => handleKeyPress(index, e)}
+								className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none w-full"
+							/>
+						</div>
+					))}
+				</div>
 			</div>
 
 			<label className="flex items-center gap-2 text-gray-700">

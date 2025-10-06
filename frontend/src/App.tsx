@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useWebsocket } from "utilities/hooks";
+import WellnessBuddy from "pages/WellnessBuddy";
 const App = () => {
 	/*
 	const { globalTheme } = useAppSelector((state) => ({
@@ -29,6 +30,7 @@ const App = () => {
 				<Route element={<MainLayout />}>
 					<Route index element={<Home />}></Route>
 					<Route path="/mentor" element={<MentorMatch />} />
+					<Route path="/wellness-buddy" element={<WellnessBuddy />} />
 					{/*Missed routes*/}
 					<Route path="*" element={<NotFound />} />
 				</Route>

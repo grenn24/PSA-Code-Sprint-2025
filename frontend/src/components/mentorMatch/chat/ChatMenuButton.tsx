@@ -9,6 +9,7 @@ import FeedbackRequestModalContent from "./FeedbackRequestModalContent";
 import ShareFileModalContent from "./ShareFileModalContent";
 import PollModalContent from "./PollModalContent";
 import QuizModalContent from "./QuizModalContent";
+import TipModalContent from "./TipModalContent";
 
 interface Prop {
 	recipient: User;
@@ -33,7 +34,6 @@ export const ChatMenuButton = ({ recipient, sendMessage }: Prop) => {
 	const { user } = useAppSelector((state) => state.user);
 	const [openChatMenu, setOpenChatMenu] = useState(false);
 	const [openMenuModal, setOpenMenuModal] = useState<string | null>(null);
-	const [inputValues, setInputValues] = useState<Record<string, any>>({});
 	const chatMenuRef = useRef<HTMLDivElement>(null);
 	const isMentor = user?.mentees.some(
 		(mentee) => mentee._id === recipient._id
@@ -42,7 +42,6 @@ export const ChatMenuButton = ({ recipient, sendMessage }: Prop) => {
 	const openModal = (type: string) => {
 		setOpenMenuModal(type);
 		setOpenChatMenu(false);
-		setInputValues({});
 	};
 
 	return (
@@ -72,7 +71,7 @@ export const ChatMenuButton = ({ recipient, sendMessage }: Prop) => {
 								/>
 								<MenuItem
 									label="💡 Share a quick tip"
-									onClick={() => openModal("tip")}
+									onClick={() => openModal("Tip")}
 								/>
 								<MenuItem
 									label="🧠 Start a quiz"
@@ -121,8 +120,6 @@ export const ChatMenuButton = ({ recipient, sendMessage }: Prop) => {
 			{openMenuModal && (
 				<ChatMenuModal
 					type={openMenuModal}
-					inputValues={inputValues}
-					setInputValues={setInputValues}
 					sendMessage={sendMessage}
 					closeModal={() => setOpenMenuModal(null)}
 				/>
@@ -148,8 +145,6 @@ const MenuItem = ({
 
 interface ModalProps {
 	type: string | null;
-	inputValues: Record<string, any>;
-	setInputValues: React.Dispatch<React.SetStateAction<Record<string, any>>>;
 	sendMessage: (
 		content: string,
 		type?:
@@ -170,27 +165,13 @@ interface ModalProps {
 
 export const ChatMenuModal = ({
 	type,
-	inputValues,
-	setInputValues,
 	sendMessage,
 	closeModal,
 }: ModalProps) => {
 	const renderContent = () => {
 		switch (type) {
-			case "tip":
-				return (
-					<textarea
-						className="border p-3 rounded w-full"
-						placeholder="Enter a quick tip"
-						value={inputValues.tip || ""}
-						onChange={(e) =>
-							setInputValues({
-								...inputValues,
-								tip: e.target.value,
-							})
-						}
-					/>
-				);
+			case "Tip":
+			return <TipModalContent sendMessage={sendMessage} setOpenMenuModal={closeModal} />
 			case "Quiz":
 				return (
 					<QuizModalContent

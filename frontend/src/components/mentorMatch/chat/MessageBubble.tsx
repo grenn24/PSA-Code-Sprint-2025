@@ -89,17 +89,55 @@ const MessageBubble = ({ isSender, message, updateMessage }: Prop) => {
 
 			case "tip":
 				return (
-					<div className="flex flex-col gap-1">
-						<div className="flex items-center gap-2">
-							<LightBulbIcon className="w-4 h-4 text-yellow-600" />
-							<span className="font-semibold">Quick Tip</span>
+					<div className="">
+						<div className="flex flex-col items-end">
+							<div className="flex items-start gap-3 p-4 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-2xl max-w-xs md:max-w-md border-1 border-yellow-200">
+								{/* Icon */}
+								<div className="flex-shrink-0 flex items-center justify-center w-8 h-8 bg-yellow-200 rounded-full">
+									<LightBulbIcon className="w-5 h-5 text-yellow-700" />
+								</div>
+
+								{/* Content */}
+								<div className="flex flex-col gap-2">
+									{/* Tip Label */}
+									<span className="text-xs font-semibold text-yellow-800 uppercase tracking-wide">
+										Tip
+									</span>
+
+									{/* Tip Text */}
+									<span className="text-gray-800 font-medium whitespace-pre-wrap">
+										{message.content}
+									</span>
+								</div>
+							</div>
+							<div className="flex items-center gap-1 text-xs text-gray-700 mt-1">
+								<span>
+									{dayjs(message.createdAt).format("h:mm a")}
+								</span>
+								{isSender && (
+									<span
+										className={`ml-1 ${
+											message.read
+												? "text-blue-500"
+												: "text-gray-700"
+										}`}
+									>
+										{message.read ? "✓✓" : "✓"}
+									</span>
+								)}
+							</div>
 						</div>
-						<p className="italic">{message.content}</p>
 					</div>
 				);
 
 			case "quiz":
-			return <QuizMessageBubbleContent message={message} isSender={isSender} />
+				return (
+					<QuizMessageBubbleContent
+						message={message}
+						isSender={isSender}
+						updateMessage={updateMessage}
+					/>
+				);
 
 			case "poll":
 				return (
@@ -237,7 +275,11 @@ const MessageBubble = ({ isSender, message, updateMessage }: Prop) => {
 																	transition-all duration-300
 																	${
 																		hasVoted
-																			? "bg-gradient-to-br from-purple-500 to-indigo-500 border-none"
+																			? `bg-gradient-to-br ${
+																					isSender
+																						? "from-green-400 to-green-600"
+																						: "from-purple-500 to-indigo-500"
+																			  } border-none`
 																			: "bg-gray-200 hover:bg-gray-300"
 																	}
 																`}
@@ -305,7 +347,11 @@ const MessageBubble = ({ isSender, message, updateMessage }: Prop) => {
 												{/* Proportion Bar */}
 												<div className="w-full h-2 bg-black/20 rounded-full overflow-hidden mt-1">
 													<div
-														className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-300"
+														className={`h-full bg-gradient-to-r ${
+															isSender
+																? "from-green-400 to-green-600"
+																: "from-purple-500 to-indigo-500"
+														} transition-all duration-300`}
 														style={{
 															width: `${
 																proportion * 100
@@ -432,7 +478,7 @@ const MessageBubble = ({ isSender, message, updateMessage }: Prop) => {
 									</>
 								)}
 						</motion.div>
-						<div className="flex items-center gap-1 text-xs text-gray-700 mt-1 mr-2">
+						<div className="flex items-center gap-1 text-xs text-gray-700 mt-1">
 							<span>
 								{dayjs(message.createdAt).format("h:mm a")}
 							</span>
@@ -484,16 +530,20 @@ interface BubbleWrapperProp {
 	children: ReactNode;
 	isSender: boolean;
 	message: Message;
+	transparent?: boolean;
 }
 export const BubbleWrapper = ({
 	children,
 	isSender,
 	message,
+	transparent,
 }: BubbleWrapperProp) => {
 	const baseBubbleStyle = `
 		py-1 px-3 rounded-xl max-w-[70%] 
 		${
-			isSender
+			transparent
+				? ""
+				: isSender
 				? "bg-green-200/80 text-green-900 rounded-br-none"
 				: "bg-gray-200/80 text-gray-800 rounded-bl-none"
 		}
