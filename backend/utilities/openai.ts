@@ -1,5 +1,5 @@
 // services/OpenAIClient.ts
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import config from "config";
 
 export class OpenAIClient {

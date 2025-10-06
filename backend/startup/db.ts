@@ -8,7 +8,7 @@ const dbDebug = createDebug("db");
 const dbStartupDebug = createDebug("db:startup");
 
 // Establish connection with mongodb, resolves with a mongoose instance
-const db = async (app?: Express) => {
+const db = async (app: Express | undefined = undefined) => {
 	try {
 		const conn = await mongoose.connect(config.get("DATABASE_URL"));
 		dbStartupDebug(

@@ -18,18 +18,11 @@ export default {
         sourcemap: true,
     },
     plugins: [
-        alias({
-            entries: [
-                { find: '@common', replacement: path.resolve(__dirname, '../common/dist') },
-            ],
-        }),
-        // tsconfigPaths(),
+        alias({ entries: [{ find: '@common', replacement: path.resolve(__dirname, '../common/types') }] }),
+        typescript({ tsconfig: './tsconfig.json', include: ['**/*.ts', '**/*.tsx'] }),
         json(),
         resolve(),
-        commonjs({
-            ignoreDynamicRequires: true,
-        }),
-        typescript({ tsconfig: './tsconfig.json' })
+        commonjs({ ignoreDynamicRequires: true }),
     ],
     external: [...builtins, 'mongodb', 'mongoose', 'winston', 'semver'],
 };

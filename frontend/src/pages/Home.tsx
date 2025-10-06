@@ -48,6 +48,7 @@ const Home = () => {
 	const { user: initialUserData } = useAppSelector((state) => state.user);
 	const [user, setUser] = useState(initialUserData);
 	useEffect(() => {
+		if (!user?._id) return;
 		userService.getUserByID(user?._id).then(setUser);
 	}, []);
 

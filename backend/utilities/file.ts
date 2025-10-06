@@ -1,4 +1,4 @@
-import { isFile, isMulterFile } from "@common/types/file.js";
+import { isFile } from "@common/types/file.js";
 
 const { fileTypeFromBuffer, fileTypeFromStream, fileTypeFromFile } =
 	await import("file-type");
@@ -42,7 +42,7 @@ export const createBufferFromUrl = async (url: string): Promise<Buffer> => {
 };
 
 export const getFileType = async (
-	file: File | Express.Multer.File | Buffer
+	file: File | Buffer
 ): Promise<
 	| {
 			mime: string;
@@ -50,13 +50,7 @@ export const getFileType = async (
 	  }
 	| undefined
 > => {
-	if (isMulterFile(file)) {
-		if (file.buffer) {
-			return await fileTypeFromBuffer(file.buffer);
-		} else {
-			return await fileTypeFromFile(file.path);
-		}
-	} else if (file instanceof File) {
+	if (file instanceof File) {
 		return await fileTypeFromStream(file.stream());
 	} else {
 		return await fileTypeFromBuffer(file);

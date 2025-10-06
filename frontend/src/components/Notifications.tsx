@@ -14,6 +14,7 @@ const Notifications = () => {
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 
 	useEffect(() => {
+		if (!user?._id) return;
 		userService.getUserByID(user?._id).then((user) => {
 			setNotifications(user.notifications);
 		});

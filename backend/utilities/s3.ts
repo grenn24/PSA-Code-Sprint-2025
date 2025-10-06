@@ -11,7 +11,7 @@ import {
 	S3Client,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { isMulterFile, S3File } from "@common/types/file.js";
+import { S3File } from "@common/types/file.js";
 import axios from "axios";
 import config from "config";
 import { v4 as uuidv4 } from "uuid";
@@ -37,7 +37,7 @@ class S3Service {
 	}
 
 	async uploadFile(
-		file: File | Express.Multer.File | Buffer,
+		file: File | Buffer,
 		s3Filename: string,
 		folder: string[],
 		description: string = ""
@@ -52,14 +52,6 @@ class S3Service {
 		} else if (file instanceof File) {
 			buffer = Buffer.from(await file.arrayBuffer());
 			fileName = file.name;
-		} else if (isMulterFile(file)) {
-			if (file.buffer) {
-				buffer = Buffer.from(file.buffer);
-				fileName = file.originalname;
-			} else {
-				buffer = await fs.promises.readFile(file.path);
-				fileName = file.originalname;
-			}
 		} else {
 			throw new Error("Unsupported file type");
 		}
@@ -102,7 +94,7 @@ class S3Service {
 
 	// Randomly generate s3 filename
 	async uploadFileWithHashing(
-		file: File | Express.Multer.File | Buffer,
+		file: File | Buffer,
 		folder: string[]
 	): Promise<S3File> {
 		const fileType = await getFileType(file);
@@ -112,7 +104,7 @@ class S3Service {
 	}
 
 	async uploadFiles(
-		files: (File | Express.Multer.File | Buffer)[],
+		files: (File | Buffer)[],
 		s3Filenames: string[],
 		folder: string[]
 	): Promise<S3File[]> {
@@ -128,7 +120,7 @@ class S3Service {
 	}
 
 	async uploadFilesWithHashing(
-		files: (File | Express.Multer.File | Buffer)[],
+		files: (File | Buffer)[],
 		folder: string[]
 	): Promise<S3File[]> {
 		const s3Files = files.map((file) =>

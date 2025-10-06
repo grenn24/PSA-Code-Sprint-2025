@@ -27,19 +27,6 @@ export const isFile = (file: any): file is File => {
 	return file && typeof file === "object" && file instanceof File;
 };
 
-export const isMulterFile = (value: any): value is Express.Multer.File => {
-	return (
-		value &&
-		typeof value === "object" &&
-		typeof value.fieldname === "string" &&
-		typeof value.originalname === "string" &&
-		typeof value.mimetype === "string" &&
-		typeof value.size === "number" &&
-		typeof value.buffer === "object" &&
-		(value.buffer || value.path)
-	);
-};
-
 export const isPromise = (value: any): value is Promise<any> => {
 	return (
 		typeof value === "object" &&

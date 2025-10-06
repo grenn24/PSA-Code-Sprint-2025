@@ -188,9 +188,9 @@ const WellnessBuddy = () => {
 					<AnimatePresence>
 						{input.trim() && (
 							<motion.button
-								initial={{ opacity: 0, scale: 0.5, x: 10 }}
-								animate={{ opacity: 1, scale: 1, x: 0 }}
-								exit={{ opacity: 0, scale: 0.5, x: 10 }}
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								exit={{ opacity: 0 }}
 								transition={{ duration: 0.2 }}
 								onClick={() => setChatMode(true)}
 								className="p-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-md transition-all duration-200"
