@@ -9,11 +9,11 @@ import userService from "services/user";
 import { setUser } from "redux/slices/user";
 import { Chat as ChatType } from "@common/types/chat";
 import { MentorMatchContext } from "context/MentorMatchContext";
+import { useSearchParams, useNavigate } from "react-router-dom"; // ✅ For query params
 
 const MentorMatch = () => {
 	const dispatch = useAppDispatch();
 	const { user } = useAppSelector((state) => state.user);
-	const [activeTab, setActiveTab] = useState("Top Matches");
 	const [chats, setChats] = useState<ChatType[]>([]);
 	const chatsWithUnreadMessages = chats.filter((c) =>
 		c.messages?.some((m) => !m.read && m.sender !== user?._id)
@@ -26,6 +26,26 @@ const MentorMatch = () => {
 		{ name: "Chat", count: chatsWithUnreadMessages.length },
 	];
 
+	const [searchParams, setSearchParams] = useSearchParams();
+	const navigate = useNavigate();
+	const tabParam = searchParams.get("tab");
+	const [activeTab, setActiveTab] = useState(tabParam || "Top Matches");
+
+	// ✅ Sync tab with URL param on first load or manual URL change
+	useEffect(() => {
+		if (tabParam && tabs.some((t) => t.name === tabParam)) {
+			setActiveTab(tabParam);
+		}
+	}, [tabParam]);
+
+	// ✅ Update query param when activeTab changes
+	useEffect(() => {
+		const current = new URLSearchParams(searchParams);
+		current.set("tab", activeTab);
+		setSearchParams(current, { replace: true });
+	}, [activeTab]);
+
+	// ✅ Load user + chats
 	useEffect(() => {
 		if (!user?._id) return;
 		userService.getChats(user._id).then((chats) => setChats(chats));
