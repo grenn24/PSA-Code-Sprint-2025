@@ -21,8 +21,10 @@
 	},
 	"dependencies": {
 		"@aws-sdk/client-s3": "^3.750.0",
+		"@aws-sdk/s3-request-presigner": "^3.901.0",
 		"@faker-js/faker": "^10.0.0",
 		"@types/mongoose": "^5.11.96",
+		"axios": "^1.12.2",
 		"bcryptjs": "^3.0.2",
 		"config": "^3.3.12",
 		"cookie-parser": "^1.4.7",
@@ -30,6 +32,7 @@
 		"dotenv": "^16.4.7",
 		"express": "^4.21.2",
 		"fawn": "^2.1.5",
+		"file-type": "^21.0.0",
 		"joi": "^17.13.3",
 		"joi-objectid": "^4.0.2",
 		"jsonwebtoken": "^9.0.2",

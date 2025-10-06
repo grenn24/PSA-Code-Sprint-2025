@@ -1,21 +1,20 @@
 import { motion } from "framer-motion";
-import { useAppSelector } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import userService from "../../services/user";
 import { User } from "@common/types/user";
 import { useEffect, useState } from "react";
+import { setUser } from "redux/slices/user";
 
 const PendingInvites = () => {
+	const dispatch = useAppDispatch();
 	const { user } = useAppSelector((state) => state.user);
 
-	const [mentorshipRequests, setMentorshipRequests] = useState<
-		User["mentorshipRequests"]
-	>(user?.mentorshipRequests || []);
-
 	useEffect(() => {
+		if (!user?._id) return;
 		userService.getUserByID(user?._id).then((user) => {
-			setMentorshipRequests(user.mentorshipRequests);
+			dispatch(setUser(user));
 		});
-	}, [user]);
+	}, []);
 
 	const acceptInvite = async (
 		request: User["mentorshipRequests"][number]
@@ -26,7 +25,7 @@ const PendingInvites = () => {
 			),
 			mentees: [...(user?.mentees || []), request.sender?._id],
 		});
-		setMentorshipRequests(newUser.mentorshipRequests);
+		dispatch(setUser(newUser));
 	};
 
 	const rejectInvite = async (
@@ -37,8 +36,9 @@ const PendingInvites = () => {
 				(req) => req._id !== request._id
 			),
 		});
-		setMentorshipRequests(newUser.mentorshipRequests);
+		dispatch(setUser(newUser));
 	};
+	const mentorshipRequests = user?.mentorshipRequests || [];
 
 	return (
 		<motion.div

@@ -1,11 +1,14 @@
 import { User } from "@common/types/user";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useAppSelector } from "redux/store";
 import FeedbackModalContent from "./FeedbackModalContent";
 import MoodUpdateModalContent from "./MoodUpdateModalContent";
 import FeedbackRequestModalContent from "./FeedbackRequestModalContent";
+import ShareFileModalContent from "./ShareFileModalContent";
+import PollModalContent from "./PollModalContent";
+import QuizModalContent from "./QuizModalContent";
 
 interface Prop {
 	recipient: User;
@@ -32,7 +35,6 @@ export const ChatMenuButton = ({ recipient, sendMessage }: Prop) => {
 	const [openMenuModal, setOpenMenuModal] = useState<string | null>(null);
 	const [inputValues, setInputValues] = useState<Record<string, any>>({});
 	const chatMenuRef = useRef<HTMLDivElement>(null);
-
 	const isMentor = user?.mentees.some(
 		(mentee) => mentee._id === recipient._id
 	);
@@ -66,7 +68,7 @@ export const ChatMenuButton = ({ recipient, sendMessage }: Prop) => {
 							<>
 								<MenuItem
 									label="📁 Share file"
-									onClick={() => openModal("file")}
+									onClick={() => openModal("Share File")}
 								/>
 								<MenuItem
 									label="💡 Share a quick tip"
@@ -74,11 +76,11 @@ export const ChatMenuButton = ({ recipient, sendMessage }: Prop) => {
 								/>
 								<MenuItem
 									label="🧠 Start a quiz"
-									onClick={() => openModal("quiz")}
+									onClick={() => openModal("Quiz")}
 								/>
 								<MenuItem
 									label="📊 Start a poll"
-									onClick={() => openModal("poll")}
+									onClick={() => openModal("Poll")}
 								/>
 								<MenuItem
 									label="📝 Give feedback"
@@ -93,7 +95,7 @@ export const ChatMenuButton = ({ recipient, sendMessage }: Prop) => {
 							<>
 								<MenuItem
 									label="📁 Share file"
-									onClick={() => openModal("file")}
+									onClick={() => openModal("Share File")}
 								/>
 								<MenuItem
 									label="📨 Request feedback"
@@ -165,6 +167,7 @@ interface ModalProps {
 	) => Promise<void>;
 	closeModal: () => void;
 }
+
 export const ChatMenuModal = ({
 	type,
 	inputValues,
@@ -188,41 +191,26 @@ export const ChatMenuModal = ({
 						}
 					/>
 				);
-			case "quiz":
-			case "poll":
+			case "Quiz":
 				return (
-					<div className="flex flex-col gap-2">
-						<input
-							className="border px-3 py-2 rounded"
-							placeholder={`${type} question`}
-							value={inputValues.question || ""}
-							onChange={(e) =>
-								setInputValues({
-									...inputValues,
-									question: e.target.value,
-								})
-							}
-						/>
-						{[0, 1, 2].map((i) => (
-							<input
-								key={i}
-								className="border px-3 py-2 rounded"
-								placeholder={`Option ${i + 1}`}
-								value={inputValues.options?.[i] || ""}
-								onChange={(e) => {
-									const options = [
-										...(inputValues.options || []),
-									];
-									options[i] = e.target.value;
-									setInputValues({ ...inputValues, options });
-								}}
-							/>
-						))}
-					</div>
+					<QuizModalContent
+						sendMessage={sendMessage}
+						setOpenMenuModal={closeModal}
+					/>
+				);
+			case "Poll":
+				return (
+					<PollModalContent
+						sendMessage={sendMessage}
+						setOpenMenuModal={closeModal}
+					/>
 				);
 			case "Request for Feedback":
 				return (
-				<FeedbackRequestModalContent sendMessage={sendMessage} setOpenMenuModal={closeModal} />
+					<FeedbackRequestModalContent
+						sendMessage={sendMessage}
+						setOpenMenuModal={closeModal}
+					/>
 				);
 			case "Feedback":
 				return (
@@ -234,6 +222,13 @@ export const ChatMenuModal = ({
 			case "Mood Update":
 				return (
 					<MoodUpdateModalContent
+						sendMessage={sendMessage}
+						setOpenMenuModal={closeModal}
+					/>
+				);
+			case "Share File":
+				return (
+					<ShareFileModalContent
 						sendMessage={sendMessage}
 						setOpenMenuModal={closeModal}
 					/>

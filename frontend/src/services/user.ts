@@ -5,7 +5,7 @@ import { User } from "@common/types/user";
 class UserService {
 	apiClient = createApiClient("/user");
 
-	async getUserByID(userId) {
+	async getUserByID(userId: string) {
 		const response = await this.apiClient.get<User>(`/${userId}`);
 		return response.data;
 	}

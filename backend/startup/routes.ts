@@ -4,6 +4,7 @@ import auth from "../routes/auth.js";
 import error from "../middlewares/error.js";
 import userRouter from "../routes/user.js";
 import chatRouter from "../routes/chat.js";
+import s3Router from "../routes/s3.js";
 
 const routes = (app: Express) => {
 	const apiRouter = express.Router();
@@ -18,6 +19,8 @@ const routes = (app: Express) => {
 	apiRouter.use("/user", userRouter);
 
 	apiRouter.use("/chat", chatRouter);
+
+	apiRouter.use("/s3", s3Router)
 
 	// Log errors
 	apiRouter.use(error);

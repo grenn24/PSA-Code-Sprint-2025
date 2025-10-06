@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { BubbleWrapper } from "./MessageBubble";
+import { Message } from "@common/types/chat";
 
 interface FeedbackEntry {
 	_id?: string;
@@ -9,7 +10,7 @@ interface FeedbackEntry {
 }
 
 interface Props {
-	message: any;
+	message: Message;
 	isSender: boolean;
 	updateMessage: (
 		messageID: string,
@@ -31,7 +32,7 @@ interface Props {
 	) => Promise<void>;
 }
 
-const FeedbackRequestBubbleContent: React.FC<Props> = ({
+const FeedbackMessageBubbleContent: React.FC<Props> = ({
 	message,
 	isSender,
 	updateMessage,
@@ -52,6 +53,7 @@ const FeedbackRequestBubbleContent: React.FC<Props> = ({
 		field: "message" | "rating",
 		value: string | number
 	) => {
+		if (!message._id) return;
 		const updatedFeedbacks = [...feedbacks];
 		updatedFeedbacks[index] = {
 			...updatedFeedbacks[index],
@@ -170,12 +172,12 @@ const FeedbackRequestBubbleContent: React.FC<Props> = ({
 													num
 												)
 											}
-											whileHover={{ scale: 1.1 }}
+											whileHover={{ scale: 1.05 }}
 											whileTap={{ scale: 0.95 }}
-											className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-semibold transition-colors ${
+											className={`min-w-8 min-h-8 rounded-full text-sm font-semibold transition-colors ${
 												fb.rating === num
 													? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow"
-													: "bg-gray-200 text-gray-600 hover:bg-blue-100"
+													: "bg-gray-200 text-gray-800"
 											}`}
 										>
 											{num}
@@ -191,4 +193,4 @@ const FeedbackRequestBubbleContent: React.FC<Props> = ({
 	);
 };
 
-export default FeedbackRequestBubbleContent;
+export default FeedbackMessageBubbleContent;

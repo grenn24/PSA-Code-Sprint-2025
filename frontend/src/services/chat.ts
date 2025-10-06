@@ -58,7 +58,7 @@ class ChatService {
 	}
 
 	async markMessagesAsRead(chatID: string) {
-		const response = await this.apiClient.post(`/${chatID}/read`, {});
+		const response = await this.apiClient.post<any, Chat>(`/${chatID}/read`, {});
 		return response.data;
 	}
 }

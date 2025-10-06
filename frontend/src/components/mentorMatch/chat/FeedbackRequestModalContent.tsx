@@ -49,10 +49,7 @@ const FeedbackRequestModalContent = ({
 				className="px-3 py-2 border border-gray-300 rounded-lg resize-none focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-400"
 			/>
 
-			{/* Send Button */}
-			<motion.button
-				whileHover={{ scale: canSend ? 1.05 : 1 }}
-				whileTap={{ scale: canSend ? 0.95 : 1 }}
+			<button
 				disabled={!canSend}
 				onClick={() => {
 					sendMessage(title, "feedbackRequest", {
@@ -60,14 +57,14 @@ const FeedbackRequestModalContent = ({
 					});
 					setOpenMenuModal(null);
 				}}
-				className={`mt-2 w-full py-2 rounded-lg font-semibold transition ${
+				className={`w-full py-2 rounded-lg font-semibold transition ${
 					canSend
 						? "bg-indigo-600 text-white hover:bg-indigo-700"
 						: "bg-gray-300 text-gray-500 cursor-not-allowed"
 				}`}
 			>
 				Send Request
-			</motion.button>
+			</button>
 		</div>
 	);
 };

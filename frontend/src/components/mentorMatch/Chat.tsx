@@ -10,11 +10,12 @@ import { WebsocketMessage } from "@common/types/http";
 import NewChatButton from "./chat/NewChatButton";
 import ChatWindow from "./chat/ChatWindow";
 import { setUser } from "redux/slices/user";
+import { useMentorMatchContext } from "context/MentorMatchContext";
 
 const Chats = () => {
 	const dispatch = useAppDispatch();
 	const { user } = useAppSelector((state) => state.user);
-	const [chats, setChats] = useState<Chat[]>([]);
+	const { chats, setChats } = useMentorMatchContext();
 	const [selectedChatID, setSelectedChatID] = useState<string | null>(null);
 	const selectedChatMessages = chats.find(
 		(c) => c._id === selectedChatID
@@ -153,7 +154,15 @@ const Chats = () => {
 		if (!selectedChatID) {
 			return;
 		}
-		chatService.markMessagesAsRead(selectedChatID);
+		chatService
+			.markMessagesAsRead(selectedChatID)
+			.then((updatedChat) =>
+				setChats((prevChats) =>
+					prevChats.map((chat) =>
+						chat._id === updatedChat._id ? updatedChat : chat
+					)
+				)
+			);
 	}, [selectedChatID, selectedChatMessages?.length]);
 
 	const filteredChats = chats.filter((chat) => {

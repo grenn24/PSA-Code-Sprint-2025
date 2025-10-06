@@ -39,7 +39,7 @@ const ChatWindow = ({ selectedChatID, chats, setChats }: Prop) => {
 		type: Message["type"] = "text",
 		metadata: Record<string, any> = {}
 	) => {
-		if (!user?._id || !selectedChatID) return;
+		if (!user?._id || !selectedChatID || (type === "text" && !content.trim())) return;
 
 		const message = await chatService.postMessage(selectedChatID, {
 			sender: user._id,
@@ -96,7 +96,7 @@ const ChatWindow = ({ selectedChatID, chats, setChats }: Prop) => {
 
 	useEffect(() => {
 		scrollToBottom();
-	}, [selectedChatID, selectedChatMessages]);
+	}, [selectedChatID, selectedChatMessages?.length]);
 
 	const groupedMessages = groupMessagesByDate(selectedChatMessages);
 

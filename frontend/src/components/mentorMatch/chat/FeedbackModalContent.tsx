@@ -58,6 +58,7 @@ const FeedbackModalContent = ({
 		index: number,
 		e: KeyboardEvent<HTMLInputElement>
 	) => {
+		// 🔹 Press Enter → add new feedback
 		if (e.key === "Enter") {
 			e.preventDefault();
 			if (feedbacks[index].message.trim() !== "") {
@@ -71,6 +72,29 @@ const FeedbackModalContent = ({
 					inputRefs.current[index + 1]?.focus();
 				}, 0);
 			}
+		}
+
+		// 🔹 Press Backspace on empty feedback → remove it (if not last)
+		if (
+			e.key === "Backspace" &&
+			feedbacks[index].message === "" &&
+			feedbacks.length > 1
+		) {
+			e.preventDefault();
+			setFeedbacks((prev) => {
+				const updated = [...prev];
+				updated.splice(index, 1); // remove current feedback
+				return updated;
+			});
+
+			setTimeout(() => {
+				// 🔹 Focus previous input if available
+				if (index > 0) {
+					inputRefs.current[index - 1]?.focus();
+				} else {
+					inputRefs.current[0]?.focus();
+				}
+			}, 0);
 		}
 	};
 
@@ -123,7 +147,7 @@ const FeedbackModalContent = ({
 									className={`px-3 py-1 rounded-full font-semibold transition-colors ${
 										fb.rating === rating
 											? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg"
-											: "bg-gray-200 text-gray-800 hover:bg-indigo-100"
+											: "bg-gray-200 text-gray-800"
 									}`}
 								>
 									{rating}
