@@ -18,7 +18,7 @@ export default {
         sourcemap: true,
     },
     plugins: [
-        alias({ entries: [{ find: '@common', replacement: path.resolve(__dirname, '../common/types') }] }),
+        alias({ entries: [{ find: '@common', replacement: path.resolve(__dirname, '../common/dist') }] }),
         typescript({ tsconfig: './tsconfig.json', include: ['**/*.ts', '**/*.tsx'] }),
         json(),
         resolve(),

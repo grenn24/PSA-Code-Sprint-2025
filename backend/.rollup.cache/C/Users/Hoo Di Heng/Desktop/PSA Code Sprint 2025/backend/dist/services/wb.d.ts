@@ -6,17 +6,17 @@ declare class WBService {
     } & {
         user: import("mongoose").Types.ObjectId;
         messages: import("mongoose").Types.DocumentArray<{
-            timestamp: NativeDate;
             text: string;
             role: "user" | "wb";
+            timestamp: NativeDate;
         }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-            timestamp: NativeDate;
             text: string;
             role: "user" | "wb";
+            timestamp: NativeDate;
         }> & {
-            timestamp: NativeDate;
             text: string;
             role: "user" | "wb";
+            timestamp: NativeDate;
         }>;
     }> & {
         createdAt: NativeDate;
@@ -24,17 +24,17 @@ declare class WBService {
     } & {
         user: import("mongoose").Types.ObjectId;
         messages: import("mongoose").Types.DocumentArray<{
-            timestamp: NativeDate;
             text: string;
             role: "user" | "wb";
+            timestamp: NativeDate;
         }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-            timestamp: NativeDate;
             text: string;
             role: "user" | "wb";
+            timestamp: NativeDate;
         }> & {
-            timestamp: NativeDate;
             text: string;
             role: "user" | "wb";
+            timestamp: NativeDate;
         }>;
     } & {
         _id: import("mongoose").Types.ObjectId;

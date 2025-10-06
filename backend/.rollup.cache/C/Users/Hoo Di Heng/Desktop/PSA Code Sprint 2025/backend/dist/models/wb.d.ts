@@ -5,17 +5,17 @@ declare const WBConversation: import("mongoose").Model<{
 } & {
     user: import("mongoose").Types.ObjectId;
     messages: import("mongoose").Types.DocumentArray<{
-        timestamp: NativeDate;
         text: string;
         role: "user" | "wb";
+        timestamp: NativeDate;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        timestamp: NativeDate;
         text: string;
         role: "user" | "wb";
+        timestamp: NativeDate;
     }> & {
-        timestamp: NativeDate;
         text: string;
         role: "user" | "wb";
+        timestamp: NativeDate;
     }>;
 }, {}, {}, {}, import("mongoose").Document<unknown, {}, {
     createdAt: NativeDate;
@@ -23,17 +23,17 @@ declare const WBConversation: import("mongoose").Model<{
 } & {
     user: import("mongoose").Types.ObjectId;
     messages: import("mongoose").Types.DocumentArray<{
-        timestamp: NativeDate;
         text: string;
         role: "user" | "wb";
+        timestamp: NativeDate;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        timestamp: NativeDate;
         text: string;
         role: "user" | "wb";
+        timestamp: NativeDate;
     }> & {
-        timestamp: NativeDate;
         text: string;
         role: "user" | "wb";
+        timestamp: NativeDate;
     }>;
 }> & {
     createdAt: NativeDate;
@@ -41,17 +41,17 @@ declare const WBConversation: import("mongoose").Model<{
 } & {
     user: import("mongoose").Types.ObjectId;
     messages: import("mongoose").Types.DocumentArray<{
-        timestamp: NativeDate;
         text: string;
         role: "user" | "wb";
+        timestamp: NativeDate;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        timestamp: NativeDate;
         text: string;
         role: "user" | "wb";
+        timestamp: NativeDate;
     }> & {
-        timestamp: NativeDate;
         text: string;
         role: "user" | "wb";
+        timestamp: NativeDate;
     }>;
 } & {
     _id: import("mongoose").Types.ObjectId;
@@ -65,17 +65,17 @@ declare const WBConversation: import("mongoose").Model<{
 } & {
     user: import("mongoose").Types.ObjectId;
     messages: import("mongoose").Types.DocumentArray<{
-        timestamp: NativeDate;
         text: string;
         role: "user" | "wb";
+        timestamp: NativeDate;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        timestamp: NativeDate;
         text: string;
         role: "user" | "wb";
+        timestamp: NativeDate;
     }> & {
-        timestamp: NativeDate;
         text: string;
         role: "user" | "wb";
+        timestamp: NativeDate;
     }>;
 }, import("mongoose").Document<unknown, {}, import("mongoose").FlatRecord<{
     createdAt: NativeDate;
@@ -83,17 +83,17 @@ declare const WBConversation: import("mongoose").Model<{
 } & {
     user: import("mongoose").Types.ObjectId;
     messages: import("mongoose").Types.DocumentArray<{
-        timestamp: NativeDate;
         text: string;
         role: "user" | "wb";
+        timestamp: NativeDate;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        timestamp: NativeDate;
         text: string;
         role: "user" | "wb";
+        timestamp: NativeDate;
     }> & {
-        timestamp: NativeDate;
         text: string;
         role: "user" | "wb";
+        timestamp: NativeDate;
     }>;
 }>> & import("mongoose").FlatRecord<{
     createdAt: NativeDate;
@@ -101,17 +101,17 @@ declare const WBConversation: import("mongoose").Model<{
 } & {
     user: import("mongoose").Types.ObjectId;
     messages: import("mongoose").Types.DocumentArray<{
-        timestamp: NativeDate;
         text: string;
         role: "user" | "wb";
+        timestamp: NativeDate;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        timestamp: NativeDate;
         text: string;
         role: "user" | "wb";
+        timestamp: NativeDate;
     }> & {
-        timestamp: NativeDate;
         text: string;
         role: "user" | "wb";
+        timestamp: NativeDate;
     }>;
 }> & {
     _id: import("mongoose").Types.ObjectId;
