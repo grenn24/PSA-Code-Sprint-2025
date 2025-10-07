@@ -1,11 +1,13 @@
 export interface WBMessage {
 	role: "user" | "assistant";
-	text: string;
+	content: string;
 	timestamp: Date;
 }
 
 export interface WBConversation {
-	userId: string;
+	_id?: string;
+	title: string;
+	user: string;
 	messages: WBMessage[];
 	createdAt: Date;
 	updatedAt: Date;

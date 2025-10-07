@@ -4,15 +4,26 @@ import { WBConversation, WBMessage } from "@common/types/wb";
 class WBService {
 	apiClient = createApiClient("/wb");
 
-	async createConversation(message: string) {
-		return this.apiClient.post<any, WBConversation>("/", { message });
+	async createConversation(data?: { content: string; timestamp: Date }) {
+		const response = await this.apiClient.post<any, WBConversation>(
+			"/",
+			data
+		);
+		return response.data;
 	}
 
-	async postMessage(conversationID: string, message: string) {
-		return this.apiClient.post<any, WBMessage>(
-			`/${conversationID}/message`,
-			{ message }
+	async postMessage(
+		conversationID: string,
+		data: {
+			content: string;
+			timestamp: Date;
+		}
+	) {
+		const response = await this.apiClient.post<any, WBConversation>(
+			`/${conversationID}`,
+			data
 		);
+		return response.data;
 	}
 }
 

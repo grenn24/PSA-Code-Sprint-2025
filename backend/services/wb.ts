@@ -4,8 +4,24 @@ import WBConversation from "../models/wb.js";
 import openai from "../utilities/openai.js";
 
 class WBService {
-	async postMessage(conversationId: string, userMessage: string) {
-		const conversation = await WBConversation.findById(conversationId);
+	private SYSTEM_PROMPT = `
+      You are a friendly and empathetic wellness assistant named Wellness Buddy 🤖.
+      Your goal is to provide concise, positive advice on mental wellness, mindfulness, stress management,
+      mood tracking, and general wellbeing. 
+      Keep the tone encouraging, empathetic, and easy to understand.
+    `;
+
+	async postMessage(
+		conversationId: string,
+		data: {
+			content: string;
+			timestamp: Date;
+		}
+	) {
+		const conversation = await WBConversation.findById(
+			conversationId
+		).exec();
+
 		if (!conversation) {
 			throw new HttpError(
 				"Conversation not found",
@@ -13,50 +29,45 @@ class WBService {
 				HttpStatusCode.NotFound
 			);
 		}
-
+		const history = conversation?.messages;
+		console.log(history);
 		conversation.messages.push({
 			role: "user",
-			text: userMessage,
-			timestamp: new Date(),
+			...data,
 		});
 
-		const systemPrompt = `
-      You are a friendly and empathetic wellness assistant named Wellness Buddy 🤖.
-      Your goal is to provide concise, positive advice on mental wellness, mindfulness, stress management,
-      mood tracking, and general wellbeing. 
-      Keep the tone encouraging, empathetic, and easy to understand.
-    `;
-
-		const response = await openai.chat(userMessage, systemPrompt);
+		const response = await openai.chat(
+			data.content,
+			this.SYSTEM_PROMPT,
+			history
+		);
 		conversation.messages.push({
-			role: "wb",
-			text: response,
+			role: "assistant",
+			content: response,
 			timestamp: new Date(),
 		});
 		await conversation.save();
 
-		return response;
+		return conversation;
 	}
 
-	async createConversation(userID: string, userMessage: string) {
-		const systemPrompt = `
-      You are a friendly and empathetic wellness assistant named Wellness Buddy 🤖.
-      Your goal is to provide concise, positive advice on mental wellness, mindfulness, stress management,
-      mood tracking, and general wellbeing. 
-      Keep the tone encouraging, empathetic, and easy to understand.
-    `;
+	async createConversation(
+		userID: string,
+		data?: {
+			content: string;
+			timestamp: Date;
+		}
+	) {
 		const wbConversation = await WBConversation.create({
 			user: userID,
-			messages: [{ role: "user", text: userMessage }],
+			messages: [],
 		});
-		const response = await openai.chat(userMessage, systemPrompt);
-		wbConversation.messages.push({
-			role: "wb",
-			text: response,
-			timestamp: new Date(),
-		});
+		if (data) {
+			const title = await openai.getTitle(data.content);
+			wbConversation.title = title;
+		}
 		await wbConversation.save();
-
+		console.log(wbConversation);
 		return wbConversation;
 	}
 }

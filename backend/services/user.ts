@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import websocketService from "../utilities/websocket.js";
 import mongoose from "mongoose";
 import Chat from "../models/chat.js";
+import WBConversation from "../models/wb.js";
 
 class UserService {
 	// Get all users
@@ -178,6 +179,11 @@ class UserService {
 			);
 		}
 		return user.notifications;
+	}
+
+	async getWBConversations(userID: string) {
+		const conversations = await WBConversation.find({user: userID}).exec();
+		return conversations
 	}
 
 	async getTopMatchedMentors(

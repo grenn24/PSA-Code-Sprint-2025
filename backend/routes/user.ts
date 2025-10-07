@@ -18,6 +18,12 @@ userRouter.get(
 );
 
 userRouter.get(
+	"/:ID/wb",
+	getID(),
+	userController.catchErrors(userController.getWBConversations.bind(userController))
+);
+
+userRouter.get(
 	"/:ID/top-matches",
 	getID(),
 	userController.catchErrors(

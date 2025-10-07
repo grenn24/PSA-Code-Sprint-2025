@@ -1,12 +1,18 @@
 import { Chat } from "@common/types/chat";
 import createApiClient from "../utilities/apiClient";
 import { User } from "@common/types/user";
+import { WBConversation } from "@common/types/wb";
 
 class UserService {
 	apiClient = createApiClient("/user");
 
 	async getUserByID(userId: string) {
 		const response = await this.apiClient.get<User>(`/${userId}`);
+		return response.data;
+	}
+
+	async getConversations(userId: string) {
+		const response = await this.apiClient.get<WBConversation[]>(`/${userId}/wb`);
 		return response.data;
 	}
 

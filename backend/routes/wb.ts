@@ -14,7 +14,7 @@ wbRouter.post(
 wbRouter.post(
 	"/",
 	auth("user"),
-	wbController.catchErrors(wbController.postMessage.bind(wbController))
+	wbController.catchErrors(wbController.createConversation.bind(wbController))
 );
 
 export default wbRouter;

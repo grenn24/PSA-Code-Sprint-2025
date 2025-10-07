@@ -4,6 +4,8 @@ import config from "config";
 
 export class OpenAIClient {
 	private client: OpenAI;
+	private MODEL = "gpt-4.1";
+	private TEMPERATURE = 0.7;
 
 	constructor() {
 		const apiKey = config.get<string>("OPENAI_API_KEY");
@@ -16,37 +18,40 @@ export class OpenAIClient {
 
 	async chat(
 		message: string,
-		systemPrompt = "You are a friendly wellness assistant."
+		systemPrompt: string,
+		history: { role: "user" | "assistant"; content: string }[] = []
 	) {
-		const response = await this.client.chat.completions.create({
-			model: "gpt-4-turbo",
-			messages: [
+		const response = await this.client.responses.create({
+			model: this.MODEL,
+			input: [
 				{ role: "system", content: systemPrompt },
+				...history.map((m) => ({ role: m.role, content: m.content })),
 				{ role: "user", content: message },
 			],
-			temperature: 0.7,
-			max_tokens: 250,
+			temperature: this.TEMPERATURE,
 		});
 
-		return response.choices[0].message?.content ?? "";
+		return response.output_text;
 	}
 
 	async chatWithContext(
 		message: string,
-		systemPrompt = "You are a friendly wellness assistant.",
-		context: string[]
+		systemPrompt: string,
+		history: { role: "user" | "assistant"; content: string }[] = [],
+		context: string
 	) {
-		const contextText = context.join("\n");
-		const prompt = `${systemPrompt}\n\nContext:\n${contextText}\n\nUser: ${message}`;
-
-		const response = await this.client.chat.completions.create({
-			model: "gpt-4-turbo",
-			messages: [{ role: "user", content: prompt }],
-			temperature: 0.7,
-			max_tokens: 300,
+		const userMessage = `${systemPrompt}\n\nContext:\n${context}\n\nUser: ${message}`;
+		const response = await this.client.responses.create({
+			model: this.MODEL,
+			input: [
+				{ role: "system", content: systemPrompt },
+				...history.map((m) => ({ role: m.role, content: m.content })),
+				{ role: "user", content: userMessage },
+			],
+			temperature: this.TEMPERATURE,
 		});
 
-		return response.choices[0].message?.content ?? "";
+		return response.output_text;
 	}
 
 	async getEmbedding(text: string) {
@@ -56,6 +61,22 @@ export class OpenAIClient {
 		});
 
 		return response.data[0].embedding;
+	}
+
+	async getTitle(firstMessage: string) {
+		const response = await this.client.responses.create({
+			model: this.MODEL,
+			input: [
+				{
+					role: "system",
+					content:
+						"Generate a concise title for this conversation starter. Keep it under 6 words.",
+				},
+				{ role: "user", content: firstMessage },
+			],
+			temperature: this.TEMPERATURE,
+		});
+		return response.output_text;
 	}
 }
 

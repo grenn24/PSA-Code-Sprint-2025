@@ -69,6 +69,13 @@ class UserController {
 		response.status(200).send(await userService.getChats(userID));
 	}
 
+	async getWBConversations(request: Request, response: Response) {
+		const userID = response.locals._id;
+		response
+			.status(200)
+			.send(await userService.getWBConversations(userID));
+	}
+
 	catchErrors(handler) {
 		return async (
 			request: Request,
