@@ -6,12 +6,6 @@ import auth from "../middlewares/auth.js";
 const wbRouter = express.Router();
 
 wbRouter.post(
-	"/:ID",
-	getID(),
-	wbController.catchErrors(wbController.postMessage.bind(wbController))
-);
-
-wbRouter.post(
 	"/",
 	auth("user"),
 	wbController.catchErrors(wbController.createConversation.bind(wbController))

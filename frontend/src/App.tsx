@@ -26,7 +26,6 @@ const App = () => {
 			<title>PSA Horizon</title>
 			<Routes>
 				<Route path="/log-in" element={<LogIn />} />
-
 				<Route element={<MainLayout />}>
 					<Route index element={<Home />}></Route>
 					<Route path="/mentor" element={<MentorMatch />} />

@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
-import { SetStateAction, useState } from "react";
-import { Dispatch } from "redux";
+import { useState } from "react";
 
 interface Prop {
 	sendMessage: (

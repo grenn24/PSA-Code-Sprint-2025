@@ -1,10 +1,9 @@
 import { Chat } from "@common/types/chat";
 import { MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useAppSelector } from "redux/store";
 import chatService from "services/chat";
-import userService from "services/user";
 
 interface Prop {
 	chats: Chat[];

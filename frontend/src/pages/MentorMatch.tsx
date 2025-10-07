@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import TopMatches from "../components/mentorMatch/TopMatches";
 import Explore from "../components/mentorMatch/Explore";
@@ -7,14 +7,13 @@ import Chat from "../components/mentorMatch/Chat";
 import { useAppDispatch, useAppSelector } from "redux/store";
 import userService from "services/user";
 import { setUser } from "redux/slices/user";
-import { Chat as ChatType } from "@common/types/chat";
-import { MentorMatchContext } from "context/MentorMatchContext";
-import { useSearchParams, useNavigate } from "react-router-dom"; // ✅ For query params
+import { useSearchParams } from "react-router-dom";
+import { useMentorMatchContext } from "context/MentorMatchContext";
 
 const MentorMatch = () => {
 	const dispatch = useAppDispatch();
 	const { user } = useAppSelector((state) => state.user);
-	const [chats, setChats] = useState<ChatType[]>([]);
+	const {chats} = useMentorMatchContext();
 	const chatsWithUnreadMessages = chats.filter((c) =>
 		c.messages?.some((m) => !m.read && m.sender !== user?._id)
 	);
@@ -27,28 +26,23 @@ const MentorMatch = () => {
 	];
 
 	const [searchParams, setSearchParams] = useSearchParams();
-	const navigate = useNavigate();
 	const tabParam = searchParams.get("tab");
 	const [activeTab, setActiveTab] = useState(tabParam || "Top Matches");
 
-	// ✅ Sync tab with URL param on first load or manual URL change
 	useEffect(() => {
 		if (tabParam && tabs.some((t) => t.name === tabParam)) {
 			setActiveTab(tabParam);
 		}
 	}, [tabParam]);
 
-	// ✅ Update query param when activeTab changes
 	useEffect(() => {
 		const current = new URLSearchParams(searchParams);
 		current.set("tab", activeTab);
 		setSearchParams(current, { replace: true });
 	}, [activeTab]);
 
-	// ✅ Load user + chats
 	useEffect(() => {
 		if (!user?._id) return;
-		userService.getChats(user._id).then((chats) => setChats(chats));
 		userService
 			.getUserByID(user._id)
 			.then((user) => dispatch(setUser(user)));
@@ -56,9 +50,7 @@ const MentorMatch = () => {
 
 	return (
 		<div className="h-full w-full flex flex-col bg-gradient-to-br from-indigo-50 to-white text-gray-900">
-			{/* Header */}
 			<header className="w-full py-2 border-b border-gray-200 bg-white/80 backdrop-blur-sm">
-				{/* Tabs */}
 				<div className="flex justify-center">
 					<div className="flex bg-gray-100 rounded-full p-1">
 						{tabs.map(({ name, count }) => (
@@ -93,7 +85,6 @@ const MentorMatch = () => {
 				</div>
 			</header>
 
-			{/* Animated Tab Content */}
 			<main className="flex-1 px-4 sm:px-8 py-8 overflow-y-auto">
 				<AnimatePresence mode="wait">
 					<motion.div
@@ -104,14 +95,10 @@ const MentorMatch = () => {
 						transition={{ duration: 0.25 }}
 						className="w-full h-full"
 					>
-						<MentorMatchContext value={{ chats, setChats }}>
-							{activeTab === "Top Matches" && <TopMatches />}
-							{activeTab === "Explore" && <Explore />}
-							{activeTab === "Pending Requests" && (
-								<PendingInvites />
-							)}
-							{activeTab === "Chat" && <Chat />}
-						</MentorMatchContext>
+						{activeTab === "Top Matches" && <TopMatches />}
+						{activeTab === "Explore" && <Explore />}
+						{activeTab === "Pending Requests" && <PendingInvites />}
+						{activeTab === "Chat" && <Chat />}
 					</motion.div>
 				</AnimatePresence>
 			</main>

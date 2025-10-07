@@ -7,6 +7,7 @@ import { Express } from "express";
 import WebSocket, { WebSocketServer } from "ws";
 import authService from "../services/auth.js";
 import User from "../models/user.js";
+import websocketRouter from "../routes/websocket.js";
 
 const wsDebug = createDebug("websocket");
 const wsStartupDebug = createDebug("websocket:startup");
@@ -72,9 +73,7 @@ class WebsocketService {
 
 			this.frontendWS.set(payload.id, frontendWS);
 
-			frontendWS.on("message", (message) => {
-				wsDebug(`Received message from ${user.email}: ${message}`);
-			});
+			frontendWS.on("message", websocketRouter);
 			frontendWS.on("close", async () => {
 				wsDebug(`Client disconnected: ${user.email}`);
 				user.lastSeen = new Date();
@@ -119,6 +118,12 @@ class WebsocketService {
 				ws.send(JSON.stringify(message));
 			}
 		});
+	}
+
+	sendToWS(ws: WebSocket, message: WebsocketMessage) {
+		if (ws.readyState === WebSocket.OPEN) {
+			ws.send(JSON.stringify(message));
+		}
 	}
 
 	private getTokenFromRequest(req: import("http").IncomingMessage) {

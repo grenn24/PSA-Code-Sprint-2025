@@ -19,9 +19,10 @@ export class OpenAIClient {
 	async chat(
 		message: string,
 		systemPrompt: string,
-		history: { role: "user" | "assistant"; content: string }[] = []
+		history: { role: "user" | "assistant"; content: string }[] = [],
+		onDelta: (message: string) => void
 	) {
-		const response = await this.client.responses.create({
+		const stream = await this.client.responses.create({
 			model: this.MODEL,
 			input: [
 				{ role: "system", content: systemPrompt },
@@ -29,19 +30,30 @@ export class OpenAIClient {
 				{ role: "user", content: message },
 			],
 			temperature: this.TEMPERATURE,
+			stream: true,
 		});
+		let fullText = "";
 
-		return response.output_text;
+		for await (const event of stream) {
+			if (event.type === "response.output_text.delta") {
+				const chunk = event.delta;
+				fullText += chunk;
+				if (onDelta) onDelta(chunk);
+			}
+		}
+
+		return fullText;
 	}
 
 	async chatWithContext(
 		message: string,
 		systemPrompt: string,
 		history: { role: "user" | "assistant"; content: string }[] = [],
-		context: string
+		context: string,
+		onDelta: (message: string) => void
 	) {
 		const userMessage = `${systemPrompt}\n\nContext:\n${context}\n\nUser: ${message}`;
-		const response = await this.client.responses.create({
+		const stream = await this.client.responses.create({
 			model: this.MODEL,
 			input: [
 				{ role: "system", content: systemPrompt },
@@ -49,9 +61,19 @@ export class OpenAIClient {
 				{ role: "user", content: userMessage },
 			],
 			temperature: this.TEMPERATURE,
+			stream: true,
 		});
 
-		return response.output_text;
+		let fullText = "";
+		for await (const event of stream) {
+			if (event.type === "response.output_text.delta") {
+				const chunk = event.delta;
+				fullText += chunk;
+				if (onDelta) onDelta(chunk);
+			}
+		}
+
+		return fullText;
 	}
 
 	async getEmbedding(text: string) {

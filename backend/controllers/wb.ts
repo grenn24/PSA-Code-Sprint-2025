@@ -4,13 +4,6 @@ import { HttpError } from "../middlewares/error.js";
 import wbService from "../services/wb.js";
 
 class WBController {
-	async postMessage(request: Request, response: Response) {
-		const conversationID = response.locals._id;
-		response
-			.status(200)
-			.send(await wbService.postMessage(conversationID, request.body));
-	}
-
 	async createConversation(request: Request, response: Response) {
 		const user = response.locals.user;
 		response

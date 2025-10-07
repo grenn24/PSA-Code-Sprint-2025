@@ -1,7 +1,7 @@
 import { User } from "@common/types/user";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useAppSelector } from "redux/store";
 import FeedbackModalContent from "./FeedbackModalContent";
 import MoodUpdateModalContent from "./MoodUpdateModalContent";

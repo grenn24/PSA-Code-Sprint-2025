@@ -22,4 +22,5 @@ export interface WebsocketMessage<T = any> {
 	data?: T;
 	status?: string;
 	timestamp: string;
+	[key: string]: any;
 }

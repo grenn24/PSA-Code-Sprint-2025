@@ -32,23 +32,20 @@ const Notifications = () => {
 
 	return (
 		<div className="relative">
-			{/* Bell Button */}
 			<button
 				className="p-2 rounded-full hover:bg-gray-100 active:scale-95 transition-transform relative bg-white/80 backdrop-blur-md"
 				onClick={() => setDropdownOpen(!dropdownOpen)}
 			>
 				<BellIcon className="w-6 h-6 text-gray-700" />
 				{notifications.length > 0 && (
-					<span className="absolute -top-1 -right-1 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-white bg-red-500 rounded-full shadow">
+					<span className="absolute -top-1 -right-1 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-semibold leading-none text-white bg-red-500 rounded-full shadow">
 						{notifications.length}
 					</span>
 				)}
 			</button>
 
-			{/* Dropdown */}
 			{dropdownOpen && (
 				<div className="absolute right-0 mt-5 w-80 max-h-96 overflow-y-auto bg-white/30 backdrop-blur-xl border border-white/20 rounded-2xl shadow-lg ring-1 ring-white/30 animate-fadeIn z-50">
-					{/* Header fixed */}
 					<div className="sticky top-0 bg-white backdrop-blur-xl px-4 py-2 border-b border-white/20 font-semibold text-gray-800 text-sm z-10">
 						Notifications
 					</div>

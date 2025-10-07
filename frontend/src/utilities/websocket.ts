@@ -1,6 +1,6 @@
 import { WebsocketMessage } from "@common/types/http";
 
-interface Listener {
+export interface Listener {
 	(message: WebsocketMessage): void;
 }
 class WebsocketService {
