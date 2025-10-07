@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import websocketService from "../utilities/websocket.js";
 import mongoose from "mongoose";
 import Chat from "../models/chat.js";
+import WBConversation from "../models/wb.js";
 class UserService {
     // Get all users
     async getAllUsers() {
@@ -113,6 +114,10 @@ class UserService {
             throw new HttpError("User not found", "NOT_FOUND", HttpStatusCode.NotFound);
         }
         return user.notifications;
+    }
+    async getWBConversations(userID) {
+        const conversations = await WBConversation.find({ user: userID }).exec();
+        return conversations;
     }
     async getTopMatchedMentors(userId, limit, page = 0) {
         const mentee = await User.findById(userId).populate("mentors").exec();

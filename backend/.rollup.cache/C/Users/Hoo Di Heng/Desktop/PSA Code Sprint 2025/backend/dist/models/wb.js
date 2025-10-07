@@ -1,14 +1,15 @@
 import { Schema, model } from "mongoose";
 const WBConversationSchema = new Schema({
+    title: { type: String, default: "" },
     user: { type: Schema.Types.ObjectId, required: true, ref: "User" },
     messages: [
         {
             role: {
                 type: String,
-                enum: ["user", "wb"],
+                enum: ["user", "assistant"],
                 required: true,
             },
-            text: { type: String, required: true },
+            content: { type: String, required: true },
             timestamp: { type: Date, default: Date.now },
         },
     ],

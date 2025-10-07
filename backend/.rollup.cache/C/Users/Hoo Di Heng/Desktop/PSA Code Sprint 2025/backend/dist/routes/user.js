@@ -6,6 +6,7 @@ const userRouter = express.Router();
 // Define the route handlers
 userRouter.get("", userController.catchErrors(userController.getAllUsers.bind(userController)));
 userRouter.get("/:ID", getID(), userController.catchErrors(userController.getUserByID.bind(userController)));
+userRouter.get("/:ID/wb", getID(), userController.catchErrors(userController.getWBConversations.bind(userController)));
 userRouter.get("/:ID/top-matches", getID(), userController.catchErrors(userController.getTopMatchedMentors.bind(userController)));
 userRouter.get("/:ID/chats", getID(), userController.catchErrors(userController.getChats.bind(userController)));
 userRouter.post("", userController.catchErrors(userController.createUser.bind(userController)));

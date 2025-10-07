@@ -9,6 +9,7 @@ declare class UserController {
     deleteAllUsers(request: Request, response: Response): Promise<void>;
     getTopMatchedMentors(request: Request, response: Response): Promise<void>;
     getChats(request: Request, response: Response): Promise<void>;
+    getWBConversations(request: Request, response: Response): Promise<void>;
     catchErrors(handler: any): (request: Request, response: Response, next: NextFunction) => Promise<void>;
 }
 declare const userController: UserController;

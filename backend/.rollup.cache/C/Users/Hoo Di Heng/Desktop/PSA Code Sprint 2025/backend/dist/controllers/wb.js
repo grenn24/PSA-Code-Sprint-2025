@@ -2,19 +2,11 @@ import mongoose from "mongoose";
 import { HttpError } from "../middlewares/error.js";
 import wbService from "../services/wb.js";
 class WBController {
-    async postMessage(request, response) {
-        const conversationID = response.locals._id;
-        const userMessage = request.body?.message;
-        response
-            .status(200)
-            .send(await wbService.postMessage(conversationID, userMessage));
-    }
     async createConversation(request, response) {
         const user = response.locals.user;
-        const userMessage = request.body?.message;
         response
             .status(200)
-            .send(await wbService.createConversation(user.id, userMessage));
+            .send(await wbService.createConversation(user.id, request.body));
     }
     catchErrors(handler) {
         return async (request, response, next) => {

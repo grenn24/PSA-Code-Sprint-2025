@@ -5,6 +5,7 @@ import createDebug from "debug";
 import WebSocket, { WebSocketServer } from "ws";
 import authService from "../services/auth.js";
 import User from "../models/user.js";
+import websocketRouter from "../routes/websocket.js";
 const wsDebug = createDebug("websocket");
 const wsStartupDebug = createDebug("websocket:startup");
 class WebsocketService {
@@ -53,9 +54,7 @@ class WebsocketService {
                 timestamp: new Date().toISOString(),
             });
             this.frontendWS.set(payload.id, frontendWS);
-            frontendWS.on("message", (message) => {
-                wsDebug(`Received message from ${user.email}: ${message}`);
-            });
+            frontendWS.on("message", websocketRouter);
             frontendWS.on("close", async () => {
                 wsDebug(`Client disconnected: ${user.email}`);
                 user.lastSeen = new Date();
@@ -94,6 +93,11 @@ class WebsocketService {
                 ws.send(JSON.stringify(message));
             }
         });
+    }
+    sendToWS(ws, message) {
+        if (ws.readyState === WebSocket.OPEN) {
+            ws.send(JSON.stringify(message));
+        }
     }
     getTokenFromRequest(req) {
         // Example: extract JWT from query params: ws://host?token=...
