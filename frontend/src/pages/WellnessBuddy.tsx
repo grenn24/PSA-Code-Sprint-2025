@@ -334,25 +334,20 @@ const WellnessBuddy = () => {
 								placeholder="Search wellness topics, exercises, or questions"
 								className="w-full p-4 rounded-2xl bg-white/60 backdrop-blur-md shadow-sm border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-gray-500"
 							/>
-							<div className="flex flex-col gap-4">
-								<h2 className="text-xl font-semibold">
-									Explore
-								</h2>
-								<div className="flex gap-4 overflow-x-auto scrollbar-hide">
-									{EXPLORE.map((item, i) => (
-										<div
-											key={i}
-											className={`min-w-[220px] p-4 rounded-2xl bg-gradient-to-br ${item.gradient} text-white shadow-lg flex flex-col justify-between cursor-pointer transition-all hover:brightness-95`}
-										>
-											<div className="mb-3 text-3xl">
-												{item.icon}
-											</div>
-											<div className="font-semibold text-lg">
-												{item.label}
-											</div>
+							<div className="flex gap-4 overflow-x-auto scrollbar-hide">
+								{EXPLORE.map((item, i) => (
+									<div
+										key={i}
+										className={`min-w-[220px] p-5 rounded-2xl bg-gradient-to-br ${item.gradient} text-white shadow-lg flex flex-col justify-between cursor-pointer transition-all hover:brightness-95`}
+									>
+										<div className="mb-3 text-3xl">
+											{item.icon}
 										</div>
-									))}
-								</div>
+										<div className="font-semibold text-lg">
+											{item.label}
+										</div>
+									</div>
+								))}
 							</div>
 							<div className="flex flex-col gap-4  w-full">
 								<h2 className="text-xl font-semibold">
@@ -368,7 +363,7 @@ const WellnessBuddy = () => {
 												key={i}
 												onClick={() => {
 													setCount(3);
-													setInput(s.input)
+													setInput(s.input);
 												}}
 												className="min-w-[300px] p-4 bg-white/80 backdrop-blur-md rounded-2xl border border-gray-300 flex flex-col justify-between cursor-pointer hover:brightness-98"
 											>

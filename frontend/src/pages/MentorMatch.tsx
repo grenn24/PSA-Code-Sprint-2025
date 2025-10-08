@@ -13,21 +13,21 @@ import { useMentorMatchContext } from "context/MentorMatchContext";
 const MentorMatch = () => {
 	const dispatch = useAppDispatch();
 	const { user } = useAppSelector((state) => state.user);
-	const {chats} = useMentorMatchContext();
+	const { chats } = useMentorMatchContext();
 	const chatsWithUnreadMessages = chats.filter((c) =>
 		c.messages?.some((m) => !m.read && m.sender !== user?._id)
 	);
 
 	const tabs = [
-		{ name: "Top Matches" },
-		{ name: "Explore" },
-		{ name: "Pending Requests", count: user?.mentorshipRequests?.length },
 		{ name: "Chat", count: chatsWithUnreadMessages.length },
+		{ name: "Suggested" },
+		{ name: "Explore" },
+		{ name: "Requests", count: user?.mentorshipRequests?.length },
 	];
 
 	const [searchParams, setSearchParams] = useSearchParams();
 	const tabParam = searchParams.get("tab");
-	const [activeTab, setActiveTab] = useState(tabParam || "Top Matches");
+	const [activeTab, setActiveTab] = useState(tabParam || "Chat");
 
 	useEffect(() => {
 		if (tabParam && tabs.some((t) => t.name === tabParam)) {
@@ -95,9 +95,9 @@ const MentorMatch = () => {
 						transition={{ duration: 0.25 }}
 						className="w-full h-full"
 					>
-						{activeTab === "Top Matches" && <TopMatches />}
+						{activeTab === "Suggested" && <TopMatches />}
 						{activeTab === "Explore" && <Explore />}
-						{activeTab === "Pending Requests" && <PendingInvites />}
+						{activeTab === "Requests" && <PendingInvites />}
 						{activeTab === "Chat" && <Chat />}
 					</motion.div>
 				</AnimatePresence>

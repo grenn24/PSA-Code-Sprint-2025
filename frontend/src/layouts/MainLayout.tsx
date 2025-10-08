@@ -26,11 +26,6 @@ const routes = [
 		icon: <BriefcaseIcon className="w-6 h-6" />,
 	},
 	{
-		path: "/profile",
-		label: "Profile Page",
-		icon: <UserIcon className="w-6 h-6" />,
-	},
-	{
 		path: "/mentor",
 		label: "Mentor Match",
 		icon: <UsersIcon className="w-6 h-6" />,

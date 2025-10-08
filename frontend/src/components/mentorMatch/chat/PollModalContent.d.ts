@@ -1,0 +1,6 @@
+interface PollModalContentProps {
+    sendMessage: (content: string, type?: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt", metadata?: Record<string, any>) => Promise<void>;
+    setOpenMenuModal: React.Dispatch<React.SetStateAction<string | null>>;
+}
+declare const PollModalContent: ({ sendMessage, setOpenMenuModal, }: PollModalContentProps) => import("react/jsx-runtime").JSX.Element;
+export default PollModalContent;

@@ -25,13 +25,39 @@ const TopMatches = () => {
 	const [message, setMessage] = useState("");
 
 	useEffect(() => {
+		setIsLoading(true);
 		userService
 			.getTopMatchedMentors(user?._id, 20, page)
 			.then((users) => {
 				setTopMatches(users);
-				setIsLoading(false);
-			});
-	}, []);
+			})
+			.finally(() => setIsLoading(false));
+	}, [page, user?._id]);
+
+	/** 🌀 Loading Indicator */
+	if (isLoading) {
+		return (
+			<div className="flex flex-col items-center justify-center h-[400px] text-center gap-5 bg-gradient-to-b from-indigo-50 to-white rounded-2xl shadow-inner">
+				<motion.div
+					initial={{ rotate: 0, opacity: 0.8 }}
+					animate={{ rotate: 360, opacity: [0.8, 1, 0.8] }}
+					transition={{
+						repeat: Infinity,
+						duration: 1.2,
+						ease: "easeInOut",
+					}}
+					className="w-16 h-16 border-4 border-indigo-500 border-t-transparent rounded-full shadow-md"
+				/>
+
+				<div className="flex flex-col items-center">
+					<h3 className="text-xl font-semibold text-indigo-700">
+						Finding your perfect mentor match
+					</h3>
+					<p className="text-gray-500 text-md max-w-md mt-1">Anchoring your potential connections... ⚓</p>
+				</div>
+			</div>
+		);
+	}
 
 	if (topMatches.length === 0 && !isLoading)
 		return (
@@ -52,10 +78,6 @@ const TopMatches = () => {
 					className="px-6 py-2 bg-indigo-500 text-white rounded-full shadow-lg hover:bg-indigo-600 transition"
 					onClick={() => {
 						setPage(page + 1);
-
-						userService
-							.getTopMatchedMentors(user?._id, 20, page + 1)
-							.then((users) => setTopMatches(users));
 					}}
 				>
 					Find New Matches
@@ -65,7 +87,6 @@ const TopMatches = () => {
 
 	const handleAction = async (type: "accept" | "reject", message?) => {
 		setOpenMessageModal(false);
-		// Show overlay first
 		setAction(type);
 
 		if (type === "accept")
@@ -74,19 +95,15 @@ const TopMatches = () => {
 				message
 			);
 
-		// After overlay is visible, start fade & slide animation
 		setTimeout(() => {
 			setSwipeDirection(type);
-
-			// Remove card after animation
 			setTimeout(() => {
 				setTopMatches((prev) => prev.filter((_m, i) => i !== index));
 				setAction(null);
 				setSwipeDirection(null);
-
 				setMessage("");
-			}, 400); // match exit animation duration
-		}, 100); // overlay visible duration
+			}, 400);
+		}, 100);
 	};
 
 	return (
@@ -114,7 +131,6 @@ const TopMatches = () => {
 							transition={{ duration: 0.3, ease: "easeInOut" }}
 							className="absolute w-full h-full bg-white rounded-3xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden"
 						>
-							{/* Overlay */}
 							{action && (
 								<motion.div
 									variants={overlayVariants}
@@ -162,32 +178,29 @@ const TopMatches = () => {
 			</div>
 
 			<div className="flex gap-10 mt-6">
-				{/* Reject Button */}
 				<motion.button
 					whileTap={{ scale: 0.9 }}
 					onClick={() => handleAction("reject")}
 					className="relative group w-16 h-16 flex items-center justify-center rounded-full bg-red-500 hover:bg-red-600 text-white shadow-lg"
 				>
 					<XMarkIcon className="w-8 h-8" />
-					{/* Tooltip */}
 					<span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-150 transition-opacity">
 						Reject Mentor
 					</span>
 				</motion.button>
 
-				{/* Accept Button */}
 				<motion.button
 					whileTap={{ scale: 0.9 }}
 					onClick={() => setOpenMessageModal(true)}
 					className="relative group w-16 h-16 flex items-center justify-center rounded-full bg-green-500 hover:bg-green-600 text-white shadow-lg"
 				>
 					<PaperAirplaneIcon className="w-8 h-8" />
-					{/* Tooltip */}
 					<span className="absolute -top-15 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity">
 						Send Mentor Request
 					</span>
 				</motion.button>
 			</div>
+
 			<AnimatePresence>
 				{openMessageModal && (
 					<motion.div
