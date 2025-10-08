@@ -28,7 +28,6 @@ const ShareFileModalContent = ({ sendMessage, setOpenMenuModal }: Prop) => {
 	const [openFileInput, setOpenFileInput] = useState(true);
 
 	const handleFileSubmit = (files: FileList) => {
-		console.log(files);
 		const uploadedFile = files?.[0];
 		if (uploadedFile) {
 			setFile(uploadedFile);
@@ -40,7 +39,6 @@ const ShareFileModalContent = ({ sendMessage, setOpenMenuModal }: Prop) => {
 		const s3File = await s3Service.uploadFileWithHashing(file, [
 			"shared-files",
 		]);
-		console.log(s3File);
 		await sendMessage(caption, "file", s3File);
 		setOpenMenuModal(null);
 	};

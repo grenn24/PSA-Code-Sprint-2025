@@ -34,29 +34,6 @@ export class OpenAIClient {
         }
         return fullText;
     }
-    async chatWithContext(message, systemPrompt, history = [], context, onDelta) {
-        const userMessage = `${systemPrompt}\n\nContext:\n${context}\n\nUser: ${message}`;
-        const stream = await this.client.responses.create({
-            model: this.MODEL,
-            input: [
-                { role: "system", content: systemPrompt },
-                ...history.map((m) => ({ role: m.role, content: m.content })),
-                { role: "user", content: userMessage },
-            ],
-            temperature: this.TEMPERATURE,
-            stream: true,
-        });
-        let fullText = "";
-        for await (const event of stream) {
-            if (event.type === "response.output_text.delta") {
-                const chunk = event.delta;
-                fullText += chunk;
-                if (onDelta)
-                    onDelta(chunk);
-            }
-        }
-        return fullText;
-    }
     async getEmbedding(text) {
         const response = await this.client.embeddings.create({
             model: "text-embedding-3-large",
@@ -75,6 +52,7 @@ export class OpenAIClient {
                 { role: "user", content: firstMessage },
             ],
             temperature: this.TEMPERATURE,
+            max_output_tokens: 16,
         });
         return response.output_text;
     }

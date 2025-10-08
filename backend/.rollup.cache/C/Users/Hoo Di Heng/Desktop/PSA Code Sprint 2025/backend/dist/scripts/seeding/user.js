@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import User from "../../models/user.js";
+import dayjs from "dayjs";
 const skillsPool = [
     "Data Analytics",
     "Data Management",
@@ -41,6 +42,19 @@ function generateCareerPath() {
     }
     return path;
 }
+function generateMoodData(start, skipProbability = 0.3) {
+    const data = [];
+    const today = new Date();
+    for (let d = new Date(start); d <= today; d.setDate(d.getDate() + 1)) {
+        if (Math.random() > skipProbability) {
+            data.push({
+                date: new Date(d),
+                level: Math.floor(Math.random() * 10) + 1,
+            });
+        }
+    }
+    return data;
+}
 function generateNotifications() {
     const count = getRandomInt(1, 3);
     return Array.from({ length: count }).map(() => ({
@@ -63,9 +77,10 @@ const generateUsers = () => {
         skills: generateRandomSkills(),
         notifications: generateNotifications(),
         careerPath: generateCareerPath(),
+        moods: generateMoodData(dayjs().subtract(2, "month").toDate()),
     }));
     users.push({
-        name: "Gren",
+        name: "Di Heng",
         email: "gren@gmail.com",
         position: "Software Engineer",
         role: "user",
@@ -117,6 +132,7 @@ const generateUsers = () => {
                 _id: "68e0fa5fb8980e66e106acb0",
             },
         ],
+        moods: generateMoodData(dayjs().subtract(2, "month").toDate()),
     });
     return users;
 };

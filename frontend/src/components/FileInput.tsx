@@ -20,7 +20,6 @@ export default function FileInput({
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-        console.log(openInput);
 		if (openInput) {
 			fileInputRef.current?.click();
 			setOpenInput(false);

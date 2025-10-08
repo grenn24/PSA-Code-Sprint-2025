@@ -33,18 +33,28 @@ const Header = () => {
 			</div>
 
 			<div className="flex items-center gap-4">
-				<button
-					className="p-2 rounded-full hover:bg-gray-100 active:scale-95 transition-transform relative bg-white/80 backdrop-blur-md"
-					onClick={() => navigate("mentor?tab=Chat")}
-				>
-					<ChatBubbleOvalLeftIcon className="w-6 h-6 text-gray-700" />
-					{chatsWithUnreadMessages.length > 0 && (
-						<span className="absolute -top-1 -right-1 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-semibold leading-none text-white bg-red-500 rounded-full shadow">
-							{chatsWithUnreadMessages.length}
-						</span>
-					)}
-				</button>
-				<Notifications />
+				<div className="relative group">
+					<button
+						className="p-2 rounded-full hover:bg-gray-100 active:scale-95 transition-transform relative bg-white/80 backdrop-blur-md"
+						onClick={() => navigate("mentor?tab=Chat")}
+					>
+						<ChatBubbleOvalLeftIcon className="w-6 h-6 text-gray-700" />
+						{chatsWithUnreadMessages.length > 0 && (
+							<span className="absolute -top-1 -right-1 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-semibold leading-none text-white bg-red-500 rounded-full shadow">
+								{chatsWithUnreadMessages.length}
+							</span>
+						)}
+					</button>
+					<span className="absolute -top-[-46px] z-1 left-1/2 -translate-x-1/2 bg-gray-700 text-white text-xs font-semibold rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity">
+						Messages
+					</span>
+				</div>
+				<div className="relative group">
+					<Notifications />
+					<span className="absolute -top-[-46px] z-1 left-1/2 -translate-x-1/2 bg-gray-700 text-white text-xs font-semibold rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity">
+						Notifications
+					</span>
+				</div>
 				<div className="relative">
 					<button
 						onClick={() => setDropdownOpen(!dropdownOpen)}

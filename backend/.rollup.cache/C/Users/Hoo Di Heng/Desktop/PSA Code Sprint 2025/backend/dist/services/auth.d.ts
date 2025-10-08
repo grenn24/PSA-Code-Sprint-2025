@@ -66,6 +66,19 @@ declare class AuthService {
             }>;
             lastSeen: NativeDate;
             isOnline: boolean;
+            moods: import("mongoose").Types.DocumentArray<{
+                date: NativeDate;
+                level: number;
+                notes: string[];
+            }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+                date: NativeDate;
+                level: number;
+                notes: string[];
+            }> & {
+                date: NativeDate;
+                level: number;
+                notes: string[];
+            }>;
             bio?: string | null | undefined;
             supervisor?: import("mongoose").Types.ObjectId | null | undefined;
             avatar?: string | null | undefined;
@@ -133,6 +146,19 @@ declare class AuthService {
             }>;
             lastSeen: NativeDate;
             isOnline: boolean;
+            moods: import("mongoose").Types.DocumentArray<{
+                date: NativeDate;
+                level: number;
+                notes: string[];
+            }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+                date: NativeDate;
+                level: number;
+                notes: string[];
+            }> & {
+                date: NativeDate;
+                level: number;
+                notes: string[];
+            }>;
             bio?: string | null | undefined;
             supervisor?: import("mongoose").Types.ObjectId | null | undefined;
             avatar?: string | null | undefined;

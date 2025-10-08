@@ -1,6 +1,6 @@
 # PSA Horizon
 **Project for PSA Code Sprint 2025**
-Staging Website: https://psa-code-sprint-2025.vercel.app
+Staging Website: https://psa-code-sprint-2025.vercel.app  
 API Endpoint: https://psa-code-sprint-2025.onrender.com/api
 
 ## Overview
@@ -31,11 +31,11 @@ PSA Horizon is an integrated employee development platform designed to empower P
 4. In the root folder, run ./start-all.bat (Windows) or ./start-all.sh (Linux)
 
 ## Directory Structure
-root/
-├── backend/
-├── common/
-├── frontend/
-├── package.json
+root/  
+├── backend/  
+├── common/  
+├── frontend/  
+├── package.json  
 └── README.md
 
 ## Tech Stack

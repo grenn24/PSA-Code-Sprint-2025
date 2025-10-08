@@ -78,6 +78,10 @@ class WebsocketService {
 	removeListeners(listeners: Listener[]) {
 		this.listeners = this.listeners.filter((h) => !listeners.includes(h));
 	}
+
+	removeAllListeners() {
+		this.listeners = [];
+	}
 }
 
 const websocketService = new WebsocketService();

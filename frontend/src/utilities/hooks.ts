@@ -13,6 +13,7 @@ export const useWebsocket = () => {
 	}, [isAuthenticated]);
 };
 
+export const useMountEffect = (fun) => useEffect(fun, []);
 
 export function useResizeObserverRef<T extends HTMLElement>(
 	measure: "contentRect" | "client" | "offset" = "contentRect"

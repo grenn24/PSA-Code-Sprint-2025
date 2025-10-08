@@ -2,9 +2,11 @@ import { HttpStatusCode } from "@common/constants/statusCode.js";
 import { HttpError } from "../middlewares/error.js";
 import WBConversation from "../models/wb.js";
 import openai from "../utilities/openai.js";
+import { WBMessage } from "@common/types/wb.js";
+import User from "../models/user.js";
 
 class WBService {
-	private SYSTEM_PROMPT = `
+	private DEFAULT_SYSTEM_PROMPT = `
 		You are "Wellness Buddy", an empathetic, professional wellness assistant embedded in the PSA Horizon website. 
 		Speak in a warm, encouraging, and non-judgmental tone.
 
@@ -67,7 +69,7 @@ class WBService {
 		});
 		const response = await openai.chat(
 			data.content,
-			this.SYSTEM_PROMPT,
+			this.DEFAULT_SYSTEM_PROMPT,
 			history,
 			onDelta
 		);
@@ -79,6 +81,76 @@ class WBService {
 		await conversation.save();
 
 		return conversation;
+	}
+
+	async postMessageStateless(
+		data: {
+			content: string;
+			timestamp: Date;
+		},
+		history: WBMessage[] = [],
+		onDelta: (chunk: string) => void
+	) {
+		const response = await openai.chat(
+			data.content,
+			this.DEFAULT_SYSTEM_PROMPT,
+			history,
+			onDelta
+		);
+		return response;
+	}
+
+	async trackMoodChanges(
+		userID: string,
+		data:
+			| {
+					content: string;
+					timestamp: Date;
+			  }
+			| undefined = undefined,
+		history: WBMessage[] = [],
+		onDelta: (chunk: string) => void
+	) {
+		const user = await User.findById(userID).exec();
+		if (!user) {
+			throw new HttpError(
+				"User not found",
+				"NOT_FOUND",
+				HttpStatusCode.NotFound
+			);
+		}
+		const serialisedMoods = JSON.stringify(
+			user.moods
+				.sort((a, b) => a.date.getTime() - b.date.getTime())
+				.slice(-30)
+				.map((m) => ({
+					date: m.date.toISOString().split("T")[0],
+					level: m.level,
+				}))
+		);
+		const initialUserMessage = `
+			Your task is to provide a friendly, empathetic summary of this user's mood trends, patterns, and insights. 
+			For example: identify any dips, improvements, consistent moods, and give gentle advice if necessary. 
+			Always keep a supportive and encouraging tone.
+
+			Important: Do NOT mention numeric mood levels. Instead, describe each mood in human-friendly terms. You can also use emojis if appropriate.
+
+			Mood History:
+			${serialisedMoods}
+			`;
+		const userMessage = data?.content ?? initialUserMessage;
+		const response = await openai.chat(
+			userMessage,
+			this.DEFAULT_SYSTEM_PROMPT,
+			data?.content
+				? [
+						{ role: "assistant", content: initialUserMessage },
+						...history,
+				  ]
+				: [],
+			onDelta
+		);
+		return response;
 	}
 
 	async createConversation(

@@ -1,4 +1,10 @@
-import mongoose, { model, Schema } from "mongoose";
+import { model, Schema } from "mongoose";
+
+const moodSchema = new Schema({
+	level: { type: Number, min: 1, max: 10, required: true },
+	date: { type: Date, required: true },
+	notes: { type: [String], default: [] },
+});
 
 const userSchema = new Schema({
 	name: { type: String, required: true },
@@ -78,6 +84,10 @@ const userSchema = new Schema({
 	],
 	lastSeen: { type: Date, default: null },
 	isOnline: { type: Boolean, default: false },
+	moods: {
+		type: [moodSchema],
+		default: [],
+	},
 });
 
 userSchema.virtual("mentors", {

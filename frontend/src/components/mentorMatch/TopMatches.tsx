@@ -34,10 +34,9 @@ const TopMatches = () => {
 			.finally(() => setIsLoading(false));
 	}, [page, user?._id]);
 
-	/** 🌀 Loading Indicator */
 	if (isLoading) {
 		return (
-			<div className="flex flex-col items-center justify-center h-[400px] text-center gap-5 bg-gradient-to-b from-indigo-50 to-white rounded-2xl shadow-inner">
+			<div className="flex flex-col items-center justify-center h-[400px] text-center gap-4">
 				<motion.div
 					initial={{ rotate: 0, opacity: 0.8 }}
 					animate={{ rotate: 360, opacity: [0.8, 1, 0.8] }}
@@ -48,13 +47,12 @@ const TopMatches = () => {
 					}}
 					className="w-16 h-16 border-4 border-indigo-500 border-t-transparent rounded-full shadow-md"
 				/>
-
-				<div className="flex flex-col items-center">
-					<h3 className="text-xl font-semibold text-indigo-700">
-						Finding your perfect mentor match
-					</h3>
-					<p className="text-gray-500 text-md max-w-md mt-1">Anchoring your potential connections... ⚓</p>
-				</div>
+				<h3 className="text-2xl font-semibold text-indigo-700">
+					Finding your perfect mentor match
+				</h3>
+				<p className="text-gray-500 text-md max-w-md mt-1">
+					Anchoring your potential connections... ⚓
+				</p>
 			</div>
 		);
 	}
@@ -107,98 +105,106 @@ const TopMatches = () => {
 	};
 
 	return (
-		<div className="flex flex-col items-center">
-			<div className="relative w-full max-w-md h-[550px]">
-				<AnimatePresence mode="wait">
-					{topMatches[index] && (
-						<motion.div
-							key={topMatches[index]._id}
-							initial={{ x: 0, opacity: 0, scale: 0.9 }}
-							animate={{ x: 0, opacity: 1, scale: 1 }}
-							exit={{
-								x:
-									swipeDirection === "accept"
-										? 300
-										: swipeDirection === "reject"
-										? -300
-										: 0,
-								opacity: 0,
-								transition: {
-									duration: 0.4,
+		<div className="flex flex-col">
+			<h2 className="text-lg font-semibold text-indigo-700 mb-[24px]">
+				Suggested Mentors
+			</h2>
+			<div className="w-full flex flex-col items-center">
+				<div className="relative w-full max-w-md h-[550px]">
+					<AnimatePresence mode="wait">
+						{topMatches[index] && (
+							<motion.div
+								key={topMatches[index]._id}
+								initial={{ x: 0, opacity: 0, scale: 0.9 }}
+								animate={{ x: 0, opacity: 1, scale: 1 }}
+								exit={{
+									x:
+										swipeDirection === "accept"
+											? 300
+											: swipeDirection === "reject"
+											? -300
+											: 0,
+									opacity: 0,
+									transition: {
+										duration: 0.4,
+										ease: "easeInOut",
+									},
+								}}
+								transition={{
+									duration: 0.3,
 									ease: "easeInOut",
-								},
-							}}
-							transition={{ duration: 0.3, ease: "easeInOut" }}
-							className="absolute w-full h-full bg-white rounded-3xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden"
-						>
-							{action && (
-								<motion.div
-									variants={overlayVariants}
-									initial="initial"
-									animate="visible"
-									exit="exit"
-									className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-20 text-white text-6xl font-bold"
-								>
-									{action === "accept" ? (
-										<PaperAirplaneIcon className="w-16 h-16 text-green-400" />
-									) : (
-										<XMarkIcon className="w-16 h-16 text-red-400" />
-									)}
-								</motion.div>
-							)}
+								}}
+								className="absolute w-full h-full bg-white rounded-3xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden"
+							>
+								{action && (
+									<motion.div
+										variants={overlayVariants}
+										initial="initial"
+										animate="visible"
+										exit="exit"
+										className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-20 text-white text-6xl font-bold"
+									>
+										{action === "accept" ? (
+											<PaperAirplaneIcon className="w-16 h-16 text-green-400" />
+										) : (
+											<XMarkIcon className="w-16 h-16 text-red-400" />
+										)}
+									</motion.div>
+								)}
 
-							<img
-								src={topMatches[index].avatar}
-								className="w-full h-7/10 object-cover"
-							/>
-							<div className="p-6 flex flex-col flex-1 overflow-auto">
-								<h2 className="text-2xl font-semibold">
-									{topMatches[index].name}
-								</h2>
-								<p className="text-gray-500">
-									{topMatches[index].position}
-								</p>
-								<div className="flex gap-2 mt-3 flex-wrap">
-									{topMatches[index].skills.map((s) => (
-										<span
-											key={s.name}
-											className="px-3 py-1 text-xs bg-indigo-100 text-indigo-700 rounded-full"
-										>
-											{s.name}
-										</span>
-									))}
+								<img
+									src={topMatches[index].avatar}
+									className="w-full h-7/10 object-cover"
+								/>
+								<div className="p-6 flex flex-col flex-1 overflow-auto">
+									<h2 className="text-2xl font-semibold">
+										{topMatches[index].name}
+									</h2>
+									<p className="text-gray-500">
+										{topMatches[index].position}
+									</p>
+									<div className="flex gap-2 mt-3 flex-wrap">
+										{topMatches[index].skills.map((s) => (
+											<span
+												key={s.name}
+												className="px-3 py-1 text-xs bg-indigo-100 text-indigo-700 rounded-full"
+											>
+												{s.name}
+											</span>
+										))}
+									</div>
+									<p className="text-sm text-gray-700 mt-4 flex-1">
+										{topMatches[index].bio}
+									</p>
 								</div>
-								<p className="text-sm text-gray-700 mt-4 flex-1">
-									{topMatches[index].bio}
-								</p>
-							</div>
-						</motion.div>
-					)}
-				</AnimatePresence>
-			</div>
+							</motion.div>
+						)}
+					</AnimatePresence>
+				</div>
 
-			<div className="flex gap-10 mt-6">
-				<motion.button
-					whileTap={{ scale: 0.9 }}
-					onClick={() => handleAction("reject")}
-					className="relative group w-16 h-16 flex items-center justify-center rounded-full bg-red-500 hover:bg-red-600 text-white shadow-lg"
-				>
-					<XMarkIcon className="w-8 h-8" />
-					<span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-150 transition-opacity">
-						Reject Mentor
-					</span>
-				</motion.button>
+				<div className="flex gap-10 mt-6">
+					<motion.button
+						whileTap={{ scale: 0.9 }}
+						onClick={() => handleAction("reject")}
+						className="relative group w-16 h-16 flex items-center justify-center rounded-full bg-red-500 hover:bg-red-600 text-white shadow-lg"
+					>
+						<XMarkIcon className="w-8 h-8" />
+						<span className="absolute -top-[-74px] z-1 left-1/2 -translate-x-1/2 bg-gray-700 text-white text-xs font-semibold rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity">
+							Reject
+						</span>
+					</motion.button>
 
-				<motion.button
-					whileTap={{ scale: 0.9 }}
-					onClick={() => setOpenMessageModal(true)}
-					className="relative group w-16 h-16 flex items-center justify-center rounded-full bg-green-500 hover:bg-green-600 text-white shadow-lg"
-				>
-					<PaperAirplaneIcon className="w-8 h-8" />
-					<span className="absolute -top-15 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity">
-						Send Mentor Request
-					</span>
-				</motion.button>
+					<motion.button
+						whileTap={{ scale: 0.9 }}
+						onClick={() => setOpenMessageModal(true)}
+						className="relative group w-16 h-16 flex items-center justify-center rounded-full bg-green-500 hover:bg-green-600 text-white shadow-lg"
+					>
+						<PaperAirplaneIcon className="w-8 h-8" />
+						<span className="absolute -top-[-74px] z-1 left-1/2 -translate-x-1/2 bg-gray-700 text-white text-xs font-semibold rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity">
+							Request
+						</span>
+					</motion.button>
+				</div>
 			</div>
 
 			<AnimatePresence>

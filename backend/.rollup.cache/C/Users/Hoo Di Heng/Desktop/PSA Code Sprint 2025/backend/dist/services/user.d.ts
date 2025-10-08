@@ -31,16 +31,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -64,6 +64,19 @@ declare class UserService {
         }>;
         lastSeen: NativeDate;
         isOnline: boolean;
+        moods: mongoose.Types.DocumentArray<{
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }> & {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }>;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
@@ -98,16 +111,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -131,6 +144,19 @@ declare class UserService {
         }>;
         lastSeen: NativeDate;
         isOnline: boolean;
+        moods: mongoose.Types.DocumentArray<{
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }> & {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }>;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
@@ -170,16 +196,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -203,6 +229,19 @@ declare class UserService {
         }>;
         lastSeen: NativeDate;
         isOnline: boolean;
+        moods: mongoose.Types.DocumentArray<{
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }> & {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }>;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
@@ -237,16 +276,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -270,6 +309,19 @@ declare class UserService {
         }>;
         lastSeen: NativeDate;
         isOnline: boolean;
+        moods: mongoose.Types.DocumentArray<{
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }> & {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }>;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
@@ -309,16 +361,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -342,6 +394,19 @@ declare class UserService {
         }>;
         lastSeen: NativeDate;
         isOnline: boolean;
+        moods: mongoose.Types.DocumentArray<{
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }> & {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }>;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
@@ -376,16 +441,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -409,6 +474,19 @@ declare class UserService {
         }>;
         lastSeen: NativeDate;
         isOnline: boolean;
+        moods: mongoose.Types.DocumentArray<{
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }> & {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }>;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
@@ -448,16 +526,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -481,6 +559,19 @@ declare class UserService {
         }>;
         lastSeen: NativeDate;
         isOnline: boolean;
+        moods: mongoose.Types.DocumentArray<{
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }> & {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }>;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
@@ -515,16 +606,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -548,6 +639,19 @@ declare class UserService {
         }>;
         lastSeen: NativeDate;
         isOnline: boolean;
+        moods: mongoose.Types.DocumentArray<{
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }> & {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }>;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
@@ -587,16 +691,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -620,6 +724,19 @@ declare class UserService {
         }>;
         lastSeen: NativeDate;
         isOnline: boolean;
+        moods: mongoose.Types.DocumentArray<{
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }> & {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }>;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
@@ -654,16 +771,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -687,6 +804,19 @@ declare class UserService {
         }>;
         lastSeen: NativeDate;
         isOnline: boolean;
+        moods: mongoose.Types.DocumentArray<{
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }> & {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }>;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
@@ -698,76 +828,76 @@ declare class UserService {
     sendMentorshipRequest(senderID: string, mentorID: string, message?: string): Promise<void>;
     getChats(userID: string): Promise<(mongoose.Document<unknown, {}, {
         createdAt: NativeDate;
+        participants: mongoose.Types.ObjectId[];
         messages: mongoose.Types.DocumentArray<{
             type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-            metadata: any;
             createdAt: NativeDate;
             sender: mongoose.Types.ObjectId;
             read: boolean;
             content: string;
+            metadata: any;
             readAt?: NativeDate | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
             type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-            metadata: any;
             createdAt: NativeDate;
             sender: mongoose.Types.ObjectId;
             read: boolean;
             content: string;
+            metadata: any;
             readAt?: NativeDate | null | undefined;
         }> & {
             type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-            metadata: any;
             createdAt: NativeDate;
             sender: mongoose.Types.ObjectId;
             read: boolean;
             content: string;
+            metadata: any;
             readAt?: NativeDate | null | undefined;
         }>;
-        participants: mongoose.Types.ObjectId[];
     }> & {
         createdAt: NativeDate;
+        participants: mongoose.Types.ObjectId[];
         messages: mongoose.Types.DocumentArray<{
             type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-            metadata: any;
             createdAt: NativeDate;
             sender: mongoose.Types.ObjectId;
             read: boolean;
             content: string;
+            metadata: any;
             readAt?: NativeDate | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
             type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-            metadata: any;
             createdAt: NativeDate;
             sender: mongoose.Types.ObjectId;
             read: boolean;
             content: string;
+            metadata: any;
             readAt?: NativeDate | null | undefined;
         }> & {
             type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-            metadata: any;
             createdAt: NativeDate;
             sender: mongoose.Types.ObjectId;
             read: boolean;
             content: string;
+            metadata: any;
             readAt?: NativeDate | null | undefined;
         }>;
-        participants: mongoose.Types.ObjectId[];
     } & {
         _id: mongoose.Types.ObjectId;
     } & {
         __v: number;
     })[]>;
     getNotifications(userID: string): Promise<mongoose.Types.DocumentArray<{
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }> & {
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }>>;
     getWBConversations(userID: string): Promise<(mongoose.Document<unknown, {}, {
@@ -775,7 +905,6 @@ declare class UserService {
         updatedAt: NativeDate;
     } & {
         user: mongoose.Types.ObjectId;
-        title: string;
         messages: mongoose.Types.DocumentArray<{
             role: "user" | "assistant";
             content: string;
@@ -789,12 +918,12 @@ declare class UserService {
             content: string;
             timestamp: NativeDate;
         }>;
+        title: string;
     }> & {
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } & {
         user: mongoose.Types.ObjectId;
-        title: string;
         messages: mongoose.Types.DocumentArray<{
             role: "user" | "assistant";
             content: string;
@@ -808,6 +937,7 @@ declare class UserService {
             content: string;
             timestamp: NativeDate;
         }>;
+        title: string;
     } & {
         _id: mongoose.Types.ObjectId;
     } & {
@@ -844,16 +974,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -877,6 +1007,19 @@ declare class UserService {
         }>;
         lastSeen: NativeDate;
         isOnline: boolean;
+        moods: mongoose.Types.DocumentArray<{
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }> & {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }>;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
@@ -911,16 +1054,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -944,6 +1087,19 @@ declare class UserService {
         }>;
         lastSeen: NativeDate;
         isOnline: boolean;
+        moods: mongoose.Types.DocumentArray<{
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }> & {
+            date: NativeDate;
+            level: number;
+            notes: string[];
+        }>;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;

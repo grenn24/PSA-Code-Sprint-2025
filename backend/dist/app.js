@@ -52731,6 +52731,11 @@ class HttpError {
     }
 }
 
+const moodSchema = new Schema$1({
+    level: { type: Number, min: 1, max: 10, required: true },
+    date: { type: Date, required: true },
+    notes: { type: [String], default: [] },
+});
 const userSchema = new Schema$1({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true, lowercase: true },
@@ -52809,6 +52814,10 @@ const userSchema = new Schema$1({
     ],
     lastSeen: { type: Date, default: null },
     isOnline: { type: Boolean, default: false },
+    moods: {
+        type: [moodSchema],
+        default: [],
+    },
 });
 userSchema.virtual("mentors", {
     ref: "User",
@@ -69560,29 +69569,6 @@ class OpenAIClient {
         }
         return fullText;
     }
-    async chatWithContext(message, systemPrompt, history = [], context, onDelta) {
-        const userMessage = `${systemPrompt}\n\nContext:\n${context}\n\nUser: ${message}`;
-        const stream = await this.client.responses.create({
-            model: this.MODEL,
-            input: [
-                { role: "system", content: systemPrompt },
-                ...history.map((m) => ({ role: m.role, content: m.content })),
-                { role: "user", content: userMessage },
-            ],
-            temperature: this.TEMPERATURE,
-            stream: true,
-        });
-        let fullText = "";
-        for await (const event of stream) {
-            if (event.type === "response.output_text.delta") {
-                const chunk = event.delta;
-                fullText += chunk;
-                if (onDelta)
-                    onDelta(chunk);
-            }
-        }
-        return fullText;
-    }
     async getEmbedding(text) {
         const response = await this.client.embeddings.create({
             model: "text-embedding-3-large",
@@ -69601,6 +69587,7 @@ class OpenAIClient {
                 { role: "user", content: firstMessage },
             ],
             temperature: this.TEMPERATURE,
+            max_output_tokens: 16,
         });
         return response.output_text;
     }
@@ -69608,7 +69595,7 @@ class OpenAIClient {
 const openai = new OpenAIClient();
 
 class WBService {
-    SYSTEM_PROMPT = `
+    DEFAULT_SYSTEM_PROMPT = `
 		You are "Wellness Buddy", an empathetic, professional wellness assistant embedded in the PSA Horizon website. 
 		Speak in a warm, encouraging, and non-judgmental tone.
 
@@ -69654,7 +69641,7 @@ class WBService {
             role: "user",
             ...data,
         });
-        const response = await openai.chat(data.content, this.SYSTEM_PROMPT, history, onDelta);
+        const response = await openai.chat(data.content, this.DEFAULT_SYSTEM_PROMPT, history, onDelta);
         conversation.messages.push({
             role: "assistant",
             content: response,
@@ -69662,6 +69649,41 @@ class WBService {
         });
         await conversation.save();
         return conversation;
+    }
+    async postMessageStateless(data, history = [], onDelta) {
+        const response = await openai.chat(data.content, this.DEFAULT_SYSTEM_PROMPT, history, onDelta);
+        return response;
+    }
+    async trackMoodChanges(userID, data = undefined, history = [], onDelta) {
+        const user = await User.findById(userID).exec();
+        if (!user) {
+            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        }
+        const serialisedMoods = JSON.stringify(user.moods
+            .sort((a, b) => a.date.getTime() - b.date.getTime())
+            .slice(-30)
+            .map((m) => ({
+            date: m.date.toISOString().split("T")[0],
+            level: m.level,
+        })));
+        const initialUserMessage = `
+			Your task is to provide a friendly, empathetic summary of this user's mood trends, patterns, and insights. 
+			For example: identify any dips, improvements, consistent moods, and give gentle advice if necessary. 
+			Always keep a supportive and encouraging tone.
+
+			Important: Do NOT mention numeric mood levels. Instead, describe each mood in human-friendly terms. You can also use emojis if appropriate.
+
+			Mood History:
+			${serialisedMoods}
+			`;
+        const userMessage = data?.content ?? initialUserMessage;
+        const response = await openai.chat(userMessage, this.DEFAULT_SYSTEM_PROMPT, data?.content
+            ? [
+                { role: "assistant", content: initialUserMessage },
+                ...history,
+            ]
+            : [], onDelta);
+        return response;
     }
     async createConversation(userID, data) {
         const wbConversation = await WBConversation.create({
@@ -69694,6 +69716,34 @@ class WebsocketController {
             conversationID: message.conversationID,
         });
     }
+    async postMessageStateless(websocket, message) {
+        const onDelta = (chunk) => websocketService.sendToWS(websocket, {
+            type: "wb_stream_chunk",
+            data: chunk,
+            timestamp: new Date().toISOString(),
+            conversationID: message.conversationID,
+        });
+        const response = await wbService.postMessageStateless(message.data, message.history, onDelta);
+        websocketService.sendToWS(websocket, {
+            type: "wb_stream_end",
+            data: response,
+            timestamp: new Date().toISOString(),
+            conversationID: message.conversationID,
+        });
+    }
+    async trackMoodChanges(websocket, message) {
+        const onDelta = (chunk) => websocketService.sendToWS(websocket, {
+            type: "wb_stream_chunk",
+            data: chunk,
+            timestamp: new Date().toISOString(),
+        });
+        const response = await wbService.trackMoodChanges(message.userID, message.data, message.history, onDelta);
+        websocketService.sendToWS(websocket, {
+            type: "wb_stream_end",
+            data: response,
+            timestamp: new Date().toISOString(),
+        });
+    }
 }
 const websocketController = new WebsocketController();
 
@@ -69701,6 +69751,12 @@ function websocketRouter(rawMessage) {
     const message = JSON.parse(rawMessage);
     if (message.type === "wb_user_message") {
         websocketController.postMessage(this, message);
+    }
+    if (message.type === "wb_user_message_stateless") {
+        websocketController.postMessageStateless(this, message);
+    }
+    if (message.type === "wb_mood_changes") {
+        websocketController.trackMoodChanges(this, message);
     }
 }
 

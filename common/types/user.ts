@@ -1,3 +1,9 @@
+export interface Mood {
+	level: number;
+	date: Date;
+	notes: string[]
+}
+
 export interface User {
 	_id?: string;
 	name: string;
@@ -33,4 +39,5 @@ export interface User {
 	}[];
 	lastSeen?: Date;
 	isOnline: boolean;
+	moods: Mood[];
 }
