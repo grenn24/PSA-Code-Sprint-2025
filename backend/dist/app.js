@@ -52138,14 +52138,15 @@ function cors(request, response, next) {
     if (origin && allowedOrigins.includes(origin)) {
         response.setHeader("Access-Control-Allow-Origin", origin);
     }
-    const headers = new Headers({
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, X-Access-Token, Authorization, Accept-Language",
-        "Access-Control-Expose-Headers": "X-Access-Token",
-        "Access-Control-Allow-Credentials": "true",
-        "Access-Control-Max-Age": "1728000",
-    });
-    response.setHeaders(headers);
+    response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    response.setHeader("Access-Control-Allow-Headers", "Content-Type, X-Access-Token, Authorization, Accept-Language");
+    response.setHeader("Access-Control-Expose-Headers", "X-Access-Token");
+    response.setHeader("Access-Control-Allow-Credentials", "true");
+    response.setHeader("Access-Control-Max-Age", "1728000");
+    // Respond immediately for OPTIONS requests
+    if (request.method === "OPTIONS") {
+        response.sendStatus(204);
+    }
     next();
 }
 
@@ -69563,8 +69564,7 @@ class OpenAIClient {
             if (event.type === "response.output_text.delta") {
                 const chunk = event.delta;
                 fullText += chunk;
-                if (onDelta)
-                    onDelta(chunk);
+                onDelta?.(chunk);
             }
         }
         return fullText;
@@ -69582,7 +69582,12 @@ class OpenAIClient {
             input: [
                 {
                     role: "system",
-                    content: "Generate a concise title for this conversation starter. Keep it under 6 words.",
+                    content: `
+						Generate a concise title for this conversation starter.
+						Keep it under 6 words.
+						Do NOT include any prefixes like "Title:" or extra punctuation.
+						Return only the title itself.
+						`,
                 },
                 { role: "user", content: firstMessage },
             ],
@@ -69593,6 +69598,24 @@ class OpenAIClient {
     }
 }
 const openai = new OpenAIClient();
+
+var dayjs_min$1 = {exports: {}};
+
+var dayjs_min = dayjs_min$1.exports;
+
+var hasRequiredDayjs_min;
+
+function requireDayjs_min () {
+	if (hasRequiredDayjs_min) return dayjs_min$1.exports;
+	hasRequiredDayjs_min = 1;
+	(function (module, exports) {
+		!function(t,e){module.exports=e();}(dayjs_min,(function(){var t=1e3,e=6e4,n=36e5,r="millisecond",i="second",s="minute",u="hour",a="day",o="week",c="month",f="quarter",h="year",d="date",l="Invalid Date",$=/^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/,y=/\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g,M={name:"en",weekdays:"Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"),months:"January_February_March_April_May_June_July_August_September_October_November_December".split("_"),ordinal:function(t){var e=["th","st","nd","rd"],n=t%100;return "["+t+(e[(n-20)%10]||e[n]||e[0])+"]"}},m=function(t,e,n){var r=String(t);return !r||r.length>=e?t:""+Array(e+1-r.length).join(n)+t},v={s:m,z:function(t){var e=-t.utcOffset(),n=Math.abs(e),r=Math.floor(n/60),i=n%60;return (e<=0?"+":"-")+m(r,2,"0")+":"+m(i,2,"0")},m:function t(e,n){if(e.date()<n.date())return -t(n,e);var r=12*(n.year()-e.year())+(n.month()-e.month()),i=e.clone().add(r,c),s=n-i<0,u=e.clone().add(r+(s?-1:1),c);return +(-(r+(n-i)/(s?i-u:u-i))||0)},a:function(t){return t<0?Math.ceil(t)||0:Math.floor(t)},p:function(t){return {M:c,y:h,w:o,d:a,D:d,h:u,m:s,s:i,ms:r,Q:f}[t]||String(t||"").toLowerCase().replace(/s$/,"")},u:function(t){return void 0===t}},g="en",D={};D[g]=M;var p="$isDayjsObject",S=function(t){return t instanceof _||!(!t||!t[p])},w=function t(e,n,r){var i;if(!e)return g;if("string"==typeof e){var s=e.toLowerCase();D[s]&&(i=s),n&&(D[s]=n,i=s);var u=e.split("-");if(!i&&u.length>1)return t(u[0])}else {var a=e.name;D[a]=e,i=a;}return !r&&i&&(g=i),i||!r&&g},O=function(t,e){if(S(t))return t.clone();var n="object"==typeof e?e:{};return n.date=t,n.args=arguments,new _(n)},b=v;b.l=w,b.i=S,b.w=function(t,e){return O(t,{locale:e.$L,utc:e.$u,x:e.$x,$offset:e.$offset})};var _=function(){function M(t){this.$L=w(t.locale,null,true),this.parse(t),this.$x=this.$x||t.x||{},this[p]=true;}var m=M.prototype;return m.parse=function(t){this.$d=function(t){var e=t.date,n=t.utc;if(null===e)return new Date(NaN);if(b.u(e))return new Date;if(e instanceof Date)return new Date(e);if("string"==typeof e&&!/Z$/i.test(e)){var r=e.match($);if(r){var i=r[2]-1||0,s=(r[7]||"0").substring(0,3);return n?new Date(Date.UTC(r[1],i,r[3]||1,r[4]||0,r[5]||0,r[6]||0,s)):new Date(r[1],i,r[3]||1,r[4]||0,r[5]||0,r[6]||0,s)}}return new Date(e)}(t),this.init();},m.init=function(){var t=this.$d;this.$y=t.getFullYear(),this.$M=t.getMonth(),this.$D=t.getDate(),this.$W=t.getDay(),this.$H=t.getHours(),this.$m=t.getMinutes(),this.$s=t.getSeconds(),this.$ms=t.getMilliseconds();},m.$utils=function(){return b},m.isValid=function(){return !(this.$d.toString()===l)},m.isSame=function(t,e){var n=O(t);return this.startOf(e)<=n&&n<=this.endOf(e)},m.isAfter=function(t,e){return O(t)<this.startOf(e)},m.isBefore=function(t,e){return this.endOf(e)<O(t)},m.$g=function(t,e,n){return b.u(t)?this[e]:this.set(n,t)},m.unix=function(){return Math.floor(this.valueOf()/1e3)},m.valueOf=function(){return this.$d.getTime()},m.startOf=function(t,e){var n=this,r=!!b.u(e)||e,f=b.p(t),l=function(t,e){var i=b.w(n.$u?Date.UTC(n.$y,e,t):new Date(n.$y,e,t),n);return r?i:i.endOf(a)},$=function(t,e){return b.w(n.toDate()[t].apply(n.toDate("s"),(r?[0,0,0,0]:[23,59,59,999]).slice(e)),n)},y=this.$W,M=this.$M,m=this.$D,v="set"+(this.$u?"UTC":"");switch(f){case h:return r?l(1,0):l(31,11);case c:return r?l(1,M):l(0,M+1);case o:var g=this.$locale().weekStart||0,D=(y<g?y+7:y)-g;return l(r?m-D:m+(6-D),M);case a:case d:return $(v+"Hours",0);case u:return $(v+"Minutes",1);case s:return $(v+"Seconds",2);case i:return $(v+"Milliseconds",3);default:return this.clone()}},m.endOf=function(t){return this.startOf(t,false)},m.$set=function(t,e){var n,o=b.p(t),f="set"+(this.$u?"UTC":""),l=(n={},n[a]=f+"Date",n[d]=f+"Date",n[c]=f+"Month",n[h]=f+"FullYear",n[u]=f+"Hours",n[s]=f+"Minutes",n[i]=f+"Seconds",n[r]=f+"Milliseconds",n)[o],$=o===a?this.$D+(e-this.$W):e;if(o===c||o===h){var y=this.clone().set(d,1);y.$d[l]($),y.init(),this.$d=y.set(d,Math.min(this.$D,y.daysInMonth())).$d;}else l&&this.$d[l]($);return this.init(),this},m.set=function(t,e){return this.clone().$set(t,e)},m.get=function(t){return this[b.p(t)]()},m.add=function(r,f){var d,l=this;r=Number(r);var $=b.p(f),y=function(t){var e=O(l);return b.w(e.date(e.date()+Math.round(t*r)),l)};if($===c)return this.set(c,this.$M+r);if($===h)return this.set(h,this.$y+r);if($===a)return y(1);if($===o)return y(7);var M=(d={},d[s]=e,d[u]=n,d[i]=t,d)[$]||1,m=this.$d.getTime()+r*M;return b.w(m,this)},m.subtract=function(t,e){return this.add(-1*t,e)},m.format=function(t){var e=this,n=this.$locale();if(!this.isValid())return n.invalidDate||l;var r=t||"YYYY-MM-DDTHH:mm:ssZ",i=b.z(this),s=this.$H,u=this.$m,a=this.$M,o=n.weekdays,c=n.months,f=n.meridiem,h=function(t,n,i,s){return t&&(t[n]||t(e,r))||i[n].slice(0,s)},d=function(t){return b.s(s%12||12,t,"0")},$=f||function(t,e,n){var r=t<12?"AM":"PM";return n?r.toLowerCase():r};return r.replace(y,(function(t,r){return r||function(t){switch(t){case "YY":return String(e.$y).slice(-2);case "YYYY":return b.s(e.$y,4,"0");case "M":return a+1;case "MM":return b.s(a+1,2,"0");case "MMM":return h(n.monthsShort,a,c,3);case "MMMM":return h(c,a);case "D":return e.$D;case "DD":return b.s(e.$D,2,"0");case "d":return String(e.$W);case "dd":return h(n.weekdaysMin,e.$W,o,2);case "ddd":return h(n.weekdaysShort,e.$W,o,3);case "dddd":return o[e.$W];case "H":return String(s);case "HH":return b.s(s,2,"0");case "h":return d(1);case "hh":return d(2);case "a":return $(s,u,true);case "A":return $(s,u,false);case "m":return String(u);case "mm":return b.s(u,2,"0");case "s":return String(e.$s);case "ss":return b.s(e.$s,2,"0");case "SSS":return b.s(e.$ms,3,"0");case "Z":return i}return null}(t)||i.replace(":","")}))},m.utcOffset=function(){return 15*-Math.round(this.$d.getTimezoneOffset()/15)},m.diff=function(r,d,l){var $,y=this,M=b.p(d),m=O(r),v=(m.utcOffset()-this.utcOffset())*e,g=this-m,D=function(){return b.m(y,m)};switch(M){case h:$=D()/12;break;case c:$=D();break;case f:$=D()/3;break;case o:$=(g-v)/6048e5;break;case a:$=(g-v)/864e5;break;case u:$=g/n;break;case s:$=g/e;break;case i:$=g/t;break;default:$=g;}return l?$:b.a($)},m.daysInMonth=function(){return this.endOf(c).$D},m.$locale=function(){return D[this.$L]},m.locale=function(t,e){if(!t)return this.$L;var n=this.clone(),r=w(t,e,true);return r&&(n.$L=r),n},m.clone=function(){return b.w(this.$d,this)},m.toDate=function(){return new Date(this.valueOf())},m.toJSON=function(){return this.isValid()?this.toISOString():null},m.toISOString=function(){return this.$d.toISOString()},m.toString=function(){return this.$d.toUTCString()},M}(),k=_.prototype;return O.prototype=k,[["$ms",r],["$s",i],["$m",s],["$H",u],["$W",a],["$M",c],["$y",h],["$D",d]].forEach((function(t){k[t[1]]=function(e){return this.$g(e,t[0],t[1])};})),O.extend=function(t,e){return t.$i||(t(e,_,O),t.$i=true),O},O.locale=w,O.isDayjs=S,O.unix=function(t){return O(1e3*t)},O.en=D[g],O.Ls=D,O.p={},O})); 
+	} (dayjs_min$1));
+	return dayjs_min$1.exports;
+}
+
+var dayjs_minExports = requireDayjs_min();
+var dayjs = /*@__PURE__*/getDefaultExportFromCjs(dayjs_minExports);
 
 class WBService {
     DEFAULT_SYSTEM_PROMPT = `
@@ -69684,6 +69707,59 @@ class WBService {
             ]
             : [], onDelta);
         return response;
+    }
+    async getUsefulTips(userID) {
+        const user = await User.findById(userID).exec();
+        if (!user) {
+            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        }
+        const userProfile = `
+			Name: ${user.name}
+			Position: ${user.position}
+			Experience Level: ${user.experienceLevel}
+			Bio: ${user.bio ?? "N/A"}
+			Skills: ${user.skills
+            .map((s) => `${s.name} (level ${s.level})`)
+            .join(", ") || "N/A"}
+			Career Path: ${user.careerPath
+            .map((c) => `${c.position} (${c.progress}%)`)
+            .join(", ") || "N/A"}
+			Recent Mood Trends: ${user.moods.length > 0
+            ? user.moods
+                .slice(-10)
+                .map((m) => `${new Date(m.date).toLocaleDateString()}: ${m.level} (${m.notes ?? "N/A"})`)
+                .join("; ")
+            : "No recent moods recorded"}
+			`;
+        const prompt = `
+			You are a wellness assistant for PSA employees. 
+			Based on the user's profile and current time ${dayjs().format("HH:mm")}, provide **10 friendly, practical, and relatable "Tip of the Moment"s"** that the user can apply in their daily work routine to improve wellness, focus, or mental health.
+
+			- Each tip must be in JSON format: { "text": "...", "category": "...", "image": "..." }.
+			- Category should be one of: "Physical", "Mental", "Focus", "Hydration", or "Ergonomics".
+			- Image should be a realistic URL (can be placeholder images for now, e.g., from unsplash.com).
+			- Keep the tone friendly, encouraging, and concise.
+			- Avoid numeric mood levels; focus on actionable advice.
+
+			User Info:
+			${userProfile}
+
+			Return only a JSON array of 15 tip objects.
+			`;
+        const response = await openai.chat(prompt, this.DEFAULT_SYSTEM_PROMPT, [], undefined);
+        let jsonString = response
+            .trim()
+            .replace(/^```json\s*/, "")
+            .replace(/^```\s*/, "")
+            .replace(/```$/, "");
+        let tips = [];
+        try {
+            tips = JSON.parse(jsonString);
+        }
+        catch (err) {
+            console.error("Failed to parse tips from OpenAI:", err);
+        }
+        return tips;
     }
     async createConversation(userID, data) {
         const wbConversation = await WBConversation.create({
@@ -70222,6 +70298,7 @@ const auth = (role) => (request, response, next) => {
 };
 
 const userRouter = express.Router();
+userRouter.use(auth("user"));
 // Define the route handlers
 userRouter.get("", userController.catchErrors(userController.getAllUsers.bind(userController)));
 userRouter.get("/:ID", getID(), userController.catchErrors(userController.getUserByID.bind(userController)));
@@ -70230,7 +70307,7 @@ userRouter.get("/:ID/top-matches", getID(), userController.catchErrors(userContr
 userRouter.get("/:ID/chats", getID(), userController.catchErrors(userController.getChats.bind(userController)));
 userRouter.post("", userController.catchErrors(userController.createUser.bind(userController)));
 userRouter.post("/:ID/notifications", getID(), userController.catchErrors(userController.addNotification.bind(userController)));
-userRouter.post("/:ID/mentor-requests", getID(), auth("user"), userController.catchErrors(userController.sendMentorshipRequest.bind(userController)));
+userRouter.post("/:ID/mentor-requests", getID(), userController.catchErrors(userController.sendMentorshipRequest.bind(userController)));
 userRouter.put("/:ID", getID(), userController.catchErrors(userController.updateUser.bind(userController)));
 userRouter.delete("", userController.catchErrors(userController.deleteAllUsers.bind(userController)));
 
@@ -90633,6 +90710,10 @@ class WBController {
             .status(200)
             .send(await wbService.createConversation(user.id, request.body));
     }
+    async getUsefulTips(request, response) {
+        const user = response.locals.user;
+        response.status(200).send(await wbService.getUsefulTips(user.id));
+    }
     catchErrors(handler) {
         return async (request, response, next) => {
             try {
@@ -90661,7 +90742,9 @@ class WBController {
 const wbController = new WBController();
 
 const wbRouter = express.Router();
-wbRouter.post("/", auth("user"), wbController.catchErrors(wbController.createConversation.bind(wbController)));
+wbRouter.use(auth("user"));
+wbRouter.post("/", wbController.catchErrors(wbController.createConversation.bind(wbController)));
+wbRouter.post("/useful-tips", wbController.catchErrors(wbController.getUsefulTips.bind(wbController)));
 
 const routes = (app) => {
     const apiRouter = express.Router();

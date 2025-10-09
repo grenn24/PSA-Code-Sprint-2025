@@ -9,14 +9,15 @@ export default function cors(request, response, next) {
     if (origin && allowedOrigins.includes(origin)) {
         response.setHeader("Access-Control-Allow-Origin", origin);
     }
-    const headers = new Headers({
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, X-Access-Token, Authorization, Accept-Language",
-        "Access-Control-Expose-Headers": "X-Access-Token",
-        "Access-Control-Allow-Credentials": "true",
-        "Access-Control-Max-Age": "1728000",
-    });
-    response.setHeaders(headers);
+    response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    response.setHeader("Access-Control-Allow-Headers", "Content-Type, X-Access-Token, Authorization, Accept-Language");
+    response.setHeader("Access-Control-Expose-Headers", "X-Access-Token");
+    response.setHeader("Access-Control-Allow-Credentials", "true");
+    response.setHeader("Access-Control-Max-Age", "1728000");
+    // Respond immediately for OPTIONS requests
+    if (request.method === "OPTIONS") {
+        response.sendStatus(204);
+    }
     next();
 }
 //# sourceMappingURL=cors.js.map

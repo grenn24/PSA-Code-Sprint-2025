@@ -9,6 +9,7 @@ declare class WBService {
         updatedAt: NativeDate;
     } & {
         user: import("mongoose").Types.ObjectId;
+        title: string;
         messages: import("mongoose").Types.DocumentArray<{
             role: "user" | "assistant";
             content: string;
@@ -22,12 +23,12 @@ declare class WBService {
             content: string;
             timestamp: NativeDate;
         }>;
-        title: string;
     }> & {
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } & {
         user: import("mongoose").Types.ObjectId;
+        title: string;
         messages: import("mongoose").Types.DocumentArray<{
             role: "user" | "assistant";
             content: string;
@@ -41,7 +42,6 @@ declare class WBService {
             content: string;
             timestamp: NativeDate;
         }>;
-        title: string;
     } & {
         _id: import("mongoose").Types.ObjectId;
     } & {
@@ -55,6 +55,11 @@ declare class WBService {
         content: string;
         timestamp: Date;
     } | undefined, history: WBMessage[] | undefined, onDelta: (chunk: string) => void): Promise<string>;
+    getUsefulTips(userID: string): Promise<{
+        text: string;
+        category: string;
+        image: string;
+    }[]>;
     createConversation(userID: string, data?: {
         content: string;
         timestamp: Date;
@@ -63,6 +68,7 @@ declare class WBService {
         updatedAt: NativeDate;
     } & {
         user: import("mongoose").Types.ObjectId;
+        title: string;
         messages: import("mongoose").Types.DocumentArray<{
             role: "user" | "assistant";
             content: string;
@@ -76,12 +82,12 @@ declare class WBService {
             content: string;
             timestamp: NativeDate;
         }>;
-        title: string;
     }> & {
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } & {
         user: import("mongoose").Types.ObjectId;
+        title: string;
         messages: import("mongoose").Types.DocumentArray<{
             role: "user" | "assistant";
             content: string;
@@ -95,7 +101,6 @@ declare class WBService {
             content: string;
             timestamp: NativeDate;
         }>;
-        title: string;
     } & {
         _id: import("mongoose").Types.ObjectId;
     } & {

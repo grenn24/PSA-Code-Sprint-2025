@@ -8,6 +8,10 @@ class WBController {
             .status(200)
             .send(await wbService.createConversation(user.id, request.body));
     }
+    async getUsefulTips(request, response) {
+        const user = response.locals.user;
+        response.status(200).send(await wbService.getUsefulTips(user.id));
+    }
     catchErrors(handler) {
         return async (request, response, next) => {
             try {

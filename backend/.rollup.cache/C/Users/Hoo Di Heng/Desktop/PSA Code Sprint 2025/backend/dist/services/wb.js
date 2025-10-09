@@ -3,6 +3,7 @@ import { HttpError } from "../middlewares/error.js";
 import WBConversation from "../models/wb.js";
 import openai from "../utilities/openai.js";
 import User from "../models/user.js";
+import dayjs from "dayjs";
 class WBService {
     DEFAULT_SYSTEM_PROMPT = `
 		You are "Wellness Buddy", an empathetic, professional wellness assistant embedded in the PSA Horizon website. 
@@ -93,6 +94,59 @@ class WBService {
             ]
             : [], onDelta);
         return response;
+    }
+    async getUsefulTips(userID) {
+        const user = await User.findById(userID).exec();
+        if (!user) {
+            throw new HttpError("User not found", "NOT_FOUND", HttpStatusCode.NotFound);
+        }
+        const userProfile = `
+			Name: ${user.name}
+			Position: ${user.position}
+			Experience Level: ${user.experienceLevel}
+			Bio: ${user.bio ?? "N/A"}
+			Skills: ${user.skills
+            .map((s) => `${s.name} (level ${s.level})`)
+            .join(", ") || "N/A"}
+			Career Path: ${user.careerPath
+            .map((c) => `${c.position} (${c.progress}%)`)
+            .join(", ") || "N/A"}
+			Recent Mood Trends: ${user.moods.length > 0
+            ? user.moods
+                .slice(-10)
+                .map((m) => `${new Date(m.date).toLocaleDateString()}: ${m.level} (${m.notes ?? "N/A"})`)
+                .join("; ")
+            : "No recent moods recorded"}
+			`;
+        const prompt = `
+			You are a wellness assistant for PSA employees. 
+			Based on the user's profile and current time ${dayjs().format("HH:mm")}, provide **10 friendly, practical, and relatable "Tip of the Moment"s"** that the user can apply in their daily work routine to improve wellness, focus, or mental health.
+
+			- Each tip must be in JSON format: { "text": "...", "category": "...", "image": "..." }.
+			- Category should be one of: "Physical", "Mental", "Focus", "Hydration", or "Ergonomics".
+			- Image should be a realistic URL (can be placeholder images for now, e.g., from unsplash.com).
+			- Keep the tone friendly, encouraging, and concise.
+			- Avoid numeric mood levels; focus on actionable advice.
+
+			User Info:
+			${userProfile}
+
+			Return only a JSON array of 15 tip objects.
+			`;
+        const response = await openai.chat(prompt, this.DEFAULT_SYSTEM_PROMPT, [], undefined);
+        let jsonString = response
+            .trim()
+            .replace(/^```json\s*/, "")
+            .replace(/^```\s*/, "")
+            .replace(/```$/, "");
+        let tips = [];
+        try {
+            tips = JSON.parse(jsonString);
+        }
+        catch (err) {
+            console.error("Failed to parse tips from OpenAI:", err);
+        }
+        return tips;
     }
     async createConversation(userID, data) {
         const wbConversation = await WBConversation.create({
