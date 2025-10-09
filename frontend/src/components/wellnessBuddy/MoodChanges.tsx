@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import ReactMarkdown from "react-markdown";
+import React, { useEffect, useState } from "react";
+import dayjs from "dayjs";
 import {
 	LineChart,
 	Line,
@@ -11,106 +10,53 @@ import {
 	ResponsiveContainer,
 	Area,
 } from "recharts";
-import CountdownButton from "components/CountdownButton";
-import { WBMessage } from "@common/types/wb";
-import websocketService from "utilities/websocket";
-import wbService from "services/wb";
 import { useAppDispatch, useAppSelector } from "redux/store";
 import userService from "services/user";
 import { setUser } from "redux/slices/user";
-import dayjs from "dayjs";
 import WBConversationWindow from "./WBConversationWindow";
+import { User } from "@common/types/user";
+import { WBMessage } from "@common/types/wb";
 
-// Generate 12 months of daily data
-const generateHeatmapData = () => {
-	const start = new Date(new Date().getFullYear(), 0, 1);
-	const today = new Date();
-	const data: { date: Date; mood: number; day: string; month: string }[] = [];
+const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const GRADIENT_ID = "mood-gradient";
 
-	const months = [
-		"Jan",
-		"Feb",
-		"Mar",
-		"Apr",
-		"May",
-		"Jun",
-		"Jul",
-		"Aug",
-		"Sep",
-		"Oct",
-		"Nov",
-		"Dec",
-	];
-	const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-	for (let d = new Date(start); d <= today; d.setDate(d.getDate() + 1)) {
-		data.push({
-			date: new Date(d),
-			mood: Math.floor(Math.random() * 10) + 1,
-			day: weekdays[d.getDay()],
-			month: months[d.getMonth()],
-		});
+const getMoodInfo = (level: number | undefined) => {
+	if (!level) {
+		return {
+			colour: "#9ca3af",
+			text: "No Data",
+		};
 	}
-
-	return data;
-};
-
-const getMoodInfo = (level: number) => {
-	if (level >= 8)
-		return {
-			colour: "#10b981",
-			text: "Very Positive 😊",
-		};
-	if (level >= 6)
-		return {
-			colour: "#34d399",
-			text: "Positive 🙂",
-		};
-	if (level >= 4)
-		return {
-			colour: "#fbbf24",
-			text: "Neutral 😐",
-		};
-	if (level >= 2)
-		return {
-			colour: "#f87171",
-			text: "Negative 😞",
-		};
-	return {
-		colour: "#ef4444",
-		text: "Very Negative 😢",
-	};
+	return level >= 8
+		? { colour: "#10b981", text: "Very Positive 😊" }
+		: level >= 6
+		? { colour: "#34d399", text: "Positive 🙂" }
+		: level >= 4
+		? { colour: "#fbbf24", text: "Neutral 😐" }
+		: level >= 2
+		? { colour: "#f87171", text: "Negative 😞" }
+		: { colour: "#ef4444", text: "Very Negative 😢" };
 };
 
 const CustomTooltip = ({ active, payload }: any) => {
-	if (active && payload && payload.length) {
-		const { level, date } = payload[0].payload;
-		const { text, colour } = getMoodInfo(level);
-
-		const translucentBg = `${colour}99`;
-
-		return (
-			<div
-				className="p-3 rounded-lg shadow-md backdrop-blur-md border border-white/30"
-				style={{
-					backgroundColor: translucentBg,
-					color: "#000",
-				}}
-			>
-				<p className="font-semibold text-white">
-					{dayjs(date).format("dddd, MMM D")}
-				</p>
-				<p className="text-white">{text}</p>
-			</div>
-		);
-	}
-	return null;
+	if (!active || !payload?.length) return null;
+	const { level, date } = payload[0].payload;
+	const { text, colour } = getMoodInfo(level);
+	return (
+		<div
+			className="p-3 rounded-lg shadow-md backdrop-blur-md border border-white/30"
+			style={{ backgroundColor: `${colour}99`, color: "#000" }}
+		>
+			<p className="font-semibold text-white">
+				{dayjs(date).format("dddd, MMM D")}
+			</p>
+			<p className="text-white">{text}</p>
+		</div>
+	);
 };
 
-const MoodDot = (props: any) => {
-	const { cx, cy, payload, r } = props;
-	if (cx === null || cy === null) return null;
-	return (
+const MoodDot = ({ cx, cy, payload, r }: any) =>
+	cx !== null && cy !== null ? (
 		<circle
 			cx={cx}
 			cy={cy}
@@ -119,13 +65,10 @@ const MoodDot = (props: any) => {
 			stroke="#fff"
 			strokeWidth={2}
 		/>
-	);
-};
+	) : null;
 
-const MoodActiveDot = (props: any) => {
-	const { cx, cy, payload } = props;
-	if (cx === null || cy === null) return null;
-	return (
+const MoodActiveDot = ({ cx, cy, payload }: any) =>
+	cx !== null && cy !== null ? (
 		<circle
 			cx={cx}
 			cy={cy}
@@ -134,129 +77,58 @@ const MoodActiveDot = (props: any) => {
 			stroke="#fff"
 			strokeWidth={2}
 		/>
-	);
-};
+	) : null;
 
-const heatmapData = generateHeatmapData();
-const months = [
-	"Jan",
-	"Feb",
-	"Mar",
-	"Apr",
-	"May",
-	"Jun",
-	"Jul",
-	"Aug",
-	"Sep",
-	"Oct",
-	"Nov",
-	"Dec",
-];
-const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const GRADIENT_ID = "mood-gradient";
+interface DayCell {
+	date: dayjs.Dayjs;
+	mood?: User["moods"][number];
+}
 
-interface Prop {
+interface Props {
 	messages: WBMessage[];
 	setMessages: React.Dispatch<React.SetStateAction<WBMessage[]>>;
 	loadingWBReply: boolean;
-	setLoadingWBReply: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const MoodChanges = ({
-	messages,
-	setMessages,
-	loadingWBReply,
-	setLoadingWBReply,
-}: Prop) => {
+
+const MoodChanges = ({ messages, loadingWBReply }: Props) => {
 	const dispatch = useAppDispatch();
 	const { user } = useAppSelector((state) => state.user);
-	const inputRef = useRef<HTMLTextAreaElement>(null);
-	const [input, setInput] = useState("");
-
-	const getColor = (mood: number) => {
-		if (mood <= 3) return "bg-red-400";
-		if (mood <= 6) return "bg-yellow-400";
-		if (mood <= 8) return "bg-green-400";
-		return "bg-green-600";
-	};
-
-	const handleTrackMoodChanges = async (userID: string, input?: string) => {
-		setInput("");
-		setLoadingWBReply(true);
-
-		if (input) {
-			setMessages((prev) => [
-				...prev,
-				{ role: "user", content: input, timestamp: new Date() },
-			]);
-		}
-		setMessages((prev) => [
-			...prev,
-			{ role: "assistant", content: "", timestamp: new Date() },
-		]);
-
-		wbService.trackMoodChanges(
-			userID,
-			input ? { content: input, timestamp: new Date() } : undefined,
-			messages
-		);
-
-		const listener = (message) => {
-			if (message.type === "wb_stream_chunk") {
-				setLoadingWBReply(false);
-				setMessages((prev) => {
-					const last = prev[prev.length - 1];
-					if (last.role !== "assistant") {
-						return [
-							...prev,
-							{
-								role: "assistant",
-								content: message.data,
-								timestamp: new Date(),
-							},
-						];
-					} else {
-						return prev.map((hist, index) =>
-							index === prev.length - 1
-								? {
-										...hist,
-										content: hist.content + message.data,
-								  }
-								: hist
-						);
-					}
-				});
-			}
-
-			if (message.type === "wb_stream_end") {
-				websocketService.removeListener(listener);
-				setMessages((prev) =>
-					prev.map((hist, index) => {
-						if (
-							index === prev.length - 1 &&
-							hist.role === "assistant"
-						) {
-							return {
-								...hist,
-								content: message.data,
-							};
-						}
-						return hist;
-					})
-				);
-			}
-		};
-
-		websocketService.addListener(listener);
-		setTimeout(() => websocketService.removeListener(listener), 60000);
-	};
+	const [hoveredCell, setHoveredCell] = useState<DayCell | null>(null);
+	const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number }>({
+		x: 0,
+		y: 0,
+	});
 
 	useEffect(() => {
-		if (!user?._id) return;
-		userService.getUserByID(user._id).then((fetchedUser) => {
-			dispatch(setUser(fetchedUser));
-		});
-	}, []);
+		if (user?._id)
+			userService
+				.getUserByID(user._id)
+				.then((fetched) => dispatch(setUser(fetched)));
+	}, [user?._id, dispatch]);
+
 	if (!user) return null;
+
+	const startDate = dayjs().subtract(12, "month").startOf("week");
+	const allDays: DayCell[] = Array.from(
+		{ length: dayjs().diff(startDate, "day") + 1 },
+		(_, i) => {
+			const day = startDate.add(i, "day");
+			const mood = user.moods.find((m) =>
+				day.isSame(dayjs(m.date), "day")
+			);
+			return { date: day, mood };
+		}
+	);
+
+	const weeks: DayCell[][] = [];
+	for (let i = 0; i < allDays.length; i += 7)
+		weeks.push(allDays.slice(i, i + 7));
+
+	const monthLabels: Record<number, string> = {};
+	weeks.forEach((week, i) => {
+		const month = week[0].date.format("MMM");
+		if (!Object.values(monthLabels).includes(month)) monthLabels[i] = month;
+	});
 
 	return (
 		<>
@@ -264,6 +136,7 @@ const MoodChanges = ({
 				Mood Changes
 			</h2>
 
+			{/* Mood Over Time Line Chart */}
 			<div className="bg-white/70 backdrop-blur-md shadow-lg rounded-2xl p-4 flex flex-col gap-4 w-full max-w-250 mb-8">
 				<h3 className="text-xl font-medium text-gray-800">
 					Mood Over Time
@@ -297,9 +170,7 @@ const MoodChanges = ({
 						<XAxis
 							dataKey="date"
 							stroke="#6b7280"
-							tickFormatter={(date) =>
-								dayjs(date).format("MMM D")
-							}
+							tickFormatter={(d) => dayjs(d).format("MMM D")}
 						/>
 						<YAxis hide stroke="#6b7280" />
 						<Tooltip content={<CustomTooltip />} />
@@ -321,64 +192,100 @@ const MoodChanges = ({
 				</ResponsiveContainer>
 			</div>
 
+			{/* Mood Heatmap */}
 			<div className="bg-white/70 backdrop-blur-md shadow-lg rounded-2xl p-4 flex flex-col gap-4 w-full max-w-250 overflow-x-auto mb-16">
 				<h3 className="text-xl font-medium text-gray-800">
 					Mood Heatmap
 				</h3>
 
-				<div className="flex gap-1">
-					<div className="flex flex-col mr-2 justify-start gap-1 mt-4">
-						{weekdays.map((day) => (
+				<div className="flex flex-col gap-1">
+					{/* Month labels */}
+					<div className="flex gap-1 ml-12">
+						{weeks.map((_, i) => (
 							<div
-								key={day}
-								className="h-4 w-10 text-xs text-gray-500 flex items-center"
+								key={i}
+								className="w-4 h-4 flex justify-center text-xs text-gray-500"
 							>
-								{day}
+								{monthLabels[i] ?? ""}
 							</div>
 						))}
 					</div>
 
-					<div className="flex-1 overflow-x-auto">
-						<div className="flex gap-1 mb-1">
-							{months.map((month) => (
+					<div className="flex gap-1">
+						{/* Weekday labels */}
+						<div className="flex flex-col mr-2 justify-start gap-1">
+							{weekdays.map((day) => (
 								<div
-									key={month}
-									className="w-4 text-xs text-gray-500 flex justify-center"
+									key={day}
+									className="h-4 w-10 text-xs text-gray-500 flex items-center"
 								>
-									{month}
+									{day}
 								</div>
 							))}
 						</div>
-						<div className="flex gap-1 flex-col">
-							{weekdays.map((day) => (
-								<div key={day} className="flex gap-1">
-									{months.map((month) => {
-										const cell = heatmapData.find(
-											(c) =>
-												c.day === day &&
-												c.month === month
-										);
-										return (
-											<div
-												key={month}
-												className={`w-4 h-4 rounded-sm cursor-pointer ${
-													cell
-														? getColor(cell.mood)
-														: "bg-gray-200"
-												} transition-transform hover:scale-125`}
-												title={`Mood: ${
-													cell?.mood ?? "N/A"
-												} on ${day}, ${month}`}
-											/>
-										);
-									})}
+
+						{/* Heatmap weeks */}
+						<div className="flex gap-1 overflow-x-auto">
+							{weeks.map((week, i) => (
+								<div key={i} className="flex flex-col gap-1">
+									{week.map((cell) => (
+										<div
+											key={cell.date.unix()}
+											className="w-4 h-4 rounded-sm cursor-pointer transition-transform hover:scale-125"
+											style={{
+												backgroundColor: cell.mood
+													? getMoodInfo(
+															cell.mood.level
+													  ).colour
+													: "#e5e7eb",
+											}}
+											onMouseEnter={(e) => {
+												const rect = (
+													e.target as HTMLDivElement
+												).getBoundingClientRect();
+												setTooltipPos({
+													x:
+														rect.left +
+														rect.width / 2,
+													y: rect.top,
+												});
+												setHoveredCell(cell);
+											}}
+											onMouseLeave={() =>
+												setHoveredCell(null)
+											}
+										/>
+									))}
 								</div>
 							))}
+
+							{/* Tooltip rendered once outside the map */}
 						</div>
 					</div>
 				</div>
 			</div>
-
+			{hoveredCell && (
+				<div
+					className="fixed p-2 rounded-lg shadow-md backdrop-blur-md pointer-events-none z-10"
+					style={{
+						backgroundColor: `${
+							getMoodInfo(hoveredCell.mood?.level).colour
+						}99`,
+						color: "#000",
+						left: tooltipPos.x,
+						top: tooltipPos.y - 60,
+						transform: "translateX(-50%)",
+					}}
+				>
+					<p className="font-semibold text-white text-sm">
+						{dayjs(hoveredCell.mood?.date).format("dddd, MMM D")}
+					</p>
+					<p className="text-white text-xs">
+						{getMoodInfo(hoveredCell.mood?.level).text}
+					</p>
+				</div>
+			)}
+			{/* WB Conversation Window */}
 			<div className="flex flex-col gap-6 w-full max-w-250">
 				<WBConversationWindow
 					messages={messages}

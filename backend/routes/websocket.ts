@@ -15,6 +15,10 @@ function websocketRouter(this: WebSocket, rawMessage: string) {
 	if (message.type === "wb_mood_changes") {
 		websocketController.trackMoodChanges(this, message);
 	}
+
+	if (message.type === "wb_useful_tips") {
+		websocketController.getUsefulTips(this, message);
+	}
 }
 
 export default websocketRouter;

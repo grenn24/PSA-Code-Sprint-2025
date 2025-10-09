@@ -49,10 +49,7 @@ class WebsocketController {
 		});
 	}
 
-	async trackMoodChanges(
-		websocket: WebSocket,
-		message: WebsocketMessage
-	) {
+	async trackMoodChanges(websocket: WebSocket, message: WebsocketMessage) {
 		const onDelta = (chunk: string) =>
 			websocketService.sendToWS(websocket, {
 				type: "wb_stream_chunk",

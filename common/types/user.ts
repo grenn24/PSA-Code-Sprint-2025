@@ -1,7 +1,7 @@
 export interface Mood {
 	level: number;
 	date: Date;
-	notes: string[]
+	notes: string[];
 }
 
 export interface User {

@@ -85,6 +85,11 @@ class WBService {
 			});
 		});
 	}
+
+	async getUsefulTips(userID: string) {
+		const response = await this.apiClient.post<any, any>("/useful-tips", { userID });
+		return response.data;
+	}
 }
 
 const wbService = new WBService();

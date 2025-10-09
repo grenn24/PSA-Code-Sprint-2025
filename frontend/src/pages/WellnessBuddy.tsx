@@ -22,6 +22,7 @@ import CountdownButton from "components/CountdownButton";
 import MoodChanges from "components/wellnessBuddy/MoodChanges";
 import WBConversationWindow from "components/wellnessBuddy/WBConversationWindow";
 import WBInput from "components/wellnessBuddy/WBInput";
+import UsefulTips from "components/wellnessBuddy/UsefulTips";
 
 const STARTERS = [
 	{
@@ -92,19 +93,25 @@ const WellnessBuddy = () => {
 	const [tmpInput, setTmpInput] = useState("");
 	const [statelessMessages, setStatelessMessages] = useState<WBMessage[]>([]);
 	const [count, setCount] = useState<number | null>(null);
+	const startersContainerRef = useRef<HTMLDivElement>(null);
+	const [usefulTips, setUsefulTips] = useState<
+		{ text: string; category: string; image: string }[]
+	>([]);
 	const [isCreatingConversation, setIsCreatingConversation] = useState(false);
 	const [conversations, setConversations] = useState<WBConversation[]>([]);
 	const [selectedConversationID, setSelectedConversationID] = useState<
 		string | null
 	>(null);
 	const [selectedFeature, setSelectedFeature] = useState<
-		"moodChanges" | null
+		"moodChanges" | "tips" | null
 	>(null);
 	const selectedConversation = conversations.find(
 		(convo) => convo._id === selectedConversationID
 	);
 	const [loadingWBReply, setLoadingWBReply] = useState(false);
 	const [loadingWBEndReply, setLoadingWBEndReply] = useState(false);
+	const messagesContainerRef = useRef<HTMLDivElement>(null);
+	const [autoScroll, setAutoScroll] = useState(true);
 
 	useEffect(() => {
 		if (!user?._id) return;
@@ -134,7 +141,7 @@ const WellnessBuddy = () => {
 		const conversation = await wbService.createConversation(userMessage);
 		setIsCreatingConversation(false);
 		setTmpInput("");
-		setConversations((prev) => [...prev, conversation]);
+		setConversations((prev) => [conversation, ...prev]);
 		if (!conversation._id) return;
 		setSelectedConversationID(conversation._id);
 		handlePostMessage(conversation._id, input);
@@ -219,27 +226,6 @@ const WellnessBuddy = () => {
 		setTimeout(() => websocketService.removeListener(listener), 60000);
 	};
 
-	const startersContainerRef = useRef<HTMLDivElement>(null);
-	useEffect(() => {
-		const container = startersContainerRef.current;
-		if (!container) return;
-		const onWheel = (e: WheelEvent) => {
-			e.preventDefault();
-			container.scrollLeft += e.deltaY;
-		};
-		container.addEventListener("wheel", onWheel, { passive: false });
-		return () => container.removeEventListener("wheel", onWheel);
-	}, []);
-
-	const messagesContainerRef = useRef<HTMLDivElement>(null);
-	const [autoScroll, setAutoScroll] = useState(true);
-
-	const scrollToBottom = () => {
-		const container = messagesContainerRef.current;
-		if (!container) return;
-		container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
-	};
-
 	const handleTrackMoodChanges = async (userID: string, input?: string) => {
 		setInput("");
 		setLoadingWBReply(true);
@@ -312,6 +298,92 @@ const WellnessBuddy = () => {
 		setTimeout(() => websocketService.removeListener(listener), 60000);
 	};
 
+	const handleGetUsefulTips = async (userID: string, input?: string) => {
+		setInput("");
+		setLoadingWBReply(true);
+		if (input) {
+			setStatelessMessages((prev) => [
+				...prev,
+				{ role: "user", content: input, timestamp: new Date() },
+			]);
+
+			wbService.postMessageStateless(
+				{ content: input, timestamp: new Date() },
+				statelessMessages
+			);
+
+			const listener = (message) => {
+				if (message.type === "wb_stream_chunk") {
+					setLoadingWBReply(false);
+					setStatelessMessages((prev) => {
+						const last = prev[prev.length - 1];
+						if (last.role !== "assistant") {
+							return [
+								...prev,
+								{
+									role: "assistant",
+									content: message.data,
+									timestamp: new Date(),
+								},
+							];
+						} else {
+							return prev.map((hist, index) =>
+								index === prev.length - 1
+									? {
+											...hist,
+											content:
+												hist.content + message.data,
+									  }
+									: hist
+							);
+						}
+					});
+				}
+
+				if (message.type === "wb_stream_end") {
+					websocketService.removeListener(listener);
+					setStatelessMessages((prev) =>
+						prev.map((hist, index) => {
+							if (
+								index === prev.length - 1 &&
+								hist.role === "assistant"
+							) {
+								return {
+									...hist,
+									content: message.data,
+								};
+							}
+							return hist;
+						})
+					);
+				}
+			};
+
+			websocketService.addListener(listener);
+			setTimeout(() => websocketService.removeListener(listener), 60000);
+		} else {
+			const usefulTips = await wbService.getUsefulTips(userID);
+			setUsefulTips(usefulTips);
+			setStatelessMessages((prev) => [
+				...prev,
+				{
+					role: "assistant",
+					content:
+						"I hope you found these tips helpful! Feel free to ask me for more advice anytime. I'm here to help you stay energized and motivated!",
+
+					timestamp: new Date(),
+				},
+			]);
+			setLoadingWBReply(false);
+		}
+	};
+
+	const scrollToBottom = () => {
+		const container = messagesContainerRef.current;
+		if (!container) return;
+		container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
+	};
+
 	const EXPLORE = [
 		{
 			label: "Daily Check-In",
@@ -342,9 +414,8 @@ const WellnessBuddy = () => {
 			icon: <FaChartLine />,
 			gradient: "from-yellow-400 to-orange-500",
 			value: "moodChanges",
-			onClick: () => {
-				if (!user?._id) return;
-				handleTrackMoodChanges(user?._id);
+			onClick: (userID: string, input?: string) => {
+				handleTrackMoodChanges(userID, input);
 			},
 		},
 		{
@@ -352,8 +423,22 @@ const WellnessBuddy = () => {
 			icon: <FaLightbulb />,
 			gradient: "from-teal-400 to-cyan-500",
 			value: "tips",
+			onClick: (userID: string, input?: string) => {
+				handleGetUsefulTips(userID, input);
+			},
 		},
 	];
+
+	useEffect(() => {
+		const container = startersContainerRef.current;
+		if (!container) return;
+		const onWheel = (e: WheelEvent) => {
+			e.preventDefault();
+			container.scrollLeft += e.deltaY;
+		};
+		container.addEventListener("wheel", onWheel, { passive: false });
+		return () => container.removeEventListener("wheel", onWheel);
+	}, []);
 
 	return (
 		<div className="relative h-full bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100 text-gray-800">
@@ -386,7 +471,8 @@ const WellnessBuddy = () => {
 											setSelectedFeature(
 												item.value as any
 											);
-											item.onClick?.();
+											if (!user?._id) return;
+											item.onClick?.(user?._id);
 										}}
 										className={`min-w-[220px] p-5 rounded-2xl bg-gradient-to-br ${item.gradient} text-white shadow-lg flex flex-col justify-between cursor-pointer transition-all hover:brightness-95`}
 									>
@@ -480,6 +566,7 @@ const WellnessBuddy = () => {
 									onClick={() => {
 										setSelectedConversationID(null);
 										setSelectedFeature(null);
+										setStatelessMessages([]);
 									}}
 									className="flex items-center gap-2 text-blue-500 hover:text-blue-600 font-semibold"
 								>
@@ -519,7 +606,14 @@ const WellnessBuddy = () => {
 									messages={statelessMessages}
 									setMessages={setStatelessMessages}
 									loadingWBReply={loadingWBReply}
-									setLoadingWBReply={setLoadingWBReply}
+								/>
+							)}
+							{selectedFeature === "tips" && (
+								<UsefulTips
+									messages={statelessMessages}
+									loadingWBReply={loadingWBReply}
+									tips={usefulTips}
+									setTips={setUsefulTips}
 								/>
 							)}
 						</motion.div>
@@ -532,6 +626,12 @@ const WellnessBuddy = () => {
 				onSubmit={() => {
 					if (!selectedConversationID) {
 						handleCreateConversation(input);
+					} else if (selectedFeature) {
+						const feature = EXPLORE.find(
+							(f) => f.value === selectedFeature
+						);
+						if (!feature || !user?._id) return;
+						feature?.onClick?.(user?._id, input);
 					} else {
 						handlePostMessage(selectedConversationID, input);
 					}

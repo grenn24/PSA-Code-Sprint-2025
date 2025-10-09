@@ -10,6 +10,10 @@ class WBController {
 			.status(200)
 			.send(await wbService.createConversation(user.id, request.body));
 	}
+	async getUsefulTips(request: Request, response: Response) {
+		const user = response.locals.user;
+		response.status(200).send(await wbService.getUsefulTips(user.id));
+	}
 	catchErrors(handler) {
 		return async (
 			request: Request,

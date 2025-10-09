@@ -20,7 +20,7 @@ export class OpenAIClient {
 		message: string,
 		systemPrompt: string,
 		history: { role: "user" | "assistant"; content: string }[] = [],
-		onDelta: (message: string) => void
+		onDelta?: (message: string) => void
 	) {
 		const stream = await this.client.responses.create({
 			model: this.MODEL,
@@ -38,14 +38,12 @@ export class OpenAIClient {
 			if (event.type === "response.output_text.delta") {
 				const chunk = event.delta;
 				fullText += chunk;
-				if (onDelta) onDelta(chunk);
+				onDelta?.(chunk);
 			}
 		}
 
 		return fullText;
 	}
-
-
 
 	async getEmbedding(text: string) {
 		const response = await this.client.embeddings.create({
@@ -62,8 +60,12 @@ export class OpenAIClient {
 			input: [
 				{
 					role: "system",
-					content:
-						"Generate a concise title for this conversation starter. Keep it under 6 words.",
+					content: `
+						Generate a concise title for this conversation starter.
+						Keep it under 6 words.
+						Do NOT include any prefixes like "Title:" or extra punctuation.
+						Return only the title itself.
+						`,
 				},
 				{ role: "user", content: firstMessage },
 			],
