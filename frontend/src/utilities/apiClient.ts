@@ -110,7 +110,11 @@ export class ApiClient {
 			return response;
 		} catch (err) {
 			// Missing or invalid access token (401 Unauthorised)
-			if (err.status === HttpStatusCode.Unauthorized && err.body?.status === "INVALID_ACCESS_TOKEN") {
+			if (
+				err.status === HttpStatusCode.Unauthorized &&
+				(err.body?.status === "INVALID_ACCESS_TOKEN" ||
+					err.body?.status === "MISSING_ACCESS_TOKEN")
+			) {
 				store.dispatch(
 					enqueueMessage({
 						content: "Session expired, please log in again.",
@@ -148,7 +152,11 @@ export class ApiClient {
 			return response;
 		} catch (err) {
 			// Missing or invalid access token (401 Unauthorised)
-			if (err.status === HttpStatusCode.Unauthorized && err.body?.status === "INVALID_ACCESS_TOKEN") {
+			if (
+				err.status === HttpStatusCode.Unauthorized &&
+				(err.body?.status === "INVALID_ACCESS_TOKEN" ||
+					err.body?.status === "MISSING_ACCESS_TOKEN")
+			) {
 				store.dispatch(
 					enqueueMessage({
 						content: "Session expired, please log in again.",
@@ -186,7 +194,11 @@ export class ApiClient {
 			return response;
 		} catch (err) {
 			// Missing or invalid access token (401 Unauthorised)
-			if (err.status === HttpStatusCode.Unauthorized && err.body?.status === "INVALID_ACCESS_TOKEN") {
+			if (
+				err.status === HttpStatusCode.Unauthorized &&
+				(err.body?.status === "INVALID_ACCESS_TOKEN" ||
+					err.body?.status === "MISSING_ACCESS_TOKEN")
+			) {
 				store.dispatch(
 					enqueueMessage({
 						content: "Session expired, please log in again.",
@@ -224,7 +236,11 @@ export class ApiClient {
 			return response;
 		} catch (err) {
 			// Missing or invalid access token (401 Unauthorised)
-			if (err.status === HttpStatusCode.Unauthorized && err.body?.status === "INVALID_ACCESS_TOKEN") {
+			if (
+				err.status === HttpStatusCode.Unauthorized &&
+				(err.body?.status === "INVALID_ACCESS_TOKEN" ||
+					err.body?.status === "MISSING_ACCESS_TOKEN")
+			) {
 				store.dispatch(
 					enqueueMessage({
 						content: "Session expired, please log in again.",
@@ -256,7 +272,11 @@ export class ApiClient {
 			return response;
 		} catch (err) {
 			// Missing or invalid access token (401 Unauthorised)
-			if (err.status === HttpStatusCode.Unauthorized && err.body?.status === "INVALID_ACCESS_TOKEN") {
+			if (
+				err.status === HttpStatusCode.Unauthorized &&
+				(err.body?.status === "INVALID_ACCESS_TOKEN" ||
+					err.body?.status === "MISSING_ACCESS_TOKEN")
+			) {
 				store.dispatch(
 					enqueueMessage({
 						content: "Session expired, please log in again.",

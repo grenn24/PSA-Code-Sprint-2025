@@ -20,6 +20,9 @@ import ReactMarkdown from "react-markdown";
 import websocketService from "utilities/websocket";
 import CountdownButton from "components/CountdownButton";
 import MoodChanges from "components/wellnessBuddy/MoodChanges";
+import WBConversationWindow from "components/wellnessBuddy/WBConversationWindow";
+import WBInput from "components/wellnessBuddy/WBInput";
+
 const STARTERS = [
 	{
 		question: "How do I manage stress during tight deadlines?",
@@ -84,7 +87,6 @@ const STARTERS = [
 ];
 
 const WellnessBuddy = () => {
-	const inputRef = useRef<HTMLTextAreaElement>(null);
 	const { user } = useAppSelector((state) => state.user);
 	const [input, setInput] = useState("");
 	const [tmpInput, setTmpInput] = useState("");
@@ -229,18 +231,9 @@ const WellnessBuddy = () => {
 		return () => container.removeEventListener("wheel", onWheel);
 	}, []);
 
-	useLayoutEffect(() => {
-		if (inputRef.current) {
-			inputRef.current.style.height = "0px";
-			inputRef.current.style.height =
-				inputRef.current.scrollHeight + "px";
-		}
-	}, [input]);
-
 	const messagesContainerRef = useRef<HTMLDivElement>(null);
 	const [autoScroll, setAutoScroll] = useState(true);
 
-	// Scroll to bottom function
 	const scrollToBottom = () => {
 		const container = messagesContainerRef.current;
 		if (!container) return;
@@ -511,49 +504,13 @@ const WellnessBuddy = () => {
 												</div>
 											</div>
 										)}
-										{selectedConversation?.messages?.map(
-											(msg, i) => (
-												<div key={i}>
-													{msg.role ===
-													"assistant" ? (
-														<div className="w-full text-lg font-normal text-gray-800">
-															<ReactMarkdown>
-																{msg.content}
-															</ReactMarkdown>
-														</div>
-													) : (
-														<div className="flex justify-end">
-															<div className="max-w-[75%] bg-blue-400/60 text-lg px-3 py-2 rounded-2xl rounded-br-none shadow-xs">
-																{msg.content}
-															</div>
-														</div>
-													)}
-												</div>
-											)
-										)}
-										{loadingWBReply && (
-											<div className="flex items-center gap-2 w-full mt-2 ml-2">
-												{[0, 0.2, 0.4].map(
-													(delay, i) => (
-														<motion.div
-															key={i}
-															className="w-4 h-4 bg-blue-400 rounded-full shadow-sm"
-															animate={{
-																opacity: [
-																	0.3, 1, 0.3,
-																],
-															}}
-															transition={{
-																repeat: Infinity,
-																duration: 0.8,
-																ease: "easeInOut",
-																delay,
-															}}
-														/>
-													)
-												)}
-											</div>
-										)}
+										<WBConversationWindow
+											messages={
+												selectedConversation?.messages ||
+												[]
+											}
+											loadingWBReply={loadingWBReply}
+										/>
 									</div>
 								</>
 							)}
@@ -569,64 +526,22 @@ const WellnessBuddy = () => {
 					)}
 				</AnimatePresence>
 			</div>
-			<AnimatePresence>
-				{!selectedFeature && (
-					<motion.div
-						initial={{ y: 80, opacity: 0 }}
-						animate={{ y: 0, opacity: 1 }}
-						exit={{ y: 0, opacity: 1 }}
-						transition={{ duration: 0.5, ease: "easeOut" }}
-						className="absolute bottom-8 w-full px-8 flex justify-center"
-					>
-						<div className="relative flex items-end border border-gray-200 bg-white/50 backdrop-blur-md shadow-lg rounded-3xl px-4 py-2 min-h-14 h-full w-full max-w-280 gap-2">
-							<textarea
-								ref={inputRef}
-								value={input}
-								onChange={(e) => setInput(e.target.value)}
-								onKeyDown={(e) => {
-									if (count !== null) {
-										setCount(null);
-									}
-									if (e.key === "Enter" && !e.shiftKey) {
-										e.preventDefault();
-										if (!selectedConversationID) {
-											handleCreateConversation(input);
-										} else {
-											handlePostMessage(
-												selectedConversationID,
-												input
-											);
-										}
-									}
-								}}
-								placeholder="Type your thoughts"
-								className="flex-1 bg-transparent text-gray-800 placeholder-gray-500 focus:outline-none resize-none h-full my-auto"
-							/>
-							<AnimatePresence>
-								{(input.trim() || count !== null) && (
-									<CountdownButton
-										count={count}
-										setCount={setCount}
-										onCountdownComplete={() => {
-											handleCreateConversation(input);
-										}}
-										onClick={() => {
-											if (!selectedConversationID) {
-												handleCreateConversation(input);
-											} else {
-												handlePostMessage(
-													selectedConversationID,
-													input
-												);
-											}
-										}}
-									/>
-								)}
-							</AnimatePresence>
-						</div>
-					</motion.div>
-				)}
-			</AnimatePresence>
+			<WBInput
+				input={input}
+				setInput={setInput}
+				onSubmit={() => {
+					if (!selectedConversationID) {
+						handleCreateConversation(input);
+					} else {
+						handlePostMessage(selectedConversationID, input);
+					}
+				}}
+				countdownCounter={count}
+				setCountdownCounter={setCount}
+				onCountdownComplete={() => {
+					handleCreateConversation(input);
+				}}
+			/>
 		</div>
 	);
 };

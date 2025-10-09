@@ -5,6 +5,7 @@ import auth from "../middlewares/auth.js";
 
 const userRouter = express.Router();
 
+userRouter.use(auth("user"));
 // Define the route handlers
 userRouter.get(
 	"",
@@ -55,7 +56,6 @@ userRouter.post(
 userRouter.post(
 	"/:ID/mentor-requests",
 	getID(),
-	auth("user"),
 	userController.catchErrors(
 		userController.sendMentorshipRequest.bind(userController)
 	)
