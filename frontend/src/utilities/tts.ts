@@ -4,7 +4,7 @@ export const textToSpeech = (
 		lang = "en-US",
 		pitch = 1,
 		rate = 0.7,
-		volume = 0.4,
+		volume = 0.6,
 	}: {
 		lang?: string;
 		pitch?: number;
@@ -14,7 +14,7 @@ export const textToSpeech = (
 		lang: "en-US",
 		pitch: 1,
 		rate: 0.7,
-		volume: 0.4,
+		volume: 0.6,
 	}
 ) => {
 	const utterance = new SpeechSynthesisUtterance(text);
@@ -23,4 +23,9 @@ export const textToSpeech = (
 	utterance.rate = rate;
 	utterance.volume = volume;
 	window.speechSynthesis.speak(utterance);
+	
 };
+
+export const stopSpeech = () => {
+	window.speechSynthesis.cancel();
+}

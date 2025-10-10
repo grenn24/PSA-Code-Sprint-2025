@@ -88,8 +88,44 @@ class WBService {
 		});
 	}
 
+	async getUnbiasedOpinion(data: { content: string; timestamp: Date }) {
+		new Promise((resolve, reject) => {
+			const listener: Listener = (message) => {
+				if (message.type === "wb_stream_end") {
+					websocketService.removeListener(listener);
+					resolve(message.data);
+				}
+			};
+			websocketService.addListener(listener);
+			websocketService.send({
+				type: "wb_unbiased_opinion",
+				timestamp: new Date().toISOString(),
+				data,
+			});
+		});
+	}
+
+	async dailyCheckIn(data: { content: string; timestamp: Date }) {
+		new Promise((resolve, reject) => {
+			const listener: Listener = (message) => {
+				if (message.type === "wb_stream_end") {
+					websocketService.removeListener(listener);
+					resolve(message.data);
+				}
+			};
+			websocketService.addListener(listener);
+			websocketService.send({
+				type: "wb_daily_check_in",
+				timestamp: new Date().toISOString(),
+				data,
+			});
+		});
+	}
+
 	async getUsefulTips(userID: string) {
-		const response = await this.apiClient.post<any, any>("/useful-tips", { userID });
+		const response = await this.apiClient.post<any, any>("/useful-tips", {
+			userID,
+		});
 		return response.data;
 	}
 }

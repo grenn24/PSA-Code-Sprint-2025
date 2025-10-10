@@ -156,6 +156,66 @@ class WBService {
 		return response;
 	}
 
+	async getUnbiasedOpinion(
+		data: {
+			content: string;
+			timestamp: Date;
+		},
+		onDelta: (chunk: string) => void
+	) {
+		const userMessage = `
+			You are an impartial and thoughtful assistant. The user will ask a question or share a dilemma, and your task is to respond with an unbiased, balanced opinion.
+
+			Provide a clear, reasoned response that considers multiple perspectives fairly. 
+			- Do not take extreme sides unless there is strong factual or ethical justification.  
+			- Avoid emotionally charged or judgmental language.  
+			- If relevant, briefly outline the pros and cons of each viewpoint before summarizing your neutral stance.  
+			- Maintain a calm, respectful, and rational tone throughout.
+
+			Question:
+			${data.content}`;
+
+		const response = await openai.chat(
+			userMessage,
+			this.DEFAULT_SYSTEM_PROMPT,
+			[],
+			onDelta
+		);
+		return response;
+	}
+
+	async dailyCheckIn(
+		data: {
+			content: string;
+			timestamp: Date;
+		},
+		onDelta: (chunk: string) => void
+	) {
+	const userMessage = `
+		You are a thoughtful and impartial assistant. The user has shared their current mood or feelings. 
+		Your task is to suggest a **single, relevant follow-up question** that encourages the user to reflect further on their mood or experience.
+
+		Guidelines:
+		- The question should be open-ended and supportive.
+		- Avoid judgmental or leading questions.
+		- Keep it empathetic, gentle, and neutral in tone.
+		- The question should relate naturally to what the user just shared.
+
+		User's Mood / Reflection:
+		${data.content}
+
+		Please respond **only with the follow-up question**, nothing else.
+		`;
+
+		const response = await openai.chat(
+			userMessage,
+			this.DEFAULT_SYSTEM_PROMPT,
+			[],
+			onDelta
+		);
+		return response;
+	}
+
 	async getUsefulTips(userID: string) {
 		const user = await User.findById(userID).exec();
 		if (!user) {
@@ -200,7 +260,9 @@ class WBService {
 
 		const prompt = `
 			You are a wellness assistant for PSA employees. 
-			Based on the user's profile and current time ${dayjs().format("HH:mm")}, provide **10 friendly, practical, and relatable "Tip of the Moment"s"** that the user can apply in their daily work routine to improve wellness, focus, or mental health.
+			Based on the user's profile and current time ${dayjs().format(
+				"HH:mm"
+			)}, provide **10 friendly, practical, and relatable "Tip of the Moment"s"** that the user can apply in their daily work routine to improve wellness, focus, or mental health.
 
 			- Each tip must be in JSON format: { "text": "...", "category": "...", "image": "..." }.
 			- Category should be one of: "Physical", "Mental", "Focus", "Hydration", or "Ergonomics".

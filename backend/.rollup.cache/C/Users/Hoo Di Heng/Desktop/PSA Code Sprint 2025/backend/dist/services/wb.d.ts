@@ -55,6 +55,14 @@ declare class WBService {
         content: string;
         timestamp: Date;
     } | undefined, history: WBMessage[] | undefined, onDelta: (chunk: string) => void): Promise<string>;
+    getUnbiasedOpinion(data: {
+        content: string;
+        timestamp: Date;
+    }, onDelta: (chunk: string) => void): Promise<string>;
+    dailyCheckIn(data: {
+        content: string;
+        timestamp: Date;
+    }, onDelta: (chunk: string) => void): Promise<string>;
     getUsefulTips(userID: string): Promise<{
         text: string;
         category: string;

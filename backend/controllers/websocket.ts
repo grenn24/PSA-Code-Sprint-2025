@@ -69,6 +69,42 @@ class WebsocketController {
 			timestamp: new Date().toISOString(),
 		});
 	}
+
+	async getUnbiasedOpinion(websocket: WebSocket, message: WebsocketMessage) {
+		const onDelta = (chunk: string) =>
+			websocketService.sendToWS(websocket, {
+				type: "wb_stream_chunk",
+				data: chunk,
+				timestamp: new Date().toISOString(),
+			});
+		const response = await wbService.getUnbiasedOpinion(
+			message.data,
+			onDelta
+		);
+		websocketService.sendToWS(websocket, {
+			type: "wb_stream_end",
+			data: response,
+			timestamp: new Date().toISOString(),
+		});
+	}
+
+	async dailyCheckIn(websocket: WebSocket, message: WebsocketMessage) {
+		const onDelta = (chunk: string) =>
+			websocketService.sendToWS(websocket, {
+				type: "wb_stream_chunk",
+				data: chunk,
+				timestamp: new Date().toISOString(),
+			});
+		const response = await wbService.dailyCheckIn(
+			message.data,
+			onDelta
+		);
+		websocketService.sendToWS(websocket, {
+			type: "wb_stream_end",
+			data: response,
+			timestamp: new Date().toISOString(),
+		});
+	}
 }
 
 const websocketController = new WebsocketController();

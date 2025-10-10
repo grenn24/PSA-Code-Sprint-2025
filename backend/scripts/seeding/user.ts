@@ -147,7 +147,7 @@ const generateUsers = () => {
 				_id: "68e0fa5fb8980e66e106acb0",
 			},
 		],
-		moods: generateMoodData(dayjs().subtract(2, "month").toDate()),
+		moods: generateMoodData(dayjs().subtract(12, "month").toDate()),
 	});
 	return users;
 };

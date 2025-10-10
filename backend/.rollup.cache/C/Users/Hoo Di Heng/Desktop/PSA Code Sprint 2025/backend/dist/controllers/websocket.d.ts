@@ -4,6 +4,8 @@ declare class WebsocketController {
     postMessage(websocket: WebSocket, message: WebsocketMessage): Promise<void>;
     postMessageStateless(websocket: WebSocket, message: WebsocketMessage): Promise<void>;
     trackMoodChanges(websocket: WebSocket, message: WebsocketMessage): Promise<void>;
+    getUnbiasedOpinion(websocket: WebSocket, message: WebsocketMessage): Promise<void>;
+    dailyCheckIn(websocket: WebSocket, message: WebsocketMessage): Promise<void>;
 }
 declare const websocketController: WebsocketController;
 export default websocketController;

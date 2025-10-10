@@ -10,6 +10,12 @@ function websocketRouter(rawMessage) {
     if (message.type === "wb_mood_changes") {
         websocketController.trackMoodChanges(this, message);
     }
+    if (message.type === "wb_unbiased_opinion") {
+        websocketController.getUnbiasedOpinion(this, message);
+    }
+    if (message.type === "wb_daily_check_in") {
+        websocketController.dailyCheckIn(this, message);
+    }
 }
 export default websocketRouter;
 //# sourceMappingURL=websocket.js.map

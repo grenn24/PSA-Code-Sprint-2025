@@ -24,6 +24,8 @@ import WBConversationWindow from "components/wellnessBuddy/WBConversationWindow"
 import WBInput from "components/wellnessBuddy/WBInput";
 import UsefulTips from "components/wellnessBuddy/UsefulTips";
 import Mindfulness from "components/wellnessBuddy/Mindfulness";
+import Opinion from "components/wellnessBuddy/Opinion";
+import DailyCheckIn from "components/wellnessBuddy/DailyCheckIn";
 
 const STARTERS = [
 	{
@@ -105,7 +107,12 @@ const WellnessBuddy = () => {
 		string | null
 	>(null);
 	const [selectedFeature, setSelectedFeature] = useState<
-		"moodChanges" | "tips" | "mindfulness" | null
+		| "moodChanges"
+		| "tips"
+		| "mindfulness"
+		| "opinion"
+		| "dailyCheckIn"
+		| null
 	>(null);
 	const selectedConversation = conversations.find(
 		(convo) => convo._id === selectedConversationID
@@ -388,6 +395,134 @@ const WellnessBuddy = () => {
 		}
 	};
 
+	const handleUnbiasedOpinionResponse = async (input: string) => {
+		setInput("");
+		setLoadingWBReply(true);
+
+		setStatelessMessages((prev) => [
+			...prev,
+			{ role: "user", content: input, timestamp: new Date() },
+		]);
+
+		wbService.postMessageStateless(
+			{ content: input, timestamp: new Date() },
+			statelessMessages
+		);
+
+		const listener = (message) => {
+			if (message.type === "wb_stream_chunk") {
+				setLoadingWBReply(false);
+				setStatelessMessages((prev) => {
+					const last = prev[prev.length - 1];
+					if (last.role !== "assistant") {
+						return [
+							...prev,
+							{
+								role: "assistant",
+								content: message.data,
+								timestamp: new Date(),
+							},
+						];
+					} else {
+						return prev.map((hist, index) =>
+							index === prev.length - 1
+								? {
+										...hist,
+										content: hist.content + message.data,
+								  }
+								: hist
+						);
+					}
+				});
+			}
+
+			if (message.type === "wb_stream_end") {
+				websocketService.removeListener(listener);
+				setStatelessMessages((prev) =>
+					prev.map((hist, index) => {
+						if (
+							index === prev.length - 1 &&
+							hist.role === "assistant"
+						) {
+							return {
+								...hist,
+								content: message.data,
+							};
+						}
+						return hist;
+					})
+				);
+			}
+		};
+
+		websocketService.addListener(listener);
+		setTimeout(() => websocketService.removeListener(listener), 60000);
+	};
+
+	const handleDailyCheckInResponse = async (input: string) => {
+		setInput("");
+		setLoadingWBReply(true);
+
+		setStatelessMessages((prev) => [
+			...prev,
+			{ role: "user", content: input, timestamp: new Date() },
+		]);
+
+		wbService.postMessageStateless(
+			{ content: input, timestamp: new Date() },
+			statelessMessages
+		);
+
+		const listener = (message) => {
+			if (message.type === "wb_stream_chunk") {
+				setLoadingWBReply(false);
+				setStatelessMessages((prev) => {
+					const last = prev[prev.length - 1];
+					if (last.role !== "assistant") {
+						return [
+							...prev,
+							{
+								role: "assistant",
+								content: message.data,
+								timestamp: new Date(),
+							},
+						];
+					} else {
+						return prev.map((hist, index) =>
+							index === prev.length - 1
+								? {
+										...hist,
+										content: hist.content + message.data,
+								  }
+								: hist
+						);
+					}
+				});
+			}
+
+			if (message.type === "wb_stream_end") {
+				websocketService.removeListener(listener);
+				setStatelessMessages((prev) =>
+					prev.map((hist, index) => {
+						if (
+							index === prev.length - 1 &&
+							hist.role === "assistant"
+						) {
+							return {
+								...hist,
+								content: message.data,
+							};
+						}
+						return hist;
+					})
+				);
+			}
+		};
+
+		websocketService.addListener(listener);
+		setTimeout(() => websocketService.removeListener(listener), 60000);
+	};
+
 	const scrollToBottom = () => {
 		const container = messagesContainerRef.current;
 		if (!container) return;
@@ -400,24 +535,38 @@ const WellnessBuddy = () => {
 			icon: <FaHeart />,
 			gradient: "from-pink-400 to-rose-500",
 			value: "dailyCheckIn",
+			renderWBInput: () => {
+				return statelessMessages.length >= 1;
+			},
+			onClick: (_userID: string, input?: string) => {
+				if (!input) return;
+				handleDailyCheckInResponse(input);
+			},
 		},
 		{
 			label: "Talk Through Problems",
 			icon: <FaComments />,
 			gradient: "from-blue-400 to-indigo-500",
 			value: "talkThroughProblems",
+			renderWBInput: () => false,
 		},
 		{
 			label: "Get an Unbiased Opinion",
 			icon: <FaBalanceScale />,
 			gradient: "from-green-400 to-emerald-500",
-			value: "getAnUnbiasedOpinion",
+			value: "opinion",
+			onClick: (_userID: string, input?: string) => {
+				if (!input) return;
+				handleUnbiasedOpinionResponse(input);
+			},
+			renderWBInput: () => statelessMessages.length >= 1,
 		},
 		{
 			label: "Mindfulness",
 			icon: <FaSpa />,
 			gradient: "from-purple-400 to-violet-500",
 			value: "mindfulness",
+			renderWBInput: () => false,
 		},
 		{
 			label: "Track Mood Changes",
@@ -427,6 +576,7 @@ const WellnessBuddy = () => {
 			onClick: (userID: string, input?: string) => {
 				handleTrackMoodChanges(userID, input);
 			},
+			renderWBInput: () => true,
 		},
 		{
 			label: "Useful Tips",
@@ -436,6 +586,7 @@ const WellnessBuddy = () => {
 			onClick: (userID: string, input?: string) => {
 				handleGetUsefulTips(userID, input);
 			},
+			renderWBInput: () => statelessMessages.length >= 1,
 		},
 	];
 
@@ -631,32 +782,58 @@ const WellnessBuddy = () => {
 							{selectedFeature === "mindfulness" && (
 								<Mindfulness />
 							)}
+							{selectedFeature === "opinion" && (
+								<Opinion
+									messages={statelessMessages}
+									setMessages={setStatelessMessages}
+									loadingWBReply={loadingWBReply}
+									setLoadingWBReply={setLoadingWBReply}
+								/>
+							)}
+							{selectedFeature === "dailyCheckIn" && (
+								<DailyCheckIn
+									messages={statelessMessages}
+									setMessages={setStatelessMessages}
+									loadingWBReply={loadingWBReply}
+									setLoadingWBReply={setLoadingWBReply}
+								/>
+							)}
 						</motion.div>
 					)}
 				</AnimatePresence>
 			</div>
-			<WBInput
-				input={input}
-				setInput={setInput}
-				onSubmit={() => {
-					if (selectedFeature) {
-						const feature = EXPLORE.find(
-							(f) => f.value === selectedFeature
-						);
-						if (!feature || !user?._id) return;
-						feature?.onClick?.(user?._id, input);
-					} else if (!selectedConversationID) {
-						handleCreateConversation(input);
-					} else {
-						handlePostMessage(selectedConversationID, input);
-					}
-				}}
-				countdownCounter={count}
-				setCountdownCounter={setCount}
-				onCountdownComplete={() => {
-					handleCreateConversation(input);
-				}}
-			/>
+			<AnimatePresence>
+				{(!selectedFeature ||
+					!!EXPLORE.find(
+						(f) => f.value === selectedFeature
+					)?.renderWBInput?.()) && (
+					<WBInput
+						input={input}
+						setInput={setInput}
+						onSubmit={() => {
+							if (selectedFeature) {
+								const feature = EXPLORE.find(
+									(f) => f.value === selectedFeature
+								);
+								if (!feature || !user?._id) return;
+								feature?.onClick?.(user?._id, input);
+							} else if (!selectedConversationID) {
+								handleCreateConversation(input);
+							} else {
+								handlePostMessage(
+									selectedConversationID,
+									input
+								);
+							}
+						}}
+						countdownCounter={count}
+						setCountdownCounter={setCount}
+						onCountdownComplete={() => {
+							handleCreateConversation(input);
+						}}
+					/>
+				)}
+			</AnimatePresence>
 		</div>
 	);
 };

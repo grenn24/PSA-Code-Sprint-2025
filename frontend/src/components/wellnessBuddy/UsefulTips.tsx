@@ -12,7 +12,6 @@ interface Tip {
 
 interface Props {
 	messages: WBMessage[];
-
 	loadingWBReply: boolean;
 	tips: Tip[];
 	setTips: React.Dispatch<React.SetStateAction<Tip[]>>;
