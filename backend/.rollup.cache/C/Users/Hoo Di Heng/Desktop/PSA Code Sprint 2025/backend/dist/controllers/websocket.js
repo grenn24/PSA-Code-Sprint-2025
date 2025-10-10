@@ -23,7 +23,7 @@ class WebsocketController {
             timestamp: new Date().toISOString(),
             conversationID: message.conversationID,
         });
-        const response = await wbService.postMessageStateless(message.data, message.history, onDelta);
+        const response = await wbService.postMessageStateless(message.data, message.history, onDelta, message.systemPrompt);
         websocketService.sendToWS(websocket, {
             type: "wb_stream_end",
             data: response,

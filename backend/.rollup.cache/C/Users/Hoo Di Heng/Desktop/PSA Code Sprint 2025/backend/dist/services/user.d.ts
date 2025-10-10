@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 declare class UserService {
     getAllUsers(): Promise<(mongoose.Document<unknown, {}, {
-        role: "user" | "admin";
         name: string;
+        role: "user" | "admin";
         createdAt: NativeDate;
         position: string;
         email: string;
@@ -31,16 +31,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -81,8 +81,8 @@ declare class UserService {
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
     }> & {
-        role: "user" | "admin";
         name: string;
+        role: "user" | "admin";
         createdAt: NativeDate;
         position: string;
         email: string;
@@ -111,16 +111,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -166,8 +166,8 @@ declare class UserService {
         __v: number;
     })[]>;
     createUser(userData: any): Promise<mongoose.Document<unknown, {}, {
-        role: "user" | "admin";
         name: string;
+        role: "user" | "admin";
         createdAt: NativeDate;
         position: string;
         email: string;
@@ -196,16 +196,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -246,8 +246,8 @@ declare class UserService {
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
     }> & {
-        role: "user" | "admin";
         name: string;
+        role: "user" | "admin";
         createdAt: NativeDate;
         position: string;
         email: string;
@@ -276,16 +276,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -331,8 +331,8 @@ declare class UserService {
         __v: number;
     }>;
     getUserByID(userId: any): Promise<mongoose.Document<unknown, {}, {
-        role: "user" | "admin";
         name: string;
+        role: "user" | "admin";
         createdAt: NativeDate;
         position: string;
         email: string;
@@ -361,16 +361,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -411,8 +411,8 @@ declare class UserService {
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
     }> & {
-        role: "user" | "admin";
         name: string;
+        role: "user" | "admin";
         createdAt: NativeDate;
         position: string;
         email: string;
@@ -441,16 +441,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -496,8 +496,8 @@ declare class UserService {
         __v: number;
     }>;
     updateUser(userId: any, userData: any): Promise<(mongoose.Document<unknown, {}, {
-        role: "user" | "admin";
         name: string;
+        role: "user" | "admin";
         createdAt: NativeDate;
         position: string;
         email: string;
@@ -526,16 +526,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -576,8 +576,8 @@ declare class UserService {
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
     }> & {
-        role: "user" | "admin";
         name: string;
+        role: "user" | "admin";
         createdAt: NativeDate;
         position: string;
         email: string;
@@ -606,16 +606,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -661,8 +661,8 @@ declare class UserService {
         __v: number;
     }) | null>;
     addNotification(userId: string, message: string): Promise<mongoose.Document<unknown, {}, {
-        role: "user" | "admin";
         name: string;
+        role: "user" | "admin";
         createdAt: NativeDate;
         position: string;
         email: string;
@@ -691,16 +691,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -741,8 +741,8 @@ declare class UserService {
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
     }> & {
-        role: "user" | "admin";
         name: string;
+        role: "user" | "admin";
         createdAt: NativeDate;
         position: string;
         email: string;
@@ -771,16 +771,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -828,56 +828,56 @@ declare class UserService {
     sendMentorshipRequest(senderID: string, mentorID: string, message?: string): Promise<void>;
     getChats(userID: string): Promise<(mongoose.Document<unknown, {}, {
         messages: mongoose.Types.DocumentArray<{
-            content: string;
             type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-            metadata: any;
+            content: string;
             createdAt: NativeDate;
             read: boolean;
             sender: mongoose.Types.ObjectId;
+            metadata: any;
             readAt?: NativeDate | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            content: string;
             type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-            metadata: any;
+            content: string;
             createdAt: NativeDate;
             read: boolean;
             sender: mongoose.Types.ObjectId;
+            metadata: any;
             readAt?: NativeDate | null | undefined;
         }> & {
-            content: string;
             type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-            metadata: any;
+            content: string;
             createdAt: NativeDate;
             read: boolean;
             sender: mongoose.Types.ObjectId;
+            metadata: any;
             readAt?: NativeDate | null | undefined;
         }>;
         createdAt: NativeDate;
         participants: mongoose.Types.ObjectId[];
     }> & {
         messages: mongoose.Types.DocumentArray<{
-            content: string;
             type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-            metadata: any;
+            content: string;
             createdAt: NativeDate;
             read: boolean;
             sender: mongoose.Types.ObjectId;
+            metadata: any;
             readAt?: NativeDate | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            content: string;
             type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-            metadata: any;
+            content: string;
             createdAt: NativeDate;
             read: boolean;
             sender: mongoose.Types.ObjectId;
+            metadata: any;
             readAt?: NativeDate | null | undefined;
         }> & {
-            content: string;
             type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-            metadata: any;
+            content: string;
             createdAt: NativeDate;
             read: boolean;
             sender: mongoose.Types.ObjectId;
+            metadata: any;
             readAt?: NativeDate | null | undefined;
         }>;
         createdAt: NativeDate;
@@ -888,24 +888,24 @@ declare class UserService {
         __v: number;
     })[]>;
     getNotifications(userID: string): Promise<mongoose.Types.DocumentArray<{
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }> & {
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }>>;
     getWBConversations(userID: string): Promise<(mongoose.Document<unknown, {}, {
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } & {
-        user: mongoose.Types.ObjectId;
         title: string;
+        user: mongoose.Types.ObjectId;
         messages: mongoose.Types.DocumentArray<{
             role: "user" | "assistant";
             content: string;
@@ -923,8 +923,8 @@ declare class UserService {
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } & {
-        user: mongoose.Types.ObjectId;
         title: string;
+        user: mongoose.Types.ObjectId;
         messages: mongoose.Types.DocumentArray<{
             role: "user" | "assistant";
             content: string;
@@ -944,8 +944,8 @@ declare class UserService {
         __v: number;
     })[]>;
     getTopMatchedMentors(userId: string, limit?: number, page?: number): Promise<(mongoose.Document<unknown, {}, {
-        role: "user" | "admin";
         name: string;
+        role: "user" | "admin";
         createdAt: NativeDate;
         position: string;
         email: string;
@@ -974,16 +974,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
@@ -1024,8 +1024,8 @@ declare class UserService {
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
     }> & {
-        role: "user" | "admin";
         name: string;
+        role: "user" | "admin";
         createdAt: NativeDate;
         position: string;
         email: string;
@@ -1054,16 +1054,16 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }> & {
-            message: string;
             createdAt: NativeDate;
+            message: string;
             read: boolean;
         }>;
         careerPath: mongoose.Types.DocumentArray<{

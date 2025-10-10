@@ -8,8 +8,8 @@ declare class WBService {
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } & {
-        user: import("mongoose").Types.ObjectId;
         title: string;
+        user: import("mongoose").Types.ObjectId;
         messages: import("mongoose").Types.DocumentArray<{
             role: "user" | "assistant";
             content: string;
@@ -27,8 +27,8 @@ declare class WBService {
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } & {
-        user: import("mongoose").Types.ObjectId;
         title: string;
+        user: import("mongoose").Types.ObjectId;
         messages: import("mongoose").Types.DocumentArray<{
             role: "user" | "assistant";
             content: string;
@@ -50,7 +50,7 @@ declare class WBService {
     postMessageStateless(data: {
         content: string;
         timestamp: Date;
-    }, history: WBMessage[] | undefined, onDelta: (chunk: string) => void): Promise<string>;
+    }, history: WBMessage[] | undefined, onDelta: (chunk: string) => void, systemPrompt?: string): Promise<string>;
     trackMoodChanges(userID: string, data: {
         content: string;
         timestamp: Date;
@@ -67,8 +67,8 @@ declare class WBService {
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } & {
-        user: import("mongoose").Types.ObjectId;
         title: string;
+        user: import("mongoose").Types.ObjectId;
         messages: import("mongoose").Types.DocumentArray<{
             role: "user" | "assistant";
             content: string;
@@ -86,8 +86,8 @@ declare class WBService {
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } & {
-        user: import("mongoose").Types.ObjectId;
         title: string;
+        user: import("mongoose").Types.ObjectId;
         messages: import("mongoose").Types.DocumentArray<{
             role: "user" | "assistant";
             content: string;

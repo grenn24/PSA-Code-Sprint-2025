@@ -39,7 +39,8 @@ class WBService {
 
 	async postMessageStateless(
 		data: { content: string; timestamp: Date },
-		history: WBMessage[] = []
+		history: WBMessage[] = [],
+		systemPrompt?: string
 	) {
 		new Promise((resolve, reject) => {
 			const listener: Listener = (message) => {
@@ -54,6 +55,7 @@ class WBService {
 				timestamp: new Date().toISOString(),
 				data,
 				history,
+				systemPrompt,
 			});
 		});
 	}

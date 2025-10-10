@@ -69673,8 +69673,8 @@ class WBService {
         await conversation.save();
         return conversation;
     }
-    async postMessageStateless(data, history = [], onDelta) {
-        const response = await openai.chat(data.content, this.DEFAULT_SYSTEM_PROMPT, history, onDelta);
+    async postMessageStateless(data, history = [], onDelta, systemPrompt) {
+        const response = await openai.chat(data.content, systemPrompt ?? this.DEFAULT_SYSTEM_PROMPT, history, onDelta);
         return response;
     }
     async trackMoodChanges(userID, data = undefined, history = [], onDelta) {
@@ -69695,6 +69695,7 @@ class WBService {
 			Always keep a supportive and encouraging tone.
 
 			Important: Do NOT mention numeric mood levels. Instead, describe each mood in human-friendly terms. You can also use emojis if appropriate.
+			You may suggest seeking professional help if the user expresses suicidal ideation, self-harm intent arising from unpleasant moods like anxiety or depression.
 
 			Mood History:
 			${serialisedMoods}
@@ -69799,7 +69800,7 @@ class WebsocketController {
             timestamp: new Date().toISOString(),
             conversationID: message.conversationID,
         });
-        const response = await wbService.postMessageStateless(message.data, message.history, onDelta);
+        const response = await wbService.postMessageStateless(message.data, message.history, onDelta, message.systemPrompt);
         websocketService.sendToWS(websocket, {
             type: "wb_stream_end",
             data: response,

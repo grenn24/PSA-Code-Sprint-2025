@@ -23,6 +23,7 @@ import MoodChanges from "components/wellnessBuddy/MoodChanges";
 import WBConversationWindow from "components/wellnessBuddy/WBConversationWindow";
 import WBInput from "components/wellnessBuddy/WBInput";
 import UsefulTips from "components/wellnessBuddy/UsefulTips";
+import Mindfulness from "components/wellnessBuddy/Mindfulness";
 
 const STARTERS = [
 	{
@@ -97,13 +98,14 @@ const WellnessBuddy = () => {
 	const [usefulTips, setUsefulTips] = useState<
 		{ text: string; category: string; image: string }[]
 	>([]);
+	const [usefulTipIndex, setUsefulTipIndex] = useState(0);
 	const [isCreatingConversation, setIsCreatingConversation] = useState(false);
 	const [conversations, setConversations] = useState<WBConversation[]>([]);
 	const [selectedConversationID, setSelectedConversationID] = useState<
 		string | null
 	>(null);
 	const [selectedFeature, setSelectedFeature] = useState<
-		"moodChanges" | "tips" | null
+		"moodChanges" | "tips" | "mindfulness" | null
 	>(null);
 	const selectedConversation = conversations.find(
 		(convo) => convo._id === selectedConversationID
@@ -301,7 +303,15 @@ const WellnessBuddy = () => {
 	const handleGetUsefulTips = async (userID: string, input?: string) => {
 		setInput("");
 		setLoadingWBReply(true);
-		if (input) {
+		if (input && !loadingWBReply && !!usefulTips?.[usefulTipIndex]) {
+			const systemPrompt = `You are "Wellness Buddy" — a warm, encouraging digital assistant for PSA employees.
+				The user has just seen a "Tip of the Moment" suggestion: ${usefulTips?.[usefulTipIndex]?.text}. 
+				Now, they may ask follow-up questions, reflections, or request for clarification.
+				Your role:
+				- Respond conversationally and empathetically, like a supportive colleague. 
+				- Encourage healthy habits, focus, and balance at work.
+				- If the user asks for advice, tailor your response to the workplace context (e.g., port operations, shift work, teamwork, or mental wellness).
+				- Keep your tone light, friendly, and human — you can use emojis sparingly.`;
 			setStatelessMessages((prev) => [
 				...prev,
 				{ role: "user", content: input, timestamp: new Date() },
@@ -309,7 +319,8 @@ const WellnessBuddy = () => {
 
 			wbService.postMessageStateless(
 				{ content: input, timestamp: new Date() },
-				statelessMessages
+				statelessMessages,
+				systemPrompt
 			);
 
 			const listener = (message) => {
@@ -369,8 +380,7 @@ const WellnessBuddy = () => {
 				{
 					role: "assistant",
 					content:
-						"I hope you found these tips helpful! Feel free to ask me for more advice anytime. I'm here to help you stay energized and motivated!",
-
+						"I hope you found these **Tips of the Moment** helpful! Feel free to ask me for more advice anytime. I'm here to help you stay energised and motivated!",
 					timestamp: new Date(),
 				},
 			]);
@@ -614,7 +624,12 @@ const WellnessBuddy = () => {
 									loadingWBReply={loadingWBReply}
 									tips={usefulTips}
 									setTips={setUsefulTips}
+									index={usefulTipIndex}
+									setIndex={setUsefulTipIndex}
 								/>
+							)}
+							{selectedFeature === "mindfulness" && (
+								<Mindfulness />
 							)}
 						</motion.div>
 					)}
@@ -624,14 +639,14 @@ const WellnessBuddy = () => {
 				input={input}
 				setInput={setInput}
 				onSubmit={() => {
-					if (!selectedConversationID) {
-						handleCreateConversation(input);
-					} else if (selectedFeature) {
+					if (selectedFeature) {
 						const feature = EXPLORE.find(
 							(f) => f.value === selectedFeature
 						);
 						if (!feature || !user?._id) return;
 						feature?.onClick?.(user?._id, input);
+					} else if (!selectedConversationID) {
+						handleCreateConversation(input);
 					} else {
 						handlePostMessage(selectedConversationID, input);
 					}

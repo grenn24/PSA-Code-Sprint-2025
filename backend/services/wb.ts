@@ -90,11 +90,12 @@ class WBService {
 			timestamp: Date;
 		},
 		history: WBMessage[] = [],
-		onDelta: (chunk: string) => void
+		onDelta: (chunk: string) => void,
+		systemPrompt?: string
 	) {
 		const response = await openai.chat(
 			data.content,
-			this.DEFAULT_SYSTEM_PROMPT,
+			systemPrompt ?? this.DEFAULT_SYSTEM_PROMPT,
 			history,
 			onDelta
 		);
@@ -135,6 +136,7 @@ class WBService {
 			Always keep a supportive and encouraging tone.
 
 			Important: Do NOT mention numeric mood levels. Instead, describe each mood in human-friendly terms. You can also use emojis if appropriate.
+			You may suggest seeking professional help if the user expresses suicidal ideation, self-harm intent arising from unpleasant moods like anxiety or depression.
 
 			Mood History:
 			${serialisedMoods}

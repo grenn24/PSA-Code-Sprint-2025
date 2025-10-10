@@ -39,7 +39,8 @@ class WebsocketController {
 		const response = await wbService.postMessageStateless(
 			message.data,
 			message.history,
-			onDelta
+			onDelta,
+			message.systemPrompt
 		);
 		websocketService.sendToWS(websocket, {
 			type: "wb_stream_end",

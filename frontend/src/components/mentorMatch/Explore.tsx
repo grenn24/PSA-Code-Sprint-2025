@@ -59,78 +59,27 @@ const Explore = () => {
 		});
 	};
 
-
 	const SkeletonCard = () => (
-		<motion.div
-			initial={{ opacity: 0.6 }}
-			animate={{ opacity: [0.6, 1, 0.6] }}
-			transition={{
-				repeat: Infinity,
-				duration: 1.6,
-				ease: "easeInOut",
-			}}
-			className="bg-white rounded-2xl border border-gray-300 overflow-hidden"
-		>
-			<motion.div
-				initial={{ backgroundPosition: "-200px 0" }}
-				animate={{
-					backgroundPosition: ["-200px 0", "200px 0", "-200px 0"],
-				}}
-				transition={{
-					repeat: Infinity,
-					duration: 1.5,
-					ease: "linear",
-				}}
-				className="h-40 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:400%_100%]"
-			/>
-			<div className="p-4 space-y-3">
-				<motion.div
-					initial={{ opacity: 0.8 }}
-					animate={{ opacity: [0.8, 1, 0.8] }}
-					transition={{
-						repeat: Infinity,
-						duration: 1.8,
-						ease: "easeInOut",
-						delay: 0.2,
-					}}
-					className="h-4 w-1/2 bg-gray-200 rounded"
-				></motion.div>
+		<div className="bg-white rounded-2xl border border-gray-300 overflow-hidden animate-pulse">
+			<div className="h-40 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:400%_100%]"></div>
 
-				<motion.div
-					initial={{ opacity: 0.8 }}
-					animate={{ opacity: [0.8, 1, 0.8] }}
-					transition={{
-						repeat: Infinity,
-						duration: 1.8,
-						ease: "easeInOut",
-						delay: 0.4,
-					}}
-					className="h-3 w-1/3 bg-gray-200 rounded"
-				></motion.div>
+			<div className="p-4 space-y-3">
+				<div className="h-4 w-1/2 bg-gray-200 rounded"></div>
+				<div className="h-3 w-1/3 bg-gray-200 rounded"></div>
 
 				<div className="flex flex-wrap gap-2 mt-2">
 					{Array(3)
 						.fill(0)
 						.map((_, i) => (
-							<motion.span
+							<span
 								key={i}
-								initial={{ opacity: 0.7, y: 0 }}
-								animate={{
-									opacity: [0.7, 1, 0.7],
-									y: [0, -2, 0],
-								}}
-								transition={{
-									repeat: Infinity,
-									duration: 1.6,
-									ease: "easeInOut",
-									delay: i * 0.05, // stagger wave
-								}}
-								className="h-5 w-12 bg-gray-200 rounded-full"
-							></motion.span>
+								className="h-5 w-12 bg-gray-200 rounded-full animate-pulse"
+								style={{ animationDelay: `${i * 0.1}s` }}
+							></span>
 						))}
 				</div>
 			</div>
-		</motion.div>
+		</div>
 	);
 
 	return (
@@ -309,5 +258,3 @@ const Explore = () => {
 };
 
 export default Explore;
-
-

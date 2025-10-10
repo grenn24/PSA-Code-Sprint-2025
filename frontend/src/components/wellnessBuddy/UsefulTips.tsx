@@ -16,12 +16,14 @@ interface Props {
 	loadingWBReply: boolean;
 	tips: Tip[];
 	setTips: React.Dispatch<React.SetStateAction<Tip[]>>;
+	index: number;
+	setIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const UsefulTips = ({ messages, loadingWBReply, tips, setTips }: Props) => {
-	const [tipIndex, setTipIndex] = useState(0);
-	const showNextTip = () => setTipIndex((prev) => (prev + 1) % tips.length);
-	const currentTip = tips[tipIndex];
+const UsefulTips = ({ messages, loadingWBReply, tips, setTips, index, setIndex }: Props) => {
+
+	const showNextTip = () => setIndex((prev) => (prev + 1) % tips.length);
+	const currentTip = tips[index];
 
 	return (
 		<>
@@ -48,7 +50,7 @@ const UsefulTips = ({ messages, loadingWBReply, tips, setTips }: Props) => {
 					) : (
 						<AnimatePresence mode="wait">
 							<motion.div
-								key={tipIndex}
+								key={index}
 								initial={{ opacity: 0, x: 100 }}
 								animate={{ opacity: 1, x: 0 }}
 								exit={{ opacity: 0, x: -100 }}

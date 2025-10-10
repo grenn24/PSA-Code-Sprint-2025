@@ -91,7 +91,7 @@ const generateUsers = () => {
 		skills: generateRandomSkills(),
 		notifications: generateNotifications(),
 		careerPath: generateCareerPath(),
-		moods: generateMoodData(dayjs().subtract(2, "month").toDate()),
+		moods: generateMoodData(dayjs().subtract(12, "month").toDate()),
 	}));
 	users.push({
 		name: "Di Heng",
