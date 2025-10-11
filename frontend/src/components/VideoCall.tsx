@@ -25,9 +25,13 @@ const VideoCall: React.FC<VideoCallProps> = ({
 
 	const [micOn, setMicOn] = useState(true);
 	const [cameraOn, setCameraOn] = useState(true);
-	const [fullscreen, setFullscreen] = useState(true);
+	const [minimized, setMinimized] = useState(false);
 
-	// attach streams
+	// for dragging minimized window
+	const [position, setPosition] = useState({ x: 20, y: 20 });
+	const [dragging, setDragging] = useState(false);
+	const [offset, setOffset] = useState({ x: 0, y: 0 });
+
 	useEffect(() => {
 		if (localVideoRef.current && localStream) {
 			localVideoRef.current.srcObject = localStream;
@@ -40,7 +44,6 @@ const VideoCall: React.FC<VideoCallProps> = ({
 		}
 	}, [remoteStream]);
 
-	// handle toggles
 	const toggleMic = () => {
 		localStream?.getAudioTracks().forEach((track) => {
 			track.enabled = !track.enabled;
@@ -55,77 +58,128 @@ const VideoCall: React.FC<VideoCallProps> = ({
 		});
 	};
 
-	const toggleFullscreen = () => setFullscreen((f) => !f);
+	const toggleMinimize = () => setMinimized((prev) => !prev);
+
+	const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+		if (!minimized) return;
+		setDragging(true);
+		setOffset({
+			x: e.clientX - position.x,
+			y: e.clientY - position.y,
+		});
+	};
+
+	const handleMouseMove = (e: MouseEvent) => {
+		if (dragging) {
+			setPosition({
+				x: e.clientX - offset.x,
+				y: e.clientY - offset.y,
+			});
+		}
+	};
+
+	const handleMouseUp = () => setDragging(false);
+
+	useEffect(() => {
+		window.addEventListener("mousemove", handleMouseMove);
+		window.addEventListener("mouseup", handleMouseUp);
+		return () => {
+			window.removeEventListener("mousemove", handleMouseMove);
+			window.removeEventListener("mouseup", handleMouseUp);
+		};
+	});
 
 	return (
 		<div
-			className={`fixed inset-0 bg-black/90 flex justify-center items-center transition-all duration-300 ${
-				fullscreen ? "z-[9999]" : "z-[100]"
-			}`}
+			className={`fixed ${
+				minimized
+					? "w-[320px] h-[180px] rounded-xl overflow-hidden shadow-2xl cursor-move"
+					: "inset-0 flex justify-center items-center bg-black/90"
+			} transition-all duration-500 ease-in-out`}
+			style={
+				minimized
+					? {
+							left: position.x,
+							bottom: position.y,
+							zIndex: 9999,
+					  }
+					: { zIndex: 9999 }
+			}
+			onMouseDown={handleMouseDown}
 		>
 			{/* Remote video */}
 			<video
 				ref={remoteVideoRef}
 				autoPlay
 				playsInline
-				className="w-full h-full object-cover bg-black"
+				className={`object-cover w-full h-full ${
+					minimized ? "rounded-xl" : ""
+				}`}
 			/>
 
-			{/* Local video overlay */}
-			<video
-				ref={localVideoRef}
-				autoPlay
-				muted
-				playsInline
-				className="absolute bottom-6 right-6 w-64 h-48 rounded-2xl bg-black border-2 border-white/30 shadow-xl object-cover"
-			/>
+			{/* Local video overlay (only in fullscreen) */}
+			{!minimized && (
+				<video
+					ref={localVideoRef}
+					autoPlay
+					muted
+					playsInline
+					className="absolute bottom-6 right-6 w-64 h-48 rounded-xl bg-black border-2 border-white/30 shadow-lg object-cover"
+				/>
+			)}
 
-			{/* Control bar */}
-			<div className="absolute bottom-8 w-full flex justify-center space-x-6">
-				{/* Mic toggle */}
-				<button
-					onClick={toggleMic}
-					className={`p-4 rounded-full ${
-						micOn
-							? "bg-gray-700 hover:bg-gray-600"
-							: "bg-red-600 hover:bg-red-500"
-					} text-white transition`}
-				>
-					{micOn ? <Mic size={24} /> : <MicOff size={24} />}
-				</button>
+			{/* Controls overlay */}
+			{!minimized && (
+				<div className="absolute bottom-8 w-full flex justify-center space-x-6">
+					{/* Mic toggle */}
+					<button
+						onClick={toggleMic}
+						className={`p-4 rounded-full transition text-white ${
+							micOn
+								? "bg-indigo-600 hover:bg-indigo-500"
+								: "bg-red-600 hover:bg-red-500"
+						}`}
+					>
+						{micOn ? <Mic size={24} /> : <MicOff size={24} />}
+					</button>
 
-				{/* Camera toggle */}
-				<button
-					onClick={toggleCamera}
-					className={`p-4 rounded-full ${
-						cameraOn
-							? "bg-gray-700 hover:bg-gray-600"
-							: "bg-red-600 hover:bg-red-500"
-					} text-white transition`}
-				>
-					{cameraOn ? <Camera size={24} /> : <CameraOff size={24} />}
-				</button>
+					{/* Camera toggle */}
+					<button
+						onClick={toggleCamera}
+						className={`p-4 rounded-full transition text-white ${
+							cameraOn
+								? "bg-indigo-600 hover:bg-indigo-500"
+								: "bg-red-600 hover:bg-red-500"
+						}`}
+					>
+						{cameraOn ? (
+							<Camera size={24} />
+						) : (
+							<CameraOff size={24} />
+						)}
+					</button>
 
-				{/* End call */}
-				<button
-					onClick={onEndCall}
-					className="p-4 rounded-full bg-red-600 hover:bg-red-500 text-white transition"
-				>
-					<PhoneOff size={24} />
-				</button>
+					{/* End call */}
+					<button
+						onClick={onEndCall}
+						className="p-4 rounded-full bg-red-600 hover:bg-red-500 text-white transition"
+					>
+						<PhoneOff size={24} />
+					</button>
 
-				{/* Fullscreen toggle */}
-				<button
-					onClick={toggleFullscreen}
-					className="p-4 rounded-full bg-gray-700 hover:bg-gray-600 text-white transition"
-				>
-					{fullscreen ? (
-						<Minimize2 size={24} />
-					) : (
-						<Maximize2 size={24} />
-					)}
-				</button>
-			</div>
+					{/* Minimize toggle */}
+					<button
+						onClick={toggleMinimize}
+						className="p-4 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white transition"
+					>
+						{minimized ? (
+							<Maximize2 size={24} />
+						) : (
+							<Minimize2 size={24} />
+						)}
+					</button>
+				</div>
+			)}
 		</div>
 	);
 };
