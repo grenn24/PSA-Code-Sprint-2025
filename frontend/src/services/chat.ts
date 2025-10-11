@@ -124,7 +124,7 @@ class ChatService {
 
 		const handleVideoCallAnswered = async (message: WebsocketMessage) => {
 			if (message.type !== "answer_video_call") return;
-			console.log("video call answered");
+			console.log("video call request has been answered");
 			await this.peerConnection?.setRemoteDescription(
 				new RTCSessionDescription(message.data)
 			);
