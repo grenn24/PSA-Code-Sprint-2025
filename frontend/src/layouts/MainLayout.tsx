@@ -54,8 +54,14 @@ const MainLayout = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const [chats, setChats] = useState<Chat[]>([]);
-	const [localStream, setLocalStream] = useState<MediaStream | null>(null);
-	const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
+	const [videoCall, setVideoCall] = useState<{
+		localStream: MediaStream | null;
+		remoteStream: MediaStream | null;
+	}>({
+		localStream: null,
+		remoteStream: null,
+	});
+
 	const [videoCallOffer, setVideoCallOffer] = useState<{
 		offer: RTCSessionDescriptionInit;
 		chat: Chat;
@@ -161,8 +167,10 @@ const MainLayout = () => {
 			handleICECandidate,
 		]);
 
-		chatService.onLocalStream = setLocalStream;
-		chatService.onRemoteStream = setRemoteStream;
+		chatService.onLocalStream = (localStream) =>
+			setVideoCall({ ...videoCall, localStream });
+		chatService.onRemoteStream = (remoteStream) =>
+			setVideoCall({ ...videoCall, remoteStream });
 		return () => {
 			websocketService.removeListeners([
 				handleNewChatMessage,
@@ -332,10 +340,10 @@ const MainLayout = () => {
 					</motion.div>
 				)}
 			</AnimatePresence>
-			{chatService.remoteStream && chatService.localStream && (
+			{videoCall.localStream && videoCall.remoteStream && (
 				<VideoCall
-					localStream={chatService.localStream}
-					remoteStream={chatService.remoteStream}
+					localStream={videoCall.localStream}
+					remoteStream={videoCall.remoteStream}
 				/>
 			)}
 		</div>
