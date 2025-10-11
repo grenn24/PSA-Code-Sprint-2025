@@ -250,23 +250,6 @@ const MainLayout = () => {
 			</div>
 
 			{/* Mobile bottom navigation */}
-			<div className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 flex justify-around py-2 md:hidden z-50">
-				{routes.map((r, idx) => {
-					const isActive = location.pathname === r.path;
-					return (
-						<button
-							key={idx}
-							onClick={() => navigate(r.path)}
-							className={`flex flex-col items-center text-xs ${
-								isActive ? "text-blue-600" : "text-gray-600"
-							}`}
-						>
-							{r.icon}
-							<span>{r.label}</span>
-						</button>
-					);
-				})}
-			</div>
 
 			{/* Main content */}
 			<MentorMatchContext value={{ chats, setChats }}>
@@ -275,6 +258,25 @@ const MainLayout = () => {
 					<main className="flex-1 overflow-y-auto">
 						<Outlet />
 					</main>
+					<div className="bottom-0 left-0 w-full bg-white border-t border-gray-200 flex justify-around py-2 md:hidden z-50">
+						{routes.map((r, idx) => {
+							const isActive = location.pathname === r.path;
+							return (
+								<button
+									key={idx}
+									onClick={() => navigate(r.path)}
+									className={`flex flex-col items-center text-xs ${
+										isActive
+											? "text-blue-600"
+											: "text-gray-600"
+									}`}
+								>
+									{r.icon}
+									<span>{r.label}</span>
+								</button>
+							);
+						})}
+					</div>
 				</div>
 			</MentorMatchContext>
 			<AnimatePresence>
