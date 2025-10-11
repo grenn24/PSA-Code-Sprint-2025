@@ -183,6 +183,7 @@ const MainLayout = () => {
 		};
 	}, []);
 
+	console.log(videoCall);
 	return (
 		<div className="flex flex-col md:flex-row h-screen w-screen bg-gray-50">
 			{/* Sidebar (hidden on mobile) */}

@@ -128,7 +128,6 @@ class ChatService {
 
 		const handleVideoCallAnswered = async (message: WebsocketMessage) => {
 			if (message.type !== "answer_video_call") return;
-			console.log("video call request has been answered");
 			await this.peerConnection?.setRemoteDescription(
 				new RTCSessionDescription(message.data)
 			);
@@ -183,7 +182,6 @@ class ChatService {
 
 		const answer = await this.peerConnection.createAnswer();
 		await this.peerConnection.setLocalDescription(answer);
-		console.log(targetUserID, chatID);
 		websocketService.send({
 			type: "answer_video_call",
 			data: answer,
