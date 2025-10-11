@@ -68,7 +68,7 @@ const MainLayout = () => {
 		offer: RTCSessionDescriptionInit;
 		chat: Chat;
 	} | null>(null);
-	const videoCallSource: User | undefined =
+	const videoCallOfferSource: User | undefined =
 		videoCallOffer?.chat.participants.find((p) => p._id !== user?._id);
 
 	useEffect(() => {
@@ -170,9 +170,9 @@ const MainLayout = () => {
 		]);
 
 		chatService.onLocalStream = (localStream) =>
-			setVideoCall(videoCall => ({ ...videoCall, localStream }));
+			setVideoCall((videoCall) => ({ ...videoCall, localStream }));
 		chatService.onRemoteStream = (remoteStream) =>
-			setVideoCall(videoCall => ({ ...videoCall, remoteStream }));
+			setVideoCall((videoCall) => ({ ...videoCall, remoteStream }));
 		return () => {
 			websocketService.removeListeners([
 				handleNewChatMessage,
@@ -282,7 +282,7 @@ const MainLayout = () => {
 				</div>
 			</MentorMatchContext>
 			<AnimatePresence>
-				{videoCallOffer && videoCallSource && (
+				{videoCallOffer && videoCallOfferSource && (
 					<motion.div
 						initial={{ opacity: 0, x: 100 }}
 						animate={{ opacity: 1, x: 0 }}
@@ -295,14 +295,14 @@ const MainLayout = () => {
 						className="fixed top-4 right-4 z-50 w-64 bg-white/90 rounded-2xl p-4 flex flex-col items-center space-y-2 shadow-lg"
 					>
 						<h2 className="text-gray-900 text-lg font-bold">
-							{videoCallSource.name}
+							{videoCallOfferSource.name}
 						</h2>
 						<span className="text-gray-600 text-sm">
 							Video Call
 						</span>
 						<img
-							src={videoCallSource.avatar}
-							alt={videoCallSource.name}
+							src={videoCallOfferSource.avatar}
+							alt={videoCallOfferSource.name}
 							className="w-16 h-16 rounded-full border-2 border-gray-200"
 						/>
 						<div className="flex space-x-4 mt-2">
@@ -312,14 +312,23 @@ const MainLayout = () => {
 									onClick={() => {
 										if (
 											!videoCallOffer.chat._id ||
-											!videoCallSource._id
+											!videoCallOfferSource._id
 										)
 											return;
 										chatService.answerVideoCall(
-											videoCallSource._id,
+											videoCallOfferSource._id,
 											videoCallOffer.chat._id,
 											videoCallOffer.offer
 										);
+										setVideoCall((videoCall) => {
+											if (!videoCallOfferSource._id)
+												return videoCall;
+											return {
+												...videoCall,
+												targetUserID:
+													videoCallOfferSource?._id,
+											};
+										});
 										setVideoCallOffer(null);
 									}}
 								>
@@ -349,8 +358,8 @@ const MainLayout = () => {
 				<VideoCall
 					localStream={videoCall.localStream}
 					remoteStream={videoCall.remoteStream}
-					onEndCall={()=>{
-						if (!videoCall.targetUserID) return
+					onEndCall={() => {
+						if (!videoCall.targetUserID) return;
 						chatService.endVideoCall(videoCall.targetUserID);
 					}}
 				/>

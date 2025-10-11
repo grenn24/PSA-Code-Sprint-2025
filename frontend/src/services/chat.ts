@@ -95,7 +95,7 @@ class ChatService {
 		}
 
 		this.peerConnection = new RTCPeerConnection();
-		
+
 		this.localStream.getTracks().forEach((track) => {
 			if (!this.peerConnection) return;
 			this.peerConnection.addTrack(track, localStream);
@@ -143,7 +143,24 @@ class ChatService {
 			this.pendingCandidates = [];
 			websocketService.removeListener(handleVideoCallAnswered);
 		};
-		websocketService.addListener(handleVideoCallAnswered);
+		const endVideoCall = async (message: WebsocketMessage) => {
+			if (message.type !== "end_video_call") return;
+			if (this.peerConnection) {
+				this.peerConnection.close();
+				this.peerConnection = null;
+			}
+			if (this.localStream) {
+				this.localStream.getTracks().forEach((track) => track.stop());
+				this.localStream = null;
+				this.onLocalStream?.(null);
+			}
+			if (this.remoteStream) {
+				this.remoteStream.getTracks().forEach((track) => track.stop());
+				this.remoteStream = null;
+				this.onRemoteStream?.(null);
+			}
+		};
+		websocketService.addListeners([handleVideoCallAnswered, endVideoCall]);
 	}
 
 	async answerVideoCall(
@@ -203,6 +220,24 @@ class ChatService {
 			chatID,
 			timestamp: new Date().toISOString(),
 		});
+		const endVideoCall = async (message: WebsocketMessage) => {
+			if (message.type !== "end_video_call") return;
+			if (this.peerConnection) {
+				this.peerConnection.close();
+				this.peerConnection = null;
+			}
+			if (this.localStream) {
+				this.localStream.getTracks().forEach((track) => track.stop());
+				this.localStream = null;
+				this.onLocalStream?.(null);
+			}
+			if (this.remoteStream) {
+				this.remoteStream.getTracks().forEach((track) => track.stop());
+				this.remoteStream = null;
+				this.onRemoteStream?.(null);
+			}
+		};
+		websocketService.addListener(endVideoCall);
 	}
 
 	async endVideoCall(targetUserID: string) {
