@@ -150,40 +150,38 @@ class ChatService {
 		chatID: string,
 		offer: RTCSessionDescriptionInit
 	) {
-		if (!this.peerConnection) {
-			this.peerConnection = new RTCPeerConnection();
-
-			if (!this.localStream) {
-				this.localStream = await navigator.mediaDevices.getUserMedia({
-					video: true,
-					audio: true,
-				});
-				this.onLocalStream?.(this.localStream);
-			}
-
-			this.localStream
-				.getTracks()
-				.forEach((track) =>
-					this.peerConnection.addTrack(track, this.localStream)
-				);
-
-			this.peerConnection.ontrack = (event) => {
-				this.remoteStream = event.streams?.[0];
-				this.onRemoteStream?.(this.remoteStream);
-			};
-
-			this.peerConnection.onicecandidate = (event) => {
-				if (event.candidate) {
-					websocketService.send({
-						type: "establish_connection",
-						data: event.candidate,
-						targetUserID,
-						chatID,
-						timestamp: new Date().toISOString(),
-					});
-				}
-			};
+		if (!this.localStream) {
+			this.localStream = await navigator.mediaDevices.getUserMedia({
+				video: true,
+				audio: true,
+			});
+			this.onLocalStream?.(this.localStream);
 		}
+
+		this.peerConnection = new RTCPeerConnection();
+
+		this.localStream
+			.getTracks()
+			.forEach((track) =>
+				this.peerConnection.addTrack(track, this.localStream)
+			);
+
+		this.peerConnection.ontrack = (event) => {
+			this.remoteStream = event.streams?.[0];
+			this.onRemoteStream?.(this.remoteStream);
+		};
+
+		this.peerConnection.onicecandidate = (event) => {
+			if (event.candidate) {
+				websocketService.send({
+					type: "establish_connection",
+					data: event.candidate,
+					targetUserID,
+					chatID,
+					timestamp: new Date().toISOString(),
+				});
+			}
+		};
 
 		await this.peerConnection.setRemoteDescription(
 			new RTCSessionDescription(offer)
