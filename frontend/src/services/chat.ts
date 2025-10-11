@@ -9,6 +9,8 @@ class ChatService {
 	public peerConnection: RTCPeerConnection;
 	public localStream: MediaStream;
 	public remoteStream: MediaStream;
+	onLocalStream?: (stream: MediaStream) => void;
+	onRemoteStream?: (stream: MediaStream) => void;
 
 	async createChat(participantIDs: string[]) {
 		const response = await this.apiClient.post<any, Chat>("", {
@@ -85,6 +87,7 @@ class ChatService {
 				video: true,
 				audio: true,
 			});
+			this.onLocalStream?.(this.localStream);
 		}
 
 		this.peerConnection = new RTCPeerConnection();
@@ -97,6 +100,7 @@ class ChatService {
 
 		this.peerConnection.ontrack = (event) => {
 			this.remoteStream = event.streams?.[0];
+			this.onRemoteStream?.(this.remoteStream);
 		};
 
 		this.peerConnection.onicecandidate = (event) => {
@@ -146,6 +150,7 @@ class ChatService {
 					video: true,
 					audio: true,
 				});
+				this.onLocalStream?.(this.localStream);
 			}
 
 			this.localStream
@@ -156,6 +161,7 @@ class ChatService {
 
 			this.peerConnection.ontrack = (event) => {
 				this.remoteStream = event.streams?.[0];
+				this.onRemoteStream?.(this.remoteStream);
 			};
 
 			this.peerConnection.onicecandidate = (event) => {
