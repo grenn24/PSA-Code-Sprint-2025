@@ -11,7 +11,7 @@ interface Prop {
 	type: "mentor" | "mentee";
 }
 const ChatHeader = ({ setChatID, recipient, type, chatID }: Prop) => {
-	const {setTargetUserID}=useVideoCallContext();
+	const { setTargetUserID } = useVideoCallContext();
 	return (
 		<div className="bg-white w-full flex items-center gap-3 p-2 border-b border-gray-200">
 			<button

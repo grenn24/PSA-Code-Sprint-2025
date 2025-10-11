@@ -358,7 +358,6 @@ const MainLayout = () => {
 					remoteStream={remoteStream}
 					onEndCall={() => {
 						if (!targetUserID) return;
-						console.log(targetUserID);
 						chatService.endVideoCall(targetUserID);
 						setTargetUserID(null);
 					}}

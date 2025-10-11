@@ -87,6 +87,13 @@ class WebsocketController {
                 timestamp: new Date().toISOString(),
             });
         }
+        if (message.type === "end_video_call") {
+            websocketService.sendTo(message.targetUserID, {
+                type: "end_video_call",
+                targetUserID: message.targetUserID,
+                timestamp: new Date().toISOString(),
+            });
+        }
     }
 }
 const websocketController = new WebsocketController();

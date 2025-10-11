@@ -221,6 +221,7 @@ class ChatService {
 			timestamp: new Date().toISOString(),
 		});
 		const endVideoCall = async (message: WebsocketMessage) => {
+			console.log("ending video call")
 			if (message.type !== "end_video_call") return;
 			if (this.peerConnection) {
 				this.peerConnection.close();

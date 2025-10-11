@@ -70129,7 +70129,6 @@ class WebsocketController {
             chatService.offerVideoCall(message.data, message.targetUserID, message.chatID);
         }
         if (message.type === "answer_video_call") {
-            console.log(message);
             chatService.answerVideoCall(message.data, message.targetUserID, message.chatID);
         }
         if (message.type === "establish_connection") {
@@ -70137,6 +70136,13 @@ class WebsocketController {
                 type: "establish_connection",
                 data: message.data,
                 userID: message.userID,
+                targetUserID: message.targetUserID,
+                timestamp: new Date().toISOString(),
+            });
+        }
+        if (message.type === "end_video_call") {
+            websocketService.sendTo(message.targetUserID, {
+                type: "end_video_call",
                 targetUserID: message.targetUserID,
                 timestamp: new Date().toISOString(),
             });
@@ -70166,6 +70172,7 @@ function websocketRouter(rawMessage) {
         case "offer_video_call":
         case "answer_video_call":
         case "establish_connection":
+        case "end_video_call":
             websocketController.handleVideoCall(this, message);
             break;
     }

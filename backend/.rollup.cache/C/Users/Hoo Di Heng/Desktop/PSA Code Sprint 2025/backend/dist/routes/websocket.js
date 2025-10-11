@@ -20,6 +20,7 @@ function websocketRouter(rawMessage) {
         case "offer_video_call":
         case "answer_video_call":
         case "establish_connection":
+        case "end_video_call":
             websocketController.handleVideoCall(this, message);
             break;
     }
