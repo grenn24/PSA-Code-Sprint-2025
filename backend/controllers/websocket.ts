@@ -121,6 +121,15 @@ class WebsocketController {
 			);
 		}
 
+		if (message.type === "reject_video_call") {
+			websocketService.sendTo(message.targetUserID, {
+				type: "reject_video_call",
+				chatID: message.chatID,
+				targetUserID: message.targetUserID,
+				timestamp: new Date().toISOString(),
+			});
+		}
+
 		if (message.type === "establish_connection") {
 			websocketService.sendTo(message.targetUserID, {
 				type: "establish_connection",

@@ -160,7 +160,28 @@ class ChatService {
 				this.onRemoteStream?.(null);
 			}
 		};
-		websocketService.addListeners([handleVideoCallAnswered, endVideoCall]);
+		const videoCallRejected = async (message: WebsocketMessage) => {
+			if (message.type !== "reject_video_call") return;
+			if (this.peerConnection) {
+				this.peerConnection.close();
+				this.peerConnection = null;
+			}
+			if (this.localStream) {
+				this.localStream.getTracks().forEach((track) => track.stop());
+				this.localStream = null;
+				this.onLocalStream?.(null);
+			}
+			if (this.remoteStream) {
+				this.remoteStream.getTracks().forEach((track) => track.stop());
+				this.remoteStream = null;
+				this.onRemoteStream?.(null);
+			}
+		};
+		websocketService.addListeners([
+			handleVideoCallAnswered,
+			endVideoCall,
+			videoCallRejected,
+		]);
 	}
 
 	async answerVideoCall(
@@ -221,7 +242,6 @@ class ChatService {
 			timestamp: new Date().toISOString(),
 		});
 		const endVideoCall = async (message: WebsocketMessage) => {
-			console.log("ending video call")
 			if (message.type !== "end_video_call") return;
 			if (this.peerConnection) {
 				this.peerConnection.close();
