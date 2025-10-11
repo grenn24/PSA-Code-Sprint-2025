@@ -292,11 +292,14 @@ const MainLayout = () => {
 								<button
 									className="bg-green-500 hover:bg-green-600 p-2 rounded-full shadow-lg"
 									onClick={() => {
-										if (!user?._id || !videoCallSource._id)
+										if (
+											!videoCallOffer.chat._id ||
+											!videoCallSource._id
+										)
 											return;
 										chatService.answerVideoCall(
-											user._id!,
 											videoCallSource._id,
+											videoCallOffer.chat._id,
 											videoCallOffer.offer
 										);
 										setVideoCallOffer(null);

@@ -268,22 +268,14 @@ class ChatService {
 			.populate("participants")
 			.exec();
 		if (!chat) {
-			throw new HttpError(
-				"Chat not found",
-				"NOT_FOUND",
-				HttpStatusCode.NotFound
-			);
+			return;
 		}
 
 		const recipient = chat.participants
 			.filter((p) => p._id?.equals(targetUserID))
 			.pop();
 		if (!recipient) {
-			throw new HttpError(
-				"Recipient not found",
-				"NOT_FOUND",
-				HttpStatusCode.NotFound
-			);
+			return;
 		}
 		websocketService.sendTo(recipient._id.toString(), {
 			type: "offer_video_call",
@@ -298,22 +290,14 @@ class ChatService {
 			.populate("participants")
 			.exec();
 		if (!chat) {
-			throw new HttpError(
-				"Chat not found",
-				"NOT_FOUND",
-				HttpStatusCode.NotFound
-			);
+			return;
 		}
 
 		const recipient = chat.participants
 			.filter((p) => p._id?.equals(targetUserID))
 			.pop();
 		if (!recipient) {
-			throw new HttpError(
-				"Recipient not found",
-				"NOT_FOUND",
-				HttpStatusCode.NotFound
-			);
+			return;
 		}
 		console.log(recipient._id.toString());
 		websocketService.sendTo(recipient._id.toString(), {

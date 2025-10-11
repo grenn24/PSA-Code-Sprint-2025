@@ -70015,13 +70015,13 @@ class ChatService {
             .populate("participants")
             .exec();
         if (!chat) {
-            throw new HttpError("Chat not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+            return;
         }
         const recipient = chat.participants
             .filter((p) => p._id?.equals(targetUserID))
             .pop();
         if (!recipient) {
-            throw new HttpError("Recipient not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+            return;
         }
         websocketService.sendTo(recipient._id.toString(), {
             type: "offer_video_call",
@@ -70035,13 +70035,13 @@ class ChatService {
             .populate("participants")
             .exec();
         if (!chat) {
-            throw new HttpError("Chat not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+            return;
         }
         const recipient = chat.participants
             .filter((p) => p._id?.equals(targetUserID))
             .pop();
         if (!recipient) {
-            throw new HttpError("Recipient not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+            return;
         }
         console.log(recipient._id.toString());
         websocketService.sendTo(recipient._id.toString(), {
@@ -70129,7 +70129,7 @@ class WebsocketController {
             chatService.offerVideoCall(message.data, message.targetUserID, message.chatID);
         }
         if (message.type === "answer_video_call") {
-            console.log("video call request has been answered");
+            console.log(message);
             chatService.answerVideoCall(message.data, message.targetUserID, message.chatID);
         }
         if (message.type === "establish_connection") {
