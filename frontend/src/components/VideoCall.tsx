@@ -12,7 +12,7 @@ import {
 interface VideoCallProps {
 	localStream: MediaStream | null;
 	remoteStream: MediaStream | null;
-	onEndCall?: () => void;
+	onEndCall: () => void;
 }
 
 const VideoCall: React.FC<VideoCallProps> = ({

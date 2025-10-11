@@ -57,9 +57,11 @@ const MainLayout = () => {
 	const [videoCall, setVideoCall] = useState<{
 		localStream: MediaStream | null;
 		remoteStream: MediaStream | null;
+		targetUserID: string | null;
 	}>({
 		localStream: null,
 		remoteStream: null,
+		targetUserID: null,
 	});
 
 	const [videoCallOffer, setVideoCallOffer] = useState<{
@@ -347,6 +349,10 @@ const MainLayout = () => {
 				<VideoCall
 					localStream={videoCall.localStream}
 					remoteStream={videoCall.remoteStream}
+					onEndCall={()=>{
+						if (!videoCall.targetUserID) return
+						chatService.endVideoCall(videoCall.targetUserID);
+					}}
 				/>
 			)}
 		</div>
