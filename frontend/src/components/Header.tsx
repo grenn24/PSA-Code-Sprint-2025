@@ -24,7 +24,7 @@ const Header = () => {
 	);
 
 	return (
-		<header className="flex items-center justify-between bg-white px-4 md:px-6 h-16 border-b border-gray-200 sticky top-0 z-50">
+		<header className="flex items-center justify-between bg-white px-2 md:px-4 h-14 border-b border-gray-200 sticky top-0 z-50">
 			{/* Left side: logo / search */}
 			<div className="flex items-center gap-3 flex-1">
 				{/* Mobile menu toggle (future use) */}
@@ -51,7 +51,7 @@ const Header = () => {
 			</div>
 
 			{/* Right side: icons */}
-			<div className="flex items-center gap-4 md:gap-6">
+			<div className="flex items-center gap-2 md:gap-3">
 				{/* Chat / messages */}
 				<div className="relative group">
 					<button
