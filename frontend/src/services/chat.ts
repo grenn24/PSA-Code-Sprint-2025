@@ -9,6 +9,7 @@ class ChatService {
 	public peerConnection: RTCPeerConnection;
 	public localStream: MediaStream;
 	public remoteStream: MediaStream;
+	private pendingCandidates: RTCIceCandidateInit[] = [];
 	onLocalStream?: (stream: MediaStream) => void;
 	onRemoteStream?: (stream: MediaStream) => void;
 
@@ -74,11 +75,13 @@ class ChatService {
 	}
 
 	async addICECandidate(candidate: RTCIceCandidateInit) {
-		if (this.peerConnection) {
-			await this.peerConnection.addIceCandidate(
-				new RTCIceCandidate(candidate)
-			);
+		if (!this.peerConnection || !this.peerConnection.remoteDescription) {
+			this.pendingCandidates.push(candidate);
+			return;
 		}
+		await this.peerConnection.addIceCandidate(
+			new RTCIceCandidate(candidate)
+		);
 	}
 
 	async offerVideoCall(targetUserID: string, chatID: string) {
@@ -131,6 +134,12 @@ class ChatService {
 			await this.peerConnection?.setRemoteDescription(
 				new RTCSessionDescription(message.data)
 			);
+			for (const candidate of this.pendingCandidates) {
+				await this.peerConnection.addIceCandidate(
+					new RTCIceCandidate(candidate)
+				);
+			}
+			this.pendingCandidates = [];
 			websocketService.removeListener(handleVideoCallAnswered);
 		};
 		websocketService.addListener(handleVideoCallAnswered);
@@ -182,6 +191,12 @@ class ChatService {
 
 		const answer = await this.peerConnection.createAnswer();
 		await this.peerConnection.setLocalDescription(answer);
+		for (const candidate of this.pendingCandidates) {
+			await this.peerConnection.addIceCandidate(
+				new RTCIceCandidate(candidate)
+			);
+		}
+		this.pendingCandidates = [];
 		websocketService.send({
 			type: "answer_video_call",
 			data: answer,
