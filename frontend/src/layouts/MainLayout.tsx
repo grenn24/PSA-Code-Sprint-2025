@@ -22,6 +22,7 @@ import chatService from "services/chat";
 import { User } from "@common/types/user";
 import { AnimatePresence, motion } from "framer-motion";
 import VideoCall from "components/VideoCall";
+import { VideoCallContext } from "context/VideoCallContext";
 
 const routes = [
 	{ path: "/", label: "Homepage", icon: <HomeIcon className="w-6 h-6" /> },
@@ -54,15 +55,9 @@ const MainLayout = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const [chats, setChats] = useState<Chat[]>([]);
-	const [videoCall, setVideoCall] = useState<{
-		localStream: MediaStream | null;
-		remoteStream: MediaStream | null;
-		targetUserID: string | null;
-	}>({
-		localStream: null,
-		remoteStream: null,
-		targetUserID: null,
-	});
+	const [localStream, setLocalStream] = useState<MediaStream | null>(null);
+	const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
+	const [targetUserID, setTargetUserID] = useState<string | null>(null);
 
 	const [videoCallOffer, setVideoCallOffer] = useState<{
 		offer: RTCSessionDescriptionInit;
@@ -169,10 +164,9 @@ const MainLayout = () => {
 			handleICECandidate,
 		]);
 
-		chatService.onLocalStream = (localStream) =>
-			setVideoCall((videoCall) => ({ ...videoCall, localStream }));
-		chatService.onRemoteStream = (remoteStream) =>
-			setVideoCall((videoCall) => ({ ...videoCall, remoteStream }));
+		chatService.onLocalStream = setLocalStream
+			
+		chatService.onRemoteStream = setRemoteStream
 		return () => {
 			websocketService.removeListeners([
 				handleNewChatMessage,
@@ -185,7 +179,7 @@ const MainLayout = () => {
 		};
 	}, []);
 
-	console.log(videoCall);
+	
 	return (
 		<div className="flex flex-col md:flex-row h-screen w-screen bg-gray-50">
 			{/* Sidebar (hidden on mobile) */}
@@ -255,31 +249,33 @@ const MainLayout = () => {
 
 			{/* Main content */}
 			<MentorMatchContext value={{ chats, setChats }}>
-				<div className="flex flex-col flex-1 h-full overflow-hidden">
-					<Header />
-					<main className="flex-1 overflow-y-auto">
-						<Outlet />
-					</main>
-					<div className="bottom-0 left-0 w-full bg-white border-t border-gray-200 flex justify-around py-2 md:hidden z-50">
-						{routes.map((r, idx) => {
-							const isActive = location.pathname === r.path;
-							return (
-								<button
-									key={idx}
-									onClick={() => navigate(r.path)}
-									className={`flex flex-col items-center text-xs ${
-										isActive
-											? "text-blue-600"
-											: "text-gray-600"
-									}`}
-								>
-									{r.icon}
-									<span>{r.label}</span>
-								</button>
-							);
-						})}
+				<VideoCallContext value={{localStream, remoteStream, setLocalStream, setRemoteStream, targetUserID, setTargetUserID}}>
+					<div className="flex flex-col flex-1 h-full overflow-hidden">
+						<Header />
+						<main className="flex-1 overflow-y-auto">
+							<Outlet />
+						</main>
+						<div className="bottom-0 left-0 w-full bg-white border-t border-gray-200 flex justify-around py-2 md:hidden z-50">
+							{routes.map((r, idx) => {
+								const isActive = location.pathname === r.path;
+								return (
+									<button
+										key={idx}
+										onClick={() => navigate(r.path)}
+										className={`flex flex-col items-center text-xs ${
+											isActive
+												? "text-blue-600"
+												: "text-gray-600"
+										}`}
+									>
+										{r.icon}
+										<span>{r.label}</span>
+									</button>
+								);
+							})}
+						</div>
 					</div>
-				</div>
+				</VideoCallContext>
 			</MentorMatchContext>
 			<AnimatePresence>
 				{videoCallOffer && videoCallOfferSource && (
@@ -320,15 +316,9 @@ const MainLayout = () => {
 											videoCallOffer.chat._id,
 											videoCallOffer.offer
 										);
-										setVideoCall((videoCall) => {
-											if (!videoCallOfferSource._id)
-												return videoCall;
-											return {
-												...videoCall,
-												targetUserID:
-													videoCallOfferSource?._id,
-											};
-										});
+										setTargetUserID(
+											videoCallOfferSource?._id
+										);
 										setVideoCallOffer(null);
 									}}
 								>
@@ -354,13 +344,14 @@ const MainLayout = () => {
 					</motion.div>
 				)}
 			</AnimatePresence>
-			{videoCall.localStream && videoCall.remoteStream && (
+			{localStream && remoteStream && (
 				<VideoCall
-					localStream={videoCall.localStream}
-					remoteStream={videoCall.remoteStream}
+					localStream={localStream}
+					remoteStream={remoteStream}
 					onEndCall={() => {
-						if (!videoCall.targetUserID) return;
-						chatService.endVideoCall(videoCall.targetUserID);
+						if (!targetUserID) return;
+						setTargetUserID(null);
+						chatService.endVideoCall(targetUserID);
 					}}
 				/>
 			)}
