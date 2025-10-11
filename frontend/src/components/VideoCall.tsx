@@ -129,7 +129,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 
 			{/* Controls overlay */}
 			{!minimized ? (
-				<div className="absolute bottom-8 w-full flex justify-center space-x-4 flex-wrap">
+				<div className="absolute bottom-8 w-full flex justify-center gap-4 flex-wrap">
 					{/* CORE BUTTONS */}
 					{[
 						{

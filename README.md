@@ -17,9 +17,14 @@ PSA Horizon is an integrated employee development platform designed to empower P
 - Real-time communication between mentors and mentees (text and video)
 
 ### Wellness Buddy
-- AI-powered companion that aims to provide emotional support for PSA's employees
-- Offer practical advice that can improve in personal wellbeing
-- Tracks historical mood changes from past conversatios
+- Offer practical and personalised advice to personal wellbeing
+- Track historical mood changes from past conversations
+- Engage in short guided activities (e.g. mindfulness)
+- Dashboard showing key mood indicators
+
+### Events Hub
+- View recommended and trending employee-initiated events
+- Online calls
 
 ## Getting Started
 1. Ensure that your machine has the following installed:
@@ -41,9 +46,9 @@ root/
 ## Tech Stack
 | Layer | Technology |
 | :----------- | :------------ |
-| Frontend | React (Vite), Tailwind CSS |
+| Frontend | React (Vite), Tailwind CSS, WebRTC |
 | Backend | Express.js, Node.js, WebSocket |
-| Data | Mongoose, Cloudflare R2 |
+| Data | Mongoose, Cloudflare R2, Redis |
 | Deployment | Vercel (frontend), Render (backend), MongoDB Atlas (db) |
 
 ## Routes

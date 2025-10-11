@@ -299,7 +299,6 @@ class ChatService {
 		if (!recipient) {
 			return;
 		}
-		console.log(recipient._id.toString());
 		websocketService.sendTo(recipient._id.toString(), {
 			type: "answer_video_call",
 			data: answer,
