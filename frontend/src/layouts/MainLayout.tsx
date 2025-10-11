@@ -168,9 +168,9 @@ const MainLayout = () => {
 		]);
 
 		chatService.onLocalStream = (localStream) =>
-			setVideoCall({ ...videoCall, localStream });
+			setVideoCall(videoCall => ({ ...videoCall, localStream }));
 		chatService.onRemoteStream = (remoteStream) =>
-			setVideoCall({ ...videoCall, remoteStream });
+			setVideoCall(videoCall => ({ ...videoCall, remoteStream }));
 		return () => {
 			websocketService.removeListeners([
 				handleNewChatMessage,
