@@ -85,7 +85,7 @@ const MentorMatch = () => {
 				</div>
 			</header>
 
-			<main className="flex-1 px-4 sm:px-8 py-8 overflow-y-auto">
+			<main className="flex-1 p-2 md:p4 overflow-y-auto mb-14 md:mb-0">
 				<AnimatePresence mode="wait">
 					<motion.div
 						key={activeTab}

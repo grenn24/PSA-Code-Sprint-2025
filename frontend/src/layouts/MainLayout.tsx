@@ -276,21 +276,17 @@ const MainLayout = () => {
 						}}
 						className="fixed top-4 right-4 z-50 w-64 bg-white/90 rounded-2xl p-4 flex flex-col items-center space-y-2 shadow-lg"
 					>
-						{/* Your name */}
 						<h2 className="text-gray-900 text-lg font-bold">
 							{videoCallSource.name}
 						</h2>
-						{/* Video Call label */}
 						<span className="text-gray-600 text-sm">
 							Video Call
 						</span>
-						{/* Avatar */}
 						<img
 							src={videoCallSource.avatar}
 							alt={videoCallSource.name}
 							className="w-16 h-16 rounded-full border-2 border-gray-200"
 						/>
-
 						<div className="flex space-x-4 mt-2">
 							<div className="relative group">
 								<button
@@ -298,7 +294,6 @@ const MainLayout = () => {
 									onClick={() => {
 										if (!user?._id || !videoCallSource._id)
 											return;
-										console.log("answering video call")
 										chatService.answerVideoCall(
 											user._id!,
 											videoCallSource._id,

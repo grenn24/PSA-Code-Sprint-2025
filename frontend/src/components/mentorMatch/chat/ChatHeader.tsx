@@ -1,18 +1,23 @@
 import { User } from "@common/types/user";
-import { VideoCameraIcon } from "@heroicons/react/24/outline";
+import { ArrowLeftIcon, VideoCameraIcon } from "@heroicons/react/24/outline";
 import dayjs from "dayjs";
-import { useAppSelector } from "redux/store";
 import chatService from "services/chat";
 
 interface Prop {
+	setChatID: React.Dispatch<React.SetStateAction<string | null>>;
 	chatID: string;
 	recipient: User;
 	type: "mentor" | "mentee";
 }
-const ChatHeader = ({ recipient, type, chatID }: Prop) => {
-	const { user } = useAppSelector((state) => state.user);
+const ChatHeader = ({ setChatID, recipient, type, chatID }: Prop) => {
 	return (
-		<div className="bg-white w-full flex items-center gap-3 py-2 px-4 border-b border-gray-200">
+		<div className="bg-white w-full flex items-center gap-3 p-2 border-b border-gray-200">
+			<button
+				onClick={() => setChatID(null)}
+				className="p-1.5 rounded-full hover:bg-gray-100"
+			>
+				<ArrowLeftIcon className="w-5 h-5" />
+			</button>
 			<img
 				src={recipient.avatar}
 				alt={recipient.name}

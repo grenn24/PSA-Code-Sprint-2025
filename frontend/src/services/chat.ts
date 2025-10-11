@@ -177,7 +177,7 @@ class ChatService {
 
 		const answer = await this.peerConnection.createAnswer();
 		await this.peerConnection.setLocalDescription(answer);
-
+		console.log(targetUserID, chatID);
 		websocketService.send({
 			type: "answer_video_call",
 			data: answer,

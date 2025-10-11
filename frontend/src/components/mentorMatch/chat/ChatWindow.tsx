@@ -7,12 +7,13 @@ import { Chat, Message } from "@common/types/chat";
 import chatService from "services/chat";
 
 interface Prop {
+	setSelectedChatID: React.Dispatch<React.SetStateAction<string | null>>;
 	selectedChatID: string | null;
 	chats: Chat[];
 	setChats: React.Dispatch<React.SetStateAction<Chat[]>>;
 }
 
-const ChatWindow = ({ selectedChatID, chats, setChats }: Prop) => {
+const ChatWindow = ({ setSelectedChatID,selectedChatID, chats, setChats }: Prop) => {
 	const { user } = useAppSelector((state) => state.user);
 	const [messageInput, setMessageInput] = React.useState("");
 	const expandedChatRef = React.useRef<HTMLDivElement>(null);
@@ -110,6 +111,7 @@ const ChatWindow = ({ selectedChatID, chats, setChats }: Prop) => {
 		>
 			{selectedChatID && recipient ? (
 				<>
+					
 					<ChatHeader
 						recipient={recipient}
 						type={
@@ -120,8 +122,8 @@ const ChatWindow = ({ selectedChatID, chats, setChats }: Prop) => {
 								: "mentor"
 						}
 						chatID={selectedChatID}
+						setChatID={setSelectedChatID}
 					/>
-
 					<div
 						ref={expandedChatRef}
 						className="w-full flex-1 p-4 overflow-y-auto space-y-3 max-w-4xl"
@@ -158,7 +160,6 @@ const ChatWindow = ({ selectedChatID, chats, setChats }: Prop) => {
 							</div>
 						))}
 					</div>
-
 					<div className="bg-white w-full p-2 border-t border-gray-200 flex gap-2">
 						<ChatMenuButton
 							recipient={recipient}
