@@ -1,5 +1,6 @@
 import wbService from "../services/wb.js";
 import websocketService from "../utilities/websocket.js";
+import chatService from "../services/chat.js";
 class WebsocketController {
     async postMessage(websocket, message) {
         const onDelta = (chunk) => websocketService.sendToWS(websocket, {
@@ -69,6 +70,23 @@ class WebsocketController {
             data: response,
             timestamp: new Date().toISOString(),
         });
+    }
+    handleVideoCall(websocket, message) {
+        if (message.type === "offer_video_call") {
+            chatService.offerVideoCall(message.data, message.targetUserID, message.chatID);
+        }
+        if (message.type === "answer_video_call") {
+            chatService.answerVideoCall(message.data, message.targetUserID, message.chatID);
+        }
+        if (message.type === "establish_connection") {
+            websocketService.sendTo(message.targetUserID, {
+                type: "establish_connection",
+                data: message.data,
+                userID: message.userID,
+                targetUserID: message.targetUserID,
+                timestamp: new Date().toISOString(),
+            });
+        }
     }
 }
 const websocketController = new WebsocketController();

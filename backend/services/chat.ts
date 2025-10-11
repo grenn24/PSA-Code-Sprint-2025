@@ -262,6 +262,67 @@ class ChatService {
 
 		return updatedChat;
 	}
+
+	async offerVideoCall(offer, targetUserID: string, chatID: string) {
+		const chat = await Chat.findById(chatID)
+			.populate("participants")
+			.exec();
+		if (!chat) {
+			throw new HttpError(
+				"Chat not found",
+				"NOT_FOUND",
+				HttpStatusCode.NotFound
+			);
+		}
+
+		const recipient = chat.participants
+			.filter((p) => p._id?.equals(targetUserID))
+			.pop();
+		if (!recipient) {
+			throw new HttpError(
+				"Recipient not found",
+				"NOT_FOUND",
+				HttpStatusCode.NotFound
+			);
+		}
+		websocketService.sendTo(recipient._id.toString(), {
+			type: "offer_video_call",
+			data: offer,
+			chat,
+			timestamp: new Date().toISOString(),
+		});
+	}
+
+	async answerVideoCall(answer, targetUserID: string, chatID: string) {
+		const chat = await Chat.findById(chatID)
+			.populate("participants")
+			.exec();
+		if (!chat) {
+			throw new HttpError(
+				"Chat not found",
+				"NOT_FOUND",
+				HttpStatusCode.NotFound
+			);
+		}
+
+		const recipient = chat.participants
+			.filter((p) => p._id?.equals(targetUserID))
+			.pop();
+		if (!recipient) {
+			throw new HttpError(
+				"Recipient not found",
+				"NOT_FOUND",
+				HttpStatusCode.NotFound
+			);
+		}
+		console.log(recipient._id.toString());
+		websocketService.sendTo(recipient._id.toString(), {
+			type: "answer_video_call",
+			data: answer,
+			chat,
+			timestamp: new Date().toISOString(),
+		});
+	}
 }
 
 export const chatService = new ChatService();

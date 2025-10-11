@@ -1,15 +1,15 @@
 import { User } from "@common/types/user";
 import { VideoCameraIcon } from "@heroicons/react/24/outline";
 import dayjs from "dayjs";
-import React from "react";
 import { useAppSelector } from "redux/store";
 import chatService from "services/chat";
 
 interface Prop {
+	chatID: string;
 	recipient: User;
 	type: "mentor" | "mentee";
 }
-const ChatHeader = ({ recipient, type }: Prop) => {
+const ChatHeader = ({ recipient, type, chatID }: Prop) => {
 	const { user } = useAppSelector((state) => state.user);
 	return (
 		<div className="bg-white w-full flex items-center gap-3 py-2 px-4 border-b border-gray-200">
@@ -43,8 +43,8 @@ const ChatHeader = ({ recipient, type }: Prop) => {
 			<div className="relative group">
 				<button
 					onClick={() => {
-						if (!user?._id || !recipient._id) return;
-						chatService.offerVideoCall(user._id, recipient._id);
+						if (!recipient?._id) return;
+						chatService.offerVideoCall(recipient._id, chatID);
 					}}
 					className="p-2 rounded-full hover:bg-gray-100 transition"
 				>

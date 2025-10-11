@@ -8,6 +8,8 @@ import {
 	ChatBubbleLeftRightIcon,
 	ArrowLeftIcon,
 	ArrowRightIcon,
+	PhoneIcon,
+	XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Header from "../components/Header";
 import { useAppSelector } from "../redux/store";
@@ -16,6 +18,10 @@ import { Chat } from "@common/types/chat";
 import { WebsocketMessage } from "@common/types/http";
 import websocketService from "utilities/websocket";
 import userService from "services/user";
+import chatService from "services/chat";
+import { User } from "@common/types/user";
+import { AnimatePresence, motion } from "framer-motion";
+import VideoCall from "components/VideoCall";
 
 const routes = [
 	{ path: "/", label: "Homepage", icon: <HomeIcon className="w-6 h-6" /> },
@@ -48,6 +54,12 @@ const MainLayout = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const [chats, setChats] = useState<Chat[]>([]);
+	const [videoCallOffer, setVideoCallOffer] = useState<{
+		offer: RTCSessionDescriptionInit;
+		chat: Chat;
+	} | null>(null);
+	const videoCallSource: User | undefined =
+		videoCallOffer?.chat.participants.find((p) => p._id !== user?._id);
 
 	useEffect(() => {
 		if (!isAuthenticated && location.pathname !== "/log-in") {
@@ -125,11 +137,26 @@ const MainLayout = () => {
 			);
 		};
 
+		const handleVideoCallOffer = (message: WebsocketMessage) => {
+			if (message.type !== "offer_video_call") return;
+			setVideoCallOffer({
+				offer: message.data,
+				chat: message.chat,
+			});
+		};
+
+		const handleICECandidate = (message: WebsocketMessage) => {
+			if (message.type !== "establish_connection") return;
+			chatService.addICECandidate(message.data);
+		};
+
 		websocketService.addListeners([
 			handleNewChatMessage,
 			handleSelectedRecipientStatusUpdate,
 			handleChatRead,
 			handleChatMessageUpdate,
+			handleVideoCallOffer,
+			handleICECandidate,
 		]);
 		return () => {
 			websocketService.removeListeners([
@@ -137,6 +164,8 @@ const MainLayout = () => {
 				handleSelectedRecipientStatusUpdate,
 				handleChatRead,
 				handleChatMessageUpdate,
+				handleVideoCallOffer,
+				handleICECandidate,
 			]);
 		};
 	}, []);
@@ -234,6 +263,78 @@ const MainLayout = () => {
 					</main>
 				</div>
 			</MentorMatchContext>
+			<AnimatePresence>
+				{videoCallOffer && videoCallSource && (
+					<motion.div
+						initial={{ opacity: 0, x: 100 }}
+						animate={{ opacity: 1, x: 0 }}
+						exit={{ opacity: 0, x: 100 }}
+						transition={{
+							type: "spring",
+							stiffness: 300,
+							damping: 30,
+						}}
+						className="fixed top-4 right-4 z-50 w-64 bg-white/90 rounded-2xl p-4 flex flex-col items-center space-y-2 shadow-lg"
+					>
+						{/* Your name */}
+						<h2 className="text-gray-900 text-lg font-bold">
+							{videoCallSource.name}
+						</h2>
+						{/* Video Call label */}
+						<span className="text-gray-600 text-sm">
+							Video Call
+						</span>
+						{/* Avatar */}
+						<img
+							src={videoCallSource.avatar}
+							alt={videoCallSource.name}
+							className="w-16 h-16 rounded-full border-2 border-gray-200"
+						/>
+
+						<div className="flex space-x-4 mt-2">
+							<div className="relative group">
+								<button
+									className="bg-green-500 hover:bg-green-600 p-2 rounded-full shadow-lg"
+									onClick={() => {
+										if (!user?._id || !videoCallSource._id)
+											return;
+										console.log("answering video call")
+										chatService.answerVideoCall(
+											user._id!,
+											videoCallSource._id,
+											videoCallOffer.offer
+										);
+										setVideoCallOffer(null);
+									}}
+								>
+									<PhoneIcon className="w-5 h-5 text-white" />
+								</button>
+								<span className="absolute -top-[-40px] z-1 left-1/2 -translate-x-1/2 bg-gray-700 text-white text-xs font-semibold rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity">
+									Answer
+								</span>
+							</div>
+
+							<div className="relative group">
+								<button
+									className="bg-red-500 hover:bg-red-600 p-2 rounded-full shadow-lg"
+									onClick={() => setVideoCallOffer(null)}
+								>
+									<XMarkIcon className="w-5 h-5 text-white" />
+								</button>
+								<span className="absolute -top-[-40px] z-1 left-1/2 -translate-x-1/2 bg-gray-700 text-white text-xs font-semibold rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity">
+									Decline
+								</span>
+							</div>
+						</div>
+					</motion.div>
+				)}
+			</AnimatePresence>
+			{chatService.remoteStream && chatService.localStream && (
+				<VideoCall
+					localStream={chatService.localStream}
+					remoteStream={chatService.remoteStream}
+				/>
+			)}
 		</div>
 	);
 };

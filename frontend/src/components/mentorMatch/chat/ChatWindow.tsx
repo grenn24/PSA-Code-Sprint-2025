@@ -119,6 +119,7 @@ const ChatWindow = ({ selectedChatID, chats, setChats }: Prop) => {
 								? "mentee"
 								: "mentor"
 						}
+						chatID={selectedChatID}
 					/>
 
 					<div

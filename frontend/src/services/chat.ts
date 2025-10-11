@@ -1,12 +1,14 @@
 import websocketService from "utilities/websocket";
 import createApiClient from "../utilities/apiClient";
 import { Chat, Message } from "@common/types/chat";
+import { WebsocketMessage } from "@common/types/http";
 
 class ChatService {
 	apiClient = createApiClient("/chat");
 
-	peerConnection: RTCPeerConnection;
-	localStream: MediaStream;
+	public peerConnection: RTCPeerConnection;
+	public localStream: MediaStream;
+	public remoteStream: MediaStream;
 
 	async createChat(participantIDs: string[]) {
 		const response = await this.apiClient.post<any, Chat>("", {
@@ -69,11 +71,21 @@ class ChatService {
 		return response.data;
 	}
 
-	async offerVideoCall(userID: string, targetUserID: string) {
-		this.localStream = await navigator.mediaDevices.getUserMedia({
-			video: true,
-			audio: true,
-		});
+	async addICECandidate(candidate: RTCIceCandidateInit) {
+		if (this.peerConnection) {
+			await this.peerConnection.addIceCandidate(
+				new RTCIceCandidate(candidate)
+			);
+		}
+	}
+
+	async offerVideoCall(targetUserID: string, chatID: string) {
+		if (!this.localStream) {
+			this.localStream = await navigator.mediaDevices.getUserMedia({
+				video: true,
+				audio: true,
+			});
+		}
 
 		this.peerConnection = new RTCPeerConnection();
 
@@ -84,10 +96,7 @@ class ChatService {
 			);
 
 		this.peerConnection.ontrack = (event) => {
-			const remoteVideo = document.getElementById(
-				"remoteVideo"
-			) as HTMLVideoElement;
-			if (remoteVideo) remoteVideo.srcObject = event.streams[0];
+			this.remoteStream = event.streams?.[0];
 		};
 
 		this.peerConnection.onicecandidate = (event) => {
@@ -95,8 +104,8 @@ class ChatService {
 				websocketService.send({
 					type: "establish_connection",
 					data: event.candidate,
-					userID,
 					targetUserID,
+					chatID,
 					timestamp: new Date().toISOString(),
 				});
 			}
@@ -108,31 +117,45 @@ class ChatService {
 		websocketService.send({
 			type: "offer_video_call",
 			data: offer,
-			userID,
 			targetUserID,
+			chatID,
 			timestamp: new Date().toISOString(),
 		});
+
+		const handleVideoCallAnswered = async (message: WebsocketMessage) => {
+			if (message.type !== "answer_video_call") return;
+			console.log("video call answered");
+			await this.peerConnection?.setRemoteDescription(
+				new RTCSessionDescription(message.data)
+			);
+			websocketService.removeListener(handleVideoCallAnswered);
+		};
+		websocketService.addListener(handleVideoCallAnswered);
 	}
 
-	async answerVideoCall(userID:string, targetUserID: string, offer: RTCSessionDescriptionInit) {
+	async answerVideoCall(
+		targetUserID: string,
+		chatID: string,
+		offer: RTCSessionDescriptionInit
+	) {
 		if (!this.peerConnection) {
 			this.peerConnection = new RTCPeerConnection();
 
-			const localStream = await navigator.mediaDevices.getUserMedia({
-				video: true,
-				audio: true,
-			});
-			localStream
+			if (!this.localStream) {
+				this.localStream = await navigator.mediaDevices.getUserMedia({
+					video: true,
+					audio: true,
+				});
+			}
+
+			this.localStream
 				.getTracks()
 				.forEach((track) =>
-					this.peerConnection.addTrack(track, localStream)
+					this.peerConnection.addTrack(track, this.localStream)
 				);
 
 			this.peerConnection.ontrack = (event) => {
-				const remoteVideo = document.getElementById(
-					"remoteVideo"
-				) as HTMLVideoElement;
-				if (remoteVideo) remoteVideo.srcObject = event.streams[0];
+				this.remoteStream = event.streams?.[0];
 			};
 
 			this.peerConnection.onicecandidate = (event) => {
@@ -140,7 +163,8 @@ class ChatService {
 					websocketService.send({
 						type: "establish_connection",
 						data: event.candidate,
-						targetUserId: targetUserID,
+						targetUserID,
+						chatID,
 						timestamp: new Date().toISOString(),
 					});
 				}
@@ -157,8 +181,8 @@ class ChatService {
 		websocketService.send({
 			type: "answer_video_call",
 			data: answer,
-			userID,
 			targetUserID,
+			chatID,
 			timestamp: new Date().toISOString(),
 		});
 	}

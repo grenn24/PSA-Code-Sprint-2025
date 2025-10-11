@@ -2,6 +2,7 @@ import { WebsocketMessage } from "@common/types/http.js";
 import WebSocket from "ws";
 import wbService from "../services/wb.js";
 import websocketService from "../utilities/websocket.js";
+import chatService from "../services/chat.js";
 
 class WebsocketController {
 	async postMessage(websocket: WebSocket, message: WebsocketMessage) {
@@ -105,24 +106,30 @@ class WebsocketController {
 
 	handleVideoCall(websocket: WebSocket, message: WebsocketMessage) {
 		if (message.type === "offer_video_call") {
-			const targetUserID = message.targetUserID;
-			websocketService.sendTo(targetUserID, {
-				type: "offer_video_call",
+			chatService.offerVideoCall(
+				message.data,
+				message.targetUserID,
+				message.chatID
+			);
+		}
+
+		if (message.type === "answer_video_call") {
+			chatService.answerVideoCall(
+				message.data,
+				message.targetUserID,
+				message.chatID
+			);
+		}
+
+		if (message.type === "establish_connection") {
+			websocketService.sendTo(message.targetUserID, {
+				type: "establish_connection",
 				data: message.data,
 				userID: message.userID,
+				targetUserID: message.targetUserID,
 				timestamp: new Date().toISOString(),
 			});
 		}
-
-		  if (message.type === "answer_video_call") {
-				const targetUserID = message.targetUserID; 
-				websocketService.sendTo(targetUserID, {
-					type: "answer_video_call",
-					data: message.data,
-					userID: message.userID, 
-					timestamp: new Date().toISOString(),
-				});
-			}
 	}
 }
 
