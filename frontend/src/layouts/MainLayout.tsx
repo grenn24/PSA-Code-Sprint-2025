@@ -164,9 +164,9 @@ const MainLayout = () => {
 			handleICECandidate,
 		]);
 
-		chatService.onLocalStream = setLocalStream
-			
-		chatService.onRemoteStream = setRemoteStream
+		chatService.onLocalStream = setLocalStream;
+
+		chatService.onRemoteStream = setRemoteStream;
 		return () => {
 			websocketService.removeListeners([
 				handleNewChatMessage,
@@ -179,7 +179,6 @@ const MainLayout = () => {
 		};
 	}, []);
 
-	
 	return (
 		<div className="flex flex-col md:flex-row h-screen w-screen bg-gray-50">
 			{/* Sidebar (hidden on mobile) */}
@@ -249,7 +248,16 @@ const MainLayout = () => {
 
 			{/* Main content */}
 			<MentorMatchContext value={{ chats, setChats }}>
-				<VideoCallContext value={{localStream, remoteStream, setLocalStream, setRemoteStream, targetUserID, setTargetUserID}}>
+				<VideoCallContext
+					value={{
+						localStream,
+						remoteStream,
+						setLocalStream,
+						setRemoteStream,
+						targetUserID,
+						setTargetUserID,
+					}}
+				>
 					<div className="flex flex-col flex-1 h-full overflow-hidden">
 						<Header />
 						<main className="flex-1 overflow-y-auto">
@@ -350,8 +358,9 @@ const MainLayout = () => {
 					remoteStream={remoteStream}
 					onEndCall={() => {
 						if (!targetUserID) return;
-						setTargetUserID(null);
+						console.log(targetUserID);
 						chatService.endVideoCall(targetUserID);
+						setTargetUserID(null);
 					}}
 				/>
 			)}
