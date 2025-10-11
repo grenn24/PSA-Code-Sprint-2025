@@ -70129,6 +70129,7 @@ class WebsocketController {
             chatService.offerVideoCall(message.data, message.targetUserID, message.chatID);
         }
         if (message.type === "answer_video_call") {
+            console.log("video call request has been answered");
             chatService.answerVideoCall(message.data, message.targetUserID, message.chatID);
         }
         if (message.type === "establish_connection") {
@@ -70561,27 +70562,27 @@ const getID = (queryParams = ["ID"]) => (request, response, next) => {
 
 const auth = (role) => (request, response, next) => {
     const accessToken = request.header("X-Access-Token");
+    // Missing access token
+    if (!accessToken) {
+        return response.status(401).json({
+            status: "MISSING_ACCESS_TOKEN",
+            message: "Missing access token",
+        });
+    }
     try {
-        // Access token missing
-        if (!accessToken) {
-            return response.status(401).send({
-                status: "MISSING_ACCESS_TOKEN",
-                message: "Missing access token",
-            });
-        }
         const payload = jwt.verify(accessToken, config.get("SECRET_KEY"));
         if (typeof payload !== "string" &&
             payload.role === "user" &&
             role === "admin") ;
-        // Pass userID payload to next controller
-        if (typeof payload != "string") {
+        // Attach user info
+        if (typeof payload !== "string") {
             response.locals.user = payload;
         }
-        next();
+        return next(); // ✅ ensure you return here
     }
     catch (err) {
-        // Access token invalid
-        response.status(401).send({
+        // Invalid access token
+        return response.status(401).json({
             status: "INVALID_ACCESS_TOKEN",
             message: "Invalid access token",
         });

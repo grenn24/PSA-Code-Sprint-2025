@@ -76,6 +76,7 @@ class WebsocketController {
             chatService.offerVideoCall(message.data, message.targetUserID, message.chatID);
         }
         if (message.type === "answer_video_call") {
+            console.log("video call request has been answered");
             chatService.answerVideoCall(message.data, message.targetUserID, message.chatID);
         }
         if (message.type === "establish_connection") {
