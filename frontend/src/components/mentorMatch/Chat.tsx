@@ -1,12 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Chat } from "@common/types/chat";
 import userService from "services/user";
 import { useAppDispatch, useAppSelector } from "redux/store";
 import { FunnelIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import chatService from "services/chat";
-import websocketService from "utilities/websocket";
-import { WebsocketMessage } from "@common/types/http";
 import NewChatButton from "./chat/NewChatButton";
 import ChatWindow from "./chat/ChatWindow";
 import { setUser } from "redux/slices/user";
@@ -186,6 +183,7 @@ const Chats = () => {
 											}
 										</p>
 									</div>
+									
 									<span
 										className={`inline-block px-2 py-1 text-xs font-medium rounded-full ${
 											user?.mentees.find(

@@ -3,7 +3,6 @@ import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import {
 	HomeIcon,
 	BriefcaseIcon,
-	UserIcon,
 	UsersIcon,
 	CalendarIcon,
 	ChatBubbleLeftRightIcon,
@@ -59,44 +58,42 @@ const MainLayout = () => {
 	useEffect(() => {
 		if (!user?._id) return;
 		userService.getChats(user._id).then((chats) => setChats(chats));
+
 		const handleNewChatMessage = (message: WebsocketMessage) => {
 			if (message.type === "NEW_CHAT_MESSAGE") {
-				setChats((prevChats) => {
-					const newChats = prevChats.map((chat) => {
-						if (chat._id === message.data?.chatID) {
-							return {
-								...chat,
-								messages: [],
-							};
-						}
-						return chat;
-					});
-					return newChats;
-				});
+				setChats((prevChats) =>
+					prevChats.map((chat) =>
+						chat._id === message.data?.chatID
+							? { ...chat, messages: [] }
+							: chat
+					)
+				);
 			}
 		};
+
 		const handleChatMessageUpdate = (message: WebsocketMessage) => {
 			if (message.type !== "CHAT_MESSAGE_UPDATE") return;
-
 			const updatedMessage = message.data?.message;
 			const chatID = message.data?.chatID;
-
 			if (!updatedMessage || !chatID) return;
 
 			setChats((prevChats) =>
-				prevChats.map((chat) => {
-					if (chat._id?.toString() !== chatID.toString()) return chat;
-					const updatedMessages = chat.messages.map((m) => {
-						return m._id?.toString() ===
-							updatedMessage._id.toString()
-							? updatedMessage
-							: m;
-					});
-
-					return { ...chat, messages: updatedMessages };
-				})
+				prevChats.map((chat) =>
+					chat._id?.toString() !== chatID.toString()
+						? chat
+						: {
+								...chat,
+								messages: chat.messages.map((m) =>
+									m._id?.toString() ===
+									updatedMessage._id.toString()
+										? updatedMessage
+										: m
+								),
+						  }
+				)
 			);
 		};
+
 		const handleSelectedRecipientStatusUpdate = (
 			message: WebsocketMessage
 		) => {
@@ -111,10 +108,8 @@ const MainLayout = () => {
 					if (!hasUser) return chat;
 					return {
 						...chat,
-						participants: chat.participants.map((participant) =>
-							participant._id === message.data._id
-								? message.data
-								: participant
+						participants: chat.participants.map((p) =>
+							p._id === message.data._id ? message.data : p
 						),
 					};
 				})
@@ -124,12 +119,9 @@ const MainLayout = () => {
 		const handleChatRead = (message: WebsocketMessage) => {
 			if (message.type !== "CHAT_MESSAGE_READ") return;
 			setChats((prevChats) =>
-				prevChats.map((chat) => {
-					if (chat._id === message.data?._id) {
-						return message.data;
-					}
-					return chat;
-				})
+				prevChats.map((chat) =>
+					chat._id === message.data?._id ? message.data : chat
+				)
 			);
 		};
 
@@ -150,11 +142,12 @@ const MainLayout = () => {
 	}, []);
 
 	return (
-		<div className="flex h-screen w-screen bg-gray-50">
+		<div className="flex flex-col md:flex-row h-screen w-screen bg-gray-50">
+			{/* Sidebar (hidden on mobile) */}
 			<div
 				className={`${
 					open ? "min-w-64" : "w-20"
-				} bg-white shadow-lg transition-all duration-300 flex flex-col border-r border-gray-200 pb-2`}
+				} hidden md:flex bg-white shadow-lg transition-all duration-300 flex-col border-r border-gray-200 pb-2`}
 			>
 				<div className="flex justify-center p-4">
 					<img src="/images/psa-logo.png" alt="PSA" className="h-6" />
@@ -163,18 +156,19 @@ const MainLayout = () => {
 				<nav className="flex-1 p-2 space-y-1 relative">
 					{routes.map((r, idx) => {
 						const isActive = location.pathname === r.path;
-
 						return (
 							<div key={idx} className="relative group">
 								<button
 									onClick={() => navigate(r.path)}
-									className={`flex items-center w-full px-3 py-2 rounded-lg transition
-                    ${open ? "justify-start" : "justify-center"}
-                    ${
-						isActive
-							? "bg-blue-100 text-blue-700"
-							: "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-					}`}
+									className={`flex items-center w-full px-3 py-2 rounded-lg transition ${
+										open
+											? "justify-start"
+											: "justify-center"
+									} ${
+										isActive
+											? "bg-blue-100 text-blue-700"
+											: "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+									}`}
 								>
 									<div className="flex-shrink-0">
 										{r.icon}
@@ -199,6 +193,7 @@ const MainLayout = () => {
 						);
 					})}
 				</nav>
+
 				<button
 					className="p-2 rounded-lg hover:bg-gray-100 flex-shrink-0 m-auto"
 					onClick={() => setOpen(!open)}
@@ -210,10 +205,31 @@ const MainLayout = () => {
 					)}
 				</button>
 			</div>
+
+			{/* Mobile bottom navigation */}
+			<div className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 flex justify-around py-2 md:hidden z-50">
+				{routes.map((r, idx) => {
+					const isActive = location.pathname === r.path;
+					return (
+						<button
+							key={idx}
+							onClick={() => navigate(r.path)}
+							className={`flex flex-col items-center text-xs ${
+								isActive ? "text-blue-600" : "text-gray-600"
+							}`}
+						>
+							{r.icon}
+							<span>{r.label}</span>
+						</button>
+					);
+				})}
+			</div>
+
+			{/* Main content */}
 			<MentorMatchContext value={{ chats, setChats }}>
-				<div className="flex flex-col flex-1 h-full">
+				<div className="flex flex-col flex-1 h-full overflow-hidden">
 					<Header />
-					<main className="h-full overflow-y-auto">
+					<main className="flex-1 overflow-y-auto">
 						<Outlet />
 					</main>
 				</div>

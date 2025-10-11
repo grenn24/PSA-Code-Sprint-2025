@@ -13,7 +13,20 @@ const WBConversationWindow = ({messages, loadingWBReply}:Prop) => {
 				<div key={i}>
 					{msg.role === "assistant" ? (
 						<div className="w-full text-lg font-normal text-gray-800">
-							<ReactMarkdown>{msg.content}</ReactMarkdown>
+							<ReactMarkdown
+								components={{
+									a: ({ node, ...props }) => (
+										<a
+											{...props}
+											className="text-blue-500 underline hover:text-blue-600"
+											target="_blank"
+											rel="noopener noreferrer"
+										/>
+									),
+								}}
+							>
+								{msg.content}
+							</ReactMarkdown>
 						</div>
 					) : (
 						<div className="flex justify-end">

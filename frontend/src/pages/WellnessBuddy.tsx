@@ -26,6 +26,7 @@ import UsefulTips from "components/wellnessBuddy/UsefulTips";
 import Mindfulness from "components/wellnessBuddy/Mindfulness";
 import Opinion from "components/wellnessBuddy/Opinion";
 import DailyCheckIn from "components/wellnessBuddy/DailyCheckIn";
+import WBDashboard from "components/wellnessBuddy/WBDashboard";
 
 const STARTERS = [
 	{
@@ -614,16 +615,37 @@ const WellnessBuddy = () => {
 							animate={{ opacity: 1, y: 0 }}
 							exit={{ opacity: 0, y: -20 }}
 							transition={{ duration: 0.4, ease: "easeInOut" }}
-							className="flex flex-col gap-8"
+							className="flex flex-col gap-10"
 						>
+							<WBDashboard
+								mood="Happy"
+								streak={5}
+								activities={[
+									{
+										name: "Morning Meditation",
+										duration: "5 min",
+										completed: true,
+									},
+									{
+										name: "Hydration Reminder",
+										duration: "8 glasses",
+										completed: true,
+									},
+									{
+										name: "Evening Walk",
+										duration: "20 min",
+										completed: false,
+									},
+									{
+										name: "Sleep Log",
+										duration: "hours",
+										completed: false,
+									},
+								]}
+							/>
 							<h1 className="text-4xl font-semibold text-gray-800">
 								How are you feeling today, {user?.name}?
 							</h1>
-							<input
-								type="text"
-								placeholder="Search for wellness resources"
-								className="w-full p-4 rounded-2xl bg-white/60 backdrop-blur-md shadow-sm border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-gray-500"
-							/>
 							<div className="flex gap-4 overflow-x-auto scrollbar-hide">
 								{EXPLORE.map((item, i) => (
 									<div

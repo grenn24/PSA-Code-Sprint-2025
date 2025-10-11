@@ -122,7 +122,7 @@ const DailyCheckIn = ({
 
 			{messages.length === 0 && (
 				<>
-					<p className="text-gray-800 text-xl md:text-2xl text-center font-semibold">
+					<p className="text-gray-800 text-2xl mb-8 text-center font-semibold">
 						How are you feeling today?
 					</p>
 

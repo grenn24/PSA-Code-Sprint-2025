@@ -95,15 +95,34 @@ class WebsocketController {
 				data: chunk,
 				timestamp: new Date().toISOString(),
 			});
-		const response = await wbService.dailyCheckIn(
-			message.data,
-			onDelta
-		);
+		const response = await wbService.dailyCheckIn(message.data, onDelta);
 		websocketService.sendToWS(websocket, {
 			type: "wb_stream_end",
 			data: response,
 			timestamp: new Date().toISOString(),
 		});
+	}
+
+	handleVideoCall(websocket: WebSocket, message: WebsocketMessage) {
+		if (message.type === "offer_video_call") {
+			const targetUserID = message.targetUserID;
+			websocketService.sendTo(targetUserID, {
+				type: "offer_video_call",
+				data: message.data,
+				userID: message.userID,
+				timestamp: new Date().toISOString(),
+			});
+		}
+
+		  if (message.type === "answer_video_call") {
+				const targetUserID = message.targetUserID; 
+				websocketService.sendTo(targetUserID, {
+					type: "answer_video_call",
+					data: message.data,
+					userID: message.userID, 
+					timestamp: new Date().toISOString(),
+				});
+			}
 	}
 }
 
