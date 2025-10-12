@@ -11,17 +11,17 @@ declare class WBService {
         user: import("mongoose").Types.ObjectId;
         title: string;
         messages: import("mongoose").Types.DocumentArray<{
-            timestamp: NativeDate;
             role: "user" | "assistant";
             content: string;
+            timestamp: NativeDate;
         }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-            timestamp: NativeDate;
             role: "user" | "assistant";
             content: string;
+            timestamp: NativeDate;
         }> & {
-            timestamp: NativeDate;
             role: "user" | "assistant";
             content: string;
+            timestamp: NativeDate;
         }>;
     }> & {
         createdAt: NativeDate;
@@ -30,17 +30,17 @@ declare class WBService {
         user: import("mongoose").Types.ObjectId;
         title: string;
         messages: import("mongoose").Types.DocumentArray<{
-            timestamp: NativeDate;
             role: "user" | "assistant";
             content: string;
+            timestamp: NativeDate;
         }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-            timestamp: NativeDate;
             role: "user" | "assistant";
             content: string;
+            timestamp: NativeDate;
         }> & {
-            timestamp: NativeDate;
             role: "user" | "assistant";
             content: string;
+            timestamp: NativeDate;
         }>;
     } & {
         _id: import("mongoose").Types.ObjectId;
@@ -78,17 +78,17 @@ declare class WBService {
         user: import("mongoose").Types.ObjectId;
         title: string;
         messages: import("mongoose").Types.DocumentArray<{
-            timestamp: NativeDate;
             role: "user" | "assistant";
             content: string;
+            timestamp: NativeDate;
         }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-            timestamp: NativeDate;
             role: "user" | "assistant";
             content: string;
+            timestamp: NativeDate;
         }> & {
-            timestamp: NativeDate;
             role: "user" | "assistant";
             content: string;
+            timestamp: NativeDate;
         }>;
     }> & {
         createdAt: NativeDate;
@@ -97,17 +97,17 @@ declare class WBService {
         user: import("mongoose").Types.ObjectId;
         title: string;
         messages: import("mongoose").Types.DocumentArray<{
-            timestamp: NativeDate;
             role: "user" | "assistant";
             content: string;
+            timestamp: NativeDate;
         }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-            timestamp: NativeDate;
             role: "user" | "assistant";
             content: string;
+            timestamp: NativeDate;
         }> & {
-            timestamp: NativeDate;
             role: "user" | "assistant";
             content: string;
+            timestamp: NativeDate;
         }>;
     } & {
         _id: import("mongoose").Types.ObjectId;
