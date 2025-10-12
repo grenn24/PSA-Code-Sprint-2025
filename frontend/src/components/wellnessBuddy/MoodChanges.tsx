@@ -264,7 +264,6 @@ const MoodChanges = ({ messages, loadingWBReply }: Props) => {
 								</div>
 							))}
 
-							{/* Tooltip rendered once outside the map */}
 						</div>
 					</div>
 				</div>

@@ -67,16 +67,16 @@ declare class AuthService {
             lastSeen: NativeDate;
             isOnline: boolean;
             moods: import("mongoose").Types.DocumentArray<{
-                level: number;
                 date: NativeDate;
+                level: number;
                 notes: string[];
             }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-                level: number;
                 date: NativeDate;
+                level: number;
                 notes: string[];
             }> & {
-                level: number;
                 date: NativeDate;
+                level: number;
                 notes: string[];
             }>;
             bio?: string | null | undefined;
@@ -147,16 +147,16 @@ declare class AuthService {
             lastSeen: NativeDate;
             isOnline: boolean;
             moods: import("mongoose").Types.DocumentArray<{
-                level: number;
                 date: NativeDate;
+                level: number;
                 notes: string[];
             }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-                level: number;
                 date: NativeDate;
+                level: number;
                 notes: string[];
             }> & {
-                level: number;
                 date: NativeDate;
+                level: number;
                 notes: string[];
             }>;
             bio?: string | null | undefined;

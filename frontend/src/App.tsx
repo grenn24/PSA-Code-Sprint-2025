@@ -31,7 +31,7 @@ const App = () => {
 					<Route index element={<Home />}></Route>
 					<Route path="/mentor" element={<MentorMatch />} />
 					<Route path="/wellness-buddy" element={<WellnessBuddy />} />
-					<Route path="/events-huv" element={<Events />} />
+					<Route path="/events-hub" element={<Events />} />
 					{/*Missed routes*/}
 					<Route path="*" element={<NotFound />} />
 				</Route>

@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
 
 const moodSchema = new Schema({
-	level: { type: Number, min: 1, max: 10, required: true },
+	level: { type: Number, min: 0, max: 10, required: true },
 	date: { type: Date, required: true },
 	notes: { type: [String], default: [] },
 });
