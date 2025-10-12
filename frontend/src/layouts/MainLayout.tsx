@@ -37,8 +37,8 @@ const routes = [
 		icon: <UsersIcon className="w-6 h-6" />,
 	},
 	{
-		path: "/events",
-		label: "Events",
+		path: "/events-hub",
+		label: "Events Hub",
 		icon: <CalendarIcon className="w-6 h-6" />,
 	},
 	{

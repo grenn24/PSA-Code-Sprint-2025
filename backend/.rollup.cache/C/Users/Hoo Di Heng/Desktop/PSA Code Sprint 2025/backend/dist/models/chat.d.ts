@@ -1,175 +1,175 @@
 import { Schema } from "mongoose";
 declare const Chat: import("mongoose").Model<{
+    createdAt: NativeDate;
     messages: import("mongoose").Types.DocumentArray<{
-        content: string;
         type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-        metadata: any;
         createdAt: NativeDate;
-        read: boolean;
         sender: import("mongoose").Types.ObjectId;
+        read: boolean;
+        content: string;
+        metadata: any;
         readAt?: NativeDate | null | undefined;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        content: string;
         type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-        metadata: any;
         createdAt: NativeDate;
-        read: boolean;
         sender: import("mongoose").Types.ObjectId;
+        read: boolean;
+        content: string;
+        metadata: any;
         readAt?: NativeDate | null | undefined;
     }> & {
-        content: string;
         type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-        metadata: any;
         createdAt: NativeDate;
-        read: boolean;
         sender: import("mongoose").Types.ObjectId;
+        read: boolean;
+        content: string;
+        metadata: any;
         readAt?: NativeDate | null | undefined;
     }>;
-    createdAt: NativeDate;
     participants: import("mongoose").Types.ObjectId[];
 }, {}, {}, {}, import("mongoose").Document<unknown, {}, {
+    createdAt: NativeDate;
     messages: import("mongoose").Types.DocumentArray<{
-        content: string;
         type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-        metadata: any;
         createdAt: NativeDate;
-        read: boolean;
         sender: import("mongoose").Types.ObjectId;
+        read: boolean;
+        content: string;
+        metadata: any;
         readAt?: NativeDate | null | undefined;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        content: string;
         type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-        metadata: any;
         createdAt: NativeDate;
-        read: boolean;
         sender: import("mongoose").Types.ObjectId;
+        read: boolean;
+        content: string;
+        metadata: any;
         readAt?: NativeDate | null | undefined;
     }> & {
-        content: string;
         type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-        metadata: any;
         createdAt: NativeDate;
-        read: boolean;
         sender: import("mongoose").Types.ObjectId;
+        read: boolean;
+        content: string;
+        metadata: any;
         readAt?: NativeDate | null | undefined;
     }>;
-    createdAt: NativeDate;
     participants: import("mongoose").Types.ObjectId[];
 }> & {
+    createdAt: NativeDate;
     messages: import("mongoose").Types.DocumentArray<{
-        content: string;
         type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-        metadata: any;
         createdAt: NativeDate;
-        read: boolean;
         sender: import("mongoose").Types.ObjectId;
+        read: boolean;
+        content: string;
+        metadata: any;
         readAt?: NativeDate | null | undefined;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        content: string;
         type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-        metadata: any;
         createdAt: NativeDate;
-        read: boolean;
         sender: import("mongoose").Types.ObjectId;
+        read: boolean;
+        content: string;
+        metadata: any;
         readAt?: NativeDate | null | undefined;
     }> & {
-        content: string;
         type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-        metadata: any;
         createdAt: NativeDate;
-        read: boolean;
         sender: import("mongoose").Types.ObjectId;
+        read: boolean;
+        content: string;
+        metadata: any;
         readAt?: NativeDate | null | undefined;
     }>;
-    createdAt: NativeDate;
     participants: import("mongoose").Types.ObjectId[];
 } & {
     _id: import("mongoose").Types.ObjectId;
 } & {
     __v: number;
 }, Schema<any, import("mongoose").Model<any, any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, {
+    createdAt: NativeDate;
     messages: import("mongoose").Types.DocumentArray<{
-        content: string;
         type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-        metadata: any;
         createdAt: NativeDate;
-        read: boolean;
         sender: import("mongoose").Types.ObjectId;
+        read: boolean;
+        content: string;
+        metadata: any;
         readAt?: NativeDate | null | undefined;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        content: string;
         type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-        metadata: any;
         createdAt: NativeDate;
-        read: boolean;
         sender: import("mongoose").Types.ObjectId;
+        read: boolean;
+        content: string;
+        metadata: any;
         readAt?: NativeDate | null | undefined;
     }> & {
-        content: string;
         type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-        metadata: any;
         createdAt: NativeDate;
-        read: boolean;
         sender: import("mongoose").Types.ObjectId;
+        read: boolean;
+        content: string;
+        metadata: any;
         readAt?: NativeDate | null | undefined;
     }>;
-    createdAt: NativeDate;
     participants: import("mongoose").Types.ObjectId[];
 }, import("mongoose").Document<unknown, {}, import("mongoose").FlatRecord<{
+    createdAt: NativeDate;
     messages: import("mongoose").Types.DocumentArray<{
-        content: string;
         type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-        metadata: any;
         createdAt: NativeDate;
-        read: boolean;
         sender: import("mongoose").Types.ObjectId;
+        read: boolean;
+        content: string;
+        metadata: any;
         readAt?: NativeDate | null | undefined;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        content: string;
         type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-        metadata: any;
         createdAt: NativeDate;
-        read: boolean;
         sender: import("mongoose").Types.ObjectId;
+        read: boolean;
+        content: string;
+        metadata: any;
         readAt?: NativeDate | null | undefined;
     }> & {
-        content: string;
         type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-        metadata: any;
         createdAt: NativeDate;
-        read: boolean;
         sender: import("mongoose").Types.ObjectId;
+        read: boolean;
+        content: string;
+        metadata: any;
         readAt?: NativeDate | null | undefined;
     }>;
-    createdAt: NativeDate;
     participants: import("mongoose").Types.ObjectId[];
 }>> & import("mongoose").FlatRecord<{
+    createdAt: NativeDate;
     messages: import("mongoose").Types.DocumentArray<{
-        content: string;
         type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-        metadata: any;
         createdAt: NativeDate;
-        read: boolean;
         sender: import("mongoose").Types.ObjectId;
+        read: boolean;
+        content: string;
+        metadata: any;
         readAt?: NativeDate | null | undefined;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        content: string;
         type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-        metadata: any;
         createdAt: NativeDate;
-        read: boolean;
         sender: import("mongoose").Types.ObjectId;
+        read: boolean;
+        content: string;
+        metadata: any;
         readAt?: NativeDate | null | undefined;
     }> & {
-        content: string;
         type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-        metadata: any;
         createdAt: NativeDate;
-        read: boolean;
         sender: import("mongoose").Types.ObjectId;
+        read: boolean;
+        content: string;
+        metadata: any;
         readAt?: NativeDate | null | undefined;
     }>;
-    createdAt: NativeDate;
     participants: import("mongoose").Types.ObjectId[];
 }> & {
     _id: import("mongoose").Types.ObjectId;

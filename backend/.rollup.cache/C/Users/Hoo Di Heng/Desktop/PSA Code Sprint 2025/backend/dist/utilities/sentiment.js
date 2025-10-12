@@ -1,14 +1,19 @@
-import { pipeline, } from "@huggingface/transformers";
-const classifier = await pipeline("sentiment-analysis", "Xenova/distilbert-base-uncased-finetuned-sst-2-english");
+import { InferenceClient } from "@huggingface/inference";
+import config from "config";
+// Initialize with your Hugging Face API key
+const hf = new InferenceClient(config.get("HF_API_KEY"));
 export async function getSentimentLevel(text) {
-    const result = (await classifier(text));
+    const result = await hf.textClassification({
+        model: "Xenova/distilbert-base-uncased-finetuned-sst-2-english",
+        inputs: text,
+    });
+    const { label, score } = result[0];
     let level;
-    const { label, score } = result?.[0];
     if (label === "POSITIVE") {
-        level = 5 + score * 5;
+        level = 5 + score * 5; // 5-10
     }
     else {
-        level = 5 - score * 5;
+        level = 5 - score * 5; // 1-5
     }
     return Number(level.toFixed(2));
 }

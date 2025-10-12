@@ -1,7 +1,7 @@
 import { Schema } from "mongoose";
 declare const Event: import("mongoose").Model<{
-    title: string;
     description: string;
+    title: string;
     participants: import("mongoose").Types.ObjectId[];
     startDate: NativeDate;
     endDate: NativeDate;
@@ -10,16 +10,16 @@ declare const Event: import("mongoose").Model<{
     creator: import("mongoose").Types.ObjectId;
     location?: string | null | undefined;
     coverImage?: {
+        filename: string;
         description: string;
         s3Filename: string;
-        filename: string;
         folder: string[];
         url?: string | null | undefined;
         mimeType?: string | null | undefined;
     } | null | undefined;
 }, {}, {}, {}, import("mongoose").Document<unknown, {}, {
-    title: string;
     description: string;
+    title: string;
     participants: import("mongoose").Types.ObjectId[];
     startDate: NativeDate;
     endDate: NativeDate;
@@ -28,16 +28,16 @@ declare const Event: import("mongoose").Model<{
     creator: import("mongoose").Types.ObjectId;
     location?: string | null | undefined;
     coverImage?: {
+        filename: string;
         description: string;
         s3Filename: string;
-        filename: string;
         folder: string[];
         url?: string | null | undefined;
         mimeType?: string | null | undefined;
     } | null | undefined;
 }> & {
-    title: string;
     description: string;
+    title: string;
     participants: import("mongoose").Types.ObjectId[];
     startDate: NativeDate;
     endDate: NativeDate;
@@ -46,9 +46,9 @@ declare const Event: import("mongoose").Model<{
     creator: import("mongoose").Types.ObjectId;
     location?: string | null | undefined;
     coverImage?: {
+        filename: string;
         description: string;
         s3Filename: string;
-        filename: string;
         folder: string[];
         url?: string | null | undefined;
         mimeType?: string | null | undefined;
@@ -58,8 +58,8 @@ declare const Event: import("mongoose").Model<{
 } & {
     __v: number;
 }, Schema<any, import("mongoose").Model<any, any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, {
-    title: string;
     description: string;
+    title: string;
     participants: import("mongoose").Types.ObjectId[];
     startDate: NativeDate;
     endDate: NativeDate;
@@ -68,16 +68,16 @@ declare const Event: import("mongoose").Model<{
     creator: import("mongoose").Types.ObjectId;
     location?: string | null | undefined;
     coverImage?: {
+        filename: string;
         description: string;
         s3Filename: string;
-        filename: string;
         folder: string[];
         url?: string | null | undefined;
         mimeType?: string | null | undefined;
     } | null | undefined;
 }, import("mongoose").Document<unknown, {}, import("mongoose").FlatRecord<{
-    title: string;
     description: string;
+    title: string;
     participants: import("mongoose").Types.ObjectId[];
     startDate: NativeDate;
     endDate: NativeDate;
@@ -86,16 +86,16 @@ declare const Event: import("mongoose").Model<{
     creator: import("mongoose").Types.ObjectId;
     location?: string | null | undefined;
     coverImage?: {
+        filename: string;
         description: string;
         s3Filename: string;
-        filename: string;
         folder: string[];
         url?: string | null | undefined;
         mimeType?: string | null | undefined;
     } | null | undefined;
 }>> & import("mongoose").FlatRecord<{
-    title: string;
     description: string;
+    title: string;
     participants: import("mongoose").Types.ObjectId[];
     startDate: NativeDate;
     endDate: NativeDate;
@@ -104,9 +104,9 @@ declare const Event: import("mongoose").Model<{
     creator: import("mongoose").Types.ObjectId;
     location?: string | null | undefined;
     coverImage?: {
+        filename: string;
         description: string;
         s3Filename: string;
-        filename: string;
         folder: string[];
         url?: string | null | undefined;
         mimeType?: string | null | undefined;

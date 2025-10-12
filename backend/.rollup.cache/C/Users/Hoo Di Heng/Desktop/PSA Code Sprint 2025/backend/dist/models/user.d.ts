@@ -1,12 +1,12 @@
 import { Schema } from "mongoose";
 declare const User: import("mongoose").Model<{
-    role: "user" | "admin";
     name: string;
-    createdAt: NativeDate;
-    position: string;
     email: string;
+    position: string;
+    role: "user" | "admin";
     password: string;
     subordinates: import("mongoose").Types.ObjectId[];
+    createdAt: NativeDate;
     experienceLevel: number;
     skills: import("mongoose").Types.DocumentArray<{
         level: number;
@@ -30,16 +30,16 @@ declare const User: import("mongoose").Model<{
     }>;
     mentees: import("mongoose").Types.ObjectId[];
     notifications: import("mongoose").Types.DocumentArray<{
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }> & {
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }>;
     careerPath: import("mongoose").Types.DocumentArray<{
@@ -64,29 +64,29 @@ declare const User: import("mongoose").Model<{
     lastSeen: NativeDate;
     isOnline: boolean;
     moods: import("mongoose").Types.DocumentArray<{
-        date: NativeDate;
         level: number;
+        date: NativeDate;
         notes: string[];
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        date: NativeDate;
         level: number;
+        date: NativeDate;
         notes: string[];
     }> & {
-        date: NativeDate;
         level: number;
+        date: NativeDate;
         notes: string[];
     }>;
     bio?: string | null | undefined;
     supervisor?: import("mongoose").Types.ObjectId | null | undefined;
     avatar?: string | null | undefined;
 }, {}, {}, {}, import("mongoose").Document<unknown, {}, {
-    role: "user" | "admin";
     name: string;
-    createdAt: NativeDate;
-    position: string;
     email: string;
+    position: string;
+    role: "user" | "admin";
     password: string;
     subordinates: import("mongoose").Types.ObjectId[];
+    createdAt: NativeDate;
     experienceLevel: number;
     skills: import("mongoose").Types.DocumentArray<{
         level: number;
@@ -110,16 +110,16 @@ declare const User: import("mongoose").Model<{
     }>;
     mentees: import("mongoose").Types.ObjectId[];
     notifications: import("mongoose").Types.DocumentArray<{
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }> & {
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }>;
     careerPath: import("mongoose").Types.DocumentArray<{
@@ -144,29 +144,29 @@ declare const User: import("mongoose").Model<{
     lastSeen: NativeDate;
     isOnline: boolean;
     moods: import("mongoose").Types.DocumentArray<{
-        date: NativeDate;
         level: number;
+        date: NativeDate;
         notes: string[];
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        date: NativeDate;
         level: number;
+        date: NativeDate;
         notes: string[];
     }> & {
-        date: NativeDate;
         level: number;
+        date: NativeDate;
         notes: string[];
     }>;
     bio?: string | null | undefined;
     supervisor?: import("mongoose").Types.ObjectId | null | undefined;
     avatar?: string | null | undefined;
 }> & {
-    role: "user" | "admin";
     name: string;
-    createdAt: NativeDate;
-    position: string;
     email: string;
+    position: string;
+    role: "user" | "admin";
     password: string;
     subordinates: import("mongoose").Types.ObjectId[];
+    createdAt: NativeDate;
     experienceLevel: number;
     skills: import("mongoose").Types.DocumentArray<{
         level: number;
@@ -190,16 +190,16 @@ declare const User: import("mongoose").Model<{
     }>;
     mentees: import("mongoose").Types.ObjectId[];
     notifications: import("mongoose").Types.DocumentArray<{
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }> & {
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }>;
     careerPath: import("mongoose").Types.DocumentArray<{
@@ -224,16 +224,16 @@ declare const User: import("mongoose").Model<{
     lastSeen: NativeDate;
     isOnline: boolean;
     moods: import("mongoose").Types.DocumentArray<{
-        date: NativeDate;
         level: number;
+        date: NativeDate;
         notes: string[];
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        date: NativeDate;
         level: number;
+        date: NativeDate;
         notes: string[];
     }> & {
-        date: NativeDate;
         level: number;
+        date: NativeDate;
         notes: string[];
     }>;
     bio?: string | null | undefined;
@@ -244,13 +244,13 @@ declare const User: import("mongoose").Model<{
 } & {
     __v: number;
 }, Schema<any, import("mongoose").Model<any, any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, {
-    role: "user" | "admin";
     name: string;
-    createdAt: NativeDate;
-    position: string;
     email: string;
+    position: string;
+    role: "user" | "admin";
     password: string;
     subordinates: import("mongoose").Types.ObjectId[];
+    createdAt: NativeDate;
     experienceLevel: number;
     skills: import("mongoose").Types.DocumentArray<{
         level: number;
@@ -274,16 +274,16 @@ declare const User: import("mongoose").Model<{
     }>;
     mentees: import("mongoose").Types.ObjectId[];
     notifications: import("mongoose").Types.DocumentArray<{
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }> & {
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }>;
     careerPath: import("mongoose").Types.DocumentArray<{
@@ -308,29 +308,29 @@ declare const User: import("mongoose").Model<{
     lastSeen: NativeDate;
     isOnline: boolean;
     moods: import("mongoose").Types.DocumentArray<{
-        date: NativeDate;
         level: number;
+        date: NativeDate;
         notes: string[];
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        date: NativeDate;
         level: number;
+        date: NativeDate;
         notes: string[];
     }> & {
-        date: NativeDate;
         level: number;
+        date: NativeDate;
         notes: string[];
     }>;
     bio?: string | null | undefined;
     supervisor?: import("mongoose").Types.ObjectId | null | undefined;
     avatar?: string | null | undefined;
 }, import("mongoose").Document<unknown, {}, import("mongoose").FlatRecord<{
-    role: "user" | "admin";
     name: string;
-    createdAt: NativeDate;
-    position: string;
     email: string;
+    position: string;
+    role: "user" | "admin";
     password: string;
     subordinates: import("mongoose").Types.ObjectId[];
+    createdAt: NativeDate;
     experienceLevel: number;
     skills: import("mongoose").Types.DocumentArray<{
         level: number;
@@ -354,16 +354,16 @@ declare const User: import("mongoose").Model<{
     }>;
     mentees: import("mongoose").Types.ObjectId[];
     notifications: import("mongoose").Types.DocumentArray<{
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }> & {
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }>;
     careerPath: import("mongoose").Types.DocumentArray<{
@@ -388,29 +388,29 @@ declare const User: import("mongoose").Model<{
     lastSeen: NativeDate;
     isOnline: boolean;
     moods: import("mongoose").Types.DocumentArray<{
-        date: NativeDate;
         level: number;
+        date: NativeDate;
         notes: string[];
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        date: NativeDate;
         level: number;
+        date: NativeDate;
         notes: string[];
     }> & {
-        date: NativeDate;
         level: number;
+        date: NativeDate;
         notes: string[];
     }>;
     bio?: string | null | undefined;
     supervisor?: import("mongoose").Types.ObjectId | null | undefined;
     avatar?: string | null | undefined;
 }>> & import("mongoose").FlatRecord<{
-    role: "user" | "admin";
     name: string;
-    createdAt: NativeDate;
-    position: string;
     email: string;
+    position: string;
+    role: "user" | "admin";
     password: string;
     subordinates: import("mongoose").Types.ObjectId[];
+    createdAt: NativeDate;
     experienceLevel: number;
     skills: import("mongoose").Types.DocumentArray<{
         level: number;
@@ -434,16 +434,16 @@ declare const User: import("mongoose").Model<{
     }>;
     mentees: import("mongoose").Types.ObjectId[];
     notifications: import("mongoose").Types.DocumentArray<{
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }> & {
-        message: string;
         createdAt: NativeDate;
+        message: string;
         read: boolean;
     }>;
     careerPath: import("mongoose").Types.DocumentArray<{
@@ -468,16 +468,16 @@ declare const User: import("mongoose").Model<{
     lastSeen: NativeDate;
     isOnline: boolean;
     moods: import("mongoose").Types.DocumentArray<{
-        date: NativeDate;
         level: number;
+        date: NativeDate;
         notes: string[];
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        date: NativeDate;
         level: number;
+        date: NativeDate;
         notes: string[];
     }> & {
-        date: NativeDate;
         level: number;
+        date: NativeDate;
         notes: string[];
     }>;
     bio?: string | null | undefined;

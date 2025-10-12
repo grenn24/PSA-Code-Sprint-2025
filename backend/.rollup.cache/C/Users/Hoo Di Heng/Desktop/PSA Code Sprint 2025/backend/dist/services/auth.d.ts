@@ -3,13 +3,13 @@ declare class AuthService {
     login(email: string, password: string): Promise<{
         token: string;
         user: import("mongoose").Document<unknown, {}, {
-            role: "user" | "admin";
             name: string;
-            createdAt: NativeDate;
-            position: string;
             email: string;
+            position: string;
+            role: "user" | "admin";
             password: string;
             subordinates: import("mongoose").Types.ObjectId[];
+            createdAt: NativeDate;
             experienceLevel: number;
             skills: import("mongoose").Types.DocumentArray<{
                 level: number;
@@ -33,16 +33,16 @@ declare class AuthService {
             }>;
             mentees: import("mongoose").Types.ObjectId[];
             notifications: import("mongoose").Types.DocumentArray<{
-                message: string;
                 createdAt: NativeDate;
+                message: string;
                 read: boolean;
             }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-                message: string;
                 createdAt: NativeDate;
+                message: string;
                 read: boolean;
             }> & {
-                message: string;
                 createdAt: NativeDate;
+                message: string;
                 read: boolean;
             }>;
             careerPath: import("mongoose").Types.DocumentArray<{
@@ -67,29 +67,29 @@ declare class AuthService {
             lastSeen: NativeDate;
             isOnline: boolean;
             moods: import("mongoose").Types.DocumentArray<{
-                date: NativeDate;
                 level: number;
+                date: NativeDate;
                 notes: string[];
             }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-                date: NativeDate;
                 level: number;
+                date: NativeDate;
                 notes: string[];
             }> & {
-                date: NativeDate;
                 level: number;
+                date: NativeDate;
                 notes: string[];
             }>;
             bio?: string | null | undefined;
             supervisor?: import("mongoose").Types.ObjectId | null | undefined;
             avatar?: string | null | undefined;
         }> & {
-            role: "user" | "admin";
             name: string;
-            createdAt: NativeDate;
-            position: string;
             email: string;
+            position: string;
+            role: "user" | "admin";
             password: string;
             subordinates: import("mongoose").Types.ObjectId[];
+            createdAt: NativeDate;
             experienceLevel: number;
             skills: import("mongoose").Types.DocumentArray<{
                 level: number;
@@ -113,16 +113,16 @@ declare class AuthService {
             }>;
             mentees: import("mongoose").Types.ObjectId[];
             notifications: import("mongoose").Types.DocumentArray<{
-                message: string;
                 createdAt: NativeDate;
+                message: string;
                 read: boolean;
             }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-                message: string;
                 createdAt: NativeDate;
+                message: string;
                 read: boolean;
             }> & {
-                message: string;
                 createdAt: NativeDate;
+                message: string;
                 read: boolean;
             }>;
             careerPath: import("mongoose").Types.DocumentArray<{
@@ -147,16 +147,16 @@ declare class AuthService {
             lastSeen: NativeDate;
             isOnline: boolean;
             moods: import("mongoose").Types.DocumentArray<{
-                date: NativeDate;
                 level: number;
+                date: NativeDate;
                 notes: string[];
             }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-                date: NativeDate;
                 level: number;
+                date: NativeDate;
                 notes: string[];
             }> & {
-                date: NativeDate;
                 level: number;
+                date: NativeDate;
                 notes: string[];
             }>;
             bio?: string | null | undefined;
