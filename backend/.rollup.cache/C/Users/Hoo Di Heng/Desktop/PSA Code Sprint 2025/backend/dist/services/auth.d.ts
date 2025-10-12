@@ -3,13 +3,13 @@ declare class AuthService {
     login(email: string, password: string): Promise<{
         token: string;
         user: import("mongoose").Document<unknown, {}, {
-            name: string;
-            email: string;
-            position: string;
             role: "user" | "admin";
+            name: string;
+            createdAt: NativeDate;
+            position: string;
+            email: string;
             password: string;
             subordinates: import("mongoose").Types.ObjectId[];
-            createdAt: NativeDate;
             experienceLevel: number;
             skills: import("mongoose").Types.DocumentArray<{
                 level: number;
@@ -33,16 +33,16 @@ declare class AuthService {
             }>;
             mentees: import("mongoose").Types.ObjectId[];
             notifications: import("mongoose").Types.DocumentArray<{
-                createdAt: NativeDate;
                 message: string;
+                createdAt: NativeDate;
                 read: boolean;
             }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-                createdAt: NativeDate;
                 message: string;
+                createdAt: NativeDate;
                 read: boolean;
             }> & {
-                createdAt: NativeDate;
                 message: string;
+                createdAt: NativeDate;
                 read: boolean;
             }>;
             careerPath: import("mongoose").Types.DocumentArray<{
@@ -83,13 +83,13 @@ declare class AuthService {
             supervisor?: import("mongoose").Types.ObjectId | null | undefined;
             avatar?: string | null | undefined;
         }> & {
-            name: string;
-            email: string;
-            position: string;
             role: "user" | "admin";
+            name: string;
+            createdAt: NativeDate;
+            position: string;
+            email: string;
             password: string;
             subordinates: import("mongoose").Types.ObjectId[];
-            createdAt: NativeDate;
             experienceLevel: number;
             skills: import("mongoose").Types.DocumentArray<{
                 level: number;
@@ -113,16 +113,16 @@ declare class AuthService {
             }>;
             mentees: import("mongoose").Types.ObjectId[];
             notifications: import("mongoose").Types.DocumentArray<{
-                createdAt: NativeDate;
                 message: string;
+                createdAt: NativeDate;
                 read: boolean;
             }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-                createdAt: NativeDate;
                 message: string;
+                createdAt: NativeDate;
                 read: boolean;
             }> & {
-                createdAt: NativeDate;
                 message: string;
+                createdAt: NativeDate;
                 read: boolean;
             }>;
             careerPath: import("mongoose").Types.DocumentArray<{

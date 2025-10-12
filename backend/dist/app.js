@@ -1,36 +1,36 @@
 import require$$3$1, { promises, lstatSync, fstatSync } from 'fs';
-import require$$1$1, { sep, join } from 'path';
+import require$$1$2, { sep, join } from 'path';
 import require$$2$2, { homedir, platform as platform$2, release } from 'os';
 import crypto$1, { createHmac, createHash } from 'crypto';
 import { a as commonjsGlobal, r as requireMs$5, g as getDefaultExportFromCjs, b as getAugmentedNamespace, c as createDebug, d as requireSrc$5 } from './index-BgPbTSVm.js';
 import require$$0$4 from 'tty';
-import require$$1$2 from 'util';
+import require$$1$3 from 'util';
 import require$$4$2 from 'net';
 import require$$0$5, { EventEmitter } from 'events';
 import stream$1, { Duplex, Readable as Readable$1, Writable, PassThrough } from 'stream';
 import * as zlib from 'zlib';
 import zlib__default from 'zlib';
 import require$$0$6, { Buffer as Buffer$1 } from 'buffer';
-import require$$1$3 from 'string_decoder';
+import require$$1$4 from 'string_decoder';
 import require$$8 from 'querystring';
 import require$$0$7, { fileURLToPath } from 'url';
-import require$$1$4, { Agent as Agent$1, request as request$2 } from 'http';
+import require$$1$5, { Agent as Agent$1, request as request$3 } from 'http';
 import mongoose, { Schema as Schema$1, model } from 'mongoose';
 import winston, { format, transports } from 'winston';
 import require$$0$8 from 'semver';
-import require$$1$5, { Agent, request as request$1 } from 'https';
+import require$$1$6, { Agent, request as request$2 } from 'https';
 import require$$4$3 from 'tls';
+import require$$3$2, { Readable } from 'node:stream';
 import require$$4$4 from 'assert';
 import { versions, env } from 'process';
-import { Readable } from 'node:stream';
 
-var config$2 = {};
+var config$3 = {};
 
 var main = {exports: {}};
 
-var version$1 = "16.4.7";
+var version$2 = "16.4.7";
 var require$$4$1 = {
-	version: version$1};
+	version: version$2};
 
 var hasRequiredMain;
 
@@ -38,7 +38,7 @@ function requireMain () {
 	if (hasRequiredMain) return main.exports;
 	hasRequiredMain = 1;
 	const fs = require$$3$1;
-	const path = require$$1$1;
+	const path = require$$1$2;
 	const os = require$$2$2;
 	const crypto = crypto$1;
 	const packageJson = require$$4$1;
@@ -454,11 +454,11 @@ function requireCliOptions () {
 	return cliOptions;
 }
 
-var hasRequiredConfig$1;
+var hasRequiredConfig$2;
 
-function requireConfig$1 () {
-	if (hasRequiredConfig$1) return config$2;
-	hasRequiredConfig$1 = 1;
+function requireConfig$2 () {
+	if (hasRequiredConfig$2) return config$3;
+	hasRequiredConfig$2 = 1;
 	(function () {
 	  requireMain().config(
 	    Object.assign(
@@ -468,10 +468,10 @@ function requireConfig$1 () {
 	    )
 	  );
 	})();
-	return config$2;
+	return config$3;
 }
 
-requireConfig$1();
+requireConfig$2();
 
 var express$2 = {exports: {}};
 
@@ -493,7 +493,7 @@ function requireDepd () {
 	 * Module dependencies.
 	 */
 
-	var relative = require$$1$1.relative;
+	var relative = require$$1$2.relative;
 
 	/**
 	 * Module exports.
@@ -2664,7 +2664,7 @@ function requireNode$4 () {
 	hasRequiredNode$4 = 1;
 	(function (module, exports) {
 		var tty = require$$0$4;
-		var util = require$$1$2;
+		var util = require$$1$3;
 
 		/**
 		 * This is the Node.js implementation of `debug()`.
@@ -3348,7 +3348,7 @@ function requireInternal () {
 	//------------------------------------------------------------------------------
 
 	// We use node.js internal decoder. Its signature is the same as ours.
-	var StringDecoder = require$$1$3.StringDecoder;
+	var StringDecoder = require$$1$4.StringDecoder;
 
 	if (!StringDecoder.prototype.end) // Node v0.8 doesn't have this method.
 	    StringDecoder.prototype.end = function() {};
@@ -5792,7 +5792,7 @@ var require$$0$2 = [
 	]
 ];
 
-var require$$1 = [
+var require$$1$1 = [
 	[
 		"0",
 		"\u0000",
@@ -13591,7 +13591,7 @@ function requireDbcsData () {
 
 	    'eucjp': {
 	        type: '_dbcs',
-	        table: function() { return require$$1 },
+	        table: function() { return require$$1$1 },
 	        encodeAdd: {'\u00a5': 0x5C, '\u203E': 0x7E},
 	    },
 
@@ -26261,7 +26261,7 @@ function requireMimeTypes () {
 		 */
 
 		var db = requireMimeDb();
-		var extname = require$$1$1.extname;
+		var extname = require$$1$2.extname;
 
 		/**
 		 * Module variables.
@@ -27222,7 +27222,7 @@ var hasRequiredUtil_inspect;
 function requireUtil_inspect () {
 	if (hasRequiredUtil_inspect) return util_inspect;
 	hasRequiredUtil_inspect = 1;
-	util_inspect = require$$1$2.inspect;
+	util_inspect = require$$1$3.inspect;
 	return util_inspect;
 }
 
@@ -29176,12 +29176,12 @@ function requireFormats () {
 	return formats;
 }
 
-var utils$3;
-var hasRequiredUtils$1;
+var utils$5;
+var hasRequiredUtils$3;
 
-function requireUtils$1 () {
-	if (hasRequiredUtils$1) return utils$3;
-	hasRequiredUtils$1 = 1;
+function requireUtils$3 () {
+	if (hasRequiredUtils$3) return utils$5;
+	hasRequiredUtils$3 = 1;
 
 	var formats = /*@__PURE__*/ requireFormats();
 
@@ -29434,7 +29434,7 @@ function requireUtils$1 () {
 	    return fn(val);
 	};
 
-	utils$3 = {
+	utils$5 = {
 	    arrayToObject: arrayToObject,
 	    assign: assign,
 	    combine: combine,
@@ -29446,7 +29446,7 @@ function requireUtils$1 () {
 	    maybeMap: maybeMap,
 	    merge: merge
 	};
-	return utils$3;
+	return utils$5;
 }
 
 var stringify_1;
@@ -29457,7 +29457,7 @@ function requireStringify () {
 	hasRequiredStringify = 1;
 
 	var getSideChannel = requireSideChannel();
-	var utils = /*@__PURE__*/ requireUtils$1();
+	var utils = /*@__PURE__*/ requireUtils$3();
 	var formats = /*@__PURE__*/ requireFormats();
 	var has = Object.prototype.hasOwnProperty;
 
@@ -29815,7 +29815,7 @@ function requireParse () {
 	if (hasRequiredParse) return parse$1;
 	hasRequiredParse = 1;
 
-	var utils = /*@__PURE__*/ requireUtils$1();
+	var utils = /*@__PURE__*/ requireUtils$3();
 
 	var has = Object.prototype.hasOwnProperty;
 	var isArray = Array.isArray;
@@ -31267,7 +31267,7 @@ function requireNode$3 () {
 	hasRequiredNode$3 = 1;
 	(function (module, exports) {
 		var tty = require$$0$4;
-		var util = require$$1$2;
+		var util = require$$1$3;
 
 		/**
 		 * This is the Node.js implementation of `debug()`.
@@ -32788,7 +32788,7 @@ function requireNode$2 () {
 	hasRequiredNode$2 = 1;
 	(function (module, exports) {
 		var tty = require$$0$4;
-		var util = require$$1$2;
+		var util = require$$1$3;
 
 		/**
 		 * This is the Node.js implementation of `debug()`.
@@ -33497,7 +33497,7 @@ function requireMethods () {
 	 * @private
 	 */
 
-	var http = require$$1$4;
+	var http = require$$1$5;
 
 	/**
 	 * Module exports.
@@ -34567,12 +34567,12 @@ function requireInit () {
  * MIT Licensed
  */
 
-var query;
-var hasRequiredQuery;
+var query$1;
+var hasRequiredQuery$1;
 
-function requireQuery () {
-	if (hasRequiredQuery) return query;
-	hasRequiredQuery = 1;
+function requireQuery$1 () {
+	if (hasRequiredQuery$1) return query$1;
+	hasRequiredQuery$1 = 1;
 
 	/**
 	 * Module dependencies.
@@ -34588,7 +34588,7 @@ function requireQuery () {
 	 * @api public
 	 */
 
-	query = function query(options) {
+	query$1 = function query(options) {
 	  var opts = merge({}, options);
 	  var queryparse = qs.parse;
 
@@ -34611,7 +34611,7 @@ function requireQuery () {
 	    next();
 	  };
 	};
-	return query;
+	return query$1;
 }
 
 /*!
@@ -34635,7 +34635,7 @@ function requireView () {
 	 */
 
 	var debug = requireSrc$2()('express:view');
-	var path = require$$1$1;
+	var path = require$$1$2;
 	var fs = require$$3$1;
 
 	/**
@@ -34804,7 +34804,7 @@ function requireView () {
 	return view;
 }
 
-var utils$2 = {};
+var utils$4 = {};
 
 var safeBuffer$1 = {exports: {}};
 
@@ -34911,7 +34911,7 @@ function requireContentDisposition () {
 	 * @private
 	 */
 
-	var basename = require$$1$1.basename;
+	var basename = require$$1$2.basename;
 	var Buffer = requireSafeBuffer$1().Buffer;
 
 	/**
@@ -35939,7 +35939,7 @@ function requireNode$1 () {
 	hasRequiredNode$1 = 1;
 	(function (module, exports) {
 		var tty = require$$0$4;
-		var util = require$$1$2;
+		var util = require$$1$3;
 
 		/**
 		 * This is the Node.js implementation of `debug()`.
@@ -39633,10 +39633,10 @@ function requireSend () {
 	var ms = requireMs$5();
 	var onFinished = requireOnFinished$1();
 	var parseRange = requireRangeParser();
-	var path = require$$1$1;
+	var path = require$$1$2;
 	var statuses = requireStatuses();
 	var Stream = stream$1;
-	var util = require$$1$2;
+	var util = require$$1$3;
 
 	/**
 	 * Path function references.
@@ -41871,11 +41871,11 @@ function requireProxyAddr () {
  * MIT Licensed
  */
 
-var hasRequiredUtils;
+var hasRequiredUtils$2;
 
-function requireUtils () {
-	if (hasRequiredUtils) return utils$2;
-	hasRequiredUtils = 1;
+function requireUtils$2 () {
+	if (hasRequiredUtils$2) return utils$4;
+	hasRequiredUtils$2 = 1;
 	(function (exports) {
 
 		/**
@@ -42172,8 +42172,8 @@ function requireUtils () {
 		function newObject() {
 		  return {};
 		} 
-	} (utils$2));
-	return utils$2;
+	} (utils$4));
+	return utils$4;
 }
 
 /*!
@@ -42200,17 +42200,17 @@ function requireApplication () {
 		var Router = requireRouter();
 		var methods = requireMethods();
 		var middleware = requireInit();
-		var query = requireQuery();
+		var query = requireQuery$1();
 		var debug = requireSrc$2()('express:application');
 		var View = requireView();
-		var http = require$$1$4;
-		var compileETag = requireUtils().compileETag;
-		var compileQueryParser = requireUtils().compileQueryParser;
-		var compileTrust = requireUtils().compileTrust;
+		var http = require$$1$5;
+		var compileETag = requireUtils$2().compileETag;
+		var compileQueryParser = requireUtils$2().compileQueryParser;
+		var compileTrust = requireUtils$2().compileTrust;
 		var deprecate = requireDepd()('express');
 		var flatten = requireArrayFlatten();
 		var merge = requireUtilsMerge();
-		var resolve = require$$1$1.resolve;
+		var resolve = require$$1$2.resolve;
 		var setPrototypeOf = requireSetprototypeof();
 
 		/**
@@ -44051,12 +44051,12 @@ function requireAccepts () {
  * MIT Licensed
  */
 
-var request;
-var hasRequiredRequest;
+var request$1;
+var hasRequiredRequest$1;
 
-function requireRequest () {
-	if (hasRequiredRequest) return request;
-	hasRequiredRequest = 1;
+function requireRequest$1 () {
+	if (hasRequiredRequest$1) return request$1;
+	hasRequiredRequest$1 = 1;
 
 	/**
 	 * Module dependencies.
@@ -44067,7 +44067,7 @@ function requireRequest () {
 	var deprecate = requireDepd()('express');
 	var isIP = require$$4$2.isIP;
 	var typeis = requireTypeIs();
-	var http = require$$1$4;
+	var http = require$$1$5;
 	var fresh = requireFresh();
 	var parseRange = requireRangeParser();
 	var parse = requireParseurl();
@@ -44085,7 +44085,7 @@ function requireRequest () {
 	 * @public
 	 */
 
-	request = req;
+	request$1 = req;
 
 	/**
 	 * Return request header.
@@ -44573,7 +44573,7 @@ function requireRequest () {
 	    get: getter
 	  });
 	}
-	return request;
+	return request$1;
 }
 
 var cookieSignature = {};
@@ -45165,16 +45165,16 @@ function requireResponse () {
 	var deprecate = requireDepd()('express');
 	var encodeUrl = requireEncodeurl$1();
 	var escapeHtml = requireEscapeHtml();
-	var http = require$$1$4;
-	var isAbsolute = requireUtils().isAbsolute;
+	var http = require$$1$5;
+	var isAbsolute = requireUtils$2().isAbsolute;
 	var onFinished = requireOnFinished$1();
-	var path = require$$1$1;
+	var path = require$$1$2;
 	var statuses = requireStatuses();
 	var merge = requireUtilsMerge();
 	var sign = requireCookieSignature().sign;
-	var normalizeType = requireUtils().normalizeType;
-	var normalizeTypes = requireUtils().normalizeTypes;
-	var setCharset = requireUtils().setCharset;
+	var normalizeType = requireUtils$2().normalizeType;
+	var normalizeTypes = requireUtils$2().normalizeTypes;
+	var setCharset = requireUtils$2().setCharset;
 	var cookie = requireCookie$1();
 	var send = requireSend();
 	var extname = path.extname;
@@ -46351,7 +46351,7 @@ function requireServeStatic () {
 	var encodeUrl = requireEncodeurl$1();
 	var escapeHtml = requireEscapeHtml();
 	var parseUrl = requireParseurl();
-	var resolve = require$$1$1.resolve;
+	var resolve = require$$1$2.resolve;
 	var send = requireSend();
 	var url = require$$0$7;
 
@@ -46570,7 +46570,7 @@ function requireExpress$1 () {
 		var proto = requireApplication();
 		var Route = requireRoute();
 		var Router = requireRouter();
-		var req = requireRequest();
+		var req = requireRequest$1();
 		var res = requireResponse();
 
 		/**
@@ -46628,7 +46628,7 @@ function requireExpress$1 () {
 		 */
 
 		exports.json = bodyParser.json;
-		exports.query = requireQuery();
+		exports.query = requireQuery$1();
 		exports.raw = bodyParser.raw;
 		exports.static = requireServeStatic();
 		exports.text = bodyParser.text;
@@ -46692,7 +46692,7 @@ function requireExpress () {
 var expressExports = requireExpress();
 var express = /*@__PURE__*/getDefaultExportFromCjs(expressExports);
 
-var config$1 = {exports: {}};
+var config$2 = {exports: {}};
 
 var defer = {};
 
@@ -48180,12 +48180,12 @@ const JSON5 = {
 
 var lib = JSON5;
 
-var dist = /*#__PURE__*/Object.freeze({
+var dist$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
   default: lib
 });
 
-var require$$0 = /*@__PURE__*/getAugmentedNamespace(dist);
+var require$$0 = /*@__PURE__*/getAugmentedNamespace(dist$1);
 
 var hasRequiredParser;
 
@@ -48567,11 +48567,11 @@ function requireParser () {
 	return parser.exports;
 }
 
-var hasRequiredConfig;
+var hasRequiredConfig$1;
 
-function requireConfig () {
-	if (hasRequiredConfig) return config$1.exports;
-	hasRequiredConfig = 1;
+function requireConfig$1 () {
+	if (hasRequiredConfig$1) return config$2.exports;
+	hasRequiredConfig$1 = 1;
 	// config.js (c) 2010-2022 Loren West and other contributors
 	// May be freely distributed under the MIT license.
 	// For further details and documentation:
@@ -48581,7 +48581,7 @@ function requireConfig () {
 	const DeferredConfig = requireDefer$1().DeferredConfig;
 	const RawConfig = requireRaw().RawConfig;
 	let Parser = requireParser();
-	const Path = require$$1$1;
+	const Path = require$$1$2;
 	const FileSystem = require$$3$1;
 
 	// Static members
@@ -50064,7 +50064,7 @@ function requireConfig () {
 	}
 
 	// Instantiate and export the configuration
-	const config = config$1.exports = new Config();
+	const config = config$2.exports = new Config();
 
 	// copy methods to util for backwards compatibility
 	util.stripComments = Parser.stripComments;
@@ -50076,11 +50076,11 @@ function requireConfig () {
 	  console.error('WARNING: No configurations found in configuration directory:' +CONFIG_DIR);
 	  console.error('WARNING: To disable this warning set SUPPRESS_NO_CONFIG_WARNING in the environment.');
 	}
-	return config$1.exports;
+	return config$2.exports;
 }
 
-var configExports = requireConfig();
-var config = /*@__PURE__*/getDefaultExportFromCjs(configExports);
+var configExports = requireConfig$1();
+var config$1 = /*@__PURE__*/getDefaultExportFromCjs(configExports);
 
 const { combine: combine$1, timestamp: timestamp$1, colorize: colorize$1, prettyPrint, simple, json: json$1 } = format;
 const { Console, File: File$1 } = transports;
@@ -50099,8 +50099,8 @@ const dbStartupDebug = createDebug("db:startup");
 // Establish connection with mongodb, resolves with a mongoose instance
 const db = async (app = undefined) => {
     try {
-        const conn = await mongoose.connect(config.get("DATABASE_URL"));
-        dbStartupDebug(`Database is connected at ${config.get("DATABASE_URL")}`);
+        const conn = await mongoose.connect(config$1.get("DATABASE_URL"));
+        dbStartupDebug(`Database is connected at ${config$1.get("DATABASE_URL")}`);
         if (app) {
             app.locals.db = conn.connection;
         }
@@ -50149,7 +50149,7 @@ const logging = () => {
 };
 
 var configStartup = () => {
-    if (!config.get("DATABASE_URL")) {
+    if (!config$1.get("DATABASE_URL")) {
         throw new Error("DATABASE_URL is not defined");
     }
     /*
@@ -50964,7 +50964,7 @@ function requireNode () {
 	hasRequiredNode = 1;
 	(function (module, exports) {
 		var tty = require$$0$4;
-		var util = require$$1$2;
+		var util = require$$1$3;
 
 		/**
 		 * This is the Node.js implementation of `debug()`.
@@ -53999,7 +53999,7 @@ function requireDataStream () {
 	hasRequiredDataStream = 1;
 	var Buffer = requireSafeBuffer$1().Buffer;
 	var Stream = stream$1;
-	var util = require$$1$2;
+	var util = require$$1$3;
 
 	function DataStream(data) {
 	  this.buffer = null;
@@ -54340,7 +54340,7 @@ function requireJwa () {
 	var Buffer = requireSafeBuffer$1().Buffer;
 	var crypto = crypto$1;
 	var formatEcdsa = requireEcdsaSigFormatter();
-	var util = require$$1$2;
+	var util = require$$1$3;
 
 	var MSG_INVALID_ALGORITHM = '"%s" is not a valid algorithm.\n  Supported algorithms are:\n  "HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "ES512" and "none".';
 	var MSG_INVALID_SECRET = 'secret must be a string or buffer';
@@ -54622,7 +54622,7 @@ function requireSignStream () {
 	var jwa = requireJwa();
 	var Stream = stream$1;
 	var toString = requireTostring();
-	var util = require$$1$2;
+	var util = require$$1$3;
 
 	function base64url(string, encoding) {
 	  return Buffer
@@ -54710,7 +54710,7 @@ function requireVerifyStream () {
 	var jwa = requireJwa();
 	var Stream = stream$1;
 	var toString = requireTostring();
-	var util = require$$1$2;
+	var util = require$$1$3;
 	var JWS_REGEX = /^[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?\.([a-zA-Z0-9\-_]+)?$/;
 
 	function isObject(thing) {
@@ -57433,7 +57433,7 @@ class AuthService {
             position: user.position,
         };
         // 4. Sign JWT token (expires in 1 day)
-        const token = jwt.sign(payload, config.get("SECRET_KEY"), {
+        const token = jwt.sign(payload, config$1.get("SECRET_KEY"), {
             expiresIn: "1d",
         });
         // 5. Return token + user info (optional)
@@ -57441,7 +57441,7 @@ class AuthService {
     }
     async validateAccessToken(accessToken) {
         try {
-            const payload = jwt.verify(accessToken, config.get("SECRET_KEY"));
+            const payload = jwt.verify(accessToken, config$1.get("SECRET_KEY"));
             if (typeof payload !== "string") {
                 return payload;
             }
@@ -58367,13 +58367,13 @@ function requirePermessageDeflate () {
 	return permessageDeflate;
 }
 
-var validation = {exports: {}};
+var validation$1 = {exports: {}};
 
-var hasRequiredValidation;
+var hasRequiredValidation$1;
 
-function requireValidation () {
-	if (hasRequiredValidation) return validation.exports;
-	hasRequiredValidation = 1;
+function requireValidation$1 () {
+	if (hasRequiredValidation$1) return validation$1.exports;
+	hasRequiredValidation$1 = 1;
 
 	const { isUtf8 } = require$$0$6;
 
@@ -58503,7 +58503,7 @@ function requireValidation () {
 	  );
 	}
 
-	validation.exports = {
+	validation$1.exports = {
 	  isBlob,
 	  isValidStatusCode,
 	  isValidUTF8: _isValidUTF8,
@@ -58511,21 +58511,21 @@ function requireValidation () {
 	};
 
 	if (isUtf8) {
-	  validation.exports.isValidUTF8 = function (buf) {
+	  validation$1.exports.isValidUTF8 = function (buf) {
 	    return buf.length < 24 ? _isValidUTF8(buf) : isUtf8(buf);
 	  };
 	} /* istanbul ignore else  */ else if (!process.env.WS_NO_UTF_8_VALIDATE) {
 	  try {
 	    const isValidUTF8 = require('utf-8-validate');
 
-	    validation.exports.isValidUTF8 = function (buf) {
+	    validation$1.exports.isValidUTF8 = function (buf) {
 	      return buf.length < 32 ? _isValidUTF8(buf) : isValidUTF8(buf);
 	    };
 	  } catch (e) {
 	    // Continue regardless of the error.
 	  }
 	}
-	return validation.exports;
+	return validation$1.exports;
 }
 
 var receiver;
@@ -58545,7 +58545,7 @@ function requireReceiver () {
 	  kWebSocket
 	} = requireConstants();
 	const { concat, toArrayBuffer, unmask } = requireBufferUtil();
-	const { isValidStatusCode, isValidUTF8 } = requireValidation();
+	const { isValidStatusCode, isValidUTF8 } = requireValidation$1();
 
 	const FastBuffer = Buffer[Symbol.species];
 
@@ -59256,7 +59256,7 @@ function requireSender () {
 
 	const PerMessageDeflate = requirePermessageDeflate();
 	const { EMPTY_BUFFER, kWebSocket, NOOP } = requireConstants();
-	const { isBlob, isValidStatusCode } = requireValidation();
+	const { isBlob, isValidStatusCode } = requireValidation$1();
 	const { mask: applyMask, toBuffer } = requireBufferUtil();
 
 	const kByteLength = Symbol('kByteLength');
@@ -60159,7 +60159,7 @@ function requireExtension () {
 	if (hasRequiredExtension) return extension;
 	hasRequiredExtension = 1;
 
-	const { tokenChars } = requireValidation();
+	const { tokenChars } = requireValidation$1();
 
 	/**
 	 * Adds an offer to the map of extension offers or a parameter to the map of
@@ -60373,8 +60373,8 @@ function requireWebsocket () {
 	hasRequiredWebsocket = 1;
 
 	const EventEmitter = require$$0$5;
-	const https = require$$1$5;
-	const http = require$$1$4;
+	const https = require$$1$6;
+	const http = require$$1$5;
 	const net = require$$4$2;
 	const tls = require$$4$3;
 	const { randomBytes, createHash } = crypto$1;
@@ -60384,7 +60384,7 @@ function requireWebsocket () {
 	const PerMessageDeflate = requirePermessageDeflate();
 	const Receiver = requireReceiver();
 	const Sender = requireSender();
-	const { isBlob } = requireValidation();
+	const { isBlob } = requireValidation$1();
 
 	const {
 	  BINARY_TYPES,
@@ -61945,7 +61945,7 @@ function requireSubprotocol () {
 	if (hasRequiredSubprotocol) return subprotocol;
 	hasRequiredSubprotocol = 1;
 
-	const { tokenChars } = requireValidation();
+	const { tokenChars } = requireValidation$1();
 
 	/**
 	 * Parses the `Sec-WebSocket-Protocol` header into a set of subprotocol names.
@@ -62018,7 +62018,7 @@ function requireWebsocketServer () {
 	hasRequiredWebsocketServer = 1;
 
 	const EventEmitter = require$$0$5;
-	const http = require$$1$4;
+	const http = require$$1$5;
 	const { Duplex } = stream$1;
 	const { createHash } = crypto$1;
 
@@ -65915,13 +65915,13 @@ let Completions$1 = class Completions extends APIResource {
 Completions$1.Messages = Messages$1;
 
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-let Chat$1 = class Chat extends APIResource {
+let Chat$2 = class Chat extends APIResource {
     constructor() {
         super(...arguments);
         this.completions = new Completions$1(this._client);
     }
 };
-Chat$1.Completions = Completions$1;
+Chat$2.Completions = Completions$1;
 
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 const brand_privateNullableHeaders = /* @__PURE__ */ Symbol('brand.privateNullableHeaders');
@@ -69046,7 +69046,7 @@ class OpenAI {
         _OpenAI_instances.add(this);
         _OpenAI_encoder.set(this, void 0);
         this.completions = new Completions(this);
-        this.chat = new Chat$1(this);
+        this.chat = new Chat$2(this);
         this.embeddings = new Embeddings(this);
         this.files = new Files$1(this);
         this.images = new Images(this);
@@ -69516,7 +69516,7 @@ OpenAI.UnprocessableEntityError = UnprocessableEntityError;
 OpenAI.InvalidWebhookSignatureError = InvalidWebhookSignatureError;
 OpenAI.toFile = toFile;
 OpenAI.Completions = Completions;
-OpenAI.Chat = Chat$1;
+OpenAI.Chat = Chat$2;
 OpenAI.Embeddings = Embeddings;
 OpenAI.Files = Files$1;
 OpenAI.Images = Images;
@@ -69536,45 +69536,20275 @@ OpenAI.Conversations = Conversations;
 OpenAI.Evals = Evals;
 OpenAI.Containers = Containers;
 
-// services/OpenAIClient.ts
+var dist = {};
+
+var pinecone = {};
+
+var control$1 = {};
+
+var indexOperationsBuilder = {};
+
+var db_control = {};
+
+var runtime$5 = {};
+
+var hasRequiredRuntime$5;
+
+function requireRuntime$5 () {
+	if (hasRequiredRuntime$5) return runtime$5;
+	hasRequiredRuntime$5 = 1;
+	(function (exports) {
+		/* tslint:disable */
+		/* eslint-disable */
+		/**
+		 * Pinecone Control Plane API
+		 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+		 *
+		 * The version of the OpenAPI document: 2025-04
+		 * Contact: support@pinecone.io
+		 *
+		 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+		 * https://openapi-generator.tech
+		 * Do not edit the class manually.
+		 */
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.TextApiResponse = exports.BlobApiResponse = exports.VoidApiResponse = exports.JSONApiResponse = exports.canConsumeForm = exports.mapValues = exports.querystring = exports.exists = exports.COLLECTION_FORMATS = exports.RequiredError = exports.FetchError = exports.ResponseError = exports.BaseAPI = exports.DefaultConfig = exports.Configuration = exports.BASE_PATH = void 0;
+		exports.BASE_PATH = "https://api.pinecone.io".replace(/\/+$/, "");
+		class Configuration {
+		    constructor(configuration = {}) {
+		        this.configuration = configuration;
+		    }
+		    set config(configuration) {
+		        this.configuration = configuration;
+		    }
+		    get basePath() {
+		        return this.configuration.basePath != null ? this.configuration.basePath : exports.BASE_PATH;
+		    }
+		    get fetchApi() {
+		        return this.configuration.fetchApi;
+		    }
+		    get middleware() {
+		        return this.configuration.middleware || [];
+		    }
+		    get queryParamsStringify() {
+		        return this.configuration.queryParamsStringify || querystring;
+		    }
+		    get username() {
+		        return this.configuration.username;
+		    }
+		    get password() {
+		        return this.configuration.password;
+		    }
+		    get apiKey() {
+		        const apiKey = this.configuration.apiKey;
+		        if (apiKey) {
+		            return typeof apiKey === 'function' ? apiKey : () => apiKey;
+		        }
+		        return undefined;
+		    }
+		    get accessToken() {
+		        const accessToken = this.configuration.accessToken;
+		        if (accessToken) {
+		            return typeof accessToken === 'function' ? accessToken : async () => accessToken;
+		        }
+		        return undefined;
+		    }
+		    get headers() {
+		        return this.configuration.headers;
+		    }
+		    get credentials() {
+		        return this.configuration.credentials;
+		    }
+		}
+		exports.Configuration = Configuration;
+		exports.DefaultConfig = new Configuration();
+		/**
+		 * This is the base class for all generated API classes.
+		 */
+		class BaseAPI {
+		    constructor(configuration = exports.DefaultConfig) {
+		        this.configuration = configuration;
+		        this.fetchApi = async (url, init) => {
+		            let fetchParams = { url, init };
+		            for (const middleware of this.middleware) {
+		                if (middleware.pre) {
+		                    fetchParams = await middleware.pre({
+		                        fetch: this.fetchApi,
+		                        ...fetchParams,
+		                    }) || fetchParams;
+		                }
+		            }
+		            let response = undefined;
+		            try {
+		                response = await (this.configuration.fetchApi || fetch)(fetchParams.url, fetchParams.init);
+		            }
+		            catch (e) {
+		                for (const middleware of this.middleware) {
+		                    if (middleware.onError) {
+		                        response = await middleware.onError({
+		                            fetch: this.fetchApi,
+		                            url: fetchParams.url,
+		                            init: fetchParams.init,
+		                            error: e,
+		                            response: response ? response.clone() : undefined,
+		                        }) || response;
+		                    }
+		                }
+		                if (response === undefined) {
+		                    if (e instanceof Error) {
+		                        throw new FetchError(e, 'The request failed and the interceptors did not return an alternative response');
+		                    }
+		                    else {
+		                        throw e;
+		                    }
+		                }
+		            }
+		            for (const middleware of this.middleware) {
+		                if (middleware.post) {
+		                    response = await middleware.post({
+		                        fetch: this.fetchApi,
+		                        url: fetchParams.url,
+		                        init: fetchParams.init,
+		                        response: response.clone(),
+		                    }) || response;
+		                }
+		            }
+		            return response;
+		        };
+		        this.middleware = configuration.middleware;
+		    }
+		    withMiddleware(...middlewares) {
+		        const next = this.clone();
+		        next.middleware = next.middleware.concat(...middlewares);
+		        return next;
+		    }
+		    withPreMiddleware(...preMiddlewares) {
+		        const middlewares = preMiddlewares.map((pre) => ({ pre }));
+		        return this.withMiddleware(...middlewares);
+		    }
+		    withPostMiddleware(...postMiddlewares) {
+		        const middlewares = postMiddlewares.map((post) => ({ post }));
+		        return this.withMiddleware(...middlewares);
+		    }
+		    /**
+		     * Check if the given MIME is a JSON MIME.
+		     * JSON MIME examples:
+		     *   application/json
+		     *   application/json; charset=UTF8
+		     *   APPLICATION/JSON
+		     *   application/vnd.company+json
+		     * @param mime - MIME (Multipurpose Internet Mail Extensions)
+		     * @return True if the given MIME is JSON, false otherwise.
+		     */
+		    isJsonMime(mime) {
+		        if (!mime) {
+		            return false;
+		        }
+		        return BaseAPI.jsonRegex.test(mime);
+		    }
+		    async request(context, initOverrides) {
+		        const { url, init } = await this.createFetchParams(context, initOverrides);
+		        const response = await this.fetchApi(url, init);
+		        if (response && (response.status >= 200 && response.status < 300)) {
+		            return response;
+		        }
+		        throw new ResponseError(response, 'Response returned an error code');
+		    }
+		    async createFetchParams(context, initOverrides) {
+		        let url = this.configuration.basePath + context.path;
+		        if (context.query !== undefined && Object.keys(context.query).length !== 0) {
+		            // only add the querystring to the URL if there are query parameters.
+		            // this is done to avoid urls ending with a "?" character which buggy webservers
+		            // do not handle correctly sometimes.
+		            url += '?' + this.configuration.queryParamsStringify(context.query);
+		        }
+		        const headers = Object.assign({}, this.configuration.headers, context.headers);
+		        Object.keys(headers).forEach(key => headers[key] === undefined ? delete headers[key] : {});
+		        const initOverrideFn = typeof initOverrides === "function"
+		            ? initOverrides
+		            : async () => initOverrides;
+		        const initParams = {
+		            method: context.method,
+		            headers,
+		            body: context.body,
+		            credentials: this.configuration.credentials,
+		        };
+		        const overriddenInit = {
+		            ...initParams,
+		            ...(await initOverrideFn({
+		                init: initParams,
+		                context,
+		            }))
+		        };
+		        let body;
+		        if (isFormData(overriddenInit.body)
+		            || (overriddenInit.body instanceof URLSearchParams)
+		            || isBlob(overriddenInit.body)) {
+		            body = overriddenInit.body;
+		        }
+		        else if (this.isJsonMime(headers['Content-Type'])) {
+		            body = JSON.stringify(overriddenInit.body);
+		        }
+		        else {
+		            body = overriddenInit.body;
+		        }
+		        const init = {
+		            ...overriddenInit,
+		            body
+		        };
+		        return { url, init };
+		    }
+		    /**
+		     * Create a shallow clone of `this` by constructing a new instance
+		     * and then shallow cloning data members.
+		     */
+		    clone() {
+		        const constructor = this.constructor;
+		        const next = new constructor(this.configuration);
+		        next.middleware = this.middleware.slice();
+		        return next;
+		    }
+		}
+		exports.BaseAPI = BaseAPI;
+		BaseAPI.jsonRegex = new RegExp('^(:?application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(:?;.*)?$', 'i');
+		function isBlob(value) {
+		    return typeof Blob !== 'undefined' && value instanceof Blob;
+		}
+		function isFormData(value) {
+		    return typeof FormData !== "undefined" && value instanceof FormData;
+		}
+		class ResponseError extends Error {
+		    constructor(response, msg) {
+		        super(msg);
+		        this.response = response;
+		        this.name = "ResponseError";
+		    }
+		}
+		exports.ResponseError = ResponseError;
+		class FetchError extends Error {
+		    constructor(cause, msg) {
+		        super(msg);
+		        this.cause = cause;
+		        this.name = "FetchError";
+		    }
+		}
+		exports.FetchError = FetchError;
+		class RequiredError extends Error {
+		    constructor(field, msg) {
+		        super(msg);
+		        this.field = field;
+		        this.name = "RequiredError";
+		    }
+		}
+		exports.RequiredError = RequiredError;
+		exports.COLLECTION_FORMATS = {
+		    csv: ",",
+		    ssv: " ",
+		    tsv: "\t",
+		    pipes: "|",
+		};
+		function exists(json, key) {
+		    const value = json[key];
+		    return value !== null && value !== undefined;
+		}
+		exports.exists = exists;
+		function querystring(params, prefix = '') {
+		    return Object.keys(params)
+		        .map(key => querystringSingleKey(key, params[key], prefix))
+		        .filter(part => part.length > 0)
+		        .join('&');
+		}
+		exports.querystring = querystring;
+		function querystringSingleKey(key, value, keyPrefix = '') {
+		    const fullKey = keyPrefix + (keyPrefix.length ? `[${key}]` : key);
+		    if (value instanceof Array) {
+		        const multiValue = value.map(singleValue => encodeURIComponent(String(singleValue)))
+		            .join(`&${encodeURIComponent(fullKey)}=`);
+		        return `${encodeURIComponent(fullKey)}=${multiValue}`;
+		    }
+		    if (value instanceof Set) {
+		        const valueAsArray = Array.from(value);
+		        return querystringSingleKey(key, valueAsArray, keyPrefix);
+		    }
+		    if (value instanceof Date) {
+		        return `${encodeURIComponent(fullKey)}=${encodeURIComponent(value.toISOString())}`;
+		    }
+		    if (value instanceof Object) {
+		        return querystring(value, fullKey);
+		    }
+		    return `${encodeURIComponent(fullKey)}=${encodeURIComponent(String(value))}`;
+		}
+		function mapValues(data, fn) {
+		    return Object.keys(data).reduce((acc, key) => ({ ...acc, [key]: fn(data[key]) }), {});
+		}
+		exports.mapValues = mapValues;
+		function canConsumeForm(consumes) {
+		    for (const consume of consumes) {
+		        if ('multipart/form-data' === consume.contentType) {
+		            return true;
+		        }
+		    }
+		    return false;
+		}
+		exports.canConsumeForm = canConsumeForm;
+		class JSONApiResponse {
+		    constructor(raw, transformer = (jsonValue) => jsonValue) {
+		        this.raw = raw;
+		        this.transformer = transformer;
+		    }
+		    async value() {
+		        return this.transformer(await this.raw.json());
+		    }
+		}
+		exports.JSONApiResponse = JSONApiResponse;
+		class VoidApiResponse {
+		    constructor(raw) {
+		        this.raw = raw;
+		    }
+		    async value() {
+		        return undefined;
+		    }
+		}
+		exports.VoidApiResponse = VoidApiResponse;
+		class BlobApiResponse {
+		    constructor(raw) {
+		        this.raw = raw;
+		    }
+		    async value() {
+		        return await this.raw.blob();
+		    }
+		    ;
+		}
+		exports.BlobApiResponse = BlobApiResponse;
+		class TextApiResponse {
+		    constructor(raw) {
+		        this.raw = raw;
+		    }
+		    async value() {
+		        return await this.raw.text();
+		    }
+		    ;
+		}
+		exports.TextApiResponse = TextApiResponse;
+		
+	} (runtime$5));
+	return runtime$5;
+}
+
+var apis$5 = {};
+
+var ManageIndexesApi = {};
+
+var models$5 = {};
+
+var BackupList = {};
+
+var BackupModel = {};
+
+var hasRequiredBackupModel;
+
+function requireBackupModel () {
+	if (hasRequiredBackupModel) return BackupModel;
+	hasRequiredBackupModel = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(BackupModel, "__esModule", { value: true });
+	BackupModel.BackupModelToJSON = BackupModel.BackupModelFromJSONTyped = BackupModel.BackupModelFromJSON = BackupModel.instanceOfBackupModel = BackupModel.BackupModelMetricEnum = void 0;
+	const runtime_1 = requireRuntime$5();
+	/**
+	 * @export
+	 */
+	BackupModel.BackupModelMetricEnum = {
+	    Cosine: 'cosine',
+	    Euclidean: 'euclidean',
+	    Dotproduct: 'dotproduct'
+	};
+	/**
+	 * Check if a given object implements the BackupModel interface.
+	 */
+	function instanceOfBackupModel(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "backupId" in value;
+	    isInstance = isInstance && "sourceIndexName" in value;
+	    isInstance = isInstance && "sourceIndexId" in value;
+	    isInstance = isInstance && "status" in value;
+	    isInstance = isInstance && "cloud" in value;
+	    isInstance = isInstance && "region" in value;
+	    return isInstance;
+	}
+	BackupModel.instanceOfBackupModel = instanceOfBackupModel;
+	function BackupModelFromJSON(json) {
+	    return BackupModelFromJSONTyped(json);
+	}
+	BackupModel.BackupModelFromJSON = BackupModelFromJSON;
+	function BackupModelFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'backupId': json['backup_id'],
+	        'sourceIndexName': json['source_index_name'],
+	        'sourceIndexId': json['source_index_id'],
+	        'name': !(0, runtime_1.exists)(json, 'name') ? undefined : json['name'],
+	        'description': !(0, runtime_1.exists)(json, 'description') ? undefined : json['description'],
+	        'status': json['status'],
+	        'cloud': json['cloud'],
+	        'region': json['region'],
+	        'dimension': !(0, runtime_1.exists)(json, 'dimension') ? undefined : json['dimension'],
+	        'metric': !(0, runtime_1.exists)(json, 'metric') ? undefined : json['metric'],
+	        'recordCount': !(0, runtime_1.exists)(json, 'record_count') ? undefined : json['record_count'],
+	        'namespaceCount': !(0, runtime_1.exists)(json, 'namespace_count') ? undefined : json['namespace_count'],
+	        'sizeBytes': !(0, runtime_1.exists)(json, 'size_bytes') ? undefined : json['size_bytes'],
+	        'tags': !(0, runtime_1.exists)(json, 'tags') ? undefined : json['tags'],
+	        'createdAt': !(0, runtime_1.exists)(json, 'created_at') ? undefined : json['created_at'],
+	    };
+	}
+	BackupModel.BackupModelFromJSONTyped = BackupModelFromJSONTyped;
+	function BackupModelToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'backup_id': value.backupId,
+	        'source_index_name': value.sourceIndexName,
+	        'source_index_id': value.sourceIndexId,
+	        'name': value.name,
+	        'description': value.description,
+	        'status': value.status,
+	        'cloud': value.cloud,
+	        'region': value.region,
+	        'dimension': value.dimension,
+	        'metric': value.metric,
+	        'record_count': value.recordCount,
+	        'namespace_count': value.namespaceCount,
+	        'size_bytes': value.sizeBytes,
+	        'tags': value.tags,
+	        'created_at': value.createdAt,
+	    };
+	}
+	BackupModel.BackupModelToJSON = BackupModelToJSON;
+	
+	return BackupModel;
+}
+
+var PaginationResponse = {};
+
+var hasRequiredPaginationResponse;
+
+function requirePaginationResponse () {
+	if (hasRequiredPaginationResponse) return PaginationResponse;
+	hasRequiredPaginationResponse = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(PaginationResponse, "__esModule", { value: true });
+	PaginationResponse.PaginationResponseToJSON = PaginationResponse.PaginationResponseFromJSONTyped = PaginationResponse.PaginationResponseFromJSON = PaginationResponse.instanceOfPaginationResponse = void 0;
+	/**
+	 * Check if a given object implements the PaginationResponse interface.
+	 */
+	function instanceOfPaginationResponse(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "next" in value;
+	    return isInstance;
+	}
+	PaginationResponse.instanceOfPaginationResponse = instanceOfPaginationResponse;
+	function PaginationResponseFromJSON(json) {
+	    return PaginationResponseFromJSONTyped(json);
+	}
+	PaginationResponse.PaginationResponseFromJSON = PaginationResponseFromJSON;
+	function PaginationResponseFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'next': json['next'],
+	    };
+	}
+	PaginationResponse.PaginationResponseFromJSONTyped = PaginationResponseFromJSONTyped;
+	function PaginationResponseToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'next': value.next,
+	    };
+	}
+	PaginationResponse.PaginationResponseToJSON = PaginationResponseToJSON;
+	
+	return PaginationResponse;
+}
+
+var hasRequiredBackupList;
+
+function requireBackupList () {
+	if (hasRequiredBackupList) return BackupList;
+	hasRequiredBackupList = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(BackupList, "__esModule", { value: true });
+	BackupList.BackupListToJSON = BackupList.BackupListFromJSONTyped = BackupList.BackupListFromJSON = BackupList.instanceOfBackupList = void 0;
+	const runtime_1 = requireRuntime$5();
+	const BackupModel_1 = requireBackupModel();
+	const PaginationResponse_1 = requirePaginationResponse();
+	/**
+	 * Check if a given object implements the BackupList interface.
+	 */
+	function instanceOfBackupList(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	BackupList.instanceOfBackupList = instanceOfBackupList;
+	function BackupListFromJSON(json) {
+	    return BackupListFromJSONTyped(json);
+	}
+	BackupList.BackupListFromJSON = BackupListFromJSON;
+	function BackupListFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'data': !(0, runtime_1.exists)(json, 'data') ? undefined : (json['data'].map(BackupModel_1.BackupModelFromJSON)),
+	        'pagination': !(0, runtime_1.exists)(json, 'pagination') ? undefined : (0, PaginationResponse_1.PaginationResponseFromJSON)(json['pagination']),
+	    };
+	}
+	BackupList.BackupListFromJSONTyped = BackupListFromJSONTyped;
+	function BackupListToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'data': value.data === undefined ? undefined : (value.data.map(BackupModel_1.BackupModelToJSON)),
+	        'pagination': (0, PaginationResponse_1.PaginationResponseToJSON)(value.pagination),
+	    };
+	}
+	BackupList.BackupListToJSON = BackupListToJSON;
+	
+	return BackupList;
+}
+
+var ByocSpec = {};
+
+var hasRequiredByocSpec;
+
+function requireByocSpec () {
+	if (hasRequiredByocSpec) return ByocSpec;
+	hasRequiredByocSpec = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ByocSpec, "__esModule", { value: true });
+	ByocSpec.ByocSpecToJSON = ByocSpec.ByocSpecFromJSONTyped = ByocSpec.ByocSpecFromJSON = ByocSpec.instanceOfByocSpec = void 0;
+	/**
+	 * Check if a given object implements the ByocSpec interface.
+	 */
+	function instanceOfByocSpec(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "environment" in value;
+	    return isInstance;
+	}
+	ByocSpec.instanceOfByocSpec = instanceOfByocSpec;
+	function ByocSpecFromJSON(json) {
+	    return ByocSpecFromJSONTyped(json);
+	}
+	ByocSpec.ByocSpecFromJSON = ByocSpecFromJSON;
+	function ByocSpecFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'environment': json['environment'],
+	    };
+	}
+	ByocSpec.ByocSpecFromJSONTyped = ByocSpecFromJSONTyped;
+	function ByocSpecToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'environment': value.environment,
+	    };
+	}
+	ByocSpec.ByocSpecToJSON = ByocSpecToJSON;
+	
+	return ByocSpec;
+}
+
+var CollectionList = {};
+
+var CollectionModel = {};
+
+var hasRequiredCollectionModel;
+
+function requireCollectionModel () {
+	if (hasRequiredCollectionModel) return CollectionModel;
+	hasRequiredCollectionModel = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(CollectionModel, "__esModule", { value: true });
+	CollectionModel.CollectionModelToJSON = CollectionModel.CollectionModelFromJSONTyped = CollectionModel.CollectionModelFromJSON = CollectionModel.instanceOfCollectionModel = CollectionModel.CollectionModelStatusEnum = void 0;
+	const runtime_1 = requireRuntime$5();
+	/**
+	 * @export
+	 */
+	CollectionModel.CollectionModelStatusEnum = {
+	    Initializing: 'Initializing',
+	    Ready: 'Ready',
+	    Terminating: 'Terminating'
+	};
+	/**
+	 * Check if a given object implements the CollectionModel interface.
+	 */
+	function instanceOfCollectionModel(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "name" in value;
+	    isInstance = isInstance && "status" in value;
+	    isInstance = isInstance && "environment" in value;
+	    return isInstance;
+	}
+	CollectionModel.instanceOfCollectionModel = instanceOfCollectionModel;
+	function CollectionModelFromJSON(json) {
+	    return CollectionModelFromJSONTyped(json);
+	}
+	CollectionModel.CollectionModelFromJSON = CollectionModelFromJSON;
+	function CollectionModelFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'name': json['name'],
+	        'size': !(0, runtime_1.exists)(json, 'size') ? undefined : json['size'],
+	        'status': json['status'],
+	        'dimension': !(0, runtime_1.exists)(json, 'dimension') ? undefined : json['dimension'],
+	        'vectorCount': !(0, runtime_1.exists)(json, 'vector_count') ? undefined : json['vector_count'],
+	        'environment': json['environment'],
+	    };
+	}
+	CollectionModel.CollectionModelFromJSONTyped = CollectionModelFromJSONTyped;
+	function CollectionModelToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'name': value.name,
+	        'size': value.size,
+	        'status': value.status,
+	        'dimension': value.dimension,
+	        'vector_count': value.vectorCount,
+	        'environment': value.environment,
+	    };
+	}
+	CollectionModel.CollectionModelToJSON = CollectionModelToJSON;
+	
+	return CollectionModel;
+}
+
+var hasRequiredCollectionList;
+
+function requireCollectionList () {
+	if (hasRequiredCollectionList) return CollectionList;
+	hasRequiredCollectionList = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(CollectionList, "__esModule", { value: true });
+	CollectionList.CollectionListToJSON = CollectionList.CollectionListFromJSONTyped = CollectionList.CollectionListFromJSON = CollectionList.instanceOfCollectionList = void 0;
+	const runtime_1 = requireRuntime$5();
+	const CollectionModel_1 = requireCollectionModel();
+	/**
+	 * Check if a given object implements the CollectionList interface.
+	 */
+	function instanceOfCollectionList(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	CollectionList.instanceOfCollectionList = instanceOfCollectionList;
+	function CollectionListFromJSON(json) {
+	    return CollectionListFromJSONTyped(json);
+	}
+	CollectionList.CollectionListFromJSON = CollectionListFromJSON;
+	function CollectionListFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'collections': !(0, runtime_1.exists)(json, 'collections') ? undefined : (json['collections'].map(CollectionModel_1.CollectionModelFromJSON)),
+	    };
+	}
+	CollectionList.CollectionListFromJSONTyped = CollectionListFromJSONTyped;
+	function CollectionListToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'collections': value.collections === undefined ? undefined : (value.collections.map(CollectionModel_1.CollectionModelToJSON)),
+	    };
+	}
+	CollectionList.CollectionListToJSON = CollectionListToJSON;
+	
+	return CollectionList;
+}
+
+var ConfigureIndexRequest = {};
+
+var ConfigureIndexRequestEmbed = {};
+
+var hasRequiredConfigureIndexRequestEmbed;
+
+function requireConfigureIndexRequestEmbed () {
+	if (hasRequiredConfigureIndexRequestEmbed) return ConfigureIndexRequestEmbed;
+	hasRequiredConfigureIndexRequestEmbed = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ConfigureIndexRequestEmbed, "__esModule", { value: true });
+	ConfigureIndexRequestEmbed.ConfigureIndexRequestEmbedToJSON = ConfigureIndexRequestEmbed.ConfigureIndexRequestEmbedFromJSONTyped = ConfigureIndexRequestEmbed.ConfigureIndexRequestEmbedFromJSON = ConfigureIndexRequestEmbed.instanceOfConfigureIndexRequestEmbed = void 0;
+	const runtime_1 = requireRuntime$5();
+	/**
+	 * Check if a given object implements the ConfigureIndexRequestEmbed interface.
+	 */
+	function instanceOfConfigureIndexRequestEmbed(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ConfigureIndexRequestEmbed.instanceOfConfigureIndexRequestEmbed = instanceOfConfigureIndexRequestEmbed;
+	function ConfigureIndexRequestEmbedFromJSON(json) {
+	    return ConfigureIndexRequestEmbedFromJSONTyped(json);
+	}
+	ConfigureIndexRequestEmbed.ConfigureIndexRequestEmbedFromJSON = ConfigureIndexRequestEmbedFromJSON;
+	function ConfigureIndexRequestEmbedFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'model': !(0, runtime_1.exists)(json, 'model') ? undefined : json['model'],
+	        'fieldMap': !(0, runtime_1.exists)(json, 'field_map') ? undefined : json['field_map'],
+	        'readParameters': !(0, runtime_1.exists)(json, 'read_parameters') ? undefined : json['read_parameters'],
+	        'writeParameters': !(0, runtime_1.exists)(json, 'write_parameters') ? undefined : json['write_parameters'],
+	    };
+	}
+	ConfigureIndexRequestEmbed.ConfigureIndexRequestEmbedFromJSONTyped = ConfigureIndexRequestEmbedFromJSONTyped;
+	function ConfigureIndexRequestEmbedToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'model': value.model,
+	        'field_map': value.fieldMap,
+	        'read_parameters': value.readParameters,
+	        'write_parameters': value.writeParameters,
+	    };
+	}
+	ConfigureIndexRequestEmbed.ConfigureIndexRequestEmbedToJSON = ConfigureIndexRequestEmbedToJSON;
+	
+	return ConfigureIndexRequestEmbed;
+}
+
+var ConfigureIndexRequestSpec = {};
+
+var ConfigureIndexRequestSpecPod = {};
+
+var hasRequiredConfigureIndexRequestSpecPod;
+
+function requireConfigureIndexRequestSpecPod () {
+	if (hasRequiredConfigureIndexRequestSpecPod) return ConfigureIndexRequestSpecPod;
+	hasRequiredConfigureIndexRequestSpecPod = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ConfigureIndexRequestSpecPod, "__esModule", { value: true });
+	ConfigureIndexRequestSpecPod.ConfigureIndexRequestSpecPodToJSON = ConfigureIndexRequestSpecPod.ConfigureIndexRequestSpecPodFromJSONTyped = ConfigureIndexRequestSpecPod.ConfigureIndexRequestSpecPodFromJSON = ConfigureIndexRequestSpecPod.instanceOfConfigureIndexRequestSpecPod = void 0;
+	const runtime_1 = requireRuntime$5();
+	/**
+	 * Check if a given object implements the ConfigureIndexRequestSpecPod interface.
+	 */
+	function instanceOfConfigureIndexRequestSpecPod(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ConfigureIndexRequestSpecPod.instanceOfConfigureIndexRequestSpecPod = instanceOfConfigureIndexRequestSpecPod;
+	function ConfigureIndexRequestSpecPodFromJSON(json) {
+	    return ConfigureIndexRequestSpecPodFromJSONTyped(json);
+	}
+	ConfigureIndexRequestSpecPod.ConfigureIndexRequestSpecPodFromJSON = ConfigureIndexRequestSpecPodFromJSON;
+	function ConfigureIndexRequestSpecPodFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'replicas': !(0, runtime_1.exists)(json, 'replicas') ? undefined : json['replicas'],
+	        'podType': !(0, runtime_1.exists)(json, 'pod_type') ? undefined : json['pod_type'],
+	    };
+	}
+	ConfigureIndexRequestSpecPod.ConfigureIndexRequestSpecPodFromJSONTyped = ConfigureIndexRequestSpecPodFromJSONTyped;
+	function ConfigureIndexRequestSpecPodToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'replicas': value.replicas,
+	        'pod_type': value.podType,
+	    };
+	}
+	ConfigureIndexRequestSpecPod.ConfigureIndexRequestSpecPodToJSON = ConfigureIndexRequestSpecPodToJSON;
+	
+	return ConfigureIndexRequestSpecPod;
+}
+
+var hasRequiredConfigureIndexRequestSpec;
+
+function requireConfigureIndexRequestSpec () {
+	if (hasRequiredConfigureIndexRequestSpec) return ConfigureIndexRequestSpec;
+	hasRequiredConfigureIndexRequestSpec = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ConfigureIndexRequestSpec, "__esModule", { value: true });
+	ConfigureIndexRequestSpec.ConfigureIndexRequestSpecToJSON = ConfigureIndexRequestSpec.ConfigureIndexRequestSpecFromJSONTyped = ConfigureIndexRequestSpec.ConfigureIndexRequestSpecFromJSON = ConfigureIndexRequestSpec.instanceOfConfigureIndexRequestSpec = void 0;
+	const ConfigureIndexRequestSpecPod_1 = requireConfigureIndexRequestSpecPod();
+	/**
+	 * Check if a given object implements the ConfigureIndexRequestSpec interface.
+	 */
+	function instanceOfConfigureIndexRequestSpec(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "pod" in value;
+	    return isInstance;
+	}
+	ConfigureIndexRequestSpec.instanceOfConfigureIndexRequestSpec = instanceOfConfigureIndexRequestSpec;
+	function ConfigureIndexRequestSpecFromJSON(json) {
+	    return ConfigureIndexRequestSpecFromJSONTyped(json);
+	}
+	ConfigureIndexRequestSpec.ConfigureIndexRequestSpecFromJSON = ConfigureIndexRequestSpecFromJSON;
+	function ConfigureIndexRequestSpecFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'pod': (0, ConfigureIndexRequestSpecPod_1.ConfigureIndexRequestSpecPodFromJSON)(json['pod']),
+	    };
+	}
+	ConfigureIndexRequestSpec.ConfigureIndexRequestSpecFromJSONTyped = ConfigureIndexRequestSpecFromJSONTyped;
+	function ConfigureIndexRequestSpecToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'pod': (0, ConfigureIndexRequestSpecPod_1.ConfigureIndexRequestSpecPodToJSON)(value.pod),
+	    };
+	}
+	ConfigureIndexRequestSpec.ConfigureIndexRequestSpecToJSON = ConfigureIndexRequestSpecToJSON;
+	
+	return ConfigureIndexRequestSpec;
+}
+
+var DeletionProtection = {};
+
+var hasRequiredDeletionProtection;
+
+function requireDeletionProtection () {
+	if (hasRequiredDeletionProtection) return DeletionProtection;
+	hasRequiredDeletionProtection = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(DeletionProtection, "__esModule", { value: true });
+	DeletionProtection.DeletionProtectionToJSON = DeletionProtection.DeletionProtectionFromJSONTyped = DeletionProtection.DeletionProtectionFromJSON = DeletionProtection.DeletionProtection = void 0;
+	/**
+	 * Whether [deletion protection](http://docs.pinecone.io/guides/manage-data/manage-indexes#configure-deletion-protection) is enabled/disabled for the index.
+	 * @export
+	 */
+	DeletionProtection.DeletionProtection = {
+	    Disabled: 'disabled',
+	    Enabled: 'enabled'
+	};
+	function DeletionProtectionFromJSON(json) {
+	    return DeletionProtectionFromJSONTyped(json);
+	}
+	DeletionProtection.DeletionProtectionFromJSON = DeletionProtectionFromJSON;
+	function DeletionProtectionFromJSONTyped(json, ignoreDiscriminator) {
+	    return json;
+	}
+	DeletionProtection.DeletionProtectionFromJSONTyped = DeletionProtectionFromJSONTyped;
+	function DeletionProtectionToJSON(value) {
+	    return value;
+	}
+	DeletionProtection.DeletionProtectionToJSON = DeletionProtectionToJSON;
+	
+	return DeletionProtection;
+}
+
+var hasRequiredConfigureIndexRequest;
+
+function requireConfigureIndexRequest () {
+	if (hasRequiredConfigureIndexRequest) return ConfigureIndexRequest;
+	hasRequiredConfigureIndexRequest = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ConfigureIndexRequest, "__esModule", { value: true });
+	ConfigureIndexRequest.ConfigureIndexRequestToJSON = ConfigureIndexRequest.ConfigureIndexRequestFromJSONTyped = ConfigureIndexRequest.ConfigureIndexRequestFromJSON = ConfigureIndexRequest.instanceOfConfigureIndexRequest = void 0;
+	const runtime_1 = requireRuntime$5();
+	const ConfigureIndexRequestEmbed_1 = requireConfigureIndexRequestEmbed();
+	const ConfigureIndexRequestSpec_1 = requireConfigureIndexRequestSpec();
+	const DeletionProtection_1 = requireDeletionProtection();
+	/**
+	 * Check if a given object implements the ConfigureIndexRequest interface.
+	 */
+	function instanceOfConfigureIndexRequest(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ConfigureIndexRequest.instanceOfConfigureIndexRequest = instanceOfConfigureIndexRequest;
+	function ConfigureIndexRequestFromJSON(json) {
+	    return ConfigureIndexRequestFromJSONTyped(json);
+	}
+	ConfigureIndexRequest.ConfigureIndexRequestFromJSON = ConfigureIndexRequestFromJSON;
+	function ConfigureIndexRequestFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'spec': !(0, runtime_1.exists)(json, 'spec') ? undefined : (0, ConfigureIndexRequestSpec_1.ConfigureIndexRequestSpecFromJSON)(json['spec']),
+	        'deletionProtection': !(0, runtime_1.exists)(json, 'deletion_protection') ? undefined : (0, DeletionProtection_1.DeletionProtectionFromJSON)(json['deletion_protection']),
+	        'tags': !(0, runtime_1.exists)(json, 'tags') ? undefined : json['tags'],
+	        'embed': !(0, runtime_1.exists)(json, 'embed') ? undefined : (0, ConfigureIndexRequestEmbed_1.ConfigureIndexRequestEmbedFromJSON)(json['embed']),
+	    };
+	}
+	ConfigureIndexRequest.ConfigureIndexRequestFromJSONTyped = ConfigureIndexRequestFromJSONTyped;
+	function ConfigureIndexRequestToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'spec': (0, ConfigureIndexRequestSpec_1.ConfigureIndexRequestSpecToJSON)(value.spec),
+	        'deletion_protection': (0, DeletionProtection_1.DeletionProtectionToJSON)(value.deletionProtection),
+	        'tags': value.tags,
+	        'embed': (0, ConfigureIndexRequestEmbed_1.ConfigureIndexRequestEmbedToJSON)(value.embed),
+	    };
+	}
+	ConfigureIndexRequest.ConfigureIndexRequestToJSON = ConfigureIndexRequestToJSON;
+	
+	return ConfigureIndexRequest;
+}
+
+var CreateBackupRequest = {};
+
+var hasRequiredCreateBackupRequest;
+
+function requireCreateBackupRequest () {
+	if (hasRequiredCreateBackupRequest) return CreateBackupRequest;
+	hasRequiredCreateBackupRequest = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(CreateBackupRequest, "__esModule", { value: true });
+	CreateBackupRequest.CreateBackupRequestToJSON = CreateBackupRequest.CreateBackupRequestFromJSONTyped = CreateBackupRequest.CreateBackupRequestFromJSON = CreateBackupRequest.instanceOfCreateBackupRequest = void 0;
+	const runtime_1 = requireRuntime$5();
+	/**
+	 * Check if a given object implements the CreateBackupRequest interface.
+	 */
+	function instanceOfCreateBackupRequest(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	CreateBackupRequest.instanceOfCreateBackupRequest = instanceOfCreateBackupRequest;
+	function CreateBackupRequestFromJSON(json) {
+	    return CreateBackupRequestFromJSONTyped(json);
+	}
+	CreateBackupRequest.CreateBackupRequestFromJSON = CreateBackupRequestFromJSON;
+	function CreateBackupRequestFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'name': !(0, runtime_1.exists)(json, 'name') ? undefined : json['name'],
+	        'description': !(0, runtime_1.exists)(json, 'description') ? undefined : json['description'],
+	    };
+	}
+	CreateBackupRequest.CreateBackupRequestFromJSONTyped = CreateBackupRequestFromJSONTyped;
+	function CreateBackupRequestToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'name': value.name,
+	        'description': value.description,
+	    };
+	}
+	CreateBackupRequest.CreateBackupRequestToJSON = CreateBackupRequestToJSON;
+	
+	return CreateBackupRequest;
+}
+
+var CreateCollectionRequest = {};
+
+var hasRequiredCreateCollectionRequest;
+
+function requireCreateCollectionRequest () {
+	if (hasRequiredCreateCollectionRequest) return CreateCollectionRequest;
+	hasRequiredCreateCollectionRequest = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(CreateCollectionRequest, "__esModule", { value: true });
+	CreateCollectionRequest.CreateCollectionRequestToJSON = CreateCollectionRequest.CreateCollectionRequestFromJSONTyped = CreateCollectionRequest.CreateCollectionRequestFromJSON = CreateCollectionRequest.instanceOfCreateCollectionRequest = void 0;
+	/**
+	 * Check if a given object implements the CreateCollectionRequest interface.
+	 */
+	function instanceOfCreateCollectionRequest(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "name" in value;
+	    isInstance = isInstance && "source" in value;
+	    return isInstance;
+	}
+	CreateCollectionRequest.instanceOfCreateCollectionRequest = instanceOfCreateCollectionRequest;
+	function CreateCollectionRequestFromJSON(json) {
+	    return CreateCollectionRequestFromJSONTyped(json);
+	}
+	CreateCollectionRequest.CreateCollectionRequestFromJSON = CreateCollectionRequestFromJSON;
+	function CreateCollectionRequestFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'name': json['name'],
+	        'source': json['source'],
+	    };
+	}
+	CreateCollectionRequest.CreateCollectionRequestFromJSONTyped = CreateCollectionRequestFromJSONTyped;
+	function CreateCollectionRequestToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'name': value.name,
+	        'source': value.source,
+	    };
+	}
+	CreateCollectionRequest.CreateCollectionRequestToJSON = CreateCollectionRequestToJSON;
+	
+	return CreateCollectionRequest;
+}
+
+var CreateIndexForModelRequest = {};
+
+var CreateIndexForModelRequestEmbed = {};
+
+var hasRequiredCreateIndexForModelRequestEmbed;
+
+function requireCreateIndexForModelRequestEmbed () {
+	if (hasRequiredCreateIndexForModelRequestEmbed) return CreateIndexForModelRequestEmbed;
+	hasRequiredCreateIndexForModelRequestEmbed = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(CreateIndexForModelRequestEmbed, "__esModule", { value: true });
+	CreateIndexForModelRequestEmbed.CreateIndexForModelRequestEmbedToJSON = CreateIndexForModelRequestEmbed.CreateIndexForModelRequestEmbedFromJSONTyped = CreateIndexForModelRequestEmbed.CreateIndexForModelRequestEmbedFromJSON = CreateIndexForModelRequestEmbed.instanceOfCreateIndexForModelRequestEmbed = CreateIndexForModelRequestEmbed.CreateIndexForModelRequestEmbedMetricEnum = void 0;
+	const runtime_1 = requireRuntime$5();
+	/**
+	 * @export
+	 */
+	CreateIndexForModelRequestEmbed.CreateIndexForModelRequestEmbedMetricEnum = {
+	    Cosine: 'cosine',
+	    Euclidean: 'euclidean',
+	    Dotproduct: 'dotproduct'
+	};
+	/**
+	 * Check if a given object implements the CreateIndexForModelRequestEmbed interface.
+	 */
+	function instanceOfCreateIndexForModelRequestEmbed(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "model" in value;
+	    isInstance = isInstance && "fieldMap" in value;
+	    return isInstance;
+	}
+	CreateIndexForModelRequestEmbed.instanceOfCreateIndexForModelRequestEmbed = instanceOfCreateIndexForModelRequestEmbed;
+	function CreateIndexForModelRequestEmbedFromJSON(json) {
+	    return CreateIndexForModelRequestEmbedFromJSONTyped(json);
+	}
+	CreateIndexForModelRequestEmbed.CreateIndexForModelRequestEmbedFromJSON = CreateIndexForModelRequestEmbedFromJSON;
+	function CreateIndexForModelRequestEmbedFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'model': json['model'],
+	        'metric': !(0, runtime_1.exists)(json, 'metric') ? undefined : json['metric'],
+	        'fieldMap': json['field_map'],
+	        'dimension': !(0, runtime_1.exists)(json, 'dimension') ? undefined : json['dimension'],
+	        'readParameters': !(0, runtime_1.exists)(json, 'read_parameters') ? undefined : json['read_parameters'],
+	        'writeParameters': !(0, runtime_1.exists)(json, 'write_parameters') ? undefined : json['write_parameters'],
+	    };
+	}
+	CreateIndexForModelRequestEmbed.CreateIndexForModelRequestEmbedFromJSONTyped = CreateIndexForModelRequestEmbedFromJSONTyped;
+	function CreateIndexForModelRequestEmbedToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'model': value.model,
+	        'metric': value.metric,
+	        'field_map': value.fieldMap,
+	        'dimension': value.dimension,
+	        'read_parameters': value.readParameters,
+	        'write_parameters': value.writeParameters,
+	    };
+	}
+	CreateIndexForModelRequestEmbed.CreateIndexForModelRequestEmbedToJSON = CreateIndexForModelRequestEmbedToJSON;
+	
+	return CreateIndexForModelRequestEmbed;
+}
+
+var hasRequiredCreateIndexForModelRequest;
+
+function requireCreateIndexForModelRequest () {
+	if (hasRequiredCreateIndexForModelRequest) return CreateIndexForModelRequest;
+	hasRequiredCreateIndexForModelRequest = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(CreateIndexForModelRequest, "__esModule", { value: true });
+	CreateIndexForModelRequest.CreateIndexForModelRequestToJSON = CreateIndexForModelRequest.CreateIndexForModelRequestFromJSONTyped = CreateIndexForModelRequest.CreateIndexForModelRequestFromJSON = CreateIndexForModelRequest.instanceOfCreateIndexForModelRequest = CreateIndexForModelRequest.CreateIndexForModelRequestCloudEnum = void 0;
+	const runtime_1 = requireRuntime$5();
+	const CreateIndexForModelRequestEmbed_1 = requireCreateIndexForModelRequestEmbed();
+	const DeletionProtection_1 = requireDeletionProtection();
+	/**
+	 * @export
+	 */
+	CreateIndexForModelRequest.CreateIndexForModelRequestCloudEnum = {
+	    Gcp: 'gcp',
+	    Aws: 'aws',
+	    Azure: 'azure'
+	};
+	/**
+	 * Check if a given object implements the CreateIndexForModelRequest interface.
+	 */
+	function instanceOfCreateIndexForModelRequest(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "name" in value;
+	    isInstance = isInstance && "cloud" in value;
+	    isInstance = isInstance && "region" in value;
+	    isInstance = isInstance && "embed" in value;
+	    return isInstance;
+	}
+	CreateIndexForModelRequest.instanceOfCreateIndexForModelRequest = instanceOfCreateIndexForModelRequest;
+	function CreateIndexForModelRequestFromJSON(json) {
+	    return CreateIndexForModelRequestFromJSONTyped(json);
+	}
+	CreateIndexForModelRequest.CreateIndexForModelRequestFromJSON = CreateIndexForModelRequestFromJSON;
+	function CreateIndexForModelRequestFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'name': json['name'],
+	        'cloud': json['cloud'],
+	        'region': json['region'],
+	        'deletionProtection': !(0, runtime_1.exists)(json, 'deletion_protection') ? undefined : (0, DeletionProtection_1.DeletionProtectionFromJSON)(json['deletion_protection']),
+	        'tags': !(0, runtime_1.exists)(json, 'tags') ? undefined : json['tags'],
+	        'embed': (0, CreateIndexForModelRequestEmbed_1.CreateIndexForModelRequestEmbedFromJSON)(json['embed']),
+	    };
+	}
+	CreateIndexForModelRequest.CreateIndexForModelRequestFromJSONTyped = CreateIndexForModelRequestFromJSONTyped;
+	function CreateIndexForModelRequestToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'name': value.name,
+	        'cloud': value.cloud,
+	        'region': value.region,
+	        'deletion_protection': (0, DeletionProtection_1.DeletionProtectionToJSON)(value.deletionProtection),
+	        'tags': value.tags,
+	        'embed': (0, CreateIndexForModelRequestEmbed_1.CreateIndexForModelRequestEmbedToJSON)(value.embed),
+	    };
+	}
+	CreateIndexForModelRequest.CreateIndexForModelRequestToJSON = CreateIndexForModelRequestToJSON;
+	
+	return CreateIndexForModelRequest;
+}
+
+var CreateIndexFromBackupRequest = {};
+
+var hasRequiredCreateIndexFromBackupRequest;
+
+function requireCreateIndexFromBackupRequest () {
+	if (hasRequiredCreateIndexFromBackupRequest) return CreateIndexFromBackupRequest;
+	hasRequiredCreateIndexFromBackupRequest = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(CreateIndexFromBackupRequest, "__esModule", { value: true });
+	CreateIndexFromBackupRequest.CreateIndexFromBackupRequestToJSON = CreateIndexFromBackupRequest.CreateIndexFromBackupRequestFromJSONTyped = CreateIndexFromBackupRequest.CreateIndexFromBackupRequestFromJSON = CreateIndexFromBackupRequest.instanceOfCreateIndexFromBackupRequest = void 0;
+	const runtime_1 = requireRuntime$5();
+	const DeletionProtection_1 = requireDeletionProtection();
+	/**
+	 * Check if a given object implements the CreateIndexFromBackupRequest interface.
+	 */
+	function instanceOfCreateIndexFromBackupRequest(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "name" in value;
+	    return isInstance;
+	}
+	CreateIndexFromBackupRequest.instanceOfCreateIndexFromBackupRequest = instanceOfCreateIndexFromBackupRequest;
+	function CreateIndexFromBackupRequestFromJSON(json) {
+	    return CreateIndexFromBackupRequestFromJSONTyped(json);
+	}
+	CreateIndexFromBackupRequest.CreateIndexFromBackupRequestFromJSON = CreateIndexFromBackupRequestFromJSON;
+	function CreateIndexFromBackupRequestFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'name': json['name'],
+	        'tags': !(0, runtime_1.exists)(json, 'tags') ? undefined : json['tags'],
+	        'deletionProtection': !(0, runtime_1.exists)(json, 'deletion_protection') ? undefined : (0, DeletionProtection_1.DeletionProtectionFromJSON)(json['deletion_protection']),
+	    };
+	}
+	CreateIndexFromBackupRequest.CreateIndexFromBackupRequestFromJSONTyped = CreateIndexFromBackupRequestFromJSONTyped;
+	function CreateIndexFromBackupRequestToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'name': value.name,
+	        'tags': value.tags,
+	        'deletion_protection': (0, DeletionProtection_1.DeletionProtectionToJSON)(value.deletionProtection),
+	    };
+	}
+	CreateIndexFromBackupRequest.CreateIndexFromBackupRequestToJSON = CreateIndexFromBackupRequestToJSON;
+	
+	return CreateIndexFromBackupRequest;
+}
+
+var CreateIndexFromBackupResponse = {};
+
+var hasRequiredCreateIndexFromBackupResponse;
+
+function requireCreateIndexFromBackupResponse () {
+	if (hasRequiredCreateIndexFromBackupResponse) return CreateIndexFromBackupResponse;
+	hasRequiredCreateIndexFromBackupResponse = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(CreateIndexFromBackupResponse, "__esModule", { value: true });
+	CreateIndexFromBackupResponse.CreateIndexFromBackupResponseToJSON = CreateIndexFromBackupResponse.CreateIndexFromBackupResponseFromJSONTyped = CreateIndexFromBackupResponse.CreateIndexFromBackupResponseFromJSON = CreateIndexFromBackupResponse.instanceOfCreateIndexFromBackupResponse = void 0;
+	/**
+	 * Check if a given object implements the CreateIndexFromBackupResponse interface.
+	 */
+	function instanceOfCreateIndexFromBackupResponse(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "restoreJobId" in value;
+	    isInstance = isInstance && "indexId" in value;
+	    return isInstance;
+	}
+	CreateIndexFromBackupResponse.instanceOfCreateIndexFromBackupResponse = instanceOfCreateIndexFromBackupResponse;
+	function CreateIndexFromBackupResponseFromJSON(json) {
+	    return CreateIndexFromBackupResponseFromJSONTyped(json);
+	}
+	CreateIndexFromBackupResponse.CreateIndexFromBackupResponseFromJSON = CreateIndexFromBackupResponseFromJSON;
+	function CreateIndexFromBackupResponseFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'restoreJobId': json['restore_job_id'],
+	        'indexId': json['index_id'],
+	    };
+	}
+	CreateIndexFromBackupResponse.CreateIndexFromBackupResponseFromJSONTyped = CreateIndexFromBackupResponseFromJSONTyped;
+	function CreateIndexFromBackupResponseToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'restore_job_id': value.restoreJobId,
+	        'index_id': value.indexId,
+	    };
+	}
+	CreateIndexFromBackupResponse.CreateIndexFromBackupResponseToJSON = CreateIndexFromBackupResponseToJSON;
+	
+	return CreateIndexFromBackupResponse;
+}
+
+var CreateIndexRequest = {};
+
+var IndexSpec = {};
+
+var PodSpec = {};
+
+var PodSpecMetadataConfig = {};
+
+var hasRequiredPodSpecMetadataConfig;
+
+function requirePodSpecMetadataConfig () {
+	if (hasRequiredPodSpecMetadataConfig) return PodSpecMetadataConfig;
+	hasRequiredPodSpecMetadataConfig = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(PodSpecMetadataConfig, "__esModule", { value: true });
+	PodSpecMetadataConfig.PodSpecMetadataConfigToJSON = PodSpecMetadataConfig.PodSpecMetadataConfigFromJSONTyped = PodSpecMetadataConfig.PodSpecMetadataConfigFromJSON = PodSpecMetadataConfig.instanceOfPodSpecMetadataConfig = void 0;
+	const runtime_1 = requireRuntime$5();
+	/**
+	 * Check if a given object implements the PodSpecMetadataConfig interface.
+	 */
+	function instanceOfPodSpecMetadataConfig(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	PodSpecMetadataConfig.instanceOfPodSpecMetadataConfig = instanceOfPodSpecMetadataConfig;
+	function PodSpecMetadataConfigFromJSON(json) {
+	    return PodSpecMetadataConfigFromJSONTyped(json);
+	}
+	PodSpecMetadataConfig.PodSpecMetadataConfigFromJSON = PodSpecMetadataConfigFromJSON;
+	function PodSpecMetadataConfigFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'indexed': !(0, runtime_1.exists)(json, 'indexed') ? undefined : json['indexed'],
+	    };
+	}
+	PodSpecMetadataConfig.PodSpecMetadataConfigFromJSONTyped = PodSpecMetadataConfigFromJSONTyped;
+	function PodSpecMetadataConfigToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'indexed': value.indexed,
+	    };
+	}
+	PodSpecMetadataConfig.PodSpecMetadataConfigToJSON = PodSpecMetadataConfigToJSON;
+	
+	return PodSpecMetadataConfig;
+}
+
+var hasRequiredPodSpec;
+
+function requirePodSpec () {
+	if (hasRequiredPodSpec) return PodSpec;
+	hasRequiredPodSpec = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(PodSpec, "__esModule", { value: true });
+	PodSpec.PodSpecToJSON = PodSpec.PodSpecFromJSONTyped = PodSpec.PodSpecFromJSON = PodSpec.instanceOfPodSpec = void 0;
+	const runtime_1 = requireRuntime$5();
+	const PodSpecMetadataConfig_1 = requirePodSpecMetadataConfig();
+	/**
+	 * Check if a given object implements the PodSpec interface.
+	 */
+	function instanceOfPodSpec(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "environment" in value;
+	    isInstance = isInstance && "podType" in value;
+	    return isInstance;
+	}
+	PodSpec.instanceOfPodSpec = instanceOfPodSpec;
+	function PodSpecFromJSON(json) {
+	    return PodSpecFromJSONTyped(json);
+	}
+	PodSpec.PodSpecFromJSON = PodSpecFromJSON;
+	function PodSpecFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'environment': json['environment'],
+	        'replicas': !(0, runtime_1.exists)(json, 'replicas') ? undefined : json['replicas'],
+	        'shards': !(0, runtime_1.exists)(json, 'shards') ? undefined : json['shards'],
+	        'podType': json['pod_type'],
+	        'pods': !(0, runtime_1.exists)(json, 'pods') ? undefined : json['pods'],
+	        'metadataConfig': !(0, runtime_1.exists)(json, 'metadata_config') ? undefined : (0, PodSpecMetadataConfig_1.PodSpecMetadataConfigFromJSON)(json['metadata_config']),
+	        'sourceCollection': !(0, runtime_1.exists)(json, 'source_collection') ? undefined : json['source_collection'],
+	    };
+	}
+	PodSpec.PodSpecFromJSONTyped = PodSpecFromJSONTyped;
+	function PodSpecToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'environment': value.environment,
+	        'replicas': value.replicas,
+	        'shards': value.shards,
+	        'pod_type': value.podType,
+	        'pods': value.pods,
+	        'metadata_config': (0, PodSpecMetadataConfig_1.PodSpecMetadataConfigToJSON)(value.metadataConfig),
+	        'source_collection': value.sourceCollection,
+	    };
+	}
+	PodSpec.PodSpecToJSON = PodSpecToJSON;
+	
+	return PodSpec;
+}
+
+var ServerlessSpec = {};
+
+var hasRequiredServerlessSpec;
+
+function requireServerlessSpec () {
+	if (hasRequiredServerlessSpec) return ServerlessSpec;
+	hasRequiredServerlessSpec = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ServerlessSpec, "__esModule", { value: true });
+	ServerlessSpec.ServerlessSpecToJSON = ServerlessSpec.ServerlessSpecFromJSONTyped = ServerlessSpec.ServerlessSpecFromJSON = ServerlessSpec.instanceOfServerlessSpec = ServerlessSpec.ServerlessSpecCloudEnum = void 0;
+	const runtime_1 = requireRuntime$5();
+	/**
+	 * @export
+	 */
+	ServerlessSpec.ServerlessSpecCloudEnum = {
+	    Gcp: 'gcp',
+	    Aws: 'aws',
+	    Azure: 'azure'
+	};
+	/**
+	 * Check if a given object implements the ServerlessSpec interface.
+	 */
+	function instanceOfServerlessSpec(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "cloud" in value;
+	    isInstance = isInstance && "region" in value;
+	    return isInstance;
+	}
+	ServerlessSpec.instanceOfServerlessSpec = instanceOfServerlessSpec;
+	function ServerlessSpecFromJSON(json) {
+	    return ServerlessSpecFromJSONTyped(json);
+	}
+	ServerlessSpec.ServerlessSpecFromJSON = ServerlessSpecFromJSON;
+	function ServerlessSpecFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'cloud': json['cloud'],
+	        'region': json['region'],
+	        'sourceCollection': !(0, runtime_1.exists)(json, 'source_collection') ? undefined : json['source_collection'],
+	    };
+	}
+	ServerlessSpec.ServerlessSpecFromJSONTyped = ServerlessSpecFromJSONTyped;
+	function ServerlessSpecToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'cloud': value.cloud,
+	        'region': value.region,
+	        'source_collection': value.sourceCollection,
+	    };
+	}
+	ServerlessSpec.ServerlessSpecToJSON = ServerlessSpecToJSON;
+	
+	return ServerlessSpec;
+}
+
+var hasRequiredIndexSpec;
+
+function requireIndexSpec () {
+	if (hasRequiredIndexSpec) return IndexSpec;
+	hasRequiredIndexSpec = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(IndexSpec, "__esModule", { value: true });
+	IndexSpec.IndexSpecToJSON = IndexSpec.IndexSpecFromJSONTyped = IndexSpec.IndexSpecFromJSON = IndexSpec.instanceOfIndexSpec = void 0;
+	const runtime_1 = requireRuntime$5();
+	const ByocSpec_1 = requireByocSpec();
+	const PodSpec_1 = requirePodSpec();
+	const ServerlessSpec_1 = requireServerlessSpec();
+	/**
+	 * Check if a given object implements the IndexSpec interface.
+	 */
+	function instanceOfIndexSpec(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	IndexSpec.instanceOfIndexSpec = instanceOfIndexSpec;
+	function IndexSpecFromJSON(json) {
+	    return IndexSpecFromJSONTyped(json);
+	}
+	IndexSpec.IndexSpecFromJSON = IndexSpecFromJSON;
+	function IndexSpecFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'serverless': !(0, runtime_1.exists)(json, 'serverless') ? undefined : (0, ServerlessSpec_1.ServerlessSpecFromJSON)(json['serverless']),
+	        'pod': !(0, runtime_1.exists)(json, 'pod') ? undefined : (0, PodSpec_1.PodSpecFromJSON)(json['pod']),
+	        'byoc': !(0, runtime_1.exists)(json, 'byoc') ? undefined : (0, ByocSpec_1.ByocSpecFromJSON)(json['byoc']),
+	    };
+	}
+	IndexSpec.IndexSpecFromJSONTyped = IndexSpecFromJSONTyped;
+	function IndexSpecToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'serverless': (0, ServerlessSpec_1.ServerlessSpecToJSON)(value.serverless),
+	        'pod': (0, PodSpec_1.PodSpecToJSON)(value.pod),
+	        'byoc': (0, ByocSpec_1.ByocSpecToJSON)(value.byoc),
+	    };
+	}
+	IndexSpec.IndexSpecToJSON = IndexSpecToJSON;
+	
+	return IndexSpec;
+}
+
+var hasRequiredCreateIndexRequest;
+
+function requireCreateIndexRequest () {
+	if (hasRequiredCreateIndexRequest) return CreateIndexRequest;
+	hasRequiredCreateIndexRequest = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(CreateIndexRequest, "__esModule", { value: true });
+	CreateIndexRequest.CreateIndexRequestToJSON = CreateIndexRequest.CreateIndexRequestFromJSONTyped = CreateIndexRequest.CreateIndexRequestFromJSON = CreateIndexRequest.instanceOfCreateIndexRequest = CreateIndexRequest.CreateIndexRequestMetricEnum = void 0;
+	const runtime_1 = requireRuntime$5();
+	const DeletionProtection_1 = requireDeletionProtection();
+	const IndexSpec_1 = requireIndexSpec();
+	/**
+	 * @export
+	 */
+	CreateIndexRequest.CreateIndexRequestMetricEnum = {
+	    Cosine: 'cosine',
+	    Euclidean: 'euclidean',
+	    Dotproduct: 'dotproduct'
+	};
+	/**
+	 * Check if a given object implements the CreateIndexRequest interface.
+	 */
+	function instanceOfCreateIndexRequest(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "name" in value;
+	    isInstance = isInstance && "spec" in value;
+	    return isInstance;
+	}
+	CreateIndexRequest.instanceOfCreateIndexRequest = instanceOfCreateIndexRequest;
+	function CreateIndexRequestFromJSON(json) {
+	    return CreateIndexRequestFromJSONTyped(json);
+	}
+	CreateIndexRequest.CreateIndexRequestFromJSON = CreateIndexRequestFromJSON;
+	function CreateIndexRequestFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'name': json['name'],
+	        'dimension': !(0, runtime_1.exists)(json, 'dimension') ? undefined : json['dimension'],
+	        'metric': !(0, runtime_1.exists)(json, 'metric') ? undefined : json['metric'],
+	        'deletionProtection': !(0, runtime_1.exists)(json, 'deletion_protection') ? undefined : (0, DeletionProtection_1.DeletionProtectionFromJSON)(json['deletion_protection']),
+	        'tags': !(0, runtime_1.exists)(json, 'tags') ? undefined : json['tags'],
+	        'spec': (0, IndexSpec_1.IndexSpecFromJSON)(json['spec']),
+	        'vectorType': !(0, runtime_1.exists)(json, 'vector_type') ? undefined : json['vector_type'],
+	    };
+	}
+	CreateIndexRequest.CreateIndexRequestFromJSONTyped = CreateIndexRequestFromJSONTyped;
+	function CreateIndexRequestToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'name': value.name,
+	        'dimension': value.dimension,
+	        'metric': value.metric,
+	        'deletion_protection': (0, DeletionProtection_1.DeletionProtectionToJSON)(value.deletionProtection),
+	        'tags': value.tags,
+	        'spec': (0, IndexSpec_1.IndexSpecToJSON)(value.spec),
+	        'vector_type': value.vectorType,
+	    };
+	}
+	CreateIndexRequest.CreateIndexRequestToJSON = CreateIndexRequestToJSON;
+	
+	return CreateIndexRequest;
+}
+
+var ErrorResponse$3 = {};
+
+var ErrorResponseError$3 = {};
+
+var hasRequiredErrorResponseError$3;
+
+function requireErrorResponseError$3 () {
+	if (hasRequiredErrorResponseError$3) return ErrorResponseError$3;
+	hasRequiredErrorResponseError$3 = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ErrorResponseError$3, "__esModule", { value: true });
+	ErrorResponseError$3.ErrorResponseErrorToJSON = ErrorResponseError$3.ErrorResponseErrorFromJSONTyped = ErrorResponseError$3.ErrorResponseErrorFromJSON = ErrorResponseError$3.instanceOfErrorResponseError = ErrorResponseError$3.ErrorResponseErrorCodeEnum = void 0;
+	const runtime_1 = requireRuntime$5();
+	/**
+	 * @export
+	 */
+	ErrorResponseError$3.ErrorResponseErrorCodeEnum = {
+	    Ok: 'OK',
+	    Unknown: 'UNKNOWN',
+	    InvalidArgument: 'INVALID_ARGUMENT',
+	    DeadlineExceeded: 'DEADLINE_EXCEEDED',
+	    QuotaExceeded: 'QUOTA_EXCEEDED',
+	    NotFound: 'NOT_FOUND',
+	    AlreadyExists: 'ALREADY_EXISTS',
+	    PermissionDenied: 'PERMISSION_DENIED',
+	    Unauthenticated: 'UNAUTHENTICATED',
+	    ResourceExhausted: 'RESOURCE_EXHAUSTED',
+	    FailedPrecondition: 'FAILED_PRECONDITION',
+	    Aborted: 'ABORTED',
+	    OutOfRange: 'OUT_OF_RANGE',
+	    Unimplemented: 'UNIMPLEMENTED',
+	    Internal: 'INTERNAL',
+	    Unavailable: 'UNAVAILABLE',
+	    DataLoss: 'DATA_LOSS',
+	    Forbidden: 'FORBIDDEN',
+	    UnprocessableEntity: 'UNPROCESSABLE_ENTITY',
+	    PaymentRequired: 'PAYMENT_REQUIRED'
+	};
+	/**
+	 * Check if a given object implements the ErrorResponseError interface.
+	 */
+	function instanceOfErrorResponseError(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "code" in value;
+	    isInstance = isInstance && "message" in value;
+	    return isInstance;
+	}
+	ErrorResponseError$3.instanceOfErrorResponseError = instanceOfErrorResponseError;
+	function ErrorResponseErrorFromJSON(json) {
+	    return ErrorResponseErrorFromJSONTyped(json);
+	}
+	ErrorResponseError$3.ErrorResponseErrorFromJSON = ErrorResponseErrorFromJSON;
+	function ErrorResponseErrorFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'code': json['code'],
+	        'message': json['message'],
+	        'details': !(0, runtime_1.exists)(json, 'details') ? undefined : json['details'],
+	    };
+	}
+	ErrorResponseError$3.ErrorResponseErrorFromJSONTyped = ErrorResponseErrorFromJSONTyped;
+	function ErrorResponseErrorToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'code': value.code,
+	        'message': value.message,
+	        'details': value.details,
+	    };
+	}
+	ErrorResponseError$3.ErrorResponseErrorToJSON = ErrorResponseErrorToJSON;
+	
+	return ErrorResponseError$3;
+}
+
+var hasRequiredErrorResponse$3;
+
+function requireErrorResponse$3 () {
+	if (hasRequiredErrorResponse$3) return ErrorResponse$3;
+	hasRequiredErrorResponse$3 = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ErrorResponse$3, "__esModule", { value: true });
+	ErrorResponse$3.ErrorResponseToJSON = ErrorResponse$3.ErrorResponseFromJSONTyped = ErrorResponse$3.ErrorResponseFromJSON = ErrorResponse$3.instanceOfErrorResponse = void 0;
+	const ErrorResponseError_1 = requireErrorResponseError$3();
+	/**
+	 * Check if a given object implements the ErrorResponse interface.
+	 */
+	function instanceOfErrorResponse(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "status" in value;
+	    isInstance = isInstance && "error" in value;
+	    return isInstance;
+	}
+	ErrorResponse$3.instanceOfErrorResponse = instanceOfErrorResponse;
+	function ErrorResponseFromJSON(json) {
+	    return ErrorResponseFromJSONTyped(json);
+	}
+	ErrorResponse$3.ErrorResponseFromJSON = ErrorResponseFromJSON;
+	function ErrorResponseFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'status': json['status'],
+	        'error': (0, ErrorResponseError_1.ErrorResponseErrorFromJSON)(json['error']),
+	    };
+	}
+	ErrorResponse$3.ErrorResponseFromJSONTyped = ErrorResponseFromJSONTyped;
+	function ErrorResponseToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'status': value.status,
+	        'error': (0, ErrorResponseError_1.ErrorResponseErrorToJSON)(value.error),
+	    };
+	}
+	ErrorResponse$3.ErrorResponseToJSON = ErrorResponseToJSON;
+	
+	return ErrorResponse$3;
+}
+
+var IndexList = {};
+
+var IndexModel = {};
+
+var IndexModelSpec = {};
+
+var hasRequiredIndexModelSpec;
+
+function requireIndexModelSpec () {
+	if (hasRequiredIndexModelSpec) return IndexModelSpec;
+	hasRequiredIndexModelSpec = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(IndexModelSpec, "__esModule", { value: true });
+	IndexModelSpec.IndexModelSpecToJSON = IndexModelSpec.IndexModelSpecFromJSONTyped = IndexModelSpec.IndexModelSpecFromJSON = IndexModelSpec.instanceOfIndexModelSpec = void 0;
+	const runtime_1 = requireRuntime$5();
+	const ByocSpec_1 = requireByocSpec();
+	const PodSpec_1 = requirePodSpec();
+	const ServerlessSpec_1 = requireServerlessSpec();
+	/**
+	 * Check if a given object implements the IndexModelSpec interface.
+	 */
+	function instanceOfIndexModelSpec(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	IndexModelSpec.instanceOfIndexModelSpec = instanceOfIndexModelSpec;
+	function IndexModelSpecFromJSON(json) {
+	    return IndexModelSpecFromJSONTyped(json);
+	}
+	IndexModelSpec.IndexModelSpecFromJSON = IndexModelSpecFromJSON;
+	function IndexModelSpecFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'byoc': !(0, runtime_1.exists)(json, 'byoc') ? undefined : (0, ByocSpec_1.ByocSpecFromJSON)(json['byoc']),
+	        'pod': !(0, runtime_1.exists)(json, 'pod') ? undefined : (0, PodSpec_1.PodSpecFromJSON)(json['pod']),
+	        'serverless': !(0, runtime_1.exists)(json, 'serverless') ? undefined : (0, ServerlessSpec_1.ServerlessSpecFromJSON)(json['serverless']),
+	    };
+	}
+	IndexModelSpec.IndexModelSpecFromJSONTyped = IndexModelSpecFromJSONTyped;
+	function IndexModelSpecToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'byoc': (0, ByocSpec_1.ByocSpecToJSON)(value.byoc),
+	        'pod': (0, PodSpec_1.PodSpecToJSON)(value.pod),
+	        'serverless': (0, ServerlessSpec_1.ServerlessSpecToJSON)(value.serverless),
+	    };
+	}
+	IndexModelSpec.IndexModelSpecToJSON = IndexModelSpecToJSON;
+	
+	return IndexModelSpec;
+}
+
+var IndexModelStatus = {};
+
+var hasRequiredIndexModelStatus;
+
+function requireIndexModelStatus () {
+	if (hasRequiredIndexModelStatus) return IndexModelStatus;
+	hasRequiredIndexModelStatus = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(IndexModelStatus, "__esModule", { value: true });
+	IndexModelStatus.IndexModelStatusToJSON = IndexModelStatus.IndexModelStatusFromJSONTyped = IndexModelStatus.IndexModelStatusFromJSON = IndexModelStatus.instanceOfIndexModelStatus = IndexModelStatus.IndexModelStatusStateEnum = void 0;
+	/**
+	 * @export
+	 */
+	IndexModelStatus.IndexModelStatusStateEnum = {
+	    Initializing: 'Initializing',
+	    InitializationFailed: 'InitializationFailed',
+	    ScalingUp: 'ScalingUp',
+	    ScalingDown: 'ScalingDown',
+	    ScalingUpPodSize: 'ScalingUpPodSize',
+	    ScalingDownPodSize: 'ScalingDownPodSize',
+	    Terminating: 'Terminating',
+	    Ready: 'Ready',
+	    Disabled: 'Disabled'
+	};
+	/**
+	 * Check if a given object implements the IndexModelStatus interface.
+	 */
+	function instanceOfIndexModelStatus(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "ready" in value;
+	    isInstance = isInstance && "state" in value;
+	    return isInstance;
+	}
+	IndexModelStatus.instanceOfIndexModelStatus = instanceOfIndexModelStatus;
+	function IndexModelStatusFromJSON(json) {
+	    return IndexModelStatusFromJSONTyped(json);
+	}
+	IndexModelStatus.IndexModelStatusFromJSON = IndexModelStatusFromJSON;
+	function IndexModelStatusFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'ready': json['ready'],
+	        'state': json['state'],
+	    };
+	}
+	IndexModelStatus.IndexModelStatusFromJSONTyped = IndexModelStatusFromJSONTyped;
+	function IndexModelStatusToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'ready': value.ready,
+	        'state': value.state,
+	    };
+	}
+	IndexModelStatus.IndexModelStatusToJSON = IndexModelStatusToJSON;
+	
+	return IndexModelStatus;
+}
+
+var ModelIndexEmbed = {};
+
+var hasRequiredModelIndexEmbed;
+
+function requireModelIndexEmbed () {
+	if (hasRequiredModelIndexEmbed) return ModelIndexEmbed;
+	hasRequiredModelIndexEmbed = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ModelIndexEmbed, "__esModule", { value: true });
+	ModelIndexEmbed.ModelIndexEmbedToJSON = ModelIndexEmbed.ModelIndexEmbedFromJSONTyped = ModelIndexEmbed.ModelIndexEmbedFromJSON = ModelIndexEmbed.instanceOfModelIndexEmbed = ModelIndexEmbed.ModelIndexEmbedMetricEnum = void 0;
+	const runtime_1 = requireRuntime$5();
+	/**
+	 * @export
+	 */
+	ModelIndexEmbed.ModelIndexEmbedMetricEnum = {
+	    Cosine: 'cosine',
+	    Euclidean: 'euclidean',
+	    Dotproduct: 'dotproduct'
+	};
+	/**
+	 * Check if a given object implements the ModelIndexEmbed interface.
+	 */
+	function instanceOfModelIndexEmbed(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "model" in value;
+	    return isInstance;
+	}
+	ModelIndexEmbed.instanceOfModelIndexEmbed = instanceOfModelIndexEmbed;
+	function ModelIndexEmbedFromJSON(json) {
+	    return ModelIndexEmbedFromJSONTyped(json);
+	}
+	ModelIndexEmbed.ModelIndexEmbedFromJSON = ModelIndexEmbedFromJSON;
+	function ModelIndexEmbedFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'model': json['model'],
+	        'metric': !(0, runtime_1.exists)(json, 'metric') ? undefined : json['metric'],
+	        'dimension': !(0, runtime_1.exists)(json, 'dimension') ? undefined : json['dimension'],
+	        'vectorType': !(0, runtime_1.exists)(json, 'vector_type') ? undefined : json['vector_type'],
+	        'fieldMap': !(0, runtime_1.exists)(json, 'field_map') ? undefined : json['field_map'],
+	        'readParameters': !(0, runtime_1.exists)(json, 'read_parameters') ? undefined : json['read_parameters'],
+	        'writeParameters': !(0, runtime_1.exists)(json, 'write_parameters') ? undefined : json['write_parameters'],
+	    };
+	}
+	ModelIndexEmbed.ModelIndexEmbedFromJSONTyped = ModelIndexEmbedFromJSONTyped;
+	function ModelIndexEmbedToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'model': value.model,
+	        'metric': value.metric,
+	        'dimension': value.dimension,
+	        'vector_type': value.vectorType,
+	        'field_map': value.fieldMap,
+	        'read_parameters': value.readParameters,
+	        'write_parameters': value.writeParameters,
+	    };
+	}
+	ModelIndexEmbed.ModelIndexEmbedToJSON = ModelIndexEmbedToJSON;
+	
+	return ModelIndexEmbed;
+}
+
+var hasRequiredIndexModel;
+
+function requireIndexModel () {
+	if (hasRequiredIndexModel) return IndexModel;
+	hasRequiredIndexModel = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(IndexModel, "__esModule", { value: true });
+	IndexModel.IndexModelToJSON = IndexModel.IndexModelFromJSONTyped = IndexModel.IndexModelFromJSON = IndexModel.instanceOfIndexModel = IndexModel.IndexModelMetricEnum = void 0;
+	const runtime_1 = requireRuntime$5();
+	const DeletionProtection_1 = requireDeletionProtection();
+	const IndexModelSpec_1 = requireIndexModelSpec();
+	const IndexModelStatus_1 = requireIndexModelStatus();
+	const ModelIndexEmbed_1 = requireModelIndexEmbed();
+	/**
+	 * @export
+	 */
+	IndexModel.IndexModelMetricEnum = {
+	    Cosine: 'cosine',
+	    Euclidean: 'euclidean',
+	    Dotproduct: 'dotproduct'
+	};
+	/**
+	 * Check if a given object implements the IndexModel interface.
+	 */
+	function instanceOfIndexModel(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "name" in value;
+	    isInstance = isInstance && "metric" in value;
+	    isInstance = isInstance && "host" in value;
+	    isInstance = isInstance && "spec" in value;
+	    isInstance = isInstance && "status" in value;
+	    isInstance = isInstance && "vectorType" in value;
+	    return isInstance;
+	}
+	IndexModel.instanceOfIndexModel = instanceOfIndexModel;
+	function IndexModelFromJSON(json) {
+	    return IndexModelFromJSONTyped(json);
+	}
+	IndexModel.IndexModelFromJSON = IndexModelFromJSON;
+	function IndexModelFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'name': json['name'],
+	        'dimension': !(0, runtime_1.exists)(json, 'dimension') ? undefined : json['dimension'],
+	        'metric': json['metric'],
+	        'host': json['host'],
+	        'privateHost': !(0, runtime_1.exists)(json, 'private_host') ? undefined : json['private_host'],
+	        'deletionProtection': !(0, runtime_1.exists)(json, 'deletion_protection') ? undefined : (0, DeletionProtection_1.DeletionProtectionFromJSON)(json['deletion_protection']),
+	        'tags': !(0, runtime_1.exists)(json, 'tags') ? undefined : json['tags'],
+	        'embed': !(0, runtime_1.exists)(json, 'embed') ? undefined : (0, ModelIndexEmbed_1.ModelIndexEmbedFromJSON)(json['embed']),
+	        'spec': (0, IndexModelSpec_1.IndexModelSpecFromJSON)(json['spec']),
+	        'status': (0, IndexModelStatus_1.IndexModelStatusFromJSON)(json['status']),
+	        'vectorType': json['vector_type'],
+	    };
+	}
+	IndexModel.IndexModelFromJSONTyped = IndexModelFromJSONTyped;
+	function IndexModelToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'name': value.name,
+	        'dimension': value.dimension,
+	        'metric': value.metric,
+	        'host': value.host,
+	        'private_host': value.privateHost,
+	        'deletion_protection': (0, DeletionProtection_1.DeletionProtectionToJSON)(value.deletionProtection),
+	        'tags': value.tags,
+	        'embed': (0, ModelIndexEmbed_1.ModelIndexEmbedToJSON)(value.embed),
+	        'spec': (0, IndexModelSpec_1.IndexModelSpecToJSON)(value.spec),
+	        'status': (0, IndexModelStatus_1.IndexModelStatusToJSON)(value.status),
+	        'vector_type': value.vectorType,
+	    };
+	}
+	IndexModel.IndexModelToJSON = IndexModelToJSON;
+	
+	return IndexModel;
+}
+
+var hasRequiredIndexList;
+
+function requireIndexList () {
+	if (hasRequiredIndexList) return IndexList;
+	hasRequiredIndexList = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(IndexList, "__esModule", { value: true });
+	IndexList.IndexListToJSON = IndexList.IndexListFromJSONTyped = IndexList.IndexListFromJSON = IndexList.instanceOfIndexList = void 0;
+	const runtime_1 = requireRuntime$5();
+	const IndexModel_1 = requireIndexModel();
+	/**
+	 * Check if a given object implements the IndexList interface.
+	 */
+	function instanceOfIndexList(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	IndexList.instanceOfIndexList = instanceOfIndexList;
+	function IndexListFromJSON(json) {
+	    return IndexListFromJSONTyped(json);
+	}
+	IndexList.IndexListFromJSON = IndexListFromJSON;
+	function IndexListFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'indexes': !(0, runtime_1.exists)(json, 'indexes') ? undefined : (json['indexes'].map(IndexModel_1.IndexModelFromJSON)),
+	    };
+	}
+	IndexList.IndexListFromJSONTyped = IndexListFromJSONTyped;
+	function IndexListToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'indexes': value.indexes === undefined ? undefined : (value.indexes.map(IndexModel_1.IndexModelToJSON)),
+	    };
+	}
+	IndexList.IndexListToJSON = IndexListToJSON;
+	
+	return IndexList;
+}
+
+var RestoreJobList = {};
+
+var RestoreJobModel = {};
+
+var hasRequiredRestoreJobModel;
+
+function requireRestoreJobModel () {
+	if (hasRequiredRestoreJobModel) return RestoreJobModel;
+	hasRequiredRestoreJobModel = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(RestoreJobModel, "__esModule", { value: true });
+	RestoreJobModel.RestoreJobModelToJSON = RestoreJobModel.RestoreJobModelFromJSONTyped = RestoreJobModel.RestoreJobModelFromJSON = RestoreJobModel.instanceOfRestoreJobModel = void 0;
+	const runtime_1 = requireRuntime$5();
+	/**
+	 * Check if a given object implements the RestoreJobModel interface.
+	 */
+	function instanceOfRestoreJobModel(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "restoreJobId" in value;
+	    isInstance = isInstance && "backupId" in value;
+	    isInstance = isInstance && "targetIndexName" in value;
+	    isInstance = isInstance && "targetIndexId" in value;
+	    isInstance = isInstance && "status" in value;
+	    isInstance = isInstance && "createdAt" in value;
+	    return isInstance;
+	}
+	RestoreJobModel.instanceOfRestoreJobModel = instanceOfRestoreJobModel;
+	function RestoreJobModelFromJSON(json) {
+	    return RestoreJobModelFromJSONTyped(json);
+	}
+	RestoreJobModel.RestoreJobModelFromJSON = RestoreJobModelFromJSON;
+	function RestoreJobModelFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'restoreJobId': json['restore_job_id'],
+	        'backupId': json['backup_id'],
+	        'targetIndexName': json['target_index_name'],
+	        'targetIndexId': json['target_index_id'],
+	        'status': json['status'],
+	        'createdAt': (new Date(json['created_at'])),
+	        'completedAt': !(0, runtime_1.exists)(json, 'completed_at') ? undefined : (new Date(json['completed_at'])),
+	        'percentComplete': !(0, runtime_1.exists)(json, 'percent_complete') ? undefined : json['percent_complete'],
+	    };
+	}
+	RestoreJobModel.RestoreJobModelFromJSONTyped = RestoreJobModelFromJSONTyped;
+	function RestoreJobModelToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'restore_job_id': value.restoreJobId,
+	        'backup_id': value.backupId,
+	        'target_index_name': value.targetIndexName,
+	        'target_index_id': value.targetIndexId,
+	        'status': value.status,
+	        'created_at': (value.createdAt.toISOString()),
+	        'completed_at': value.completedAt === undefined ? undefined : (value.completedAt.toISOString()),
+	        'percent_complete': value.percentComplete,
+	    };
+	}
+	RestoreJobModel.RestoreJobModelToJSON = RestoreJobModelToJSON;
+	
+	return RestoreJobModel;
+}
+
+var hasRequiredRestoreJobList;
+
+function requireRestoreJobList () {
+	if (hasRequiredRestoreJobList) return RestoreJobList;
+	hasRequiredRestoreJobList = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(RestoreJobList, "__esModule", { value: true });
+	RestoreJobList.RestoreJobListToJSON = RestoreJobList.RestoreJobListFromJSONTyped = RestoreJobList.RestoreJobListFromJSON = RestoreJobList.instanceOfRestoreJobList = void 0;
+	const runtime_1 = requireRuntime$5();
+	const PaginationResponse_1 = requirePaginationResponse();
+	const RestoreJobModel_1 = requireRestoreJobModel();
+	/**
+	 * Check if a given object implements the RestoreJobList interface.
+	 */
+	function instanceOfRestoreJobList(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "data" in value;
+	    return isInstance;
+	}
+	RestoreJobList.instanceOfRestoreJobList = instanceOfRestoreJobList;
+	function RestoreJobListFromJSON(json) {
+	    return RestoreJobListFromJSONTyped(json);
+	}
+	RestoreJobList.RestoreJobListFromJSON = RestoreJobListFromJSON;
+	function RestoreJobListFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'data': (json['data'].map(RestoreJobModel_1.RestoreJobModelFromJSON)),
+	        'pagination': !(0, runtime_1.exists)(json, 'pagination') ? undefined : (0, PaginationResponse_1.PaginationResponseFromJSON)(json['pagination']),
+	    };
+	}
+	RestoreJobList.RestoreJobListFromJSONTyped = RestoreJobListFromJSONTyped;
+	function RestoreJobListToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'data': (value.data.map(RestoreJobModel_1.RestoreJobModelToJSON)),
+	        'pagination': (0, PaginationResponse_1.PaginationResponseToJSON)(value.pagination),
+	    };
+	}
+	RestoreJobList.RestoreJobListToJSON = RestoreJobListToJSON;
+	
+	return RestoreJobList;
+}
+
+var hasRequiredModels$5;
+
+function requireModels$5 () {
+	if (hasRequiredModels$5) return models$5;
+	hasRequiredModels$5 = 1;
+	(function (exports) {
+		var __createBinding = (models$5 && models$5.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    var desc = Object.getOwnPropertyDescriptor(m, k);
+		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+		      desc = { enumerable: true, get: function() { return m[k]; } };
+		    }
+		    Object.defineProperty(o, k2, desc);
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __exportStar = (models$5 && models$5.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		/* tslint:disable */
+		/* eslint-disable */
+		__exportStar(requireBackupList(), exports);
+		__exportStar(requireBackupModel(), exports);
+		__exportStar(requireByocSpec(), exports);
+		__exportStar(requireCollectionList(), exports);
+		__exportStar(requireCollectionModel(), exports);
+		__exportStar(requireConfigureIndexRequest(), exports);
+		__exportStar(requireConfigureIndexRequestEmbed(), exports);
+		__exportStar(requireConfigureIndexRequestSpec(), exports);
+		__exportStar(requireConfigureIndexRequestSpecPod(), exports);
+		__exportStar(requireCreateBackupRequest(), exports);
+		__exportStar(requireCreateCollectionRequest(), exports);
+		__exportStar(requireCreateIndexForModelRequest(), exports);
+		__exportStar(requireCreateIndexForModelRequestEmbed(), exports);
+		__exportStar(requireCreateIndexFromBackupRequest(), exports);
+		__exportStar(requireCreateIndexFromBackupResponse(), exports);
+		__exportStar(requireCreateIndexRequest(), exports);
+		__exportStar(requireDeletionProtection(), exports);
+		__exportStar(requireErrorResponse$3(), exports);
+		__exportStar(requireErrorResponseError$3(), exports);
+		__exportStar(requireIndexList(), exports);
+		__exportStar(requireIndexModel(), exports);
+		__exportStar(requireIndexModelSpec(), exports);
+		__exportStar(requireIndexModelStatus(), exports);
+		__exportStar(requireIndexSpec(), exports);
+		__exportStar(requireModelIndexEmbed(), exports);
+		__exportStar(requirePaginationResponse(), exports);
+		__exportStar(requirePodSpec(), exports);
+		__exportStar(requirePodSpecMetadataConfig(), exports);
+		__exportStar(requireRestoreJobList(), exports);
+		__exportStar(requireRestoreJobModel(), exports);
+		__exportStar(requireServerlessSpec(), exports);
+		
+	} (models$5));
+	return models$5;
+}
+
+var hasRequiredManageIndexesApi;
+
+function requireManageIndexesApi () {
+	if (hasRequiredManageIndexesApi) return ManageIndexesApi;
+	hasRequiredManageIndexesApi = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Control Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	var __createBinding = (ManageIndexesApi && ManageIndexesApi.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    var desc = Object.getOwnPropertyDescriptor(m, k);
+	    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+	      desc = { enumerable: true, get: function() { return m[k]; } };
+	    }
+	    Object.defineProperty(o, k2, desc);
+	}) : (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    o[k2] = m[k];
+	}));
+	var __setModuleDefault = (ManageIndexesApi && ManageIndexesApi.__setModuleDefault) || (Object.create ? (function(o, v) {
+	    Object.defineProperty(o, "default", { enumerable: true, value: v });
+	}) : function(o, v) {
+	    o["default"] = v;
+	});
+	var __importStar = (ManageIndexesApi && ManageIndexesApi.__importStar) || function (mod) {
+	    if (mod && mod.__esModule) return mod;
+	    var result = {};
+	    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+	    __setModuleDefault(result, mod);
+	    return result;
+	};
+	Object.defineProperty(ManageIndexesApi, "__esModule", { value: true });
+	ManageIndexesApi.ManageIndexesApi = void 0;
+	const runtime = __importStar(requireRuntime$5());
+	const index_1 = requireModels$5();
+	/**
+	 *
+	 */
+	let ManageIndexesApi$1 = class ManageIndexesApi extends runtime.BaseAPI {
+	    /**
+	     * Configure an existing index. For serverless indexes, you can configure index deletion protection, tags, and integrated inference embedding settings for the index. For pod-based indexes, you can configure the pod size, number of replicas, tags, and index deletion protection.  It is not possible to change the pod type of a pod-based index. However, you can create a collection from a pod-based index and then [create a new pod-based index with a different pod type](http://docs.pinecone.io/guides/indexes/pods/create-a-pod-based-index#create-a-pod-index-from-a-collection) from the collection. For guidance and examples, see [Configure an index](http://docs.pinecone.io/guides/indexes/pods/manage-pod-based-indexes).
+	     * Configure an index
+	     */
+	    async configureIndexRaw(requestParameters, initOverrides) {
+	        if (requestParameters.indexName === null || requestParameters.indexName === undefined) {
+	            throw new runtime.RequiredError('indexName', 'Required parameter requestParameters.indexName was null or undefined when calling configureIndex.');
+	        }
+	        if (requestParameters.configureIndexRequest === null || requestParameters.configureIndexRequest === undefined) {
+	            throw new runtime.RequiredError('configureIndexRequest', 'Required parameter requestParameters.configureIndexRequest was null or undefined when calling configureIndex.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/json';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/indexes/{index_name}`.replace(`{${"index_name"}}`, encodeURIComponent(String(requestParameters.indexName))),
+	            method: 'PATCH',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: (0, index_1.ConfigureIndexRequestToJSON)(requestParameters.configureIndexRequest),
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.IndexModelFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Configure an existing index. For serverless indexes, you can configure index deletion protection, tags, and integrated inference embedding settings for the index. For pod-based indexes, you can configure the pod size, number of replicas, tags, and index deletion protection.  It is not possible to change the pod type of a pod-based index. However, you can create a collection from a pod-based index and then [create a new pod-based index with a different pod type](http://docs.pinecone.io/guides/indexes/pods/create-a-pod-based-index#create-a-pod-index-from-a-collection) from the collection. For guidance and examples, see [Configure an index](http://docs.pinecone.io/guides/indexes/pods/manage-pod-based-indexes).
+	     * Configure an index
+	     */
+	    async configureIndex(requestParameters, initOverrides) {
+	        const response = await this.configureIndexRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Create a backup of an index.
+	     * Create a backup of an index
+	     */
+	    async createBackupRaw(requestParameters, initOverrides) {
+	        if (requestParameters.indexName === null || requestParameters.indexName === undefined) {
+	            throw new runtime.RequiredError('indexName', 'Required parameter requestParameters.indexName was null or undefined when calling createBackup.');
+	        }
+	        if (requestParameters.createBackupRequest === null || requestParameters.createBackupRequest === undefined) {
+	            throw new runtime.RequiredError('createBackupRequest', 'Required parameter requestParameters.createBackupRequest was null or undefined when calling createBackup.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/json';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/indexes/{index_name}/backups`.replace(`{${"index_name"}}`, encodeURIComponent(String(requestParameters.indexName))),
+	            method: 'POST',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: (0, index_1.CreateBackupRequestToJSON)(requestParameters.createBackupRequest),
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.BackupModelFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Create a backup of an index.
+	     * Create a backup of an index
+	     */
+	    async createBackup(requestParameters, initOverrides) {
+	        const response = await this.createBackupRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Create a Pinecone collection.    Serverless indexes do not support collections.
+	     * Create a collection
+	     */
+	    async createCollectionRaw(requestParameters, initOverrides) {
+	        if (requestParameters.createCollectionRequest === null || requestParameters.createCollectionRequest === undefined) {
+	            throw new runtime.RequiredError('createCollectionRequest', 'Required parameter requestParameters.createCollectionRequest was null or undefined when calling createCollection.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/json';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/collections`,
+	            method: 'POST',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: (0, index_1.CreateCollectionRequestToJSON)(requestParameters.createCollectionRequest),
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.CollectionModelFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Create a Pinecone collection.    Serverless indexes do not support collections.
+	     * Create a collection
+	     */
+	    async createCollection(requestParameters, initOverrides) {
+	        const response = await this.createCollectionRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Create a Pinecone index. This is where you specify the measure of similarity, the dimension of vectors to be stored in the index, which cloud provider you would like to deploy with, and more.    For guidance and examples, see [Create an index](https://docs.pinecone.io/guides/index-data/create-an-index).
+	     * Create an index
+	     */
+	    async createIndexRaw(requestParameters, initOverrides) {
+	        if (requestParameters.createIndexRequest === null || requestParameters.createIndexRequest === undefined) {
+	            throw new runtime.RequiredError('createIndexRequest', 'Required parameter requestParameters.createIndexRequest was null or undefined when calling createIndex.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/json';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/indexes`,
+	            method: 'POST',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: (0, index_1.CreateIndexRequestToJSON)(requestParameters.createIndexRequest),
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.IndexModelFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Create a Pinecone index. This is where you specify the measure of similarity, the dimension of vectors to be stored in the index, which cloud provider you would like to deploy with, and more.    For guidance and examples, see [Create an index](https://docs.pinecone.io/guides/index-data/create-an-index).
+	     * Create an index
+	     */
+	    async createIndex(requestParameters, initOverrides) {
+	        const response = await this.createIndexRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Create an index with integrated embedding.  With this type of index, you provide source text, and Pinecone uses a [hosted embedding model](https://docs.pinecone.io/guides/index-data/create-an-index#embedding-models) to convert the text automatically during [upsert](https://docs.pinecone.io/reference/api/2025-01/data-plane/upsert_records) and [search](https://docs.pinecone.io/reference/api/2025-01/data-plane/search_records).  For guidance and examples, see [Create an index](https://docs.pinecone.io/guides/index-data/create-an-index#integrated-embedding).
+	     * Create an index with integrated embedding
+	     */
+	    async createIndexForModelRaw(requestParameters, initOverrides) {
+	        if (requestParameters.createIndexForModelRequest === null || requestParameters.createIndexForModelRequest === undefined) {
+	            throw new runtime.RequiredError('createIndexForModelRequest', 'Required parameter requestParameters.createIndexForModelRequest was null or undefined when calling createIndexForModel.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/json';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/indexes/create-for-model`,
+	            method: 'POST',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: (0, index_1.CreateIndexForModelRequestToJSON)(requestParameters.createIndexForModelRequest),
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.IndexModelFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Create an index with integrated embedding.  With this type of index, you provide source text, and Pinecone uses a [hosted embedding model](https://docs.pinecone.io/guides/index-data/create-an-index#embedding-models) to convert the text automatically during [upsert](https://docs.pinecone.io/reference/api/2025-01/data-plane/upsert_records) and [search](https://docs.pinecone.io/reference/api/2025-01/data-plane/search_records).  For guidance and examples, see [Create an index](https://docs.pinecone.io/guides/index-data/create-an-index#integrated-embedding).
+	     * Create an index with integrated embedding
+	     */
+	    async createIndexForModel(requestParameters, initOverrides) {
+	        const response = await this.createIndexForModelRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Create an index from a backup.
+	     * Create an index from a backup
+	     */
+	    async createIndexFromBackupOperationRaw(requestParameters, initOverrides) {
+	        if (requestParameters.backupId === null || requestParameters.backupId === undefined) {
+	            throw new runtime.RequiredError('backupId', 'Required parameter requestParameters.backupId was null or undefined when calling createIndexFromBackupOperation.');
+	        }
+	        if (requestParameters.createIndexFromBackupRequest === null || requestParameters.createIndexFromBackupRequest === undefined) {
+	            throw new runtime.RequiredError('createIndexFromBackupRequest', 'Required parameter requestParameters.createIndexFromBackupRequest was null or undefined when calling createIndexFromBackupOperation.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/json';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/backups/{backup_id}/create-index`.replace(`{${"backup_id"}}`, encodeURIComponent(String(requestParameters.backupId))),
+	            method: 'POST',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: (0, index_1.CreateIndexFromBackupRequestToJSON)(requestParameters.createIndexFromBackupRequest),
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.CreateIndexFromBackupResponseFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Create an index from a backup.
+	     * Create an index from a backup
+	     */
+	    async createIndexFromBackupOperation(requestParameters, initOverrides) {
+	        const response = await this.createIndexFromBackupOperationRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Delete a backup.
+	     * Delete a backup
+	     */
+	    async deleteBackupRaw(requestParameters, initOverrides) {
+	        if (requestParameters.backupId === null || requestParameters.backupId === undefined) {
+	            throw new runtime.RequiredError('backupId', 'Required parameter requestParameters.backupId was null or undefined when calling deleteBackup.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/backups/{backup_id}`.replace(`{${"backup_id"}}`, encodeURIComponent(String(requestParameters.backupId))),
+	            method: 'DELETE',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.VoidApiResponse(response);
+	    }
+	    /**
+	     * Delete a backup.
+	     * Delete a backup
+	     */
+	    async deleteBackup(requestParameters, initOverrides) {
+	        await this.deleteBackupRaw(requestParameters, initOverrides);
+	    }
+	    /**
+	     * Delete an existing collection. Serverless indexes do not support collections.
+	     * Delete a collection
+	     */
+	    async deleteCollectionRaw(requestParameters, initOverrides) {
+	        if (requestParameters.collectionName === null || requestParameters.collectionName === undefined) {
+	            throw new runtime.RequiredError('collectionName', 'Required parameter requestParameters.collectionName was null or undefined when calling deleteCollection.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/collections/{collection_name}`.replace(`{${"collection_name"}}`, encodeURIComponent(String(requestParameters.collectionName))),
+	            method: 'DELETE',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.VoidApiResponse(response);
+	    }
+	    /**
+	     * Delete an existing collection. Serverless indexes do not support collections.
+	     * Delete a collection
+	     */
+	    async deleteCollection(requestParameters, initOverrides) {
+	        await this.deleteCollectionRaw(requestParameters, initOverrides);
+	    }
+	    /**
+	     * Delete an existing index.
+	     * Delete an index
+	     */
+	    async deleteIndexRaw(requestParameters, initOverrides) {
+	        if (requestParameters.indexName === null || requestParameters.indexName === undefined) {
+	            throw new runtime.RequiredError('indexName', 'Required parameter requestParameters.indexName was null or undefined when calling deleteIndex.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/indexes/{index_name}`.replace(`{${"index_name"}}`, encodeURIComponent(String(requestParameters.indexName))),
+	            method: 'DELETE',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.VoidApiResponse(response);
+	    }
+	    /**
+	     * Delete an existing index.
+	     * Delete an index
+	     */
+	    async deleteIndex(requestParameters, initOverrides) {
+	        await this.deleteIndexRaw(requestParameters, initOverrides);
+	    }
+	    /**
+	     * Get a description of a backup.
+	     * Describe a backup
+	     */
+	    async describeBackupRaw(requestParameters, initOverrides) {
+	        if (requestParameters.backupId === null || requestParameters.backupId === undefined) {
+	            throw new runtime.RequiredError('backupId', 'Required parameter requestParameters.backupId was null or undefined when calling describeBackup.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/backups/{backup_id}`.replace(`{${"backup_id"}}`, encodeURIComponent(String(requestParameters.backupId))),
+	            method: 'GET',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.BackupModelFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Get a description of a backup.
+	     * Describe a backup
+	     */
+	    async describeBackup(requestParameters, initOverrides) {
+	        const response = await this.describeBackupRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Get a description of a collection. Serverless indexes do not support collections.
+	     * Describe a collection
+	     */
+	    async describeCollectionRaw(requestParameters, initOverrides) {
+	        if (requestParameters.collectionName === null || requestParameters.collectionName === undefined) {
+	            throw new runtime.RequiredError('collectionName', 'Required parameter requestParameters.collectionName was null or undefined when calling describeCollection.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/collections/{collection_name}`.replace(`{${"collection_name"}}`, encodeURIComponent(String(requestParameters.collectionName))),
+	            method: 'GET',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.CollectionModelFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Get a description of a collection. Serverless indexes do not support collections.
+	     * Describe a collection
+	     */
+	    async describeCollection(requestParameters, initOverrides) {
+	        const response = await this.describeCollectionRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Get a description of an index.
+	     * Describe an index
+	     */
+	    async describeIndexRaw(requestParameters, initOverrides) {
+	        if (requestParameters.indexName === null || requestParameters.indexName === undefined) {
+	            throw new runtime.RequiredError('indexName', 'Required parameter requestParameters.indexName was null or undefined when calling describeIndex.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/indexes/{index_name}`.replace(`{${"index_name"}}`, encodeURIComponent(String(requestParameters.indexName))),
+	            method: 'GET',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.IndexModelFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Get a description of an index.
+	     * Describe an index
+	     */
+	    async describeIndex(requestParameters, initOverrides) {
+	        const response = await this.describeIndexRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Get a description of a restore job.
+	     * Describe a restore job
+	     */
+	    async describeRestoreJobRaw(requestParameters, initOverrides) {
+	        if (requestParameters.jobId === null || requestParameters.jobId === undefined) {
+	            throw new runtime.RequiredError('jobId', 'Required parameter requestParameters.jobId was null or undefined when calling describeRestoreJob.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/restore-jobs/{job_id}`.replace(`{${"job_id"}}`, encodeURIComponent(String(requestParameters.jobId))),
+	            method: 'GET',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.RestoreJobModelFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Get a description of a restore job.
+	     * Describe a restore job
+	     */
+	    async describeRestoreJob(requestParameters, initOverrides) {
+	        const response = await this.describeRestoreJobRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * List all collections in a project. Serverless indexes do not support collections.
+	     * List collections
+	     */
+	    async listCollectionsRaw(initOverrides) {
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/collections`,
+	            method: 'GET',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.CollectionListFromJSON)(jsonValue));
+	    }
+	    /**
+	     * List all collections in a project. Serverless indexes do not support collections.
+	     * List collections
+	     */
+	    async listCollections(initOverrides) {
+	        const response = await this.listCollectionsRaw(initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * List all backups for an index.
+	     * List backups for an index
+	     */
+	    async listIndexBackupsRaw(requestParameters, initOverrides) {
+	        if (requestParameters.indexName === null || requestParameters.indexName === undefined) {
+	            throw new runtime.RequiredError('indexName', 'Required parameter requestParameters.indexName was null or undefined when calling listIndexBackups.');
+	        }
+	        const queryParameters = {};
+	        if (requestParameters.limit !== undefined) {
+	            queryParameters['limit'] = requestParameters.limit;
+	        }
+	        if (requestParameters.paginationToken !== undefined) {
+	            queryParameters['paginationToken'] = requestParameters.paginationToken;
+	        }
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/indexes/{index_name}/backups`.replace(`{${"index_name"}}`, encodeURIComponent(String(requestParameters.indexName))),
+	            method: 'GET',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.BackupListFromJSON)(jsonValue));
+	    }
+	    /**
+	     * List all backups for an index.
+	     * List backups for an index
+	     */
+	    async listIndexBackups(requestParameters, initOverrides) {
+	        const response = await this.listIndexBackupsRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * List all indexes in a project.
+	     * List indexes
+	     */
+	    async listIndexesRaw(initOverrides) {
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/indexes`,
+	            method: 'GET',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.IndexListFromJSON)(jsonValue));
+	    }
+	    /**
+	     * List all indexes in a project.
+	     * List indexes
+	     */
+	    async listIndexes(initOverrides) {
+	        const response = await this.listIndexesRaw(initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * List all backups for a project.
+	     * List backups for all indexes in a project
+	     */
+	    async listProjectBackupsRaw(requestParameters, initOverrides) {
+	        const queryParameters = {};
+	        if (requestParameters.limit !== undefined) {
+	            queryParameters['limit'] = requestParameters.limit;
+	        }
+	        if (requestParameters.paginationToken !== undefined) {
+	            queryParameters['paginationToken'] = requestParameters.paginationToken;
+	        }
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/backups`,
+	            method: 'GET',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.BackupListFromJSON)(jsonValue));
+	    }
+	    /**
+	     * List all backups for a project.
+	     * List backups for all indexes in a project
+	     */
+	    async listProjectBackups(requestParameters = {}, initOverrides) {
+	        const response = await this.listProjectBackupsRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * List all restore jobs for a project.
+	     * List restore jobs
+	     */
+	    async listRestoreJobsRaw(requestParameters, initOverrides) {
+	        const queryParameters = {};
+	        if (requestParameters.limit !== undefined) {
+	            queryParameters['limit'] = requestParameters.limit;
+	        }
+	        if (requestParameters.paginationToken !== undefined) {
+	            queryParameters['paginationToken'] = requestParameters.paginationToken;
+	        }
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/restore-jobs`,
+	            method: 'GET',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.RestoreJobListFromJSON)(jsonValue));
+	    }
+	    /**
+	     * List all restore jobs for a project.
+	     * List restore jobs
+	     */
+	    async listRestoreJobs(requestParameters = {}, initOverrides) {
+	        const response = await this.listRestoreJobsRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	};
+	ManageIndexesApi.ManageIndexesApi = ManageIndexesApi$1;
+	
+	return ManageIndexesApi;
+}
+
+var hasRequiredApis$5;
+
+function requireApis$5 () {
+	if (hasRequiredApis$5) return apis$5;
+	hasRequiredApis$5 = 1;
+	(function (exports) {
+		var __createBinding = (apis$5 && apis$5.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    var desc = Object.getOwnPropertyDescriptor(m, k);
+		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+		      desc = { enumerable: true, get: function() { return m[k]; } };
+		    }
+		    Object.defineProperty(o, k2, desc);
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __exportStar = (apis$5 && apis$5.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		/* tslint:disable */
+		/* eslint-disable */
+		__exportStar(requireManageIndexesApi(), exports);
+		
+	} (apis$5));
+	return apis$5;
+}
+
+var api_version$5 = {};
+
+var hasRequiredApi_version$5;
+
+function requireApi_version$5 () {
+	if (hasRequiredApi_version$5) return api_version$5;
+	hasRequiredApi_version$5 = 1;
+	Object.defineProperty(api_version$5, "__esModule", { value: true });
+	api_version$5.X_PINECONE_API_VERSION = void 0;
+	api_version$5.X_PINECONE_API_VERSION = '2025-04';
+	
+	return api_version$5;
+}
+
+var hasRequiredDb_control;
+
+function requireDb_control () {
+	if (hasRequiredDb_control) return db_control;
+	hasRequiredDb_control = 1;
+	(function (exports) {
+		var __createBinding = (db_control && db_control.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    var desc = Object.getOwnPropertyDescriptor(m, k);
+		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+		      desc = { enumerable: true, get: function() { return m[k]; } };
+		    }
+		    Object.defineProperty(o, k2, desc);
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __exportStar = (db_control && db_control.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		/* tslint:disable */
+		/* eslint-disable */
+		__exportStar(requireRuntime$5(), exports);
+		__exportStar(requireApis$5(), exports);
+		__exportStar(requireModels$5(), exports);
+		__exportStar(requireApi_version$5(), exports);
+		
+	} (db_control));
+	return db_control;
+}
+
+var utils$3 = {};
+
+var debugLog = {};
+
+var hasRequiredDebugLog;
+
+function requireDebugLog () {
+	if (hasRequiredDebugLog) return debugLog;
+	hasRequiredDebugLog = 1;
+	Object.defineProperty(debugLog, "__esModule", { value: true });
+	debugLog.debugLog = void 0;
+	const debugLog$1 = (str) => {
+	    if (typeof process !== 'undefined' &&
+	        process &&
+	        process.env &&
+	        process.env.PINECONE_DEBUG) {
+	        console.log(str);
+	    }
+	};
+	debugLog.debugLog = debugLog$1;
+	
+	return debugLog;
+}
+
+var normalizeUrl = {};
+
+var hasRequiredNormalizeUrl;
+
+function requireNormalizeUrl () {
+	if (hasRequiredNormalizeUrl) return normalizeUrl;
+	hasRequiredNormalizeUrl = 1;
+	Object.defineProperty(normalizeUrl, "__esModule", { value: true });
+	normalizeUrl.normalizeUrl = void 0;
+	function normalizeUrl$1(url) {
+	    if (!url || url.trim().length === 0) {
+	        return;
+	    }
+	    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+	        return 'https://' + url;
+	    }
+	    return url;
+	}
+	normalizeUrl.normalizeUrl = normalizeUrl$1;
+	
+	return normalizeUrl;
+}
+
+var queryParamsStringify = {};
+
+var hasRequiredQueryParamsStringify;
+
+function requireQueryParamsStringify () {
+	if (hasRequiredQueryParamsStringify) return queryParamsStringify;
+	hasRequiredQueryParamsStringify = 1;
+	Object.defineProperty(queryParamsStringify, "__esModule", { value: true });
+	queryParamsStringify.queryParamsStringify = void 0;
+	// Everything in this file is lifted from the generated openapi runtime.
+	// I need to create a small modification of the generated queryParamStringify
+	// function in order to fix an issue with array params.
+	//
+	// See https://github.com/pinecone-io/pinecone-ts-client/pull/74
+	function queryParamsStringify$1(params, prefix = '') {
+	    return Object.keys(params)
+	        .map((key) => querystringSingleKey(key, params[key], prefix))
+	        .filter((part) => part.length > 0)
+	        .join('&');
+	}
+	queryParamsStringify.queryParamsStringify = queryParamsStringify$1;
+	function querystringSingleKey(key, value, keyPrefix = '') {
+	    const fullKey = keyPrefix + (keyPrefix.length ? `[${key}]` : key);
+	    // This is a one line change from the default querystring implementation. Checking
+	    // with `Array.isArray` instead of `value instanceof Array` allows us to get the
+	    // the correct behavior when stringifying array params.
+	    if (Array.isArray(value)) {
+	        const multiValue = value
+	            .map((singleValue) => encodeURIComponent(String(singleValue)))
+	            .join(`&${encodeURIComponent(fullKey)}=`);
+	        return `${encodeURIComponent(fullKey)}=${multiValue}`;
+	    }
+	    if (value instanceof Set) {
+	        const valueAsArray = Array.from(value);
+	        return querystringSingleKey(key, valueAsArray, keyPrefix);
+	    }
+	    if (value instanceof Date) {
+	        return `${encodeURIComponent(fullKey)}=${encodeURIComponent(value.toISOString())}`;
+	    }
+	    if (value instanceof Object) {
+	        return queryParamsStringify$1(value, fullKey);
+	    }
+	    return `${encodeURIComponent(fullKey)}=${encodeURIComponent(String(value))}`;
+	}
+	
+	return queryParamsStringify;
+}
+
+var userAgent = {};
+
+var environment = {};
+
+var hasRequiredEnvironment;
+
+function requireEnvironment () {
+	if (hasRequiredEnvironment) return environment;
+	hasRequiredEnvironment = 1;
+	Object.defineProperty(environment, "__esModule", { value: true });
+	environment.isBrowser = environment.isEdge = void 0;
+	const isEdge = () => {
+	    // This is the recommended way to detect
+	    // running in the Edge Runtime according
+	    // to Vercel docs.
+	    return typeof EdgeRuntime === 'string';
+	};
+	environment.isEdge = isEdge;
+	const isBrowser = () => {
+	    return typeof window !== 'undefined';
+	};
+	environment.isBrowser = isBrowser;
+	
+	return environment;
+}
+
+var name = "@pinecone-database/pinecone";
+var version$1 = "6.1.1";
+var require$$1 = {
+	name: name,
+	version: version$1
+};
+
+var hasRequiredUserAgent;
+
+function requireUserAgent () {
+	if (hasRequiredUserAgent) return userAgent;
+	hasRequiredUserAgent = 1;
+	var __createBinding = (userAgent && userAgent.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    var desc = Object.getOwnPropertyDescriptor(m, k);
+	    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+	      desc = { enumerable: true, get: function() { return m[k]; } };
+	    }
+	    Object.defineProperty(o, k2, desc);
+	}) : (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    o[k2] = m[k];
+	}));
+	var __setModuleDefault = (userAgent && userAgent.__setModuleDefault) || (Object.create ? (function(o, v) {
+	    Object.defineProperty(o, "default", { enumerable: true, value: v });
+	}) : function(o, v) {
+	    o["default"] = v;
+	});
+	var __importStar = (userAgent && userAgent.__importStar) || function (mod) {
+	    if (mod && mod.__esModule) return mod;
+	    var result = {};
+	    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+	    __setModuleDefault(result, mod);
+	    return result;
+	};
+	Object.defineProperty(userAgent, "__esModule", { value: true });
+	userAgent.buildUserAgent = void 0;
+	const environment_1 = requireEnvironment();
+	const packageInfo = __importStar(require$$1);
+	const buildUserAgent = (config) => {
+	    // We always want to include the package name and version
+	    // along with the langauge name to help distinguish these
+	    // requests from those emitted by other clients
+	    const userAgentParts = [
+	        `${packageInfo.name} v${packageInfo.version}`,
+	        'lang=typescript',
+	    ];
+	    if ((0, environment_1.isEdge)()) {
+	        userAgentParts.push('Edge Runtime');
+	    }
+	    // If available, capture information about the Node.js version
+	    if (typeof process !== 'undefined' && process && process.version) {
+	        userAgentParts.push(`node ${process.version}`);
+	    }
+	    if (config.sourceTag) {
+	        userAgentParts.push(`source_tag=${normalizeSourceTag(config.sourceTag)}`);
+	    }
+	    return userAgentParts.join('; ');
+	};
+	userAgent.buildUserAgent = buildUserAgent;
+	const normalizeSourceTag = (sourceTag) => {
+	    if (!sourceTag) {
+	        return;
+	    }
+	    /**
+	     * normalize sourceTag
+	     * 1. Lowercase
+	     * 2. Limit charset to [a-z0-9_ :]
+	     * 3. Trim left/right spaces
+	     * 4. Condense multiple spaces to one, and replace with underscore
+	     */
+	    return sourceTag
+	        .toLowerCase()
+	        .replace(/[^a-z0-9_ :]/g, '')
+	        .trim()
+	        .replace(/[ ]+/g, '_');
+	};
+	
+	return userAgent;
+}
+
+var fetch$2 = {};
+
+var errors = {};
+
+var config = {};
+
+var base = {};
+
+var hasRequiredBase;
+
+function requireBase () {
+	if (hasRequiredBase) return base;
+	hasRequiredBase = 1;
+	Object.defineProperty(base, "__esModule", { value: true });
+	base.BasePineconeError = void 0;
+	class BasePineconeError extends Error {
+	    constructor(message, cause) {
+	        super(message);
+	        // Set the prototype explicitly to ensure instanceof works correctly
+	        Object.setPrototypeOf(this, new.target.prototype);
+	        // Maintain a proper stack trace in V8 environments (Chrome and Node.js)
+	        if (Error.captureStackTrace) {
+	            Error.captureStackTrace(this, new.target);
+	        }
+	        this.name = this.constructor.name;
+	        this.cause = cause;
+	    }
+	}
+	base.BasePineconeError = BasePineconeError;
+	
+	return base;
+}
+
+var hasRequiredConfig;
+
+function requireConfig () {
+	if (hasRequiredConfig) return config;
+	hasRequiredConfig = 1;
+	Object.defineProperty(config, "__esModule", { value: true });
+	config.PineconeUnableToResolveHostError = config.PineconeEnvironmentVarsNotSupportedError = config.PineconeUnexpectedResponseError = config.PineconeConfigurationError = void 0;
+	const base_1 = requireBase();
+	const CONFIG_HELP = `You can find the configuration values for your project in the Pinecone developer console at https://app.pinecone.io.`;
+	/**
+	 * This exception indicates there is a problem with the configuration values
+	 * you have provided to the client. The error message should contain additional
+	 * context about what you are missing.
+	 *
+	 * @see {@link Pinecone} for information about initializing the client.
+	 */
+	class PineconeConfigurationError extends base_1.BasePineconeError {
+	    constructor(message) {
+	        super(`${message} ${CONFIG_HELP}`);
+	        this.name = 'PineconeConfigurationError';
+	    }
+	}
+	config.PineconeConfigurationError = PineconeConfigurationError;
+	/**
+	 * This exception indicates an API call that returned a response that was
+	 * unable to be parsed or that did not include expected fields. It's not
+	 * expected to ever occur.
+	 *
+	 * If you encounter this error, please [file an issue](https://github.com/pinecone-io/pinecone-ts-client/issues) so we can investigate.
+	 */
+	class PineconeUnexpectedResponseError extends base_1.BasePineconeError {
+	    constructor(url, status, body, message) {
+	        super(`Unexpected response while calling ${url}. ${message ? message + ' ' : ''}Status: ${status}. Body: ${body}`);
+	        this.name = 'PineconeUnexpectedResponseError';
+	    }
+	}
+	config.PineconeUnexpectedResponseError = PineconeUnexpectedResponseError;
+	/**
+	 * This error occurs when the client tries to read environment variables in
+	 * an environment that does not have access to the Node.js global `process.env`.
+	 *
+	 * If you are seeing this error, you will need to configure the client by passing
+	 * configuration values to the `Pinecone` constructor.
+	 *
+	 * ```typescript
+	 * import { Pinecone } from '@pinecone-database/pinecone';
+	 *
+	 * const pinecone = new Pinecone({
+	 *    apiKey: 'YOUR_API_KEY',
+	 * })
+	 * ```
+	 *
+	 * @see Instructions for configuring { @link Pinecone }
+	 */
+	class PineconeEnvironmentVarsNotSupportedError extends base_1.BasePineconeError {
+	    constructor(message) {
+	        super(message);
+	        this.name = 'PineconeEnvironmentVarsNotSupportedError';
+	    }
+	}
+	config.PineconeEnvironmentVarsNotSupportedError = PineconeEnvironmentVarsNotSupportedError;
+	/**
+	 * This error occurs when the client is unable to resolve the database host for a given
+	 * index. This is unexpected to occur unless there is a problem with the Pinecone service.
+	 *
+	 * If you encounter this error, please [file an issue](https://github.com/pinecone-io/pinecone-ts-client/issues) so we can investigate.
+	 */
+	class PineconeUnableToResolveHostError extends base_1.BasePineconeError {
+	    constructor(message) {
+	        super(message);
+	        this.name = 'PineconeUnableToResolveHostError';
+	    }
+	}
+	config.PineconeUnableToResolveHostError = PineconeUnableToResolveHostError;
+	
+	return config;
+}
+
+var http$1 = {};
+
+var hasRequiredHttp$1;
+
+function requireHttp$1 () {
+	if (hasRequiredHttp$1) return http$1;
+	hasRequiredHttp$1 = 1;
+	Object.defineProperty(http$1, "__esModule", { value: true });
+	http$1.mapHttpStatusError = http$1.PineconeUnmappedHttpError = http$1.PineconeNotImplementedError = http$1.PineconeUnavailableError = http$1.PineconeMaxRetriesExceededError = http$1.PineconeInternalServerError = http$1.PineconeConflictError = http$1.PineconeNotFoundError = http$1.PineconeAuthorizationError = http$1.PineconeBadRequestError = void 0;
+	const base_1 = requireBase();
+	const CONFIG_HELP = `You can find the configuration values for your project in the Pinecone developer console at https://app.pinecone.io`;
+	/** This error is thrown when API requests return with status 400. Typically this is due to some aspect of the request being incorrect or invalid.
+	 *
+	 * Some examples when this error could occur:
+	 * - While attempting to create an index with no available quota in your project.
+	 * - While upserting records that do not match the `dimension` of your index
+	 * - While attempting to create an index using an invalid name ("!@#$%")
+	 */
+	class PineconeBadRequestError extends base_1.BasePineconeError {
+	    constructor(failedRequest) {
+	        const { message } = failedRequest;
+	        super(message);
+	        this.name = 'PineconeBadRequestError';
+	    }
+	}
+	http$1.PineconeBadRequestError = PineconeBadRequestError;
+	/**
+	 * This error occurs when API requests are attempted using invalid configurations such as a mispelled or revoked API key.
+	 *
+	 * Log in to https://app.pinecone.io to verify you have configured the { @link Pinecone }
+	 * client using the correct values.
+	 */
+	class PineconeAuthorizationError extends base_1.BasePineconeError {
+	    constructor(failedRequest) {
+	        const { url } = failedRequest;
+	        if (url) {
+	            super(`The API key you provided was rejected while calling ${url}. Please check your configuration values and try again. ${CONFIG_HELP}`);
+	        }
+	        else {
+	            super(`The API key you provided was rejected. Please check your configuration values and try again. ${CONFIG_HELP}`);
+	        }
+	        this.name = 'PineconeAuthorizationError';
+	    }
+	}
+	http$1.PineconeAuthorizationError = PineconeAuthorizationError;
+	/**
+	 * This error is thrown when interacting with a resource such as an index or collection
+	 * that cannot be found.
+	 */
+	class PineconeNotFoundError extends base_1.BasePineconeError {
+	    constructor(failedRequest) {
+	        const { url } = failedRequest;
+	        if (url) {
+	            super(`A call to ${url} returned HTTP status 404.`);
+	        }
+	        else {
+	            super('The requested resource could not be found.');
+	        }
+	        this.name = 'PineconeNotFoundError';
+	    }
+	}
+	http$1.PineconeNotFoundError = PineconeNotFoundError;
+	/**
+	 * This error is thrown when attempting to create a resource such as an index or
+	 * collection with a name that is already in use.
+	 * */
+	class PineconeConflictError extends base_1.BasePineconeError {
+	    constructor(failedRequest) {
+	        const { url, message } = failedRequest;
+	        if (url) {
+	            super(`A call to ${url} returned HTTP status 409. ${message ? message : ''}`);
+	        }
+	        else {
+	            super('The resource you are attempting to create already exists.');
+	        }
+	        this.name = 'PineconeConflictError';
+	    }
+	}
+	http$1.PineconeConflictError = PineconeConflictError;
+	/**
+	 * This error indicates API responses are returning with status 500 and
+	 * something is wrong with Pinecone. Check the [status page](https://status.pinecone.io/)
+	 * for information about current or recent outages.
+	 *
+	 * @see [Pinecone's status page](https://status.pinecone.io/)
+	 */
+	class PineconeInternalServerError extends base_1.BasePineconeError {
+	    constructor(failedRequest) {
+	        const { url, body, status } = failedRequest;
+	        const intro = url
+	            ? `An internal server error occurred while calling the ${url} endpoint.`
+	            : '';
+	        const help = `To see overall service health and learn whether this seems like a large-scale problem or one specific to your request, please go to https://status.pinecone.io/ to view our status page. If you believe the error reflects a problem with this client, please file a bug report in the github issue tracker at https://github.com/pinecone-io/pinecone-ts-client`;
+	        const statusMessage = status ? `Status Code: ${status}.` : '';
+	        const bodyMessage = body ? `Body: ${body}` : '';
+	        super([intro, statusMessage, help, bodyMessage].join(' ').trim());
+	        this.name = 'PineconeInternalServerError';
+	    }
+	}
+	http$1.PineconeInternalServerError = PineconeInternalServerError;
+	/* We can choose to throw this error when we want to limit requests to the server. When instantiated, pass the
+	 number of retries the user has made already. */
+	class PineconeMaxRetriesExceededError extends base_1.BasePineconeError {
+	    constructor(retries) {
+	        const intro = `You have exceeded the max configured retries (${retries}). `;
+	        const help = 'Increase the maxRetries field in the RetryOptions object to retry more times. If you believe the' +
+	            ' error reflects a problem with this client, please file a bug report in the github issue tracker at https://github.com/pinecone-io/pinecone-ts-client';
+	        super([intro, help].join(' ').trim());
+	        this.name = 'PineconeMaxRetriesExceededError';
+	    }
+	}
+	http$1.PineconeMaxRetriesExceededError = PineconeMaxRetriesExceededError;
+	/**
+	 * This error indicates API responses are returning with status 503 and
+	 * Pinecone itself is down. Check the [status page](https://status.pinecone.io/)
+	 * for information about current or recent outages.
+	 *
+	 * The difference between this error (503) and a PineconeInternalServerError (500) is that this error does NOT indicate
+	 * that the server is _unable_ to process the request, just that the server will not process the request.
+	 *
+	 * @see [Pinecone's status page](https://status.pinecone.io/)
+	 */
+	class PineconeUnavailableError extends base_1.BasePineconeError {
+	    constructor(failedRequest) {
+	        const { url, body, status } = failedRequest;
+	        const intro = url
+	            ? `The Pinecone service (${url}) is temporarily unavailable.`
+	            : '';
+	        const statusMessage = status ? `Status Code: ${status}.` : '';
+	        const help = `To see overall service health and learn whether this seems like a large-scale problem or one specific to your request, please go to https://status.pinecone.io/ to view our status page. If you believe the error reflects a problem with this client, please file a bug report in the github issue tracker at https://github.com/pinecone-io/pinecone-ts-client`;
+	        const bodyMessage = body ? `Body: ${body}` : '';
+	        super([intro, statusMessage, help, bodyMessage].join(' ').trim());
+	        this.name = 'PineconeUnavailableError';
+	    }
+	}
+	http$1.PineconeUnavailableError = PineconeUnavailableError;
+	/**
+	 * This error is thrown when you are attempting to use a feature that is
+	 * not implemented or unavailable to you on your current plan. Free indexes
+	 * only support a subset of Pinecone's capabilities, and if you are seeing
+	 * these exceptions then you should consult the
+	 * [pricing page](https://www.pinecone.io/pricing/) to see whether upgrading
+	 * makes sense for your use case.
+	 */
+	class PineconeNotImplementedError extends base_1.BasePineconeError {
+	    constructor(requestInfo) {
+	        const { url, message } = requestInfo;
+	        if (url) {
+	            super(`A call to ${url} returned HTTP status 501. ${message ? message : ''}`);
+	        }
+	        else {
+	            super();
+	        }
+	        this.name = 'PineconeNotImplementedError';
+	    }
+	}
+	http$1.PineconeNotImplementedError = PineconeNotImplementedError;
+	/**
+	 * This catch-all exception is thrown when a request error that is not
+	 * specifically mapped to another exception is thrown.
+	 */
+	class PineconeUnmappedHttpError extends base_1.BasePineconeError {
+	    constructor(failedRequest) {
+	        const { url, status, body, message } = failedRequest;
+	        const intro = url
+	            ? `An unexpected error occured while calling the ${url} endpoint. `
+	            : '';
+	        const statusMsg = status ? `Status: ${status}. ` : '';
+	        const bodyMsg = body ? `Body: ${body}` : '';
+	        super([intro, message, statusMsg, bodyMsg].join(' ').trim());
+	        this.name = 'PineconeUnmappedHttpError';
+	    }
+	}
+	http$1.PineconeUnmappedHttpError = PineconeUnmappedHttpError;
+	/** @internal */
+	const mapHttpStatusError = (failedRequestInfo) => {
+	    switch (failedRequestInfo.status) {
+	        case 400:
+	            return new PineconeBadRequestError(failedRequestInfo);
+	        case 401:
+	            return new PineconeAuthorizationError(failedRequestInfo);
+	        case 403:
+	            return new PineconeBadRequestError(failedRequestInfo);
+	        case 404:
+	            return new PineconeNotFoundError(failedRequestInfo);
+	        case 409:
+	            return new PineconeConflictError(failedRequestInfo);
+	        case 500:
+	            return new PineconeInternalServerError(failedRequestInfo);
+	        case 501:
+	            return new PineconeNotImplementedError(failedRequestInfo);
+	        case 503:
+	            return new PineconeUnavailableError(failedRequestInfo);
+	        default:
+	            throw new PineconeUnmappedHttpError(failedRequestInfo);
+	    }
+	};
+	http$1.mapHttpStatusError = mapHttpStatusError;
+	
+	return http$1;
+}
+
+var request = {};
+
+var hasRequiredRequest;
+
+function requireRequest () {
+	if (hasRequiredRequest) return request;
+	hasRequiredRequest = 1;
+	Object.defineProperty(request, "__esModule", { value: true });
+	request.PineconeRequestError = request.PineconeConnectionError = void 0;
+	const base_1 = requireBase();
+	/**
+	 * This error is thrown when the client attempts to make a
+	 * request and never receives any response.
+	 *
+	 * This could be due to:
+	 * - Network problems which prevent the request from being completed.
+	 * - An outage of Pinecone's APIs. See [Pinecone's status page](https://status.pinecone.io/) to find out whether there is an ongoing incident.
+	 *
+	 * The `cause` property will contain a reference to the underlying error. Inspect its value to find out more about the root cause of the error.
+	 * ```
+	 * import { Pinecone } from '@pinecone-database/pinecone';
+	 *
+	 * const p = new Pinecone({ apiKey: 'invalid-api-key-value' })
+	 *
+	 * try {
+	 *  await p.listIndexes();
+	 * } catch (e) {
+	 *  console.log(e.name); // PineconeConnectionError
+	 *  console.log(e.cause); // Error [FetchError]: The request failed and the interceptors did not return an alternative response
+	 *  console.log(e.cause.cause); // TypeError: fetch failed
+	 *  console.log(e.cause.cause.cause); // Error: getaddrinfo ENOTFOUND controller.wrong-environment.pinecone.io
+	 * }
+	 * ```
+	 *
+	 * @see [Pinecone's status page](https://status.pinecone.io/)
+	 * */
+	class PineconeConnectionError extends base_1.BasePineconeError {
+	    constructor(e, url) {
+	        let urlMessage = '';
+	        if (url) {
+	            urlMessage = ` while calling ${url}`;
+	        }
+	        super(`Request failed to reach Pinecone${urlMessage}. This can occur for reasons such as network problems that prevent the request from being completed, or a Pinecone API outage. Check your network connection, and visit https://status.pinecone.io/ to see whether any outages are ongoing.`, e);
+	        this.name = 'PineconeConnectionError';
+	    }
+	}
+	request.PineconeConnectionError = PineconeConnectionError;
+	/**
+	 * This error is thrown any time a request to the Pinecone API fails.
+	 *
+	 * The `cause` property will contain a reference to the underlying error. Inspect its value to find out more about the root cause.
+	 */
+	class PineconeRequestError extends base_1.BasePineconeError {
+	    constructor(context) {
+	        if (context.response) {
+	            super(`Request failed during a call to ${context.init.method} ${context.url} with status ${context.response.status}`, context.error);
+	        }
+	        else {
+	            super(`Request failed during a call to ${context.init.method} ${context.url}`, context.error);
+	        }
+	    }
+	}
+	request.PineconeRequestError = PineconeRequestError;
+	
+	return request;
+}
+
+var validation = {};
+
+var hasRequiredValidation;
+
+function requireValidation () {
+	if (hasRequiredValidation) return validation;
+	hasRequiredValidation = 1;
+	Object.defineProperty(validation, "__esModule", { value: true });
+	validation.PineconeArgumentError = void 0;
+	const base_1 = requireBase();
+	/**
+	 * This error is thrown when arguments passed to a Pinecone
+	 * client method fail a runtime validation.
+	 */
+	class PineconeArgumentError extends base_1.BasePineconeError {
+	    constructor(message) {
+	        super(`${message}`);
+	        this.name = 'PineconeArgumentError';
+	    }
+	}
+	validation.PineconeArgumentError = PineconeArgumentError;
+	
+	return validation;
+}
+
+var utils$2 = {};
+
+var hasRequiredUtils$1;
+
+function requireUtils$1 () {
+	if (hasRequiredUtils$1) return utils$2;
+	hasRequiredUtils$1 = 1;
+	Object.defineProperty(utils$2, "__esModule", { value: true });
+	utils$2.extractMessage = void 0;
+	/** @internal */
+	const extractMessage = async (error) => {
+	    let message = await error.response.text();
+	    // Error response is sometimes the raw message, sometimes it's JSON
+	    // so we will try to parse out the actual message text, but
+	    // we wrap it in a try to avoid crashing in a way that obscures
+	    // the actual error if the response format changes in the future.
+	    try {
+	        const messageJSON = JSON.parse(message);
+	        if (messageJSON.message) {
+	            message = messageJSON.message;
+	        }
+	    }
+	    catch (e) {
+	        // noop
+	    }
+	    return message;
+	};
+	utils$2.extractMessage = extractMessage;
+	
+	return utils$2;
+}
+
+var handling = {};
+
+var hasRequiredHandling;
+
+function requireHandling () {
+	if (hasRequiredHandling) return handling;
+	hasRequiredHandling = 1;
+	Object.defineProperty(handling, "__esModule", { value: true });
+	handling.handleApiError = void 0;
+	const utils_1 = requireUtils$1();
+	const http_1 = requireHttp$1();
+	const request_1 = requireRequest();
+	/** @internal */
+	const handleApiError = async (e, customMessage, url) => {
+	    if (e instanceof Error && e.name === 'ResponseError') {
+	        const responseError = e;
+	        const rawMessage = await (0, utils_1.extractMessage)(responseError);
+	        const statusCode = responseError.response.status;
+	        const message = customMessage
+	            ? await customMessage(statusCode, rawMessage)
+	            : rawMessage;
+	        return (0, http_1.mapHttpStatusError)({
+	            status: responseError.response.status,
+	            url: responseError.response.url || url,
+	            message: message,
+	        });
+	    }
+	    else if (e instanceof request_1.PineconeConnectionError) {
+	        // If we've already wrapped this error, just return it
+	        return e;
+	    }
+	    else {
+	        // There seem to be some situations where "e instanceof Error" is erroneously
+	        // false (perhaps the custom errors emitted by cross-fetch do not extend Error?)
+	        // but we can still cast it to an Error type because all we're going to do
+	        // with it is store off a reference to whatever it is under the "cause"
+	        const err = e;
+	        return new request_1.PineconeConnectionError(err);
+	    }
+	};
+	handling.handleApiError = handleApiError;
+	
+	return handling;
+}
+
+var hasRequiredErrors;
+
+function requireErrors () {
+	if (hasRequiredErrors) return errors;
+	hasRequiredErrors = 1;
+	(function (exports) {
+		var __createBinding = (errors && errors.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    var desc = Object.getOwnPropertyDescriptor(m, k);
+		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+		      desc = { enumerable: true, get: function() { return m[k]; } };
+		    }
+		    Object.defineProperty(o, k2, desc);
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __exportStar = (errors && errors.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.handleApiError = exports.extractMessage = exports.PineconeArgumentError = exports.BasePineconeError = exports.PineconeRequestError = exports.PineconeConnectionError = exports.PineconeUnableToResolveHostError = exports.PineconeEnvironmentVarsNotSupportedError = exports.PineconeUnexpectedResponseError = exports.PineconeConfigurationError = void 0;
+		var config_1 = requireConfig();
+		Object.defineProperty(exports, "PineconeConfigurationError", { enumerable: true, get: function () { return config_1.PineconeConfigurationError; } });
+		Object.defineProperty(exports, "PineconeUnexpectedResponseError", { enumerable: true, get: function () { return config_1.PineconeUnexpectedResponseError; } });
+		Object.defineProperty(exports, "PineconeEnvironmentVarsNotSupportedError", { enumerable: true, get: function () { return config_1.PineconeEnvironmentVarsNotSupportedError; } });
+		Object.defineProperty(exports, "PineconeUnableToResolveHostError", { enumerable: true, get: function () { return config_1.PineconeUnableToResolveHostError; } });
+		__exportStar(requireHttp$1(), exports);
+		var request_1 = requireRequest();
+		Object.defineProperty(exports, "PineconeConnectionError", { enumerable: true, get: function () { return request_1.PineconeConnectionError; } });
+		Object.defineProperty(exports, "PineconeRequestError", { enumerable: true, get: function () { return request_1.PineconeRequestError; } });
+		var base_1 = requireBase();
+		Object.defineProperty(exports, "BasePineconeError", { enumerable: true, get: function () { return base_1.BasePineconeError; } });
+		var validation_1 = requireValidation();
+		Object.defineProperty(exports, "PineconeArgumentError", { enumerable: true, get: function () { return validation_1.PineconeArgumentError; } });
+		var utils_1 = requireUtils$1();
+		Object.defineProperty(exports, "extractMessage", { enumerable: true, get: function () { return utils_1.extractMessage; } });
+		var handling_1 = requireHandling();
+		Object.defineProperty(exports, "handleApiError", { enumerable: true, get: function () { return handling_1.handleApiError; } });
+		
+	} (errors));
+	return errors;
+}
+
+var hasRequiredFetch$1;
+
+function requireFetch$1 () {
+	if (hasRequiredFetch$1) return fetch$2;
+	hasRequiredFetch$1 = 1;
+	Object.defineProperty(fetch$2, "__esModule", { value: true });
+	fetch$2.getFetch = void 0;
+	const errors_1 = requireErrors();
+	const getFetch = (config) => {
+	    if (config.fetchApi) {
+	        // User-provided fetch implementation, if any, takes precedence.
+	        return config.fetchApi;
+	    }
+	    else if (commonjsGlobal.fetch) {
+	        // If a fetch implementation is present in the global scope (will work with native fetch in Node18+, Edge runtimes,
+	        // etc.), use that. This should prevent confusing failures in
+	        // Next.js projects where @vercel/fetch is mandated and
+	        // other implementations are stubbed out.
+	        return commonjsGlobal.fetch;
+	    }
+	    else {
+	        // If no fetch implementation is found, throw an error.
+	        throw new errors_1.PineconeConfigurationError('No global or user-provided fetch implementations found. Please supply a fetch implementation.');
+	    }
+	};
+	fetch$2.getFetch = getFetch;
+	
+	return fetch$2;
+}
+
+var retries = {};
+
+var hasRequiredRetries;
+
+function requireRetries () {
+	if (hasRequiredRetries) return retries;
+	hasRequiredRetries = 1;
+	Object.defineProperty(retries, "__esModule", { value: true });
+	retries.RetryOnServerFailure = void 0;
+	const errors_1 = requireErrors();
+	// TODO: Parameterize this class to allow for custom error handling (e.g. only retry 400 errors on Chat endpoint,
+	//  but not globally
+	/* Retry asynchronous operations.
+	 *
+	 * @param maxRetries - The maximum number of retries to attempt.
+	 * @param asyncFn - The asynchronous function to retry.
+	 */
+	class RetryOnServerFailure {
+	    constructor(asyncFn, maxRetries) {
+	        /*
+	         * Calculate the delay time for retrying an operation.
+	         *
+	         * @param attempt: The # of times the operation has been attempted.
+	         * @param baseDelay: The base delay time in milliseconds.
+	         * @param maxDelay: The maximum delay time in milliseconds.
+	         * @param jitterFactor: The magnitude of jitter relative to the delay.
+	         */
+	        this.calculateRetryDelay = (attempt, baseDelay = 200, maxDelay = 20000, jitterFactor = 0.25) => {
+	            let delay = baseDelay * 2 ** attempt; // Exponential (baseDelay * 2^attempt)
+	            // Apply jitter as a random percentage of the original delay; e.g.: if `jitterFactor` = 0.25 and `baseDelay` = 1000,
+	            // then `jitter` is 25% of `baseDelay`
+	            const jitter = delay * jitterFactor * (Math.random() - 0.5);
+	            delay += jitter;
+	            // Ensure delay is not negative or greater than maxDelay
+	            return Math.min(maxDelay, Math.max(0, delay));
+	        };
+	        if (maxRetries) {
+	            this.maxRetries = maxRetries;
+	        }
+	        else {
+	            this.maxRetries = 3;
+	        }
+	        if (this.maxRetries > 10) {
+	            throw new Error('Max retries cannot exceed 10');
+	        }
+	        this.asyncFn = asyncFn;
+	    }
+	    async execute(...args) {
+	        if (this.maxRetries < 1) {
+	            return this.asyncFn(...args);
+	        }
+	        for (let attempt = 0; attempt < this.maxRetries; attempt++) {
+	            try {
+	                const response = await this.asyncFn(...args);
+	                // Return immediately if the response is not a retryable error
+	                if (!this.isRetryError(response)) {
+	                    return response;
+	                }
+	                throw response; // Will catch this in next line
+	            }
+	            catch (error) {
+	                const mappedError = this.mapErrorIfNeeded(error);
+	                // If the error is not retryable, throw it immediately
+	                if (this.shouldStopRetrying(mappedError)) {
+	                    throw mappedError;
+	                }
+	                // On the last retry, throw a MaxRetriesExceededError
+	                if (attempt === this.maxRetries - 1) {
+	                    throw new errors_1.PineconeMaxRetriesExceededError(this.maxRetries);
+	                }
+	                // Wait before retrying
+	                await this.delay(attempt + 1);
+	            }
+	        }
+	        // This fallback is unnecessary, but included for type safety
+	        throw new errors_1.PineconeMaxRetriesExceededError(this.maxRetries);
+	    }
+	    isRetryError(response) {
+	        if (!response) {
+	            return false;
+	        }
+	        if (response) {
+	            if (response.name &&
+	                ['PineconeUnavailableError', 'PineconeInternalServerError'].includes(response.name)) {
+	                return true;
+	            }
+	            if (response.status && response.status >= 500) {
+	                return true;
+	            }
+	        }
+	        return false;
+	    }
+	    async delay(attempt) {
+	        const delayTime = this.calculateRetryDelay(attempt);
+	        return new Promise((resolve) => setTimeout(resolve, delayTime));
+	    }
+	    mapErrorIfNeeded(error) {
+	        if (error?.status) {
+	            return (0, errors_1.mapHttpStatusError)(error);
+	        }
+	        return error; // Return original error if no mapping is needed
+	    }
+	    shouldStopRetrying(error) {
+	        if (error.status) {
+	            return error.status < 500;
+	        }
+	        if (error.name) {
+	            return (error.name !== 'PineconeUnavailableError' &&
+	                error.name !== 'PineconeInternalServerError');
+	        }
+	        return true;
+	    }
+	}
+	retries.RetryOnServerFailure = RetryOnServerFailure;
+	
+	return retries;
+}
+
+var chatStream$1 = {};
+
+var convertKeys = {};
+
+var hasRequiredConvertKeys;
+
+function requireConvertKeys () {
+	if (hasRequiredConvertKeys) return convertKeys;
+	hasRequiredConvertKeys = 1;
+	(function (exports) {
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.convertKeysToCamelCase = void 0;
+		// converts keys of a json payload from snake_case to camelCase
+		const convertKeysToCamelCase = (object) => {
+		    if (Array.isArray(object)) {
+		        return object.map((item) => (0, exports.convertKeysToCamelCase)(item));
+		    }
+		    else if (object !== null && typeof object === 'object') {
+		        return Object.entries(object).reduce((acc, [key, value]) => {
+		            const camelKey = toCamelCase(key);
+		            acc[camelKey] = (0, exports.convertKeysToCamelCase)(value);
+		            return acc;
+		        }, {});
+		    }
+		    return object; // return primitives as is
+		};
+		exports.convertKeysToCamelCase = convertKeysToCamelCase;
+		// converts snake-case keys to camelCase
+		const toCamelCase = (str) => str.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
+		
+	} (convertKeys));
+	return convertKeys;
+}
+
+var hasRequiredChatStream$1;
+
+function requireChatStream$1 () {
+	if (hasRequiredChatStream$1) return chatStream$1;
+	hasRequiredChatStream$1 = 1;
+	Object.defineProperty(chatStream$1, "__esModule", { value: true });
+	chatStream$1.ChatStream = void 0;
+	const convertKeys_1 = requireConvertKeys();
+	/**
+	 * Implements an async iterable that processes the readable stream of an assistant chat response.
+	 *
+	 * This class expects each chunk of data in the stream to begin with `data:` and be followed by a valid chunk of JSON.
+	 * If a chunk contains malformed JSON, it is skipped, and a debug message is logged.
+	 *
+	 * @template Item - The type of items yielded by the iterable.
+	 */
+	class ChatStream {
+	    constructor(stream) {
+	        this.stream = stream;
+	    }
+	    async *[Symbol.asyncIterator]() {
+	        let buffer = '';
+	        for await (const chunk of this.stream) {
+	            buffer += chunk.toString();
+	            let newlineIndex;
+	            while ((newlineIndex = buffer.indexOf('\n')) !== -1) {
+	                const line = buffer.slice(0, newlineIndex).trim();
+	                buffer = buffer.slice(newlineIndex + 1);
+	                // each chunk of json should begin with 'data:'
+	                if (line && line.startsWith('data:')) {
+	                    const json = line.slice(5).trim();
+	                    try {
+	                        const parsedJson = JSON.parse(json);
+	                        const convertedJson = (0, convertKeys_1.convertKeysToCamelCase)(parsedJson);
+	                        yield convertedJson;
+	                    }
+	                    catch (err) {
+	                        console.debug(`Skipping malformed JSON:${line}`);
+	                        continue;
+	                    }
+	                }
+	            }
+	        }
+	        if (buffer.trim()) {
+	            try {
+	                const parsedJson = JSON.parse(buffer);
+	                const convertedJson = (0, convertKeys_1.convertKeysToCamelCase)(parsedJson);
+	                yield convertedJson;
+	            }
+	            catch (err) {
+	                console.debug(`Skipping malformed JSON:${buffer}`);
+	            }
+	        }
+	    }
+	}
+	chatStream$1.ChatStream = ChatStream;
+	
+	return chatStream$1;
+}
+
+var hasRequiredUtils;
+
+function requireUtils () {
+	if (hasRequiredUtils) return utils$3;
+	hasRequiredUtils = 1;
+	(function (exports) {
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.ChatStream = exports.RetryOnServerFailure = exports.convertKeysToCamelCase = exports.getFetch = exports.buildUserAgent = exports.queryParamsStringify = exports.normalizeUrl = exports.debugLog = void 0;
+		const debugLog_1 = requireDebugLog();
+		Object.defineProperty(exports, "debugLog", { enumerable: true, get: function () { return debugLog_1.debugLog; } });
+		const normalizeUrl_1 = requireNormalizeUrl();
+		Object.defineProperty(exports, "normalizeUrl", { enumerable: true, get: function () { return normalizeUrl_1.normalizeUrl; } });
+		const queryParamsStringify_1 = requireQueryParamsStringify();
+		Object.defineProperty(exports, "queryParamsStringify", { enumerable: true, get: function () { return queryParamsStringify_1.queryParamsStringify; } });
+		const user_agent_1 = requireUserAgent();
+		Object.defineProperty(exports, "buildUserAgent", { enumerable: true, get: function () { return user_agent_1.buildUserAgent; } });
+		const fetch_1 = requireFetch$1();
+		Object.defineProperty(exports, "getFetch", { enumerable: true, get: function () { return fetch_1.getFetch; } });
+		const retries_1 = requireRetries();
+		Object.defineProperty(exports, "RetryOnServerFailure", { enumerable: true, get: function () { return retries_1.RetryOnServerFailure; } });
+		const chatStream_1 = requireChatStream$1();
+		Object.defineProperty(exports, "ChatStream", { enumerable: true, get: function () { return chatStream_1.ChatStream; } });
+		const convertKeys_1 = requireConvertKeys();
+		Object.defineProperty(exports, "convertKeysToCamelCase", { enumerable: true, get: function () { return convertKeys_1.convertKeysToCamelCase; } });
+		
+	} (utils$3));
+	return utils$3;
+}
+
+var middleware = {};
+
+var hasRequiredMiddleware;
+
+function requireMiddleware () {
+	if (hasRequiredMiddleware) return middleware;
+	hasRequiredMiddleware = 1;
+	Object.defineProperty(middleware, "__esModule", { value: true });
+	middleware.middleware = void 0;
+	const db_control_1 = requireDb_control();
+	const errors_1 = requireErrors();
+	const debugMiddleware = [];
+	const chalk = (str, color) => {
+	    const colors = {
+	        blue: '\x1b[34m',
+	        red: '\x1b[31m',
+	        green: '\x1b[32m',
+	        yellow: '\x1b[33m',
+	    };
+	    return colors[color] + str + '\x1b[39m';
+	};
+	/**
+	 * Enable the `PINECONE_DEBUG` environment variable to print the request and
+	 * response bodies for each request.
+	 *
+	 * Api-Key headers will be redacted.
+	 */
+	if (typeof process !== 'undefined' &&
+	    process &&
+	    process.env &&
+	    process.env.PINECONE_DEBUG) {
+	    const debugLogMiddleware = {
+	        pre: async (context) => {
+	            console.debug(chalk(`>>> Request: ${context.init.method} ${context.url}`, 'blue'));
+	            const headers = JSON.parse(JSON.stringify(context.init.headers));
+	            headers['Api-Key'] = '***REDACTED***';
+	            console.debug(chalk(`>>> Headers: ${JSON.stringify(headers)}`, 'blue'));
+	            if (context.init.body) {
+	                console.debug(chalk(`>>> Body: ${context.init.body}`, 'blue'));
+	            }
+	            console.debug('');
+	        },
+	        post: async (context) => {
+	            console.debug(chalk(`<<< Status: ${context.response.status}`, 'green'));
+	            console.debug(chalk(`<<< Body: ${await context.response.text()}`, 'green'));
+	            console.debug('');
+	        },
+	    };
+	    debugMiddleware.push(debugLogMiddleware);
+	}
+	/**
+	 * Enable the `PINECONE_DEBUG_CURL` environment variable to print the equivalent
+	 * curl commands for each request. These commands will include the API key and
+	 * other sensitive information, so be careful when using this option.
+	 */
+	if (typeof process !== 'undefined' &&
+	    process &&
+	    process.env &&
+	    process.env.PINECONE_DEBUG_CURL) {
+	    const debugCurlMiddleware = {
+	        post: async (context) => {
+	            let headers = `-H "Api-Key: ${(context.init.headers || {})['Api-Key']}"`;
+	            if (context.init.headers && context.init.headers['Content-Type']) {
+	                headers += ` -H "Content-Type: ${context.init.headers['Content-Type']}"`;
+	            }
+	            const cmd = `curl -X ${context.init.method} ${context.url} ${headers} ${context.init.body ? `-d '${context.init.body}'` : ''}`;
+	            console.debug(chalk(cmd, 'red'));
+	            console.debug('');
+	        },
+	    };
+	    debugMiddleware.push(debugCurlMiddleware);
+	}
+	middleware.middleware = [
+	    ...debugMiddleware,
+	    {
+	        onError: async (context) => {
+	            const err = await (0, errors_1.handleApiError)(context.error, undefined, context.url);
+	            throw err;
+	        },
+	        post: async (context) => {
+	            const { response } = context;
+	            if (response.status >= 200 && response.status < 300) {
+	                return response;
+	            }
+	            else {
+	                const err = await (0, errors_1.handleApiError)(new db_control_1.ResponseError(response, 'Response returned an error'), undefined, context.url);
+	                throw err;
+	            }
+	        },
+	    },
+	];
+	
+	return middleware;
+}
+
+var hasRequiredIndexOperationsBuilder;
+
+function requireIndexOperationsBuilder () {
+	if (hasRequiredIndexOperationsBuilder) return indexOperationsBuilder;
+	hasRequiredIndexOperationsBuilder = 1;
+	Object.defineProperty(indexOperationsBuilder, "__esModule", { value: true });
+	indexOperationsBuilder.indexOperationsBuilder = void 0;
+	const db_control_1 = requireDb_control();
+	const utils_1 = requireUtils();
+	const middleware_1 = requireMiddleware();
+	const indexOperationsBuilder$1 = (config) => {
+	    const { apiKey } = config;
+	    const controllerPath = (0, utils_1.normalizeUrl)(config.controllerHostUrl) || 'https://api.pinecone.io';
+	    const headers = config.additionalHeaders || null;
+	    const apiConfig = {
+	        basePath: controllerPath,
+	        apiKey,
+	        queryParamsStringify: utils_1.queryParamsStringify,
+	        headers: {
+	            'User-Agent': (0, utils_1.buildUserAgent)(config),
+	            'X-Pinecone-Api-Version': db_control_1.X_PINECONE_API_VERSION,
+	            ...headers,
+	        },
+	        fetchApi: (0, utils_1.getFetch)(config),
+	        middleware: middleware_1.middleware,
+	    };
+	    return new db_control_1.ManageIndexesApi(new db_control_1.Configuration(apiConfig));
+	};
+	indexOperationsBuilder.indexOperationsBuilder = indexOperationsBuilder$1;
+	
+	return indexOperationsBuilder;
+}
+
+var configureIndex = {};
+
+var validateObjectProperties = {};
+
+var hasRequiredValidateObjectProperties;
+
+function requireValidateObjectProperties () {
+	if (hasRequiredValidateObjectProperties) return validateObjectProperties;
+	hasRequiredValidateObjectProperties = 1;
+	Object.defineProperty(validateObjectProperties, "__esModule", { value: true });
+	validateObjectProperties.ValidateObjectProperties = void 0;
+	const errors_1 = requireErrors();
+	function ValidateObjectProperties(item, validProperties) {
+	    const itemKeys = Object.keys(item);
+	    // Check for any keys in `item` that are not in `validProperties`
+	    const invalidKeys = itemKeys.filter((key) => !validProperties.includes(key));
+	    if (invalidKeys.length > 0) {
+	        throw new errors_1.PineconeArgumentError(`Object contained invalid properties: ${invalidKeys.join(', ')}. Valid properties include ${validProperties.join(', ')}.`);
+	    }
+	}
+	validateObjectProperties.ValidateObjectProperties = ValidateObjectProperties;
+	
+	return validateObjectProperties;
+}
+
+var hasRequiredConfigureIndex;
+
+function requireConfigureIndex () {
+	if (hasRequiredConfigureIndex) return configureIndex;
+	hasRequiredConfigureIndex = 1;
+	(function (exports) {
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.configureIndex = exports.ConfigureIndexRequestProperties = void 0;
+		const errors_1 = requireErrors();
+		const validateObjectProperties_1 = requireValidateObjectProperties();
+		const utils_1 = requireUtils();
+		exports.ConfigureIndexRequestProperties = [
+		    'deletionProtection',
+		    'spec',
+		    'tags',
+		    'embed',
+		];
+		const configureIndex = (api) => {
+		    const validator = (indexName, options) => {
+		        if (options) {
+		            (0, validateObjectProperties_1.ValidateObjectProperties)(options, exports.ConfigureIndexRequestProperties);
+		        }
+		        if (!indexName) {
+		            throw new errors_1.PineconeArgumentError('You must pass a non-empty string for `indexName` to configureIndex.');
+		        }
+		        // !options.deletionProtection evaluates to false if options.deletionProtection is undefined, empty string, or
+		        // not provided
+		        if (!options.spec &&
+		            !options.deletionProtection &&
+		            !options.tags &&
+		            !options.embed) {
+		            throw new errors_1.PineconeArgumentError('You must pass either `spec`, `deletionProtection`, `tags`, or `embed` to configureIndex in order to update.');
+		        }
+		        if (options.spec) {
+		            if (options.spec.pod) {
+		                (0, validateObjectProperties_1.ValidateObjectProperties)(options.spec.pod, ['replicas', 'podType']);
+		            }
+		            if (options.spec.pod && options.spec.pod.replicas) {
+		                if (options.spec.pod.replicas <= 0) {
+		                    throw new errors_1.PineconeArgumentError('`replicas` must be a positive integer.');
+		                }
+		            }
+		        }
+		    };
+		    return async (indexName, options, maxRetries) => {
+		        validator(indexName, options);
+		        const retryWrapper = new utils_1.RetryOnServerFailure(api.configureIndex.bind(api), maxRetries);
+		        return await retryWrapper.execute({
+		            indexName,
+		            configureIndexRequest: options,
+		        });
+		    };
+		};
+		exports.configureIndex = configureIndex;
+		
+	} (configureIndex));
+	return configureIndex;
+}
+
+var createIndex = {};
+
+var types$3 = {};
+
+var hasRequiredTypes$3;
+
+function requireTypes$3 () {
+	if (hasRequiredTypes$3) return types$3;
+	hasRequiredTypes$3 = 1;
+	Object.defineProperty(types$3, "__esModule", { value: true });
+	types$3.ValidPodTypes = void 0;
+	types$3.ValidPodTypes = [
+	    's1.x1',
+	    's1.x2',
+	    's1.x4',
+	    's1.x8',
+	    'p1.x1',
+	    'p1.x2',
+	    'p1.x4',
+	    'p1.x8',
+	    'p2.x1',
+	    'p2.x2',
+	    'p2.x4',
+	    'p2.x8',
+	];
+	
+	return types$3;
+}
+
+var hasRequiredCreateIndex;
+
+function requireCreateIndex () {
+	if (hasRequiredCreateIndex) return createIndex;
+	hasRequiredCreateIndex = 1;
+	(function (exports) {
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.waitUntilIndexIsReady = exports.createIndex = void 0;
+		const db_control_1 = requireDb_control();
+		const utils_1 = requireUtils();
+		const types_1 = requireTypes$3();
+		const errors_1 = requireErrors();
+		const validateObjectProperties_1 = requireValidateObjectProperties();
+		const CreateIndexOptionsProperties = [
+		    'spec',
+		    'name',
+		    'dimension',
+		    'metric',
+		    'deletionProtection',
+		    'waitUntilReady',
+		    'suppressConflicts',
+		    'tags',
+		    'vectorType',
+		];
+		const CreateIndexSpecProperties = ['serverless', 'pod'];
+		const CreateIndexServerlessSpecProperties = [
+		    'cloud',
+		    'region',
+		    'sourceCollection',
+		];
+		const CreateIndexPodSpecProperties = [
+		    'environment',
+		    'replicas',
+		    'shards',
+		    'podType',
+		    'pods',
+		    'metadataConfig',
+		    'sourceCollection',
+		];
+		const createIndex = (api) => {
+		    return async (options) => {
+		        if (!options) {
+		            throw new errors_1.PineconeArgumentError('You must pass an object with required properties (`name`, `dimension`, `spec`) to create an index.');
+		        }
+		        // If metric is not specified for a sparse index, default to dotproduct
+		        if (options.vectorType && options.vectorType.toLowerCase() === 'sparse') {
+		            if (!options.metric) {
+		                options.metric = db_control_1.IndexModelMetricEnum.Dotproduct;
+		            }
+		        }
+		        else {
+		            // If metric is not specified for a dense index, default to cosine
+		            if (!options.metric) {
+		                options.metric = db_control_1.IndexModelMetricEnum.Cosine;
+		            }
+		        }
+		        validateCreateIndexRequest(options);
+		        try {
+		            const createResponse = await api.createIndex({
+		                createIndexRequest: options,
+		            });
+		            if (options.waitUntilReady) {
+		                return await (0, exports.waitUntilIndexIsReady)(api, options.name);
+		            }
+		            return createResponse;
+		        }
+		        catch (e) {
+		            if (!(options.suppressConflicts &&
+		                e instanceof Error &&
+		                e.name === 'PineconeConflictError')) {
+		                throw e;
+		            }
+		        }
+		    };
+		};
+		exports.createIndex = createIndex;
+		const waitUntilIndexIsReady = async (api, indexName, seconds = 0) => {
+		    try {
+		        const indexDescription = await api.describeIndex({ indexName });
+		        if (!indexDescription.status?.ready) {
+		            await new Promise((r) => setTimeout(r, 1000));
+		            return await (0, exports.waitUntilIndexIsReady)(api, indexName, seconds + 1);
+		        }
+		        else {
+		            (0, utils_1.debugLog)(`Index ${indexName} is ready after ${seconds}`);
+		            return indexDescription;
+		        }
+		    }
+		    catch (e) {
+		        const err = await (0, errors_1.handleApiError)(e, async (_, rawMessageText) => `Error creating index ${indexName}: ${rawMessageText}`);
+		        throw err;
+		    }
+		};
+		exports.waitUntilIndexIsReady = waitUntilIndexIsReady;
+		const validateCreateIndexRequest = (options) => {
+		    // validate options properties
+		    if (options) {
+		        (0, validateObjectProperties_1.ValidateObjectProperties)(options, CreateIndexOptionsProperties);
+		    }
+		    if (!options.name) {
+		        throw new errors_1.PineconeArgumentError('You must pass a non-empty string for `name` in order to create an index.');
+		    }
+		    if (options.dimension && options.dimension <= 0) {
+		        throw new errors_1.PineconeArgumentError('You must pass a positive integer for `dimension` in order to create an index.');
+		    }
+		    // validate options.spec properties
+		    if (!options.spec) {
+		        throw new errors_1.PineconeArgumentError('You must pass a `pods` or `serverless` `spec` object in order to create an index.');
+		    }
+		    if (options.spec) {
+		        (0, validateObjectProperties_1.ValidateObjectProperties)(options.spec, CreateIndexSpecProperties);
+		    }
+		    // validate options.metric
+		    if (options.metric &&
+		        !Object.values(db_control_1.IndexModelMetricEnum).includes(options.metric)) {
+		        {
+		            throw new errors_1.PineconeArgumentError(`Invalid metric value: ${options.metric}. Valid values are: 'cosine', 'euclidean', or 'dotproduct.'`);
+		        }
+		    }
+		    // validate options.spec.serverless properties if serverless spec is passed
+		    if (options.spec.serverless) {
+		        (0, validateObjectProperties_1.ValidateObjectProperties)(options.spec.serverless, CreateIndexServerlessSpecProperties);
+		        // extract and default vectorType to 'dense' if not specified
+		        const vectorType = options.vectorType
+		            ? options.vectorType.toLowerCase()
+		            : 'dense';
+		        if (vectorType !== 'dense' && vectorType !== 'sparse') {
+		            throw new errors_1.PineconeArgumentError('Invalid `vectorType` value. Valid values are `dense` or `sparse`.');
+		        }
+		        // sparse indexes must have a metric of 'dotproduct' and no dimension
+		        if (vectorType == 'sparse') {
+		            if (options.dimension && options.dimension > 0) {
+		                throw new errors_1.PineconeArgumentError('Sparse indexes cannot have a `dimension`.');
+		            }
+		            if (options.metric && options.metric !== 'dotproduct') {
+		                throw new errors_1.PineconeArgumentError('Sparse indexes must have a `metric` of `dotproduct`.');
+		            }
+		        }
+		        else if (vectorType == 'dense') {
+		            // dense indexes must have a dimension
+		            if (!options.dimension || options.dimension <= 0) {
+		                throw new errors_1.PineconeArgumentError('You must pass a positive `dimension` when creating a dense index.');
+		            }
+		        }
+		        // validate serverless cloud & region
+		        if (!options.spec.serverless.cloud) {
+		            throw new errors_1.PineconeArgumentError('You must pass a `cloud` for the serverless `spec` object in order to create an index.');
+		        }
+		        if (options.spec.serverless.cloud &&
+		            !Object.values(db_control_1.ServerlessSpecCloudEnum).includes(options.spec.serverless.cloud)) {
+		            throw new errors_1.PineconeArgumentError(`Invalid cloud value: ${options.spec.serverless.cloud}. Valid values are: ${Object.values(db_control_1.ServerlessSpecCloudEnum).join(', ')}.`);
+		        }
+		        if (!options.spec.serverless.region) {
+		            throw new errors_1.PineconeArgumentError('You must pass a `region` for the serverless `spec` object in order to create an index.');
+		        }
+		    }
+		    else if (options.spec.pod) {
+		        // validate options.spec.pod properties if pod spec is passed
+		        (0, validateObjectProperties_1.ValidateObjectProperties)(options.spec.pod, CreateIndexPodSpecProperties);
+		        if (!options.spec.pod.environment) {
+		            throw new errors_1.PineconeArgumentError('You must pass an `environment` for the pod `spec` object in order to create an index.');
+		        }
+		        // pod indexes must have a dimension
+		        if (!options.dimension || options.dimension <= 0) {
+		            throw new errors_1.PineconeArgumentError('You must pass a positive `dimension` when creating a dense index.');
+		        }
+		        // pod indexes must be dense
+		        const vectorType = 'dense';
+		        if (options.vectorType && options.vectorType.toLowerCase() !== vectorType) {
+		            throw new errors_1.PineconeArgumentError('Pod indexes must have a `vectorType` of `dense`.');
+		        }
+		        if (!options.spec.pod.podType) {
+		            throw new errors_1.PineconeArgumentError('You must pass a `podType` for the pod `spec` object in order to create an index.');
+		        }
+		        if (options.spec.pod.replicas && options.spec.pod.replicas <= 0) {
+		            throw new errors_1.PineconeArgumentError('You must pass a positive integer for `replicas` in order to create an index.');
+		        }
+		        if (options.spec.pod.pods && options.spec.pod.pods <= 0) {
+		            throw new errors_1.PineconeArgumentError('You must pass a positive integer for `pods` in order to create an index.');
+		        }
+		        if (!types_1.ValidPodTypes.includes(options.spec.pod.podType)) {
+		            throw new errors_1.PineconeArgumentError(`Invalid pod type: ${options.spec.pod.podType}. Valid values are: ${types_1.ValidPodTypes.join(', ')}.`);
+		        }
+		    }
+		};
+		
+	} (createIndex));
+	return createIndex;
+}
+
+var createIndexForModel = {};
+
+var hasRequiredCreateIndexForModel;
+
+function requireCreateIndexForModel () {
+	if (hasRequiredCreateIndexForModel) return createIndexForModel;
+	hasRequiredCreateIndexForModel = 1;
+	Object.defineProperty(createIndexForModel, "__esModule", { value: true });
+	createIndexForModel.createIndexForModel = void 0;
+	const db_control_1 = requireDb_control();
+	const errors_1 = requireErrors();
+	const createIndex_1 = requireCreateIndex();
+	const validateObjectProperties_1 = requireValidateObjectProperties();
+	const CreateIndexForModelOptionsProperties = [
+	    'name',
+	    'cloud',
+	    'region',
+	    'embed',
+	    'deletionProtection',
+	    'tags',
+	    'waitUntilReady',
+	    'suppressConflicts',
+	];
+	const CreateIndexForModelEmbedProperties = [
+	    'model',
+	    'metric',
+	    'fieldMap',
+	    'readParameters',
+	    'writeParameters',
+	];
+	const createIndexForModel$1 = (api) => {
+	    return async (options) => {
+	        if (!options) {
+	            throw new errors_1.PineconeArgumentError('You must pass an object with required properties (`name`, `cloud`, `region`, and an `embed`)');
+	        }
+	        validateCreateIndexForModelRequest(options);
+	        try {
+	            const createResponse = await api.createIndexForModel({
+	                createIndexForModelRequest: options,
+	            });
+	            if (options.waitUntilReady) {
+	                return await (0, createIndex_1.waitUntilIndexIsReady)(api, createResponse.name);
+	            }
+	            return createResponse;
+	        }
+	        catch (e) {
+	            if (!(options.suppressConflicts &&
+	                e instanceof Error &&
+	                e.name === 'PineconeConflictError')) {
+	                throw e;
+	            }
+	        }
+	    };
+	};
+	createIndexForModel.createIndexForModel = createIndexForModel$1;
+	const validateCreateIndexForModelRequest = (options) => {
+	    // validate options properties
+	    if (options) {
+	        (0, validateObjectProperties_1.ValidateObjectProperties)(options, CreateIndexForModelOptionsProperties);
+	    }
+	    if (!options.name) {
+	        throw new errors_1.PineconeArgumentError('You must pass a non-empty string for `name` in order to create an index.');
+	    }
+	    if (!options.cloud) {
+	        throw new errors_1.PineconeArgumentError('You must pass a non-empty string for `cloud` in order to create an index.');
+	    }
+	    if (options.cloud &&
+	        !Object.values(db_control_1.ServerlessSpecCloudEnum).includes(options.cloud)) {
+	        throw new errors_1.PineconeArgumentError(`Invalid cloud value: ${options.cloud}. Valid values are: ${Object.values(db_control_1.ServerlessSpecCloudEnum).join(', ')}.`);
+	    }
+	    if (!options.region) {
+	        throw new errors_1.PineconeArgumentError('You must pass a non-empty string for `region` in order to create an index.');
+	    }
+	    if (!options.embed) {
+	        throw new errors_1.PineconeArgumentError('You must pass an `embed` object in order to create an index.');
+	    }
+	    // validate embed properties
+	    if (options.embed) {
+	        (0, validateObjectProperties_1.ValidateObjectProperties)(options.embed, CreateIndexForModelEmbedProperties);
+	    }
+	    if (options.embed.metric &&
+	        !Object.values(db_control_1.IndexModelMetricEnum).includes(options.embed.metric)) {
+	        {
+	            throw new errors_1.PineconeArgumentError(`Invalid metric value: ${options.embed.metric}. Valid values are: ${Object.values(db_control_1.IndexModelMetricEnum).join(', ')}.`);
+	        }
+	    }
+	};
+	
+	return createIndexForModel;
+}
+
+var deleteIndex = {};
+
+var hasRequiredDeleteIndex;
+
+function requireDeleteIndex () {
+	if (hasRequiredDeleteIndex) return deleteIndex;
+	hasRequiredDeleteIndex = 1;
+	Object.defineProperty(deleteIndex, "__esModule", { value: true });
+	deleteIndex.deleteIndex = void 0;
+	const errors_1 = requireErrors();
+	const deleteIndex$1 = (api) => {
+	    return async (indexName) => {
+	        if (!indexName) {
+	            throw new errors_1.PineconeArgumentError('You must pass a non-empty string for `indexName` in order to delete an index');
+	        }
+	        await api.deleteIndex({ indexName });
+	        return;
+	    };
+	};
+	deleteIndex.deleteIndex = deleteIndex$1;
+	
+	return deleteIndex;
+}
+
+var describeIndex = {};
+
+var hasRequiredDescribeIndex;
+
+function requireDescribeIndex () {
+	if (hasRequiredDescribeIndex) return describeIndex;
+	hasRequiredDescribeIndex = 1;
+	Object.defineProperty(describeIndex, "__esModule", { value: true });
+	describeIndex.describeIndex = void 0;
+	const errors_1 = requireErrors();
+	const describeIndex$1 = (api) => {
+	    const removeDeprecatedFields = (result) => {
+	        if (result.database) {
+	            for (const key of Object.keys(result.database)) {
+	                if (result.database[key] === undefined) {
+	                    delete result.database[key];
+	                }
+	            }
+	        }
+	    };
+	    return async (indexName) => {
+	        if (!indexName) {
+	            throw new errors_1.PineconeArgumentError('You must pass a non-empty string for `name` in order to describe an index');
+	        }
+	        const result = await api.describeIndex({ indexName });
+	        removeDeprecatedFields(result);
+	        return result;
+	    };
+	};
+	describeIndex.describeIndex = describeIndex$1;
+	
+	return describeIndex;
+}
+
+var listIndexes = {};
+
+var hasRequiredListIndexes;
+
+function requireListIndexes () {
+	if (hasRequiredListIndexes) return listIndexes;
+	hasRequiredListIndexes = 1;
+	Object.defineProperty(listIndexes, "__esModule", { value: true });
+	listIndexes.listIndexes = void 0;
+	const listIndexes$1 = (api) => {
+	    return async () => {
+	        const response = await api.listIndexes();
+	        return response;
+	    };
+	};
+	listIndexes.listIndexes = listIndexes$1;
+	
+	return listIndexes;
+}
+
+var createCollection = {};
+
+var hasRequiredCreateCollection;
+
+function requireCreateCollection () {
+	if (hasRequiredCreateCollection) return createCollection;
+	hasRequiredCreateCollection = 1;
+	(function (exports) {
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.createCollection = exports.CreateCollectionRequestProperties = void 0;
+		const errors_1 = requireErrors();
+		const validateObjectProperties_1 = requireValidateObjectProperties();
+		exports.CreateCollectionRequestProperties = ['source', 'name'];
+		const createCollection = (api) => {
+		    const validator = (options) => {
+		        if (options) {
+		            (0, validateObjectProperties_1.ValidateObjectProperties)(options, exports.CreateCollectionRequestProperties);
+		        }
+		        if (!options || typeof options !== 'object') {
+		            throw new errors_1.PineconeArgumentError('You must pass a non-empty object with `name` and `source` fields in order to create a collection.');
+		        }
+		        if (!options.name && !options.source) {
+		            throw new errors_1.PineconeArgumentError('The argument to createCollection must have required properties: `name`, `source`.');
+		        }
+		        if (!options.name) {
+		            throw new errors_1.PineconeArgumentError('You must pass a non-empty string for `name` in order to create a collection.');
+		        }
+		        if (!options.source) {
+		            throw new errors_1.PineconeArgumentError('You must pass a non-empty string for `source` in order to create a collection.');
+		        }
+		    };
+		    return async (options) => {
+		        validator(options);
+		        return await api.createCollection({ createCollectionRequest: options });
+		    };
+		};
+		exports.createCollection = createCollection;
+		
+	} (createCollection));
+	return createCollection;
+}
+
+var deleteCollection = {};
+
+var hasRequiredDeleteCollection;
+
+function requireDeleteCollection () {
+	if (hasRequiredDeleteCollection) return deleteCollection;
+	hasRequiredDeleteCollection = 1;
+	Object.defineProperty(deleteCollection, "__esModule", { value: true });
+	deleteCollection.deleteCollection = void 0;
+	const errors_1 = requireErrors();
+	const deleteCollection$1 = (api) => {
+	    return async (collectionName) => {
+	        if (!collectionName) {
+	            throw new errors_1.PineconeArgumentError('You must pass a non-empty string for `collectionName`');
+	        }
+	        await api.deleteCollection({ collectionName });
+	        return;
+	    };
+	};
+	deleteCollection.deleteCollection = deleteCollection$1;
+	
+	return deleteCollection;
+}
+
+var describeCollection = {};
+
+var hasRequiredDescribeCollection;
+
+function requireDescribeCollection () {
+	if (hasRequiredDescribeCollection) return describeCollection;
+	hasRequiredDescribeCollection = 1;
+	Object.defineProperty(describeCollection, "__esModule", { value: true });
+	describeCollection.describeCollection = void 0;
+	const errors_1 = requireErrors();
+	const describeCollection$1 = (api) => {
+	    return async (name) => {
+	        if (!name || name.length === 0) {
+	            throw new errors_1.PineconeArgumentError('You must pass a non-empty string for `name` in order to describe a collection');
+	        }
+	        return await api.describeCollection({ collectionName: name });
+	    };
+	};
+	describeCollection.describeCollection = describeCollection$1;
+	
+	return describeCollection;
+}
+
+var listCollections = {};
+
+var hasRequiredListCollections;
+
+function requireListCollections () {
+	if (hasRequiredListCollections) return listCollections;
+	hasRequiredListCollections = 1;
+	Object.defineProperty(listCollections, "__esModule", { value: true });
+	listCollections.listCollections = void 0;
+	const listCollections$1 = (api) => {
+	    return async () => {
+	        const results = await api.listCollections();
+	        return results;
+	    };
+	};
+	listCollections.listCollections = listCollections$1;
+	
+	return listCollections;
+}
+
+var createBackup = {};
+
+var hasRequiredCreateBackup;
+
+function requireCreateBackup () {
+	if (hasRequiredCreateBackup) return createBackup;
+	hasRequiredCreateBackup = 1;
+	Object.defineProperty(createBackup, "__esModule", { value: true });
+	createBackup.createBackup = void 0;
+	const createBackup$1 = (api) => {
+	    return async (createBackupOptions) => {
+	        if (!createBackupOptions.indexName) {
+	            throw new Error('You must pass a non-empty string for `indexName` in order to create a backup');
+	        }
+	        return await api.createBackup({
+	            indexName: createBackupOptions.indexName,
+	            createBackupRequest: {
+	                name: createBackupOptions.name,
+	                description: createBackupOptions.description,
+	            },
+	        });
+	    };
+	};
+	createBackup.createBackup = createBackup$1;
+	
+	return createBackup;
+}
+
+var createIndexFromBackup = {};
+
+var hasRequiredCreateIndexFromBackup;
+
+function requireCreateIndexFromBackup () {
+	if (hasRequiredCreateIndexFromBackup) return createIndexFromBackup;
+	hasRequiredCreateIndexFromBackup = 1;
+	Object.defineProperty(createIndexFromBackup, "__esModule", { value: true });
+	createIndexFromBackup.createIndexFromBackup = void 0;
+	const createIndexFromBackup$1 = (api) => {
+	    return async (createIndexFromBackupOptions) => {
+	        if (!createIndexFromBackupOptions.backupId) {
+	            throw new Error('You must pass a non-empty string for `backupId` in order to create an index from backup');
+	        }
+	        else if (!createIndexFromBackupOptions.name) {
+	            throw new Error('You must pass a non-empty string for `name` in order to create an index from backup');
+	        }
+	        return await api.createIndexFromBackupOperation({
+	            backupId: createIndexFromBackupOptions.backupId,
+	            createIndexFromBackupRequest: {
+	                name: createIndexFromBackupOptions.name,
+	                tags: createIndexFromBackupOptions.tags,
+	                deletionProtection: createIndexFromBackupOptions.deletionProtection,
+	            },
+	        });
+	    };
+	};
+	createIndexFromBackup.createIndexFromBackup = createIndexFromBackup$1;
+	
+	return createIndexFromBackup;
+}
+
+var describeBackup = {};
+
+var hasRequiredDescribeBackup;
+
+function requireDescribeBackup () {
+	if (hasRequiredDescribeBackup) return describeBackup;
+	hasRequiredDescribeBackup = 1;
+	Object.defineProperty(describeBackup, "__esModule", { value: true });
+	describeBackup.describeBackup = void 0;
+	const errors_1 = requireErrors();
+	const describeBackup$1 = (api) => {
+	    return async (backupId) => {
+	        if (!backupId) {
+	            throw new errors_1.PineconeArgumentError('You must pass a non-empty string for `backupId` in order to describe a backup');
+	        }
+	        return await api.describeBackup({ backupId: backupId });
+	    };
+	};
+	describeBackup.describeBackup = describeBackup$1;
+	
+	return describeBackup;
+}
+
+var describeRestoreJob = {};
+
+var hasRequiredDescribeRestoreJob;
+
+function requireDescribeRestoreJob () {
+	if (hasRequiredDescribeRestoreJob) return describeRestoreJob;
+	hasRequiredDescribeRestoreJob = 1;
+	Object.defineProperty(describeRestoreJob, "__esModule", { value: true });
+	describeRestoreJob.describeRestoreJob = void 0;
+	const errors_1 = requireErrors();
+	const describeRestoreJob$1 = (api) => {
+	    return async (restoreJobId) => {
+	        if (!restoreJobId) {
+	            throw new errors_1.PineconeArgumentError('You must pass a non-empty string for `restoreJobId` in order to describe a restore job');
+	        }
+	        return await api.describeRestoreJob({ jobId: restoreJobId });
+	    };
+	};
+	describeRestoreJob.describeRestoreJob = describeRestoreJob$1;
+	
+	return describeRestoreJob;
+}
+
+var listBackups = {};
+
+var hasRequiredListBackups;
+
+function requireListBackups () {
+	if (hasRequiredListBackups) return listBackups;
+	hasRequiredListBackups = 1;
+	Object.defineProperty(listBackups, "__esModule", { value: true });
+	listBackups.listBackups = void 0;
+	const listBackups$1 = (api) => {
+	    return async (listBackupOptions = {}) => {
+	        const { indexName, ...rest } = listBackupOptions;
+	        if (!indexName) {
+	            return await api.listProjectBackups({
+	                ...rest,
+	            });
+	        }
+	        else {
+	            return await api.listIndexBackups({ indexName, ...rest });
+	        }
+	    };
+	};
+	listBackups.listBackups = listBackups$1;
+	
+	return listBackups;
+}
+
+var listRestoreJobs = {};
+
+var hasRequiredListRestoreJobs;
+
+function requireListRestoreJobs () {
+	if (hasRequiredListRestoreJobs) return listRestoreJobs;
+	hasRequiredListRestoreJobs = 1;
+	Object.defineProperty(listRestoreJobs, "__esModule", { value: true });
+	listRestoreJobs.listRestoreJobs = void 0;
+	const listRestoreJobs$1 = (api) => {
+	    return async (listBackupOptions) => {
+	        return await api.listRestoreJobs(listBackupOptions);
+	    };
+	};
+	listRestoreJobs.listRestoreJobs = listRestoreJobs$1;
+	
+	return listRestoreJobs;
+}
+
+var deleteBackup = {};
+
+var hasRequiredDeleteBackup;
+
+function requireDeleteBackup () {
+	if (hasRequiredDeleteBackup) return deleteBackup;
+	hasRequiredDeleteBackup = 1;
+	Object.defineProperty(deleteBackup, "__esModule", { value: true });
+	deleteBackup.deleteBackup = void 0;
+	const errors_1 = requireErrors();
+	const deleteBackup$1 = (api) => {
+	    return async (backupId) => {
+	        if (!backupId) {
+	            throw new errors_1.PineconeArgumentError('You must pass a non-empty string for `backupId` in order to delete a backup');
+	        }
+	        return await api.deleteBackup({ backupId: backupId });
+	    };
+	};
+	deleteBackup.deleteBackup = deleteBackup$1;
+	
+	return deleteBackup;
+}
+
+var hasRequiredControl$1;
+
+function requireControl$1 () {
+	if (hasRequiredControl$1) return control$1;
+	hasRequiredControl$1 = 1;
+	(function (exports) {
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.deleteBackup = exports.listRestoreJobs = exports.listBackups = exports.describeRestoreJob = exports.describeBackup = exports.createIndexFromBackup = exports.createBackup = exports.listCollections = exports.describeCollection = exports.deleteCollection = exports.createCollection = exports.listIndexes = exports.describeIndex = exports.deleteIndex = exports.createIndexForModel = exports.createIndex = exports.configureIndex = exports.indexOperationsBuilder = void 0;
+		// Index Operations
+		var indexOperationsBuilder_1 = requireIndexOperationsBuilder();
+		Object.defineProperty(exports, "indexOperationsBuilder", { enumerable: true, get: function () { return indexOperationsBuilder_1.indexOperationsBuilder; } });
+		var configureIndex_1 = requireConfigureIndex();
+		Object.defineProperty(exports, "configureIndex", { enumerable: true, get: function () { return configureIndex_1.configureIndex; } });
+		var createIndex_1 = requireCreateIndex();
+		Object.defineProperty(exports, "createIndex", { enumerable: true, get: function () { return createIndex_1.createIndex; } });
+		var createIndexForModel_1 = requireCreateIndexForModel();
+		Object.defineProperty(exports, "createIndexForModel", { enumerable: true, get: function () { return createIndexForModel_1.createIndexForModel; } });
+		var deleteIndex_1 = requireDeleteIndex();
+		Object.defineProperty(exports, "deleteIndex", { enumerable: true, get: function () { return deleteIndex_1.deleteIndex; } });
+		var describeIndex_1 = requireDescribeIndex();
+		Object.defineProperty(exports, "describeIndex", { enumerable: true, get: function () { return describeIndex_1.describeIndex; } });
+		var listIndexes_1 = requireListIndexes();
+		Object.defineProperty(exports, "listIndexes", { enumerable: true, get: function () { return listIndexes_1.listIndexes; } });
+		var createCollection_1 = requireCreateCollection();
+		Object.defineProperty(exports, "createCollection", { enumerable: true, get: function () { return createCollection_1.createCollection; } });
+		var deleteCollection_1 = requireDeleteCollection();
+		Object.defineProperty(exports, "deleteCollection", { enumerable: true, get: function () { return deleteCollection_1.deleteCollection; } });
+		var describeCollection_1 = requireDescribeCollection();
+		Object.defineProperty(exports, "describeCollection", { enumerable: true, get: function () { return describeCollection_1.describeCollection; } });
+		var listCollections_1 = requireListCollections();
+		Object.defineProperty(exports, "listCollections", { enumerable: true, get: function () { return listCollections_1.listCollections; } });
+		var createBackup_1 = requireCreateBackup();
+		Object.defineProperty(exports, "createBackup", { enumerable: true, get: function () { return createBackup_1.createBackup; } });
+		var createIndexFromBackup_1 = requireCreateIndexFromBackup();
+		Object.defineProperty(exports, "createIndexFromBackup", { enumerable: true, get: function () { return createIndexFromBackup_1.createIndexFromBackup; } });
+		var describeBackup_1 = requireDescribeBackup();
+		Object.defineProperty(exports, "describeBackup", { enumerable: true, get: function () { return describeBackup_1.describeBackup; } });
+		var describeRestoreJob_1 = requireDescribeRestoreJob();
+		Object.defineProperty(exports, "describeRestoreJob", { enumerable: true, get: function () { return describeRestoreJob_1.describeRestoreJob; } });
+		var listBackups_1 = requireListBackups();
+		Object.defineProperty(exports, "listBackups", { enumerable: true, get: function () { return listBackups_1.listBackups; } });
+		var listRestoreJobs_1 = requireListRestoreJobs();
+		Object.defineProperty(exports, "listRestoreJobs", { enumerable: true, get: function () { return listRestoreJobs_1.listRestoreJobs; } });
+		var deleteBackup_1 = requireDeleteBackup();
+		Object.defineProperty(exports, "deleteBackup", { enumerable: true, get: function () { return deleteBackup_1.deleteBackup; } });
+		
+	} (control$1));
+	return control$1;
+}
+
+var control = {};
+
+var createAssistant = {};
+
+var assistant_control = {};
+
+var runtime$4 = {};
+
+var hasRequiredRuntime$4;
+
+function requireRuntime$4 () {
+	if (hasRequiredRuntime$4) return runtime$4;
+	hasRequiredRuntime$4 = 1;
+	(function (exports) {
+		/* tslint:disable */
+		/* eslint-disable */
+		/**
+		 * Pinecone Assistant Control Plane API
+		 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge  from millions of documents at scale. This API supports creating and managing assistants.
+		 *
+		 * The version of the OpenAPI document: 2025-04
+		 * Contact: support@pinecone.io
+		 *
+		 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+		 * https://openapi-generator.tech
+		 * Do not edit the class manually.
+		 */
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.TextApiResponse = exports.BlobApiResponse = exports.VoidApiResponse = exports.JSONApiResponse = exports.canConsumeForm = exports.mapValues = exports.querystring = exports.exists = exports.COLLECTION_FORMATS = exports.RequiredError = exports.FetchError = exports.ResponseError = exports.BaseAPI = exports.DefaultConfig = exports.Configuration = exports.BASE_PATH = void 0;
+		exports.BASE_PATH = "https://api.pinecone.io/assistant".replace(/\/+$/, "");
+		class Configuration {
+		    constructor(configuration = {}) {
+		        this.configuration = configuration;
+		    }
+		    set config(configuration) {
+		        this.configuration = configuration;
+		    }
+		    get basePath() {
+		        return this.configuration.basePath != null ? this.configuration.basePath : exports.BASE_PATH;
+		    }
+		    get fetchApi() {
+		        return this.configuration.fetchApi;
+		    }
+		    get middleware() {
+		        return this.configuration.middleware || [];
+		    }
+		    get queryParamsStringify() {
+		        return this.configuration.queryParamsStringify || querystring;
+		    }
+		    get username() {
+		        return this.configuration.username;
+		    }
+		    get password() {
+		        return this.configuration.password;
+		    }
+		    get apiKey() {
+		        const apiKey = this.configuration.apiKey;
+		        if (apiKey) {
+		            return typeof apiKey === 'function' ? apiKey : () => apiKey;
+		        }
+		        return undefined;
+		    }
+		    get accessToken() {
+		        const accessToken = this.configuration.accessToken;
+		        if (accessToken) {
+		            return typeof accessToken === 'function' ? accessToken : async () => accessToken;
+		        }
+		        return undefined;
+		    }
+		    get headers() {
+		        return this.configuration.headers;
+		    }
+		    get credentials() {
+		        return this.configuration.credentials;
+		    }
+		}
+		exports.Configuration = Configuration;
+		exports.DefaultConfig = new Configuration();
+		/**
+		 * This is the base class for all generated API classes.
+		 */
+		class BaseAPI {
+		    constructor(configuration = exports.DefaultConfig) {
+		        this.configuration = configuration;
+		        this.fetchApi = async (url, init) => {
+		            let fetchParams = { url, init };
+		            for (const middleware of this.middleware) {
+		                if (middleware.pre) {
+		                    fetchParams = await middleware.pre({
+		                        fetch: this.fetchApi,
+		                        ...fetchParams,
+		                    }) || fetchParams;
+		                }
+		            }
+		            let response = undefined;
+		            try {
+		                response = await (this.configuration.fetchApi || fetch)(fetchParams.url, fetchParams.init);
+		            }
+		            catch (e) {
+		                for (const middleware of this.middleware) {
+		                    if (middleware.onError) {
+		                        response = await middleware.onError({
+		                            fetch: this.fetchApi,
+		                            url: fetchParams.url,
+		                            init: fetchParams.init,
+		                            error: e,
+		                            response: response ? response.clone() : undefined,
+		                        }) || response;
+		                    }
+		                }
+		                if (response === undefined) {
+		                    if (e instanceof Error) {
+		                        throw new FetchError(e, 'The request failed and the interceptors did not return an alternative response');
+		                    }
+		                    else {
+		                        throw e;
+		                    }
+		                }
+		            }
+		            for (const middleware of this.middleware) {
+		                if (middleware.post) {
+		                    response = await middleware.post({
+		                        fetch: this.fetchApi,
+		                        url: fetchParams.url,
+		                        init: fetchParams.init,
+		                        response: response.clone(),
+		                    }) || response;
+		                }
+		            }
+		            return response;
+		        };
+		        this.middleware = configuration.middleware;
+		    }
+		    withMiddleware(...middlewares) {
+		        const next = this.clone();
+		        next.middleware = next.middleware.concat(...middlewares);
+		        return next;
+		    }
+		    withPreMiddleware(...preMiddlewares) {
+		        const middlewares = preMiddlewares.map((pre) => ({ pre }));
+		        return this.withMiddleware(...middlewares);
+		    }
+		    withPostMiddleware(...postMiddlewares) {
+		        const middlewares = postMiddlewares.map((post) => ({ post }));
+		        return this.withMiddleware(...middlewares);
+		    }
+		    /**
+		     * Check if the given MIME is a JSON MIME.
+		     * JSON MIME examples:
+		     *   application/json
+		     *   application/json; charset=UTF8
+		     *   APPLICATION/JSON
+		     *   application/vnd.company+json
+		     * @param mime - MIME (Multipurpose Internet Mail Extensions)
+		     * @return True if the given MIME is JSON, false otherwise.
+		     */
+		    isJsonMime(mime) {
+		        if (!mime) {
+		            return false;
+		        }
+		        return BaseAPI.jsonRegex.test(mime);
+		    }
+		    async request(context, initOverrides) {
+		        const { url, init } = await this.createFetchParams(context, initOverrides);
+		        const response = await this.fetchApi(url, init);
+		        if (response && (response.status >= 200 && response.status < 300)) {
+		            return response;
+		        }
+		        throw new ResponseError(response, 'Response returned an error code');
+		    }
+		    async createFetchParams(context, initOverrides) {
+		        let url = this.configuration.basePath + context.path;
+		        if (context.query !== undefined && Object.keys(context.query).length !== 0) {
+		            // only add the querystring to the URL if there are query parameters.
+		            // this is done to avoid urls ending with a "?" character which buggy webservers
+		            // do not handle correctly sometimes.
+		            url += '?' + this.configuration.queryParamsStringify(context.query);
+		        }
+		        const headers = Object.assign({}, this.configuration.headers, context.headers);
+		        Object.keys(headers).forEach(key => headers[key] === undefined ? delete headers[key] : {});
+		        const initOverrideFn = typeof initOverrides === "function"
+		            ? initOverrides
+		            : async () => initOverrides;
+		        const initParams = {
+		            method: context.method,
+		            headers,
+		            body: context.body,
+		            credentials: this.configuration.credentials,
+		        };
+		        const overriddenInit = {
+		            ...initParams,
+		            ...(await initOverrideFn({
+		                init: initParams,
+		                context,
+		            }))
+		        };
+		        let body;
+		        if (isFormData(overriddenInit.body)
+		            || (overriddenInit.body instanceof URLSearchParams)
+		            || isBlob(overriddenInit.body)) {
+		            body = overriddenInit.body;
+		        }
+		        else if (this.isJsonMime(headers['Content-Type'])) {
+		            body = JSON.stringify(overriddenInit.body);
+		        }
+		        else {
+		            body = overriddenInit.body;
+		        }
+		        const init = {
+		            ...overriddenInit,
+		            body
+		        };
+		        return { url, init };
+		    }
+		    /**
+		     * Create a shallow clone of `this` by constructing a new instance
+		     * and then shallow cloning data members.
+		     */
+		    clone() {
+		        const constructor = this.constructor;
+		        const next = new constructor(this.configuration);
+		        next.middleware = this.middleware.slice();
+		        return next;
+		    }
+		}
+		exports.BaseAPI = BaseAPI;
+		BaseAPI.jsonRegex = new RegExp('^(:?application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(:?;.*)?$', 'i');
+		function isBlob(value) {
+		    return typeof Blob !== 'undefined' && value instanceof Blob;
+		}
+		function isFormData(value) {
+		    return typeof FormData !== "undefined" && value instanceof FormData;
+		}
+		class ResponseError extends Error {
+		    constructor(response, msg) {
+		        super(msg);
+		        this.response = response;
+		        this.name = "ResponseError";
+		    }
+		}
+		exports.ResponseError = ResponseError;
+		class FetchError extends Error {
+		    constructor(cause, msg) {
+		        super(msg);
+		        this.cause = cause;
+		        this.name = "FetchError";
+		    }
+		}
+		exports.FetchError = FetchError;
+		class RequiredError extends Error {
+		    constructor(field, msg) {
+		        super(msg);
+		        this.field = field;
+		        this.name = "RequiredError";
+		    }
+		}
+		exports.RequiredError = RequiredError;
+		exports.COLLECTION_FORMATS = {
+		    csv: ",",
+		    ssv: " ",
+		    tsv: "\t",
+		    pipes: "|",
+		};
+		function exists(json, key) {
+		    const value = json[key];
+		    return value !== null && value !== undefined;
+		}
+		exports.exists = exists;
+		function querystring(params, prefix = '') {
+		    return Object.keys(params)
+		        .map(key => querystringSingleKey(key, params[key], prefix))
+		        .filter(part => part.length > 0)
+		        .join('&');
+		}
+		exports.querystring = querystring;
+		function querystringSingleKey(key, value, keyPrefix = '') {
+		    const fullKey = keyPrefix + (keyPrefix.length ? `[${key}]` : key);
+		    if (value instanceof Array) {
+		        const multiValue = value.map(singleValue => encodeURIComponent(String(singleValue)))
+		            .join(`&${encodeURIComponent(fullKey)}=`);
+		        return `${encodeURIComponent(fullKey)}=${multiValue}`;
+		    }
+		    if (value instanceof Set) {
+		        const valueAsArray = Array.from(value);
+		        return querystringSingleKey(key, valueAsArray, keyPrefix);
+		    }
+		    if (value instanceof Date) {
+		        return `${encodeURIComponent(fullKey)}=${encodeURIComponent(value.toISOString())}`;
+		    }
+		    if (value instanceof Object) {
+		        return querystring(value, fullKey);
+		    }
+		    return `${encodeURIComponent(fullKey)}=${encodeURIComponent(String(value))}`;
+		}
+		function mapValues(data, fn) {
+		    return Object.keys(data).reduce((acc, key) => ({ ...acc, [key]: fn(data[key]) }), {});
+		}
+		exports.mapValues = mapValues;
+		function canConsumeForm(consumes) {
+		    for (const consume of consumes) {
+		        if ('multipart/form-data' === consume.contentType) {
+		            return true;
+		        }
+		    }
+		    return false;
+		}
+		exports.canConsumeForm = canConsumeForm;
+		class JSONApiResponse {
+		    constructor(raw, transformer = (jsonValue) => jsonValue) {
+		        this.raw = raw;
+		        this.transformer = transformer;
+		    }
+		    async value() {
+		        return this.transformer(await this.raw.json());
+		    }
+		}
+		exports.JSONApiResponse = JSONApiResponse;
+		class VoidApiResponse {
+		    constructor(raw) {
+		        this.raw = raw;
+		    }
+		    async value() {
+		        return undefined;
+		    }
+		}
+		exports.VoidApiResponse = VoidApiResponse;
+		class BlobApiResponse {
+		    constructor(raw) {
+		        this.raw = raw;
+		    }
+		    async value() {
+		        return await this.raw.blob();
+		    }
+		    ;
+		}
+		exports.BlobApiResponse = BlobApiResponse;
+		class TextApiResponse {
+		    constructor(raw) {
+		        this.raw = raw;
+		    }
+		    async value() {
+		        return await this.raw.text();
+		    }
+		    ;
+		}
+		exports.TextApiResponse = TextApiResponse;
+		
+	} (runtime$4));
+	return runtime$4;
+}
+
+var apis$4 = {};
+
+var ManageAssistantsApi$1 = {};
+
+var models$4 = {};
+
+var Assistant = {};
+
+var hasRequiredAssistant$1;
+
+function requireAssistant$1 () {
+	if (hasRequiredAssistant$1) return Assistant;
+	hasRequiredAssistant$1 = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Control Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge  from millions of documents at scale. This API supports creating and managing assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(Assistant, "__esModule", { value: true });
+	Assistant.AssistantToJSON = Assistant.AssistantFromJSONTyped = Assistant.AssistantFromJSON = Assistant.instanceOfAssistant = Assistant.AssistantStatusEnum = void 0;
+	const runtime_1 = requireRuntime$4();
+	/**
+	 * @export
+	 */
+	Assistant.AssistantStatusEnum = {
+	    Initializing: 'Initializing',
+	    Failed: 'Failed',
+	    Ready: 'Ready',
+	    Terminating: 'Terminating',
+	    InitializationFailed: 'InitializationFailed'
+	};
+	/**
+	 * Check if a given object implements the Assistant interface.
+	 */
+	function instanceOfAssistant(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "name" in value;
+	    isInstance = isInstance && "status" in value;
+	    return isInstance;
+	}
+	Assistant.instanceOfAssistant = instanceOfAssistant;
+	function AssistantFromJSON(json) {
+	    return AssistantFromJSONTyped(json);
+	}
+	Assistant.AssistantFromJSON = AssistantFromJSON;
+	function AssistantFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'name': json['name'],
+	        'instructions': !(0, runtime_1.exists)(json, 'instructions') ? undefined : json['instructions'],
+	        'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : json['metadata'],
+	        'status': json['status'],
+	        'host': !(0, runtime_1.exists)(json, 'host') ? undefined : json['host'],
+	        'createdAt': !(0, runtime_1.exists)(json, 'created_at') ? undefined : (new Date(json['created_at'])),
+	        'updatedAt': !(0, runtime_1.exists)(json, 'updated_at') ? undefined : (new Date(json['updated_at'])),
+	    };
+	}
+	Assistant.AssistantFromJSONTyped = AssistantFromJSONTyped;
+	function AssistantToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'name': value.name,
+	        'instructions': value.instructions,
+	        'metadata': value.metadata,
+	        'status': value.status,
+	        'host': value.host,
+	        'created_at': value.createdAt === undefined ? undefined : (value.createdAt.toISOString()),
+	        'updated_at': value.updatedAt === undefined ? undefined : (value.updatedAt.toISOString()),
+	    };
+	}
+	Assistant.AssistantToJSON = AssistantToJSON;
+	
+	return Assistant;
+}
+
+var CreateAssistantRequest = {};
+
+var hasRequiredCreateAssistantRequest;
+
+function requireCreateAssistantRequest () {
+	if (hasRequiredCreateAssistantRequest) return CreateAssistantRequest;
+	hasRequiredCreateAssistantRequest = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Control Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge  from millions of documents at scale. This API supports creating and managing assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(CreateAssistantRequest, "__esModule", { value: true });
+	CreateAssistantRequest.CreateAssistantRequestToJSON = CreateAssistantRequest.CreateAssistantRequestFromJSONTyped = CreateAssistantRequest.CreateAssistantRequestFromJSON = CreateAssistantRequest.instanceOfCreateAssistantRequest = CreateAssistantRequest.CreateAssistantRequestRegionEnum = void 0;
+	const runtime_1 = requireRuntime$4();
+	/**
+	 * @export
+	 */
+	CreateAssistantRequest.CreateAssistantRequestRegionEnum = {
+	    Us: 'us',
+	    Eu: 'eu'
+	};
+	/**
+	 * Check if a given object implements the CreateAssistantRequest interface.
+	 */
+	function instanceOfCreateAssistantRequest(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "name" in value;
+	    return isInstance;
+	}
+	CreateAssistantRequest.instanceOfCreateAssistantRequest = instanceOfCreateAssistantRequest;
+	function CreateAssistantRequestFromJSON(json) {
+	    return CreateAssistantRequestFromJSONTyped(json);
+	}
+	CreateAssistantRequest.CreateAssistantRequestFromJSON = CreateAssistantRequestFromJSON;
+	function CreateAssistantRequestFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'name': json['name'],
+	        'instructions': !(0, runtime_1.exists)(json, 'instructions') ? undefined : json['instructions'],
+	        'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : json['metadata'],
+	        'region': !(0, runtime_1.exists)(json, 'region') ? undefined : json['region'],
+	    };
+	}
+	CreateAssistantRequest.CreateAssistantRequestFromJSONTyped = CreateAssistantRequestFromJSONTyped;
+	function CreateAssistantRequestToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'name': value.name,
+	        'instructions': value.instructions,
+	        'metadata': value.metadata,
+	        'region': value.region,
+	    };
+	}
+	CreateAssistantRequest.CreateAssistantRequestToJSON = CreateAssistantRequestToJSON;
+	
+	return CreateAssistantRequest;
+}
+
+var ErrorResponse$2 = {};
+
+var ErrorResponseError$2 = {};
+
+var hasRequiredErrorResponseError$2;
+
+function requireErrorResponseError$2 () {
+	if (hasRequiredErrorResponseError$2) return ErrorResponseError$2;
+	hasRequiredErrorResponseError$2 = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Control Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge  from millions of documents at scale. This API supports creating and managing assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ErrorResponseError$2, "__esModule", { value: true });
+	ErrorResponseError$2.ErrorResponseErrorToJSON = ErrorResponseError$2.ErrorResponseErrorFromJSONTyped = ErrorResponseError$2.ErrorResponseErrorFromJSON = ErrorResponseError$2.instanceOfErrorResponseError = ErrorResponseError$2.ErrorResponseErrorCodeEnum = void 0;
+	const runtime_1 = requireRuntime$4();
+	/**
+	 * @export
+	 */
+	ErrorResponseError$2.ErrorResponseErrorCodeEnum = {
+	    Ok: 'OK',
+	    Unknown: 'UNKNOWN',
+	    InvalidArgument: 'INVALID_ARGUMENT',
+	    DeadlineExceeded: 'DEADLINE_EXCEEDED',
+	    QuotaExceeded: 'QUOTA_EXCEEDED',
+	    NotFound: 'NOT_FOUND',
+	    AlreadyExists: 'ALREADY_EXISTS',
+	    PermissionDenied: 'PERMISSION_DENIED',
+	    Unauthenticated: 'UNAUTHENTICATED',
+	    ResourceExhausted: 'RESOURCE_EXHAUSTED',
+	    FailedPrecondition: 'FAILED_PRECONDITION',
+	    Aborted: 'ABORTED',
+	    OutOfRange: 'OUT_OF_RANGE',
+	    Unimplemented: 'UNIMPLEMENTED',
+	    Internal: 'INTERNAL',
+	    Unavailable: 'UNAVAILABLE',
+	    DataLoss: 'DATA_LOSS',
+	    Forbidden: 'FORBIDDEN'
+	};
+	/**
+	 * Check if a given object implements the ErrorResponseError interface.
+	 */
+	function instanceOfErrorResponseError(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "code" in value;
+	    isInstance = isInstance && "message" in value;
+	    return isInstance;
+	}
+	ErrorResponseError$2.instanceOfErrorResponseError = instanceOfErrorResponseError;
+	function ErrorResponseErrorFromJSON(json) {
+	    return ErrorResponseErrorFromJSONTyped(json);
+	}
+	ErrorResponseError$2.ErrorResponseErrorFromJSON = ErrorResponseErrorFromJSON;
+	function ErrorResponseErrorFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'code': json['code'],
+	        'message': json['message'],
+	        'details': !(0, runtime_1.exists)(json, 'details') ? undefined : json['details'],
+	    };
+	}
+	ErrorResponseError$2.ErrorResponseErrorFromJSONTyped = ErrorResponseErrorFromJSONTyped;
+	function ErrorResponseErrorToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'code': value.code,
+	        'message': value.message,
+	        'details': value.details,
+	    };
+	}
+	ErrorResponseError$2.ErrorResponseErrorToJSON = ErrorResponseErrorToJSON;
+	
+	return ErrorResponseError$2;
+}
+
+var hasRequiredErrorResponse$2;
+
+function requireErrorResponse$2 () {
+	if (hasRequiredErrorResponse$2) return ErrorResponse$2;
+	hasRequiredErrorResponse$2 = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Control Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge  from millions of documents at scale. This API supports creating and managing assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ErrorResponse$2, "__esModule", { value: true });
+	ErrorResponse$2.ErrorResponseToJSON = ErrorResponse$2.ErrorResponseFromJSONTyped = ErrorResponse$2.ErrorResponseFromJSON = ErrorResponse$2.instanceOfErrorResponse = void 0;
+	const ErrorResponseError_1 = requireErrorResponseError$2();
+	/**
+	 * Check if a given object implements the ErrorResponse interface.
+	 */
+	function instanceOfErrorResponse(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "status" in value;
+	    isInstance = isInstance && "error" in value;
+	    return isInstance;
+	}
+	ErrorResponse$2.instanceOfErrorResponse = instanceOfErrorResponse;
+	function ErrorResponseFromJSON(json) {
+	    return ErrorResponseFromJSONTyped(json);
+	}
+	ErrorResponse$2.ErrorResponseFromJSON = ErrorResponseFromJSON;
+	function ErrorResponseFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'status': json['status'],
+	        'error': (0, ErrorResponseError_1.ErrorResponseErrorFromJSON)(json['error']),
+	    };
+	}
+	ErrorResponse$2.ErrorResponseFromJSONTyped = ErrorResponseFromJSONTyped;
+	function ErrorResponseToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'status': value.status,
+	        'error': (0, ErrorResponseError_1.ErrorResponseErrorToJSON)(value.error),
+	    };
+	}
+	ErrorResponse$2.ErrorResponseToJSON = ErrorResponseToJSON;
+	
+	return ErrorResponse$2;
+}
+
+var ListAssistants200Response = {};
+
+var hasRequiredListAssistants200Response;
+
+function requireListAssistants200Response () {
+	if (hasRequiredListAssistants200Response) return ListAssistants200Response;
+	hasRequiredListAssistants200Response = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Control Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge  from millions of documents at scale. This API supports creating and managing assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ListAssistants200Response, "__esModule", { value: true });
+	ListAssistants200Response.ListAssistants200ResponseToJSON = ListAssistants200Response.ListAssistants200ResponseFromJSONTyped = ListAssistants200Response.ListAssistants200ResponseFromJSON = ListAssistants200Response.instanceOfListAssistants200Response = void 0;
+	const runtime_1 = requireRuntime$4();
+	const Assistant_1 = requireAssistant$1();
+	/**
+	 * Check if a given object implements the ListAssistants200Response interface.
+	 */
+	function instanceOfListAssistants200Response(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ListAssistants200Response.instanceOfListAssistants200Response = instanceOfListAssistants200Response;
+	function ListAssistants200ResponseFromJSON(json) {
+	    return ListAssistants200ResponseFromJSONTyped(json);
+	}
+	ListAssistants200Response.ListAssistants200ResponseFromJSON = ListAssistants200ResponseFromJSON;
+	function ListAssistants200ResponseFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'assistants': !(0, runtime_1.exists)(json, 'assistants') ? undefined : (json['assistants'].map(Assistant_1.AssistantFromJSON)),
+	    };
+	}
+	ListAssistants200Response.ListAssistants200ResponseFromJSONTyped = ListAssistants200ResponseFromJSONTyped;
+	function ListAssistants200ResponseToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'assistants': value.assistants === undefined ? undefined : (value.assistants.map(Assistant_1.AssistantToJSON)),
+	    };
+	}
+	ListAssistants200Response.ListAssistants200ResponseToJSON = ListAssistants200ResponseToJSON;
+	
+	return ListAssistants200Response;
+}
+
+var UpdateAssistant200Response = {};
+
+var hasRequiredUpdateAssistant200Response;
+
+function requireUpdateAssistant200Response () {
+	if (hasRequiredUpdateAssistant200Response) return UpdateAssistant200Response;
+	hasRequiredUpdateAssistant200Response = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Control Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge  from millions of documents at scale. This API supports creating and managing assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(UpdateAssistant200Response, "__esModule", { value: true });
+	UpdateAssistant200Response.UpdateAssistant200ResponseToJSON = UpdateAssistant200Response.UpdateAssistant200ResponseFromJSONTyped = UpdateAssistant200Response.UpdateAssistant200ResponseFromJSON = UpdateAssistant200Response.instanceOfUpdateAssistant200Response = void 0;
+	const runtime_1 = requireRuntime$4();
+	/**
+	 * Check if a given object implements the UpdateAssistant200Response interface.
+	 */
+	function instanceOfUpdateAssistant200Response(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	UpdateAssistant200Response.instanceOfUpdateAssistant200Response = instanceOfUpdateAssistant200Response;
+	function UpdateAssistant200ResponseFromJSON(json) {
+	    return UpdateAssistant200ResponseFromJSONTyped(json);
+	}
+	UpdateAssistant200Response.UpdateAssistant200ResponseFromJSON = UpdateAssistant200ResponseFromJSON;
+	function UpdateAssistant200ResponseFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'assistantName': !(0, runtime_1.exists)(json, 'assistant_name') ? undefined : json['assistant_name'],
+	        'instructions': !(0, runtime_1.exists)(json, 'instructions') ? undefined : json['instructions'],
+	        'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : json['metadata'],
+	    };
+	}
+	UpdateAssistant200Response.UpdateAssistant200ResponseFromJSONTyped = UpdateAssistant200ResponseFromJSONTyped;
+	function UpdateAssistant200ResponseToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'assistant_name': value.assistantName,
+	        'instructions': value.instructions,
+	        'metadata': value.metadata,
+	    };
+	}
+	UpdateAssistant200Response.UpdateAssistant200ResponseToJSON = UpdateAssistant200ResponseToJSON;
+	
+	return UpdateAssistant200Response;
+}
+
+var UpdateAssistantRequest = {};
+
+var hasRequiredUpdateAssistantRequest;
+
+function requireUpdateAssistantRequest () {
+	if (hasRequiredUpdateAssistantRequest) return UpdateAssistantRequest;
+	hasRequiredUpdateAssistantRequest = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Control Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge  from millions of documents at scale. This API supports creating and managing assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(UpdateAssistantRequest, "__esModule", { value: true });
+	UpdateAssistantRequest.UpdateAssistantRequestToJSON = UpdateAssistantRequest.UpdateAssistantRequestFromJSONTyped = UpdateAssistantRequest.UpdateAssistantRequestFromJSON = UpdateAssistantRequest.instanceOfUpdateAssistantRequest = void 0;
+	const runtime_1 = requireRuntime$4();
+	/**
+	 * Check if a given object implements the UpdateAssistantRequest interface.
+	 */
+	function instanceOfUpdateAssistantRequest(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	UpdateAssistantRequest.instanceOfUpdateAssistantRequest = instanceOfUpdateAssistantRequest;
+	function UpdateAssistantRequestFromJSON(json) {
+	    return UpdateAssistantRequestFromJSONTyped(json);
+	}
+	UpdateAssistantRequest.UpdateAssistantRequestFromJSON = UpdateAssistantRequestFromJSON;
+	function UpdateAssistantRequestFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'instructions': !(0, runtime_1.exists)(json, 'instructions') ? undefined : json['instructions'],
+	        'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : json['metadata'],
+	    };
+	}
+	UpdateAssistantRequest.UpdateAssistantRequestFromJSONTyped = UpdateAssistantRequestFromJSONTyped;
+	function UpdateAssistantRequestToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'instructions': value.instructions,
+	        'metadata': value.metadata,
+	    };
+	}
+	UpdateAssistantRequest.UpdateAssistantRequestToJSON = UpdateAssistantRequestToJSON;
+	
+	return UpdateAssistantRequest;
+}
+
+var hasRequiredModels$4;
+
+function requireModels$4 () {
+	if (hasRequiredModels$4) return models$4;
+	hasRequiredModels$4 = 1;
+	(function (exports) {
+		var __createBinding = (models$4 && models$4.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    var desc = Object.getOwnPropertyDescriptor(m, k);
+		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+		      desc = { enumerable: true, get: function() { return m[k]; } };
+		    }
+		    Object.defineProperty(o, k2, desc);
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __exportStar = (models$4 && models$4.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		/* tslint:disable */
+		/* eslint-disable */
+		__exportStar(requireAssistant$1(), exports);
+		__exportStar(requireCreateAssistantRequest(), exports);
+		__exportStar(requireErrorResponse$2(), exports);
+		__exportStar(requireErrorResponseError$2(), exports);
+		__exportStar(requireListAssistants200Response(), exports);
+		__exportStar(requireUpdateAssistant200Response(), exports);
+		__exportStar(requireUpdateAssistantRequest(), exports);
+		
+	} (models$4));
+	return models$4;
+}
+
+var hasRequiredManageAssistantsApi$1;
+
+function requireManageAssistantsApi$1 () {
+	if (hasRequiredManageAssistantsApi$1) return ManageAssistantsApi$1;
+	hasRequiredManageAssistantsApi$1 = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Control Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge  from millions of documents at scale. This API supports creating and managing assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	var __createBinding = (ManageAssistantsApi$1 && ManageAssistantsApi$1.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    var desc = Object.getOwnPropertyDescriptor(m, k);
+	    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+	      desc = { enumerable: true, get: function() { return m[k]; } };
+	    }
+	    Object.defineProperty(o, k2, desc);
+	}) : (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    o[k2] = m[k];
+	}));
+	var __setModuleDefault = (ManageAssistantsApi$1 && ManageAssistantsApi$1.__setModuleDefault) || (Object.create ? (function(o, v) {
+	    Object.defineProperty(o, "default", { enumerable: true, value: v });
+	}) : function(o, v) {
+	    o["default"] = v;
+	});
+	var __importStar = (ManageAssistantsApi$1 && ManageAssistantsApi$1.__importStar) || function (mod) {
+	    if (mod && mod.__esModule) return mod;
+	    var result = {};
+	    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+	    __setModuleDefault(result, mod);
+	    return result;
+	};
+	Object.defineProperty(ManageAssistantsApi$1, "__esModule", { value: true });
+	ManageAssistantsApi$1.ManageAssistantsApi = void 0;
+	const runtime = __importStar(requireRuntime$4());
+	const index_1 = requireModels$4();
+	/**
+	 *
+	 */
+	class ManageAssistantsApi extends runtime.BaseAPI {
+	    /**
+	     * Create an assistant. This is where you specify the underlying training model, which cloud provider you would like to deploy with, and more.  For guidance and examples, see [Create an assistant](https://docs.pinecone.io/guides/assistant/create-assistant)
+	     * Create an assistant
+	     */
+	    async createAssistantRaw(requestParameters, initOverrides) {
+	        if (requestParameters.createAssistantRequest === null || requestParameters.createAssistantRequest === undefined) {
+	            throw new runtime.RequiredError('createAssistantRequest', 'Required parameter requestParameters.createAssistantRequest was null or undefined when calling createAssistant.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/json';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/assistants`,
+	            method: 'POST',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: (0, index_1.CreateAssistantRequestToJSON)(requestParameters.createAssistantRequest),
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.AssistantFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Create an assistant. This is where you specify the underlying training model, which cloud provider you would like to deploy with, and more.  For guidance and examples, see [Create an assistant](https://docs.pinecone.io/guides/assistant/create-assistant)
+	     * Create an assistant
+	     */
+	    async createAssistant(requestParameters, initOverrides) {
+	        const response = await this.createAssistantRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Delete an existing assistant.  For guidance and examples, see [Manage assistants](https://docs.pinecone.io/guides/assistant/manage-assistants#delete-an-assistant)
+	     * Delete an assistant
+	     */
+	    async deleteAssistantRaw(requestParameters, initOverrides) {
+	        if (requestParameters.assistantName === null || requestParameters.assistantName === undefined) {
+	            throw new runtime.RequiredError('assistantName', 'Required parameter requestParameters.assistantName was null or undefined when calling deleteAssistant.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/assistants/{assistant_name}`.replace(`{${"assistant_name"}}`, encodeURIComponent(String(requestParameters.assistantName))),
+	            method: 'DELETE',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.VoidApiResponse(response);
+	    }
+	    /**
+	     * Delete an existing assistant.  For guidance and examples, see [Manage assistants](https://docs.pinecone.io/guides/assistant/manage-assistants#delete-an-assistant)
+	     * Delete an assistant
+	     */
+	    async deleteAssistant(requestParameters, initOverrides) {
+	        await this.deleteAssistantRaw(requestParameters, initOverrides);
+	    }
+	    /**
+	     * Get the status of an assistant.  For guidance and examples, see [Manage assistants](https://docs.pinecone.io/guides/assistant/manage-assistants#get-the-status-of-an-assistant)
+	     * Check assistant status
+	     */
+	    async getAssistantRaw(requestParameters, initOverrides) {
+	        if (requestParameters.assistantName === null || requestParameters.assistantName === undefined) {
+	            throw new runtime.RequiredError('assistantName', 'Required parameter requestParameters.assistantName was null or undefined when calling getAssistant.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/assistants/{assistant_name}`.replace(`{${"assistant_name"}}`, encodeURIComponent(String(requestParameters.assistantName))),
+	            method: 'GET',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.AssistantFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Get the status of an assistant.  For guidance and examples, see [Manage assistants](https://docs.pinecone.io/guides/assistant/manage-assistants#get-the-status-of-an-assistant)
+	     * Check assistant status
+	     */
+	    async getAssistant(requestParameters, initOverrides) {
+	        const response = await this.getAssistantRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * List of all assistants in a project.  For guidance and examples, see [Manage assistants](https://docs.pinecone.io/guides/assistant/manage-assistants#list-assistants-for-a-project).
+	     * List assistants
+	     */
+	    async listAssistantsRaw(initOverrides) {
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/assistants`,
+	            method: 'GET',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.ListAssistants200ResponseFromJSON)(jsonValue));
+	    }
+	    /**
+	     * List of all assistants in a project.  For guidance and examples, see [Manage assistants](https://docs.pinecone.io/guides/assistant/manage-assistants#list-assistants-for-a-project).
+	     * List assistants
+	     */
+	    async listAssistants(initOverrides) {
+	        const response = await this.listAssistantsRaw(initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Update an existing assistant. You can modify the assistant\'s instructions.  For guidance and examples, see [Manage assistants](https://docs.pinecone.io/guides/assistant/manage-assistants#add-instructions-to-an-assistant).
+	     * Update an assistant
+	     */
+	    async updateAssistantRaw(requestParameters, initOverrides) {
+	        if (requestParameters.assistantName === null || requestParameters.assistantName === undefined) {
+	            throw new runtime.RequiredError('assistantName', 'Required parameter requestParameters.assistantName was null or undefined when calling updateAssistant.');
+	        }
+	        if (requestParameters.updateAssistantRequest === null || requestParameters.updateAssistantRequest === undefined) {
+	            throw new runtime.RequiredError('updateAssistantRequest', 'Required parameter requestParameters.updateAssistantRequest was null or undefined when calling updateAssistant.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/json';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/assistants/{assistant_name}`.replace(`{${"assistant_name"}}`, encodeURIComponent(String(requestParameters.assistantName))),
+	            method: 'PATCH',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: (0, index_1.UpdateAssistantRequestToJSON)(requestParameters.updateAssistantRequest),
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.UpdateAssistant200ResponseFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Update an existing assistant. You can modify the assistant\'s instructions.  For guidance and examples, see [Manage assistants](https://docs.pinecone.io/guides/assistant/manage-assistants#add-instructions-to-an-assistant).
+	     * Update an assistant
+	     */
+	    async updateAssistant(requestParameters, initOverrides) {
+	        const response = await this.updateAssistantRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	}
+	ManageAssistantsApi$1.ManageAssistantsApi = ManageAssistantsApi;
+	
+	return ManageAssistantsApi$1;
+}
+
+var hasRequiredApis$4;
+
+function requireApis$4 () {
+	if (hasRequiredApis$4) return apis$4;
+	hasRequiredApis$4 = 1;
+	(function (exports) {
+		var __createBinding = (apis$4 && apis$4.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    var desc = Object.getOwnPropertyDescriptor(m, k);
+		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+		      desc = { enumerable: true, get: function() { return m[k]; } };
+		    }
+		    Object.defineProperty(o, k2, desc);
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __exportStar = (apis$4 && apis$4.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		/* tslint:disable */
+		/* eslint-disable */
+		__exportStar(requireManageAssistantsApi$1(), exports);
+		
+	} (apis$4));
+	return apis$4;
+}
+
+var api_version$4 = {};
+
+var hasRequiredApi_version$4;
+
+function requireApi_version$4 () {
+	if (hasRequiredApi_version$4) return api_version$4;
+	hasRequiredApi_version$4 = 1;
+	Object.defineProperty(api_version$4, "__esModule", { value: true });
+	api_version$4.X_PINECONE_API_VERSION = void 0;
+	api_version$4.X_PINECONE_API_VERSION = '2025-04';
+	
+	return api_version$4;
+}
+
+var hasRequiredAssistant_control;
+
+function requireAssistant_control () {
+	if (hasRequiredAssistant_control) return assistant_control;
+	hasRequiredAssistant_control = 1;
+	(function (exports) {
+		var __createBinding = (assistant_control && assistant_control.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    var desc = Object.getOwnPropertyDescriptor(m, k);
+		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+		      desc = { enumerable: true, get: function() { return m[k]; } };
+		    }
+		    Object.defineProperty(o, k2, desc);
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __exportStar = (assistant_control && assistant_control.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		/* tslint:disable */
+		/* eslint-disable */
+		__exportStar(requireRuntime$4(), exports);
+		__exportStar(requireApis$4(), exports);
+		__exportStar(requireModels$4(), exports);
+		__exportStar(requireApi_version$4(), exports);
+		
+	} (assistant_control));
+	return assistant_control;
+}
+
+var types$2 = {};
+
+var hasRequiredTypes$2;
+
+function requireTypes$2 () {
+	if (hasRequiredTypes$2) return types$2;
+	hasRequiredTypes$2 = 1;
+	Object.defineProperty(types$2, "__esModule", { value: true });
+	types$2.AssistantStatusEnum = types$2.UpdateAssistantOptionsType = types$2.CreateAssistantOptionsType = void 0;
+	types$2.CreateAssistantOptionsType = [
+	    'name',
+	    'instructions',
+	    'metadata',
+	    'region',
+	];
+	types$2.UpdateAssistantOptionsType = [
+	    'instructions',
+	    'metadata',
+	];
+	/**
+	 * Enum representing the possible statuses of an assistant.
+	 *
+	 * - `Initializing`: The assistant is initializing and is not yet ready to handle requests.
+	 * - `Failed`: The assistant encountered an error and cannot proceed.
+	 * - `Ready`: The assistant is ready to handle requests.
+	 * - `Terminating`: The assistant is shutting down and will soon be unavailable.
+	 */
+	types$2.AssistantStatusEnum = {
+	    Initializing: 'Initializing',
+	    Failed: 'Failed',
+	    Ready: 'Ready',
+	    Terminating: 'Terminating',
+	};
+	
+	return types$2;
+}
+
+var hasRequiredCreateAssistant;
+
+function requireCreateAssistant () {
+	if (hasRequiredCreateAssistant) return createAssistant;
+	hasRequiredCreateAssistant = 1;
+	Object.defineProperty(createAssistant, "__esModule", { value: true });
+	createAssistant.createAssistant = void 0;
+	const assistant_control_1 = requireAssistant_control();
+	const types_1 = requireTypes$2();
+	const validateObjectProperties_1 = requireValidateObjectProperties();
+	const errors_1 = requireErrors();
+	const createAssistant$1 = (api) => {
+	    return async (options) => {
+	        validateCreateAssistantOptions(options);
+	        return (await api.createAssistant({
+	            createAssistantRequest: {
+	                name: options.name,
+	                instructions: options?.instructions,
+	                metadata: options?.metadata,
+	                region: options?.region,
+	            },
+	        }));
+	    };
+	};
+	createAssistant.createAssistant = createAssistant$1;
+	const validateCreateAssistantOptions = (options) => {
+	    if (!options) {
+	        throw new errors_1.PineconeArgumentError('You must pass an object with required properties (`name`) to create an Assistant.');
+	    }
+	    (0, validateObjectProperties_1.ValidateObjectProperties)(options, types_1.CreateAssistantOptionsType);
+	    if (options.region) {
+	        let region = assistant_control_1.CreateAssistantRequestRegionEnum.Us;
+	        if (!Object.values(assistant_control_1.CreateAssistantRequestRegionEnum)
+	            .toString()
+	            .includes(options.region.toLowerCase())) {
+	            throw new errors_1.PineconeArgumentError('Invalid region specified. Must be one of "us" or "eu"');
+	        }
+	        else {
+	            region = options.region.toLowerCase();
+	        }
+	        options.region = region;
+	    }
+	};
+	
+	return createAssistant;
+}
+
+var deleteAssistant = {};
+
+var hasRequiredDeleteAssistant;
+
+function requireDeleteAssistant () {
+	if (hasRequiredDeleteAssistant) return deleteAssistant;
+	hasRequiredDeleteAssistant = 1;
+	Object.defineProperty(deleteAssistant, "__esModule", { value: true });
+	deleteAssistant.deleteAssistant = void 0;
+	const errors_1 = requireErrors();
+	const deleteAssistant$1 = (api) => {
+	    return async (assistantName) => {
+	        if (!assistantName) {
+	            throw new errors_1.PineconeArgumentError('You must pass the name of an assistant to update.');
+	        }
+	        return await api.deleteAssistant({
+	            assistantName: assistantName,
+	        });
+	    };
+	};
+	deleteAssistant.deleteAssistant = deleteAssistant$1;
+	
+	return deleteAssistant;
+}
+
+var describeAssistant = {};
+
+var hasRequiredDescribeAssistant;
+
+function requireDescribeAssistant () {
+	if (hasRequiredDescribeAssistant) return describeAssistant;
+	hasRequiredDescribeAssistant = 1;
+	Object.defineProperty(describeAssistant, "__esModule", { value: true });
+	describeAssistant.describeAssistant = void 0;
+	const errors_1 = requireErrors();
+	const describeAssistant$1 = (api) => {
+	    return async (assistantName) => {
+	        if (!assistantName) {
+	            throw new errors_1.PineconeArgumentError('You must pass the name of an assistant to update.');
+	        }
+	        return (await api.getAssistant({
+	            assistantName: assistantName,
+	        }));
+	    };
+	};
+	describeAssistant.describeAssistant = describeAssistant$1;
+	
+	return describeAssistant;
+}
+
+var listAssistants = {};
+
+var hasRequiredListAssistants;
+
+function requireListAssistants () {
+	if (hasRequiredListAssistants) return listAssistants;
+	hasRequiredListAssistants = 1;
+	Object.defineProperty(listAssistants, "__esModule", { value: true });
+	listAssistants.listAssistants = void 0;
+	const listAssistants$1 = (api) => {
+	    return async () => {
+	        return (await api.listAssistants());
+	    };
+	};
+	listAssistants.listAssistants = listAssistants$1;
+	
+	return listAssistants;
+}
+
+var updateAssistant = {};
+
+var hasRequiredUpdateAssistant;
+
+function requireUpdateAssistant () {
+	if (hasRequiredUpdateAssistant) return updateAssistant;
+	hasRequiredUpdateAssistant = 1;
+	Object.defineProperty(updateAssistant, "__esModule", { value: true });
+	updateAssistant.updateAssistant = void 0;
+	const types_1 = requireTypes$2();
+	const validateObjectProperties_1 = requireValidateObjectProperties();
+	const errors_1 = requireErrors();
+	const updateAssistant$1 = (api) => {
+	    return async (name, options) => {
+	        if (!name) {
+	            throw new errors_1.PineconeArgumentError('You must pass the name of an assistant to update.');
+	        }
+	        validateUpdateAssistantOptions(options);
+	        const updateAssistantRequest = {};
+	        if (options?.instructions) {
+	            updateAssistantRequest['instructions'] = options.instructions;
+	        }
+	        if (options?.metadata) {
+	            updateAssistantRequest['metadata'] = options.metadata;
+	        }
+	        return await api.updateAssistant({
+	            assistantName: name,
+	            updateAssistantRequest: updateAssistantRequest,
+	        });
+	    };
+	};
+	updateAssistant.updateAssistant = updateAssistant$1;
+	const validateUpdateAssistantOptions = (options) => {
+	    if (!options) {
+	        throw new errors_1.PineconeArgumentError('You must pass an object with at least one property to update an assistant.');
+	    }
+	    (0, validateObjectProperties_1.ValidateObjectProperties)(options, types_1.UpdateAssistantOptionsType);
+	};
+	
+	return updateAssistant;
+}
+
+var asstControlOperationsBuilder = {};
+
+var hasRequiredAsstControlOperationsBuilder;
+
+function requireAsstControlOperationsBuilder () {
+	if (hasRequiredAsstControlOperationsBuilder) return asstControlOperationsBuilder;
+	hasRequiredAsstControlOperationsBuilder = 1;
+	Object.defineProperty(asstControlOperationsBuilder, "__esModule", { value: true });
+	asstControlOperationsBuilder.asstControlOperationsBuilder = void 0;
+	const assistant_control_1 = requireAssistant_control();
+	const utils_1 = requireUtils();
+	const middleware_1 = requireMiddleware();
+	const asstControlOperationsBuilder$1 = (config) => {
+	    const { apiKey } = config;
+	    const controllerPath = (0, utils_1.normalizeUrl)(config.controllerHostUrl) ||
+	        'https://api.pinecone.io/assistant';
+	    const headers = config.additionalHeaders || null;
+	    const apiConfig = {
+	        basePath: controllerPath,
+	        apiKey,
+	        queryParamsStringify: utils_1.queryParamsStringify,
+	        headers: {
+	            'User-Agent': (0, utils_1.buildUserAgent)(config),
+	            'X-Pinecone-Api-Version': assistant_control_1.X_PINECONE_API_VERSION,
+	            ...headers,
+	        },
+	        fetchApi: (0, utils_1.getFetch)(config),
+	        middleware: middleware_1.middleware,
+	    };
+	    return new assistant_control_1.ManageAssistantsApi(new assistant_control_1.Configuration(apiConfig));
+	};
+	asstControlOperationsBuilder.asstControlOperationsBuilder = asstControlOperationsBuilder$1;
+	
+	return asstControlOperationsBuilder;
+}
+
+var asstMetricsOperationsBuilder = {};
+
+var assistant_evaluation = {};
+
+var runtime$3 = {};
+
+var hasRequiredRuntime$3;
+
+function requireRuntime$3 () {
+	if (hasRequiredRuntime$3) return runtime$3;
+	hasRequiredRuntime$3 = 1;
+	(function (exports) {
+		/* tslint:disable */
+		/* eslint-disable */
+		/**
+		 * Evaluation API
+		 * Provides endpoints for evaluating RAG systems using various metrics.
+		 *
+		 * The version of the OpenAPI document: 2025-04
+		 * Contact: support@pinecone.io
+		 *
+		 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+		 * https://openapi-generator.tech
+		 * Do not edit the class manually.
+		 */
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.TextApiResponse = exports.BlobApiResponse = exports.VoidApiResponse = exports.JSONApiResponse = exports.canConsumeForm = exports.mapValues = exports.querystring = exports.exists = exports.COLLECTION_FORMATS = exports.RequiredError = exports.FetchError = exports.ResponseError = exports.BaseAPI = exports.DefaultConfig = exports.Configuration = exports.BASE_PATH = void 0;
+		exports.BASE_PATH = "https://prod-1-data.ke.pinecone.io/assistant".replace(/\/+$/, "");
+		class Configuration {
+		    constructor(configuration = {}) {
+		        this.configuration = configuration;
+		    }
+		    set config(configuration) {
+		        this.configuration = configuration;
+		    }
+		    get basePath() {
+		        return this.configuration.basePath != null ? this.configuration.basePath : exports.BASE_PATH;
+		    }
+		    get fetchApi() {
+		        return this.configuration.fetchApi;
+		    }
+		    get middleware() {
+		        return this.configuration.middleware || [];
+		    }
+		    get queryParamsStringify() {
+		        return this.configuration.queryParamsStringify || querystring;
+		    }
+		    get username() {
+		        return this.configuration.username;
+		    }
+		    get password() {
+		        return this.configuration.password;
+		    }
+		    get apiKey() {
+		        const apiKey = this.configuration.apiKey;
+		        if (apiKey) {
+		            return typeof apiKey === 'function' ? apiKey : () => apiKey;
+		        }
+		        return undefined;
+		    }
+		    get accessToken() {
+		        const accessToken = this.configuration.accessToken;
+		        if (accessToken) {
+		            return typeof accessToken === 'function' ? accessToken : async () => accessToken;
+		        }
+		        return undefined;
+		    }
+		    get headers() {
+		        return this.configuration.headers;
+		    }
+		    get credentials() {
+		        return this.configuration.credentials;
+		    }
+		}
+		exports.Configuration = Configuration;
+		exports.DefaultConfig = new Configuration();
+		/**
+		 * This is the base class for all generated API classes.
+		 */
+		class BaseAPI {
+		    constructor(configuration = exports.DefaultConfig) {
+		        this.configuration = configuration;
+		        this.fetchApi = async (url, init) => {
+		            let fetchParams = { url, init };
+		            for (const middleware of this.middleware) {
+		                if (middleware.pre) {
+		                    fetchParams = await middleware.pre({
+		                        fetch: this.fetchApi,
+		                        ...fetchParams,
+		                    }) || fetchParams;
+		                }
+		            }
+		            let response = undefined;
+		            try {
+		                response = await (this.configuration.fetchApi || fetch)(fetchParams.url, fetchParams.init);
+		            }
+		            catch (e) {
+		                for (const middleware of this.middleware) {
+		                    if (middleware.onError) {
+		                        response = await middleware.onError({
+		                            fetch: this.fetchApi,
+		                            url: fetchParams.url,
+		                            init: fetchParams.init,
+		                            error: e,
+		                            response: response ? response.clone() : undefined,
+		                        }) || response;
+		                    }
+		                }
+		                if (response === undefined) {
+		                    if (e instanceof Error) {
+		                        throw new FetchError(e, 'The request failed and the interceptors did not return an alternative response');
+		                    }
+		                    else {
+		                        throw e;
+		                    }
+		                }
+		            }
+		            for (const middleware of this.middleware) {
+		                if (middleware.post) {
+		                    response = await middleware.post({
+		                        fetch: this.fetchApi,
+		                        url: fetchParams.url,
+		                        init: fetchParams.init,
+		                        response: response.clone(),
+		                    }) || response;
+		                }
+		            }
+		            return response;
+		        };
+		        this.middleware = configuration.middleware;
+		    }
+		    withMiddleware(...middlewares) {
+		        const next = this.clone();
+		        next.middleware = next.middleware.concat(...middlewares);
+		        return next;
+		    }
+		    withPreMiddleware(...preMiddlewares) {
+		        const middlewares = preMiddlewares.map((pre) => ({ pre }));
+		        return this.withMiddleware(...middlewares);
+		    }
+		    withPostMiddleware(...postMiddlewares) {
+		        const middlewares = postMiddlewares.map((post) => ({ post }));
+		        return this.withMiddleware(...middlewares);
+		    }
+		    /**
+		     * Check if the given MIME is a JSON MIME.
+		     * JSON MIME examples:
+		     *   application/json
+		     *   application/json; charset=UTF8
+		     *   APPLICATION/JSON
+		     *   application/vnd.company+json
+		     * @param mime - MIME (Multipurpose Internet Mail Extensions)
+		     * @return True if the given MIME is JSON, false otherwise.
+		     */
+		    isJsonMime(mime) {
+		        if (!mime) {
+		            return false;
+		        }
+		        return BaseAPI.jsonRegex.test(mime);
+		    }
+		    async request(context, initOverrides) {
+		        const { url, init } = await this.createFetchParams(context, initOverrides);
+		        const response = await this.fetchApi(url, init);
+		        if (response && (response.status >= 200 && response.status < 300)) {
+		            return response;
+		        }
+		        throw new ResponseError(response, 'Response returned an error code');
+		    }
+		    async createFetchParams(context, initOverrides) {
+		        let url = this.configuration.basePath + context.path;
+		        if (context.query !== undefined && Object.keys(context.query).length !== 0) {
+		            // only add the querystring to the URL if there are query parameters.
+		            // this is done to avoid urls ending with a "?" character which buggy webservers
+		            // do not handle correctly sometimes.
+		            url += '?' + this.configuration.queryParamsStringify(context.query);
+		        }
+		        const headers = Object.assign({}, this.configuration.headers, context.headers);
+		        Object.keys(headers).forEach(key => headers[key] === undefined ? delete headers[key] : {});
+		        const initOverrideFn = typeof initOverrides === "function"
+		            ? initOverrides
+		            : async () => initOverrides;
+		        const initParams = {
+		            method: context.method,
+		            headers,
+		            body: context.body,
+		            credentials: this.configuration.credentials,
+		        };
+		        const overriddenInit = {
+		            ...initParams,
+		            ...(await initOverrideFn({
+		                init: initParams,
+		                context,
+		            }))
+		        };
+		        let body;
+		        if (isFormData(overriddenInit.body)
+		            || (overriddenInit.body instanceof URLSearchParams)
+		            || isBlob(overriddenInit.body)) {
+		            body = overriddenInit.body;
+		        }
+		        else if (this.isJsonMime(headers['Content-Type'])) {
+		            body = JSON.stringify(overriddenInit.body);
+		        }
+		        else {
+		            body = overriddenInit.body;
+		        }
+		        const init = {
+		            ...overriddenInit,
+		            body
+		        };
+		        return { url, init };
+		    }
+		    /**
+		     * Create a shallow clone of `this` by constructing a new instance
+		     * and then shallow cloning data members.
+		     */
+		    clone() {
+		        const constructor = this.constructor;
+		        const next = new constructor(this.configuration);
+		        next.middleware = this.middleware.slice();
+		        return next;
+		    }
+		}
+		exports.BaseAPI = BaseAPI;
+		BaseAPI.jsonRegex = new RegExp('^(:?application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(:?;.*)?$', 'i');
+		function isBlob(value) {
+		    return typeof Blob !== 'undefined' && value instanceof Blob;
+		}
+		function isFormData(value) {
+		    return typeof FormData !== "undefined" && value instanceof FormData;
+		}
+		class ResponseError extends Error {
+		    constructor(response, msg) {
+		        super(msg);
+		        this.response = response;
+		        this.name = "ResponseError";
+		    }
+		}
+		exports.ResponseError = ResponseError;
+		class FetchError extends Error {
+		    constructor(cause, msg) {
+		        super(msg);
+		        this.cause = cause;
+		        this.name = "FetchError";
+		    }
+		}
+		exports.FetchError = FetchError;
+		class RequiredError extends Error {
+		    constructor(field, msg) {
+		        super(msg);
+		        this.field = field;
+		        this.name = "RequiredError";
+		    }
+		}
+		exports.RequiredError = RequiredError;
+		exports.COLLECTION_FORMATS = {
+		    csv: ",",
+		    ssv: " ",
+		    tsv: "\t",
+		    pipes: "|",
+		};
+		function exists(json, key) {
+		    const value = json[key];
+		    return value !== null && value !== undefined;
+		}
+		exports.exists = exists;
+		function querystring(params, prefix = '') {
+		    return Object.keys(params)
+		        .map(key => querystringSingleKey(key, params[key], prefix))
+		        .filter(part => part.length > 0)
+		        .join('&');
+		}
+		exports.querystring = querystring;
+		function querystringSingleKey(key, value, keyPrefix = '') {
+		    const fullKey = keyPrefix + (keyPrefix.length ? `[${key}]` : key);
+		    if (value instanceof Array) {
+		        const multiValue = value.map(singleValue => encodeURIComponent(String(singleValue)))
+		            .join(`&${encodeURIComponent(fullKey)}=`);
+		        return `${encodeURIComponent(fullKey)}=${multiValue}`;
+		    }
+		    if (value instanceof Set) {
+		        const valueAsArray = Array.from(value);
+		        return querystringSingleKey(key, valueAsArray, keyPrefix);
+		    }
+		    if (value instanceof Date) {
+		        return `${encodeURIComponent(fullKey)}=${encodeURIComponent(value.toISOString())}`;
+		    }
+		    if (value instanceof Object) {
+		        return querystring(value, fullKey);
+		    }
+		    return `${encodeURIComponent(fullKey)}=${encodeURIComponent(String(value))}`;
+		}
+		function mapValues(data, fn) {
+		    return Object.keys(data).reduce((acc, key) => ({ ...acc, [key]: fn(data[key]) }), {});
+		}
+		exports.mapValues = mapValues;
+		function canConsumeForm(consumes) {
+		    for (const consume of consumes) {
+		        if ('multipart/form-data' === consume.contentType) {
+		            return true;
+		        }
+		    }
+		    return false;
+		}
+		exports.canConsumeForm = canConsumeForm;
+		class JSONApiResponse {
+		    constructor(raw, transformer = (jsonValue) => jsonValue) {
+		        this.raw = raw;
+		        this.transformer = transformer;
+		    }
+		    async value() {
+		        return this.transformer(await this.raw.json());
+		    }
+		}
+		exports.JSONApiResponse = JSONApiResponse;
+		class VoidApiResponse {
+		    constructor(raw) {
+		        this.raw = raw;
+		    }
+		    async value() {
+		        return undefined;
+		    }
+		}
+		exports.VoidApiResponse = VoidApiResponse;
+		class BlobApiResponse {
+		    constructor(raw) {
+		        this.raw = raw;
+		    }
+		    async value() {
+		        return await this.raw.blob();
+		    }
+		    ;
+		}
+		exports.BlobApiResponse = BlobApiResponse;
+		class TextApiResponse {
+		    constructor(raw) {
+		        this.raw = raw;
+		    }
+		    async value() {
+		        return await this.raw.text();
+		    }
+		    ;
+		}
+		exports.TextApiResponse = TextApiResponse;
+		
+	} (runtime$3));
+	return runtime$3;
+}
+
+var apis$3 = {};
+
+var MetricsApi = {};
+
+var models$3 = {};
+
+var AlignmentRequest = {};
+
+var hasRequiredAlignmentRequest;
+
+function requireAlignmentRequest () {
+	if (hasRequiredAlignmentRequest) return AlignmentRequest;
+	hasRequiredAlignmentRequest = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Evaluation API
+	 * Provides endpoints for evaluating RAG systems using various metrics.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(AlignmentRequest, "__esModule", { value: true });
+	AlignmentRequest.AlignmentRequestToJSON = AlignmentRequest.AlignmentRequestFromJSONTyped = AlignmentRequest.AlignmentRequestFromJSON = AlignmentRequest.instanceOfAlignmentRequest = void 0;
+	/**
+	 * Check if a given object implements the AlignmentRequest interface.
+	 */
+	function instanceOfAlignmentRequest(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "question" in value;
+	    isInstance = isInstance && "answer" in value;
+	    isInstance = isInstance && "groundTruthAnswer" in value;
+	    return isInstance;
+	}
+	AlignmentRequest.instanceOfAlignmentRequest = instanceOfAlignmentRequest;
+	function AlignmentRequestFromJSON(json) {
+	    return AlignmentRequestFromJSONTyped(json);
+	}
+	AlignmentRequest.AlignmentRequestFromJSON = AlignmentRequestFromJSON;
+	function AlignmentRequestFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'question': json['question'],
+	        'answer': json['answer'],
+	        'groundTruthAnswer': json['ground_truth_answer'],
+	    };
+	}
+	AlignmentRequest.AlignmentRequestFromJSONTyped = AlignmentRequestFromJSONTyped;
+	function AlignmentRequestToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'question': value.question,
+	        'answer': value.answer,
+	        'ground_truth_answer': value.groundTruthAnswer,
+	    };
+	}
+	AlignmentRequest.AlignmentRequestToJSON = AlignmentRequestToJSON;
+	
+	return AlignmentRequest;
+}
+
+var AlignmentResponse = {};
+
+var Metrics = {};
+
+var hasRequiredMetrics;
+
+function requireMetrics () {
+	if (hasRequiredMetrics) return Metrics;
+	hasRequiredMetrics = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Evaluation API
+	 * Provides endpoints for evaluating RAG systems using various metrics.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(Metrics, "__esModule", { value: true });
+	Metrics.MetricsToJSON = Metrics.MetricsFromJSONTyped = Metrics.MetricsFromJSON = Metrics.instanceOfMetrics = void 0;
+	/**
+	 * Check if a given object implements the Metrics interface.
+	 */
+	function instanceOfMetrics(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "correctness" in value;
+	    isInstance = isInstance && "completeness" in value;
+	    isInstance = isInstance && "alignment" in value;
+	    return isInstance;
+	}
+	Metrics.instanceOfMetrics = instanceOfMetrics;
+	function MetricsFromJSON(json) {
+	    return MetricsFromJSONTyped(json);
+	}
+	Metrics.MetricsFromJSON = MetricsFromJSON;
+	function MetricsFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'correctness': json['correctness'],
+	        'completeness': json['completeness'],
+	        'alignment': json['alignment'],
+	    };
+	}
+	Metrics.MetricsFromJSONTyped = MetricsFromJSONTyped;
+	function MetricsToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'correctness': value.correctness,
+	        'completeness': value.completeness,
+	        'alignment': value.alignment,
+	    };
+	}
+	Metrics.MetricsToJSON = MetricsToJSON;
+	
+	return Metrics;
+}
+
+var Reasoning = {};
+
+var EvaluatedFact = {};
+
+var Entailment = {};
+
+var hasRequiredEntailment;
+
+function requireEntailment () {
+	if (hasRequiredEntailment) return Entailment;
+	hasRequiredEntailment = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Evaluation API
+	 * Provides endpoints for evaluating RAG systems using various metrics.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(Entailment, "__esModule", { value: true });
+	Entailment.EntailmentToJSON = Entailment.EntailmentFromJSONTyped = Entailment.EntailmentFromJSON = Entailment.Entailment = void 0;
+	/**
+	 * The entailment of a fact.
+	 * @export
+	 */
+	Entailment.Entailment = {
+	    Entailed: 'entailed',
+	    Contradicted: 'contradicted',
+	    Neutral: 'neutral'
+	};
+	function EntailmentFromJSON(json) {
+	    return EntailmentFromJSONTyped(json);
+	}
+	Entailment.EntailmentFromJSON = EntailmentFromJSON;
+	function EntailmentFromJSONTyped(json, ignoreDiscriminator) {
+	    return json;
+	}
+	Entailment.EntailmentFromJSONTyped = EntailmentFromJSONTyped;
+	function EntailmentToJSON(value) {
+	    return value;
+	}
+	Entailment.EntailmentToJSON = EntailmentToJSON;
+	
+	return Entailment;
+}
+
+var Fact = {};
+
+var hasRequiredFact;
+
+function requireFact () {
+	if (hasRequiredFact) return Fact;
+	hasRequiredFact = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Evaluation API
+	 * Provides endpoints for evaluating RAG systems using various metrics.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(Fact, "__esModule", { value: true });
+	Fact.FactToJSON = Fact.FactFromJSONTyped = Fact.FactFromJSON = Fact.instanceOfFact = void 0;
+	/**
+	 * Check if a given object implements the Fact interface.
+	 */
+	function instanceOfFact(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "content" in value;
+	    return isInstance;
+	}
+	Fact.instanceOfFact = instanceOfFact;
+	function FactFromJSON(json) {
+	    return FactFromJSONTyped(json);
+	}
+	Fact.FactFromJSON = FactFromJSON;
+	function FactFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'content': json['content'],
+	    };
+	}
+	Fact.FactFromJSONTyped = FactFromJSONTyped;
+	function FactToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'content': value.content,
+	    };
+	}
+	Fact.FactToJSON = FactToJSON;
+	
+	return Fact;
+}
+
+var hasRequiredEvaluatedFact;
+
+function requireEvaluatedFact () {
+	if (hasRequiredEvaluatedFact) return EvaluatedFact;
+	hasRequiredEvaluatedFact = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Evaluation API
+	 * Provides endpoints for evaluating RAG systems using various metrics.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(EvaluatedFact, "__esModule", { value: true });
+	EvaluatedFact.EvaluatedFactToJSON = EvaluatedFact.EvaluatedFactFromJSONTyped = EvaluatedFact.EvaluatedFactFromJSON = EvaluatedFact.instanceOfEvaluatedFact = void 0;
+	const Entailment_1 = requireEntailment();
+	const Fact_1 = requireFact();
+	/**
+	 * Check if a given object implements the EvaluatedFact interface.
+	 */
+	function instanceOfEvaluatedFact(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "fact" in value;
+	    isInstance = isInstance && "entailment" in value;
+	    return isInstance;
+	}
+	EvaluatedFact.instanceOfEvaluatedFact = instanceOfEvaluatedFact;
+	function EvaluatedFactFromJSON(json) {
+	    return EvaluatedFactFromJSONTyped(json);
+	}
+	EvaluatedFact.EvaluatedFactFromJSON = EvaluatedFactFromJSON;
+	function EvaluatedFactFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'fact': (0, Fact_1.FactFromJSON)(json['fact']),
+	        'entailment': (0, Entailment_1.EntailmentFromJSON)(json['entailment']),
+	    };
+	}
+	EvaluatedFact.EvaluatedFactFromJSONTyped = EvaluatedFactFromJSONTyped;
+	function EvaluatedFactToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'fact': (0, Fact_1.FactToJSON)(value.fact),
+	        'entailment': (0, Entailment_1.EntailmentToJSON)(value.entailment),
+	    };
+	}
+	EvaluatedFact.EvaluatedFactToJSON = EvaluatedFactToJSON;
+	
+	return EvaluatedFact;
+}
+
+var hasRequiredReasoning;
+
+function requireReasoning () {
+	if (hasRequiredReasoning) return Reasoning;
+	hasRequiredReasoning = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Evaluation API
+	 * Provides endpoints for evaluating RAG systems using various metrics.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(Reasoning, "__esModule", { value: true });
+	Reasoning.ReasoningToJSON = Reasoning.ReasoningFromJSONTyped = Reasoning.ReasoningFromJSON = Reasoning.instanceOfReasoning = void 0;
+	const EvaluatedFact_1 = requireEvaluatedFact();
+	/**
+	 * Check if a given object implements the Reasoning interface.
+	 */
+	function instanceOfReasoning(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "evaluatedFacts" in value;
+	    return isInstance;
+	}
+	Reasoning.instanceOfReasoning = instanceOfReasoning;
+	function ReasoningFromJSON(json) {
+	    return ReasoningFromJSONTyped(json);
+	}
+	Reasoning.ReasoningFromJSON = ReasoningFromJSON;
+	function ReasoningFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'evaluatedFacts': (json['evaluated_facts'].map(EvaluatedFact_1.EvaluatedFactFromJSON)),
+	    };
+	}
+	Reasoning.ReasoningFromJSONTyped = ReasoningFromJSONTyped;
+	function ReasoningToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'evaluated_facts': (value.evaluatedFacts.map(EvaluatedFact_1.EvaluatedFactToJSON)),
+	    };
+	}
+	Reasoning.ReasoningToJSON = ReasoningToJSON;
+	
+	return Reasoning;
+}
+
+var TokenCounts = {};
+
+var hasRequiredTokenCounts;
+
+function requireTokenCounts () {
+	if (hasRequiredTokenCounts) return TokenCounts;
+	hasRequiredTokenCounts = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Evaluation API
+	 * Provides endpoints for evaluating RAG systems using various metrics.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(TokenCounts, "__esModule", { value: true });
+	TokenCounts.TokenCountsToJSON = TokenCounts.TokenCountsFromJSONTyped = TokenCounts.TokenCountsFromJSON = TokenCounts.instanceOfTokenCounts = void 0;
+	/**
+	 * Check if a given object implements the TokenCounts interface.
+	 */
+	function instanceOfTokenCounts(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "promptTokens" in value;
+	    isInstance = isInstance && "completionTokens" in value;
+	    isInstance = isInstance && "totalTokens" in value;
+	    return isInstance;
+	}
+	TokenCounts.instanceOfTokenCounts = instanceOfTokenCounts;
+	function TokenCountsFromJSON(json) {
+	    return TokenCountsFromJSONTyped(json);
+	}
+	TokenCounts.TokenCountsFromJSON = TokenCountsFromJSON;
+	function TokenCountsFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'promptTokens': json['prompt_tokens'],
+	        'completionTokens': json['completion_tokens'],
+	        'totalTokens': json['total_tokens'],
+	    };
+	}
+	TokenCounts.TokenCountsFromJSONTyped = TokenCountsFromJSONTyped;
+	function TokenCountsToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'prompt_tokens': value.promptTokens,
+	        'completion_tokens': value.completionTokens,
+	        'total_tokens': value.totalTokens,
+	    };
+	}
+	TokenCounts.TokenCountsToJSON = TokenCountsToJSON;
+	
+	return TokenCounts;
+}
+
+var hasRequiredAlignmentResponse;
+
+function requireAlignmentResponse () {
+	if (hasRequiredAlignmentResponse) return AlignmentResponse;
+	hasRequiredAlignmentResponse = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Evaluation API
+	 * Provides endpoints for evaluating RAG systems using various metrics.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(AlignmentResponse, "__esModule", { value: true });
+	AlignmentResponse.AlignmentResponseToJSON = AlignmentResponse.AlignmentResponseFromJSONTyped = AlignmentResponse.AlignmentResponseFromJSON = AlignmentResponse.instanceOfAlignmentResponse = void 0;
+	const Metrics_1 = requireMetrics();
+	const Reasoning_1 = requireReasoning();
+	const TokenCounts_1 = requireTokenCounts();
+	/**
+	 * Check if a given object implements the AlignmentResponse interface.
+	 */
+	function instanceOfAlignmentResponse(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "metrics" in value;
+	    isInstance = isInstance && "reasoning" in value;
+	    isInstance = isInstance && "usage" in value;
+	    return isInstance;
+	}
+	AlignmentResponse.instanceOfAlignmentResponse = instanceOfAlignmentResponse;
+	function AlignmentResponseFromJSON(json) {
+	    return AlignmentResponseFromJSONTyped(json);
+	}
+	AlignmentResponse.AlignmentResponseFromJSON = AlignmentResponseFromJSON;
+	function AlignmentResponseFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'metrics': (0, Metrics_1.MetricsFromJSON)(json['metrics']),
+	        'reasoning': (0, Reasoning_1.ReasoningFromJSON)(json['reasoning']),
+	        'usage': (0, TokenCounts_1.TokenCountsFromJSON)(json['usage']),
+	    };
+	}
+	AlignmentResponse.AlignmentResponseFromJSONTyped = AlignmentResponseFromJSONTyped;
+	function AlignmentResponseToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'metrics': (0, Metrics_1.MetricsToJSON)(value.metrics),
+	        'reasoning': (0, Reasoning_1.ReasoningToJSON)(value.reasoning),
+	        'usage': (0, TokenCounts_1.TokenCountsToJSON)(value.usage),
+	    };
+	}
+	AlignmentResponse.AlignmentResponseToJSON = AlignmentResponseToJSON;
+	
+	return AlignmentResponse;
+}
+
+var BasicErrorResponse = {};
+
+var hasRequiredBasicErrorResponse;
+
+function requireBasicErrorResponse () {
+	if (hasRequiredBasicErrorResponse) return BasicErrorResponse;
+	hasRequiredBasicErrorResponse = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Evaluation API
+	 * Provides endpoints for evaluating RAG systems using various metrics.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(BasicErrorResponse, "__esModule", { value: true });
+	BasicErrorResponse.BasicErrorResponseToJSON = BasicErrorResponse.BasicErrorResponseFromJSONTyped = BasicErrorResponse.BasicErrorResponseFromJSON = BasicErrorResponse.instanceOfBasicErrorResponse = void 0;
+	/**
+	 * Check if a given object implements the BasicErrorResponse interface.
+	 */
+	function instanceOfBasicErrorResponse(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "message" in value;
+	    return isInstance;
+	}
+	BasicErrorResponse.instanceOfBasicErrorResponse = instanceOfBasicErrorResponse;
+	function BasicErrorResponseFromJSON(json) {
+	    return BasicErrorResponseFromJSONTyped(json);
+	}
+	BasicErrorResponse.BasicErrorResponseFromJSON = BasicErrorResponseFromJSON;
+	function BasicErrorResponseFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'message': json['message'],
+	    };
+	}
+	BasicErrorResponse.BasicErrorResponseFromJSONTyped = BasicErrorResponseFromJSONTyped;
+	function BasicErrorResponseToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'message': value.message,
+	    };
+	}
+	BasicErrorResponse.BasicErrorResponseToJSON = BasicErrorResponseToJSON;
+	
+	return BasicErrorResponse;
+}
+
+var hasRequiredModels$3;
+
+function requireModels$3 () {
+	if (hasRequiredModels$3) return models$3;
+	hasRequiredModels$3 = 1;
+	(function (exports) {
+		var __createBinding = (models$3 && models$3.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    var desc = Object.getOwnPropertyDescriptor(m, k);
+		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+		      desc = { enumerable: true, get: function() { return m[k]; } };
+		    }
+		    Object.defineProperty(o, k2, desc);
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __exportStar = (models$3 && models$3.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		/* tslint:disable */
+		/* eslint-disable */
+		__exportStar(requireAlignmentRequest(), exports);
+		__exportStar(requireAlignmentResponse(), exports);
+		__exportStar(requireBasicErrorResponse(), exports);
+		__exportStar(requireEntailment(), exports);
+		__exportStar(requireEvaluatedFact(), exports);
+		__exportStar(requireFact(), exports);
+		__exportStar(requireMetrics(), exports);
+		__exportStar(requireReasoning(), exports);
+		__exportStar(requireTokenCounts(), exports);
+		
+	} (models$3));
+	return models$3;
+}
+
+var hasRequiredMetricsApi;
+
+function requireMetricsApi () {
+	if (hasRequiredMetricsApi) return MetricsApi;
+	hasRequiredMetricsApi = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Evaluation API
+	 * Provides endpoints for evaluating RAG systems using various metrics.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	var __createBinding = (MetricsApi && MetricsApi.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    var desc = Object.getOwnPropertyDescriptor(m, k);
+	    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+	      desc = { enumerable: true, get: function() { return m[k]; } };
+	    }
+	    Object.defineProperty(o, k2, desc);
+	}) : (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    o[k2] = m[k];
+	}));
+	var __setModuleDefault = (MetricsApi && MetricsApi.__setModuleDefault) || (Object.create ? (function(o, v) {
+	    Object.defineProperty(o, "default", { enumerable: true, value: v });
+	}) : function(o, v) {
+	    o["default"] = v;
+	});
+	var __importStar = (MetricsApi && MetricsApi.__importStar) || function (mod) {
+	    if (mod && mod.__esModule) return mod;
+	    var result = {};
+	    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+	    __setModuleDefault(result, mod);
+	    return result;
+	};
+	Object.defineProperty(MetricsApi, "__esModule", { value: true });
+	MetricsApi.MetricsApi = void 0;
+	const runtime = __importStar(requireRuntime$3());
+	const index_1 = requireModels$3();
+	/**
+	 *
+	 */
+	let MetricsApi$1 = class MetricsApi extends runtime.BaseAPI {
+	    /**
+	     * Evaluate the correctness and completeness of a response from an assistant or a RAG system. The correctness and completeness are evaluated based on the precision and recall of the generated answer with respect to the ground truth answer facts. Alignment is the harmonic mean of correctness and completeness.  For guidance and examples, see [Evaluate answers](https://docs.pinecone.io/guides/assistant/evaluate-answers).
+	     * Evaluate an answer
+	     */
+	    async metricsAlignmentRaw(requestParameters, initOverrides) {
+	        if (requestParameters.alignmentRequest === null || requestParameters.alignmentRequest === undefined) {
+	            throw new runtime.RequiredError('alignmentRequest', 'Required parameter requestParameters.alignmentRequest was null or undefined when calling metricsAlignment.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/json';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/evaluation/metrics/alignment`,
+	            method: 'POST',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: (0, index_1.AlignmentRequestToJSON)(requestParameters.alignmentRequest),
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.AlignmentResponseFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Evaluate the correctness and completeness of a response from an assistant or a RAG system. The correctness and completeness are evaluated based on the precision and recall of the generated answer with respect to the ground truth answer facts. Alignment is the harmonic mean of correctness and completeness.  For guidance and examples, see [Evaluate answers](https://docs.pinecone.io/guides/assistant/evaluate-answers).
+	     * Evaluate an answer
+	     */
+	    async metricsAlignment(requestParameters, initOverrides) {
+	        const response = await this.metricsAlignmentRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	};
+	MetricsApi.MetricsApi = MetricsApi$1;
+	
+	return MetricsApi;
+}
+
+var hasRequiredApis$3;
+
+function requireApis$3 () {
+	if (hasRequiredApis$3) return apis$3;
+	hasRequiredApis$3 = 1;
+	(function (exports) {
+		var __createBinding = (apis$3 && apis$3.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    var desc = Object.getOwnPropertyDescriptor(m, k);
+		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+		      desc = { enumerable: true, get: function() { return m[k]; } };
+		    }
+		    Object.defineProperty(o, k2, desc);
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __exportStar = (apis$3 && apis$3.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		/* tslint:disable */
+		/* eslint-disable */
+		__exportStar(requireMetricsApi(), exports);
+		
+	} (apis$3));
+	return apis$3;
+}
+
+var api_version$3 = {};
+
+var hasRequiredApi_version$3;
+
+function requireApi_version$3 () {
+	if (hasRequiredApi_version$3) return api_version$3;
+	hasRequiredApi_version$3 = 1;
+	Object.defineProperty(api_version$3, "__esModule", { value: true });
+	api_version$3.X_PINECONE_API_VERSION = void 0;
+	api_version$3.X_PINECONE_API_VERSION = '2025-04';
+	
+	return api_version$3;
+}
+
+var hasRequiredAssistant_evaluation;
+
+function requireAssistant_evaluation () {
+	if (hasRequiredAssistant_evaluation) return assistant_evaluation;
+	hasRequiredAssistant_evaluation = 1;
+	(function (exports) {
+		var __createBinding = (assistant_evaluation && assistant_evaluation.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    var desc = Object.getOwnPropertyDescriptor(m, k);
+		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+		      desc = { enumerable: true, get: function() { return m[k]; } };
+		    }
+		    Object.defineProperty(o, k2, desc);
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __exportStar = (assistant_evaluation && assistant_evaluation.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		/* tslint:disable */
+		/* eslint-disable */
+		__exportStar(requireRuntime$3(), exports);
+		__exportStar(requireApis$3(), exports);
+		__exportStar(requireModels$3(), exports);
+		__exportStar(requireApi_version$3(), exports);
+		
+	} (assistant_evaluation));
+	return assistant_evaluation;
+}
+
+var hasRequiredAsstMetricsOperationsBuilder;
+
+function requireAsstMetricsOperationsBuilder () {
+	if (hasRequiredAsstMetricsOperationsBuilder) return asstMetricsOperationsBuilder;
+	hasRequiredAsstMetricsOperationsBuilder = 1;
+	Object.defineProperty(asstMetricsOperationsBuilder, "__esModule", { value: true });
+	asstMetricsOperationsBuilder.asstMetricsOperationsBuilder = void 0;
+	const assistant_evaluation_1 = requireAssistant_evaluation();
+	const utils_1 = requireUtils();
+	const middleware_1 = requireMiddleware();
+	const asstMetricsOperationsBuilder$1 = (config) => {
+	    const { apiKey } = config;
+	    let hostUrl = 'https://prod-1-data.ke.pinecone.io/assistant';
+	    // If 'eu' is specified use that, otherwise default to 'us'
+	    if (config.assistantRegion && config.assistantRegion.toLowerCase() === 'eu') {
+	        hostUrl = 'https://prod-eu-data.ke.pinecone.io/assistant';
+	    }
+	    const headers = config.additionalHeaders || null;
+	    const apiConfig = {
+	        basePath: hostUrl,
+	        apiKey,
+	        queryParamsStringify: utils_1.queryParamsStringify,
+	        headers: {
+	            'User-Agent': (0, utils_1.buildUserAgent)(config),
+	            'X-Pinecone-Api-Version': assistant_evaluation_1.X_PINECONE_API_VERSION,
+	            ...headers,
+	        },
+	        fetchApi: (0, utils_1.getFetch)(config),
+	        middleware: middleware_1.middleware,
+	    };
+	    return new assistant_evaluation_1.MetricsApi(new assistant_evaluation_1.Configuration(apiConfig));
+	};
+	asstMetricsOperationsBuilder.asstMetricsOperationsBuilder = asstMetricsOperationsBuilder$1;
+	
+	return asstMetricsOperationsBuilder;
+}
+
+var hasRequiredControl;
+
+function requireControl () {
+	if (hasRequiredControl) return control;
+	hasRequiredControl = 1;
+	(function (exports) {
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.asstMetricsOperationsBuilder = exports.asstControlOperationsBuilder = exports.updateAssistant = exports.listAssistants = exports.describeAssistant = exports.deleteAssistant = exports.createAssistant = void 0;
+		var createAssistant_1 = requireCreateAssistant();
+		Object.defineProperty(exports, "createAssistant", { enumerable: true, get: function () { return createAssistant_1.createAssistant; } });
+		var deleteAssistant_1 = requireDeleteAssistant();
+		Object.defineProperty(exports, "deleteAssistant", { enumerable: true, get: function () { return deleteAssistant_1.deleteAssistant; } });
+		var describeAssistant_1 = requireDescribeAssistant();
+		Object.defineProperty(exports, "describeAssistant", { enumerable: true, get: function () { return describeAssistant_1.describeAssistant; } });
+		var listAssistants_1 = requireListAssistants();
+		Object.defineProperty(exports, "listAssistants", { enumerable: true, get: function () { return listAssistants_1.listAssistants; } });
+		var updateAssistant_1 = requireUpdateAssistant();
+		Object.defineProperty(exports, "updateAssistant", { enumerable: true, get: function () { return updateAssistant_1.updateAssistant; } });
+		var asstControlOperationsBuilder_1 = requireAsstControlOperationsBuilder();
+		Object.defineProperty(exports, "asstControlOperationsBuilder", { enumerable: true, get: function () { return asstControlOperationsBuilder_1.asstControlOperationsBuilder; } });
+		var asstMetricsOperationsBuilder_1 = requireAsstMetricsOperationsBuilder();
+		Object.defineProperty(exports, "asstMetricsOperationsBuilder", { enumerable: true, get: function () { return asstMetricsOperationsBuilder_1.asstMetricsOperationsBuilder; } });
+		
+	} (control));
+	return control;
+}
+
+var assistantHostSingleton = {};
+
+var hasRequiredAssistantHostSingleton;
+
+function requireAssistantHostSingleton () {
+	if (hasRequiredAssistantHostSingleton) return assistantHostSingleton;
+	hasRequiredAssistantHostSingleton = 1;
+	Object.defineProperty(assistantHostSingleton, "__esModule", { value: true });
+	assistantHostSingleton.AssistantHostSingleton = void 0;
+	const utils_1 = requireUtils();
+	const asstControlOperationsBuilder_1 = requireAsstControlOperationsBuilder();
+	const control_1 = requireControl();
+	assistantHostSingleton.AssistantHostSingleton = (function () {
+	    const hostUrls = {}; // map of apiKey-assistantName to hostUrl
+	    function ensureAssistantPath(url) {
+	        if (!url.endsWith('/assistant')) {
+	            // Append "/assistant" if it doesn't already end with it
+	            url = url.endsWith('/') ? `${url}assistant` : `${url}/assistant`;
+	        }
+	        return url;
+	    }
+	    const _describeAssistant = async (config, assistantName) => {
+	        const assistantControlApi = (0, asstControlOperationsBuilder_1.asstControlOperationsBuilder)(config);
+	        const describeResponse = await (0, control_1.describeAssistant)(assistantControlApi)(assistantName);
+	        const host = describeResponse?.host;
+	        if (!host) {
+	            // if the host is empty for some reason, default based on region
+	            let defaultHost = 'https://prod-1-data.ke.pinecone.io';
+	            // If 'eu' is specified use that, otherwise default to 'us'
+	            if (config.assistantRegion &&
+	                config.assistantRegion.toLowerCase() === 'eu') {
+	                defaultHost = 'https://prod-eu-data.ke.pinecone.io';
+	            }
+	            return defaultHost;
+	        }
+	        else {
+	            return host;
+	        }
+	    };
+	    const _key = (config, assistantName) => `${config.apiKey}-${assistantName}`;
+	    // singleton object
+	    const singleton = {
+	        getHostUrl: async (config, assistantName) => {
+	            const cacheKey = _key(config, assistantName);
+	            if (cacheKey in hostUrls) {
+	                return hostUrls[cacheKey];
+	            }
+	            else {
+	                const hostUrl = await _describeAssistant(config, assistantName);
+	                hostUrls[cacheKey] = (0, utils_1.normalizeUrl)(ensureAssistantPath(hostUrl));
+	            }
+	            return hostUrls[cacheKey];
+	        },
+	        _reset: () => {
+	            for (const key of Object.keys(hostUrls)) {
+	                delete hostUrls[key];
+	            }
+	        },
+	        _set: (config, assistantName, hostUrl) => {
+	            const normalizedHostUrl = (0, utils_1.normalizeUrl)(ensureAssistantPath(hostUrl));
+	            // prevent adding an empty hostUrl to the cache
+	            if (!hostUrl || !normalizedHostUrl) {
+	                return;
+	            }
+	            const cacheKey = _key(config, assistantName);
+	            hostUrls[cacheKey] = normalizedHostUrl;
+	        },
+	        _delete: (config, assistantName) => {
+	            const cacheKey = _key(config, assistantName);
+	            delete hostUrls[cacheKey];
+	        },
+	    };
+	    return singleton;
+	})();
+	
+	return assistantHostSingleton;
+}
+
+var indexHostSingleton = {};
+
+var hasRequiredIndexHostSingleton;
+
+function requireIndexHostSingleton () {
+	if (hasRequiredIndexHostSingleton) return indexHostSingleton;
+	hasRequiredIndexHostSingleton = 1;
+	Object.defineProperty(indexHostSingleton, "__esModule", { value: true });
+	indexHostSingleton.IndexHostSingleton = void 0;
+	const control_1 = requireControl$1();
+	const errors_1 = requireErrors();
+	const utils_1 = requireUtils();
+	// We use describeIndex to retrieve the data plane url (host) for a given API key
+	// and index. We only ever want to call describeIndex a maximum of once per API key
+	// and index, so we cache them in a singleton for reuse.
+	indexHostSingleton.IndexHostSingleton = (function () {
+	    const hostUrls = {}; // map of apiKey-indexName to hostUrl
+	    const _describeIndex = async (config, indexName) => {
+	        const indexOperationsApi = (0, control_1.indexOperationsBuilder)(config);
+	        const describeResponse = await (0, control_1.describeIndex)(indexOperationsApi)(indexName);
+	        const host = describeResponse.host;
+	        if (!host) {
+	            // Generally, middleware will handle most errors from the call itself such as index not found, etc
+	            // However, we need to explicitly handle the optionality of status.host
+	            throw new errors_1.PineconeUnableToResolveHostError('The HTTP call succeeded but the host URL could not be resolved. Please make sure the index exists and is in a ready state.');
+	        }
+	        else {
+	            return host;
+	        }
+	    };
+	    const _key = (config, indexName) => `${config.apiKey}-${indexName}`;
+	    const singleton = {
+	        getHostUrl: async (config, indexName) => {
+	            const cacheKey = _key(config, indexName);
+	            if (cacheKey in hostUrls) {
+	                return hostUrls[cacheKey];
+	            }
+	            else {
+	                const hostUrl = await _describeIndex(config, indexName);
+	                singleton._set(config, indexName, hostUrl);
+	                if (!hostUrls[cacheKey]) {
+	                    throw new errors_1.PineconeUnableToResolveHostError(`Could not get host for index: ${indexName}. Call describeIndex('${indexName}') to check the current status.`);
+	                }
+	                return hostUrls[cacheKey];
+	            }
+	        },
+	        _reset: () => {
+	            for (const key of Object.keys(hostUrls)) {
+	                delete hostUrls[key];
+	            }
+	        },
+	        _set: (config, indexName, hostUrl) => {
+	            const normalizedHostUrl = (0, utils_1.normalizeUrl)(hostUrl);
+	            // prevent adding an empty hostUrl to the cache
+	            if (!normalizedHostUrl) {
+	                return;
+	            }
+	            const cacheKey = _key(config, indexName);
+	            hostUrls[cacheKey] = normalizedHostUrl;
+	        },
+	        _delete: (config, indexName) => {
+	            const cacheKey = _key(config, indexName);
+	            delete hostUrls[cacheKey];
+	        },
+	    };
+	    return singleton;
+	})();
+	
+	return indexHostSingleton;
+}
+
+var data = {};
+
+var upsert = {};
+
+var types$1 = {};
+
+var hasRequiredTypes$1;
+
+function requireTypes$1 () {
+	if (hasRequiredTypes$1) return types$1;
+	hasRequiredTypes$1 = 1;
+	Object.defineProperty(types$1, "__esModule", { value: true });
+	types$1.PineconeRecordsProperties = types$1.PineconeConfigurationProperties = void 0;
+	types$1.PineconeConfigurationProperties = [
+	    'apiKey',
+	    'controllerHostUrl',
+	    'fetchApi',
+	    'additionalHeaders',
+	    'sourceTag',
+	    'maxRetries',
+	];
+	types$1.PineconeRecordsProperties = [
+	    'id',
+	    'values',
+	    'sparseValues',
+	    'metadata',
+	];
+	
+	return types$1;
+}
+
+var hasRequiredUpsert;
+
+function requireUpsert () {
+	if (hasRequiredUpsert) return upsert;
+	hasRequiredUpsert = 1;
+	Object.defineProperty(upsert, "__esModule", { value: true });
+	upsert.UpsertCommand = void 0;
+	const types_1 = requireTypes$1();
+	const errors_1 = requireErrors();
+	const validateObjectProperties_1 = requireValidateObjectProperties();
+	const utils_1 = requireUtils();
+	class UpsertCommand {
+	    constructor(apiProvider, namespace) {
+	        this.validator = (records) => {
+	            for (const record of records) {
+	                (0, validateObjectProperties_1.ValidateObjectProperties)(record, types_1.PineconeRecordsProperties);
+	            }
+	            if (records.length === 0) {
+	                throw new errors_1.PineconeArgumentError('Must pass in at least 1 record to upsert.');
+	            }
+	            records.forEach((record) => {
+	                if (!record.id) {
+	                    throw new errors_1.PineconeArgumentError('Every record must include an `id` property in order to upsert.');
+	                }
+	                if (!record.values && !record.sparseValues) {
+	                    throw new errors_1.PineconeArgumentError('Every record must include either `values` or `sparseValues` in order to upsert.');
+	                }
+	            });
+	        };
+	        this.apiProvider = apiProvider;
+	        this.namespace = namespace;
+	    }
+	    async run(records, maxRetries) {
+	        this.validator(records);
+	        const api = await this.apiProvider.provide();
+	        const retryWrapper = new utils_1.RetryOnServerFailure(api.upsertVectors.bind(api), maxRetries);
+	        await retryWrapper.execute({
+	            upsertRequest: {
+	                vectors: records,
+	                namespace: this.namespace,
+	            },
+	        });
+	    }
+	}
+	upsert.UpsertCommand = UpsertCommand;
+	
+	return upsert;
+}
+
+var fetch$1 = {};
+
+var hasRequiredFetch;
+
+function requireFetch () {
+	if (hasRequiredFetch) return fetch$1;
+	hasRequiredFetch = 1;
+	Object.defineProperty(fetch$1, "__esModule", { value: true });
+	fetch$1.FetchCommand = void 0;
+	const errors_1 = requireErrors();
+	class FetchCommand {
+	    constructor(apiProvider, namespace) {
+	        this.validator = (options) => {
+	            if (options.length === 0) {
+	                throw new errors_1.PineconeArgumentError('Must pass in at least 1 recordID.');
+	            }
+	        };
+	        this.apiProvider = apiProvider;
+	        this.namespace = namespace;
+	    }
+	    async run(ids) {
+	        this.validator(ids);
+	        const api = await this.apiProvider.provide();
+	        const response = await api.fetchVectors({
+	            ids: ids,
+	            namespace: this.namespace,
+	        });
+	        // My testing shows that in reality vectors and namespace are
+	        // never undefined even when there are no records returned. So these
+	        // default values are needed only to satisfy the typescript compiler.
+	        return {
+	            records: response.vectors ? response.vectors : {},
+	            namespace: response.namespace ? response.namespace : '',
+	            ...(response.usage && { usage: response.usage }),
+	        };
+	    }
+	}
+	fetch$1.FetchCommand = FetchCommand;
+	
+	return fetch$1;
+}
+
+var update = {};
+
+var hasRequiredUpdate;
+
+function requireUpdate () {
+	if (hasRequiredUpdate) return update;
+	hasRequiredUpdate = 1;
+	Object.defineProperty(update, "__esModule", { value: true });
+	update.UpdateCommand = void 0;
+	const errors_1 = requireErrors();
+	const validateObjectProperties_1 = requireValidateObjectProperties();
+	const utils_1 = requireUtils();
+	const UpdateOptionsProperties = [
+	    'id',
+	    'values',
+	    'sparseValues',
+	    'metadata',
+	];
+	class UpdateCommand {
+	    constructor(apiProvider, namespace) {
+	        this.validator = (options) => {
+	            if (options) {
+	                (0, validateObjectProperties_1.ValidateObjectProperties)(options, UpdateOptionsProperties);
+	            }
+	            if (options && !options.id) {
+	                throw new errors_1.PineconeArgumentError('You must enter a non-empty string for the `id` field in order to update a record.');
+	            }
+	        };
+	        this.apiProvider = apiProvider;
+	        this.namespace = namespace;
+	    }
+	    async run(options, maxRetries) {
+	        this.validator(options);
+	        const requestOptions = {
+	            id: options['id'],
+	            values: options['values'],
+	            sparseValues: options['sparseValues'],
+	            setMetadata: options['metadata'],
+	        };
+	        const api = await this.apiProvider.provide();
+	        const retryWrapper = new utils_1.RetryOnServerFailure(api.updateVector.bind(api), maxRetries);
+	        await retryWrapper.execute({
+	            updateRequest: { ...requestOptions, namespace: this.namespace },
+	        });
+	        return;
+	    }
+	}
+	update.UpdateCommand = UpdateCommand;
+	
+	return update;
+}
+
+var query = {};
+
+var hasRequiredQuery;
+
+function requireQuery () {
+	if (hasRequiredQuery) return query;
+	hasRequiredQuery = 1;
+	Object.defineProperty(query, "__esModule", { value: true });
+	query.QueryCommand = void 0;
+	const errors_1 = requireErrors();
+	const validateObjectProperties_1 = requireValidateObjectProperties();
+	const QueryOptionsProperties = [
+	    'id',
+	    'vector',
+	    'sparseVector',
+	    'includeValues',
+	    'includeMetadata',
+	    'filter',
+	    'topK',
+	];
+	class QueryCommand {
+	    constructor(apiProvider, namespace) {
+	        this.validator = (options) => {
+	            if (options) {
+	                (0, validateObjectProperties_1.ValidateObjectProperties)(options, QueryOptionsProperties);
+	            }
+	            if (!options) {
+	                throw new errors_1.PineconeArgumentError('You must enter a query configuration object to query the index.');
+	            }
+	            if (options && !options.topK) {
+	                throw new errors_1.PineconeArgumentError('You must enter an integer for the `topK` search results to be returned.');
+	            }
+	            if (options && options.topK && options.topK < 1) {
+	                throw new errors_1.PineconeArgumentError('`topK` property must be greater than 0.');
+	            }
+	            if (options && options.filter) {
+	                const keys = Object.keys(options.filter);
+	                if (keys.length === 0) {
+	                    throw new errors_1.PineconeArgumentError('You must enter a `filter` object with at least one key-value pair.');
+	                }
+	            }
+	            if ('id' in options) {
+	                if (!options.id) {
+	                    throw new errors_1.PineconeArgumentError('You must enter non-empty string for `id` to query by record ID.');
+	                }
+	            }
+	            if ('vector' in options) {
+	                if (options.vector.length === 0) {
+	                    throw new errors_1.PineconeArgumentError('You must enter an array of `RecordValues` in order to query by vector values.');
+	                }
+	            }
+	            if ('sparseVector' in options) {
+	                if (options.sparseVector?.indices.length === 0 ||
+	                    options.sparseVector?.values.length === 0) {
+	                    throw new errors_1.PineconeArgumentError('You must enter a `RecordSparseValues` object with `indices` and `values` properties in order to query by' +
+	                        ' sparse vector values.');
+	                }
+	            }
+	        };
+	        this.apiProvider = apiProvider;
+	        this.namespace = namespace;
+	    }
+	    async run(query) {
+	        this.validator(query);
+	        const api = await this.apiProvider.provide();
+	        const results = await api.queryVectors({
+	            queryRequest: { ...query, namespace: this.namespace },
+	        });
+	        const matches = results.matches ? results.matches : [];
+	        return {
+	            matches: matches,
+	            namespace: this.namespace,
+	            ...(results.usage && { usage: results.usage }),
+	        };
+	    }
+	}
+	query.QueryCommand = QueryCommand;
+	
+	return query;
+}
+
+var deleteOne = {};
+
+var hasRequiredDeleteOne;
+
+function requireDeleteOne () {
+	if (hasRequiredDeleteOne) return deleteOne;
+	hasRequiredDeleteOne = 1;
+	Object.defineProperty(deleteOne, "__esModule", { value: true });
+	deleteOne.deleteOne = void 0;
+	const errors_1 = requireErrors();
+	const deleteOne$1 = (apiProvider, namespace) => {
+	    const validator = (options) => {
+	        if (!options) {
+	            throw new errors_1.PineconeArgumentError('You must pass a non-empty string for `options` in order to delete a record.');
+	        }
+	    };
+	    return async (options) => {
+	        validator(options);
+	        const api = await apiProvider.provide();
+	        await api.deleteVectors({ deleteRequest: { ids: [options], namespace } });
+	        return;
+	    };
+	};
+	deleteOne.deleteOne = deleteOne$1;
+	
+	return deleteOne;
+}
+
+var deleteMany = {};
+
+var hasRequiredDeleteMany;
+
+function requireDeleteMany () {
+	if (hasRequiredDeleteMany) return deleteMany;
+	hasRequiredDeleteMany = 1;
+	Object.defineProperty(deleteMany, "__esModule", { value: true });
+	deleteMany.deleteMany = void 0;
+	const errors_1 = requireErrors();
+	const deleteMany$1 = (apiProvider, namespace) => {
+	    const FilterValidator = (options) => {
+	        for (const key in options) {
+	            if (!options[key]) {
+	                throw new errors_1.PineconeArgumentError(`\`filter\` property cannot be empty for key ${key}`);
+	            }
+	        }
+	    };
+	    const validator = (options) => {
+	        if (!Array.isArray(options)) {
+	            return FilterValidator(options);
+	        }
+	        else {
+	            if (options.length === 0) {
+	                throw new errors_1.PineconeArgumentError('Must pass in at least 1 record ID.');
+	            }
+	        }
+	    };
+	    return async (options) => {
+	        validator(options);
+	        const requestOptions = {};
+	        if (Array.isArray(options)) {
+	            requestOptions.ids = options;
+	        }
+	        else {
+	            requestOptions.filter = options;
+	        }
+	        const api = await apiProvider.provide();
+	        await api.deleteVectors({
+	            deleteRequest: { ...requestOptions, namespace },
+	        });
+	    };
+	};
+	deleteMany.deleteMany = deleteMany$1;
+	
+	return deleteMany;
+}
+
+var deleteAll = {};
+
+var hasRequiredDeleteAll;
+
+function requireDeleteAll () {
+	if (hasRequiredDeleteAll) return deleteAll;
+	hasRequiredDeleteAll = 1;
+	Object.defineProperty(deleteAll, "__esModule", { value: true });
+	deleteAll.deleteAll = void 0;
+	const deleteAll$1 = (apiProvider, namespace) => {
+	    return async () => {
+	        const api = await apiProvider.provide();
+	        await api.deleteVectors({ deleteRequest: { deleteAll: true, namespace } });
+	        return;
+	    };
+	};
+	deleteAll.deleteAll = deleteAll$1;
+	
+	return deleteAll;
+}
+
+var describeIndexStats = {};
+
+var hasRequiredDescribeIndexStats;
+
+function requireDescribeIndexStats () {
+	if (hasRequiredDescribeIndexStats) return describeIndexStats;
+	hasRequiredDescribeIndexStats = 1;
+	Object.defineProperty(describeIndexStats, "__esModule", { value: true });
+	describeIndexStats.describeIndexStats = void 0;
+	const errors_1 = requireErrors();
+	const validateObjectProperties_1 = requireValidateObjectProperties();
+	const describeIndexStats$1 = (apiProvider) => {
+	    const validator = (options) => {
+	        if (options) {
+	            (0, validateObjectProperties_1.ValidateObjectProperties)(options, ['filter']);
+	        }
+	        const map = options['filter'];
+	        for (const key in map) {
+	            if (!map[key]) {
+	                throw new errors_1.PineconeArgumentError(`\`filter\` property cannot be empty for ${key}`);
+	            }
+	        }
+	    };
+	    return async (options) => {
+	        if (options) {
+	            validator(options);
+	        }
+	        const api = await apiProvider.provide();
+	        const results = await api.describeIndexStats({
+	            describeIndexStatsRequest: { ...options },
+	        });
+	        const mappedResult = {
+	            namespaces: {},
+	            dimension: results.dimension,
+	            indexFullness: results.indexFullness,
+	            totalRecordCount: results.totalVectorCount,
+	        };
+	        if (results.namespaces) {
+	            for (const key in results.namespaces) {
+	                mappedResult.namespaces[key] = {
+	                    recordCount: results.namespaces[key].vectorCount,
+	                };
+	            }
+	        }
+	        return mappedResult;
+	    };
+	};
+	describeIndexStats.describeIndexStats = describeIndexStats$1;
+	
+	return describeIndexStats;
+}
+
+var vectorOperationsProvider = {};
+
+var db_data = {};
+
+var runtime$2 = {};
+
+var hasRequiredRuntime$2;
+
+function requireRuntime$2 () {
+	if (hasRequiredRuntime$2) return runtime$2;
+	hasRequiredRuntime$2 = 1;
+	(function (exports) {
+		/* tslint:disable */
+		/* eslint-disable */
+		/**
+		 * Pinecone Data Plane API
+		 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+		 *
+		 * The version of the OpenAPI document: 2025-04
+		 * Contact: support@pinecone.io
+		 *
+		 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+		 * https://openapi-generator.tech
+		 * Do not edit the class manually.
+		 */
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.TextApiResponse = exports.BlobApiResponse = exports.VoidApiResponse = exports.JSONApiResponse = exports.canConsumeForm = exports.mapValues = exports.querystring = exports.exists = exports.COLLECTION_FORMATS = exports.RequiredError = exports.FetchError = exports.ResponseError = exports.BaseAPI = exports.DefaultConfig = exports.Configuration = exports.BASE_PATH = void 0;
+		exports.BASE_PATH = "https://unknown".replace(/\/+$/, "");
+		class Configuration {
+		    constructor(configuration = {}) {
+		        this.configuration = configuration;
+		    }
+		    set config(configuration) {
+		        this.configuration = configuration;
+		    }
+		    get basePath() {
+		        return this.configuration.basePath != null ? this.configuration.basePath : exports.BASE_PATH;
+		    }
+		    get fetchApi() {
+		        return this.configuration.fetchApi;
+		    }
+		    get middleware() {
+		        return this.configuration.middleware || [];
+		    }
+		    get queryParamsStringify() {
+		        return this.configuration.queryParamsStringify || querystring;
+		    }
+		    get username() {
+		        return this.configuration.username;
+		    }
+		    get password() {
+		        return this.configuration.password;
+		    }
+		    get apiKey() {
+		        const apiKey = this.configuration.apiKey;
+		        if (apiKey) {
+		            return typeof apiKey === 'function' ? apiKey : () => apiKey;
+		        }
+		        return undefined;
+		    }
+		    get accessToken() {
+		        const accessToken = this.configuration.accessToken;
+		        if (accessToken) {
+		            return typeof accessToken === 'function' ? accessToken : async () => accessToken;
+		        }
+		        return undefined;
+		    }
+		    get headers() {
+		        return this.configuration.headers;
+		    }
+		    get credentials() {
+		        return this.configuration.credentials;
+		    }
+		}
+		exports.Configuration = Configuration;
+		exports.DefaultConfig = new Configuration();
+		/**
+		 * This is the base class for all generated API classes.
+		 */
+		class BaseAPI {
+		    constructor(configuration = exports.DefaultConfig) {
+		        this.configuration = configuration;
+		        this.fetchApi = async (url, init) => {
+		            let fetchParams = { url, init };
+		            for (const middleware of this.middleware) {
+		                if (middleware.pre) {
+		                    fetchParams = await middleware.pre({
+		                        fetch: this.fetchApi,
+		                        ...fetchParams,
+		                    }) || fetchParams;
+		                }
+		            }
+		            let response = undefined;
+		            try {
+		                response = await (this.configuration.fetchApi || fetch)(fetchParams.url, fetchParams.init);
+		            }
+		            catch (e) {
+		                for (const middleware of this.middleware) {
+		                    if (middleware.onError) {
+		                        response = await middleware.onError({
+		                            fetch: this.fetchApi,
+		                            url: fetchParams.url,
+		                            init: fetchParams.init,
+		                            error: e,
+		                            response: response ? response.clone() : undefined,
+		                        }) || response;
+		                    }
+		                }
+		                if (response === undefined) {
+		                    if (e instanceof Error) {
+		                        throw new FetchError(e, 'The request failed and the interceptors did not return an alternative response');
+		                    }
+		                    else {
+		                        throw e;
+		                    }
+		                }
+		            }
+		            for (const middleware of this.middleware) {
+		                if (middleware.post) {
+		                    response = await middleware.post({
+		                        fetch: this.fetchApi,
+		                        url: fetchParams.url,
+		                        init: fetchParams.init,
+		                        response: response.clone(),
+		                    }) || response;
+		                }
+		            }
+		            return response;
+		        };
+		        this.middleware = configuration.middleware;
+		    }
+		    withMiddleware(...middlewares) {
+		        const next = this.clone();
+		        next.middleware = next.middleware.concat(...middlewares);
+		        return next;
+		    }
+		    withPreMiddleware(...preMiddlewares) {
+		        const middlewares = preMiddlewares.map((pre) => ({ pre }));
+		        return this.withMiddleware(...middlewares);
+		    }
+		    withPostMiddleware(...postMiddlewares) {
+		        const middlewares = postMiddlewares.map((post) => ({ post }));
+		        return this.withMiddleware(...middlewares);
+		    }
+		    /**
+		     * Check if the given MIME is a JSON MIME.
+		     * JSON MIME examples:
+		     *   application/json
+		     *   application/json; charset=UTF8
+		     *   APPLICATION/JSON
+		     *   application/vnd.company+json
+		     * @param mime - MIME (Multipurpose Internet Mail Extensions)
+		     * @return True if the given MIME is JSON, false otherwise.
+		     */
+		    isJsonMime(mime) {
+		        if (!mime) {
+		            return false;
+		        }
+		        return BaseAPI.jsonRegex.test(mime);
+		    }
+		    async request(context, initOverrides) {
+		        const { url, init } = await this.createFetchParams(context, initOverrides);
+		        const response = await this.fetchApi(url, init);
+		        if (response && (response.status >= 200 && response.status < 300)) {
+		            return response;
+		        }
+		        throw new ResponseError(response, 'Response returned an error code');
+		    }
+		    async createFetchParams(context, initOverrides) {
+		        let url = this.configuration.basePath + context.path;
+		        if (context.query !== undefined && Object.keys(context.query).length !== 0) {
+		            // only add the querystring to the URL if there are query parameters.
+		            // this is done to avoid urls ending with a "?" character which buggy webservers
+		            // do not handle correctly sometimes.
+		            url += '?' + this.configuration.queryParamsStringify(context.query);
+		        }
+		        const headers = Object.assign({}, this.configuration.headers, context.headers);
+		        Object.keys(headers).forEach(key => headers[key] === undefined ? delete headers[key] : {});
+		        const initOverrideFn = typeof initOverrides === "function"
+		            ? initOverrides
+		            : async () => initOverrides;
+		        const initParams = {
+		            method: context.method,
+		            headers,
+		            body: context.body,
+		            credentials: this.configuration.credentials,
+		        };
+		        const overriddenInit = {
+		            ...initParams,
+		            ...(await initOverrideFn({
+		                init: initParams,
+		                context,
+		            }))
+		        };
+		        let body;
+		        if (isFormData(overriddenInit.body)
+		            || (overriddenInit.body instanceof URLSearchParams)
+		            || isBlob(overriddenInit.body)) {
+		            body = overriddenInit.body;
+		        }
+		        else if (this.isJsonMime(headers['Content-Type'])) {
+		            body = JSON.stringify(overriddenInit.body);
+		        }
+		        else {
+		            body = overriddenInit.body;
+		        }
+		        const init = {
+		            ...overriddenInit,
+		            body
+		        };
+		        return { url, init };
+		    }
+		    /**
+		     * Create a shallow clone of `this` by constructing a new instance
+		     * and then shallow cloning data members.
+		     */
+		    clone() {
+		        const constructor = this.constructor;
+		        const next = new constructor(this.configuration);
+		        next.middleware = this.middleware.slice();
+		        return next;
+		    }
+		}
+		exports.BaseAPI = BaseAPI;
+		BaseAPI.jsonRegex = new RegExp('^(:?application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(:?;.*)?$', 'i');
+		function isBlob(value) {
+		    return typeof Blob !== 'undefined' && value instanceof Blob;
+		}
+		function isFormData(value) {
+		    return typeof FormData !== "undefined" && value instanceof FormData;
+		}
+		class ResponseError extends Error {
+		    constructor(response, msg) {
+		        super(msg);
+		        this.response = response;
+		        this.name = "ResponseError";
+		    }
+		}
+		exports.ResponseError = ResponseError;
+		class FetchError extends Error {
+		    constructor(cause, msg) {
+		        super(msg);
+		        this.cause = cause;
+		        this.name = "FetchError";
+		    }
+		}
+		exports.FetchError = FetchError;
+		class RequiredError extends Error {
+		    constructor(field, msg) {
+		        super(msg);
+		        this.field = field;
+		        this.name = "RequiredError";
+		    }
+		}
+		exports.RequiredError = RequiredError;
+		exports.COLLECTION_FORMATS = {
+		    csv: ",",
+		    ssv: " ",
+		    tsv: "\t",
+		    pipes: "|",
+		};
+		function exists(json, key) {
+		    const value = json[key];
+		    return value !== null && value !== undefined;
+		}
+		exports.exists = exists;
+		function querystring(params, prefix = '') {
+		    return Object.keys(params)
+		        .map(key => querystringSingleKey(key, params[key], prefix))
+		        .filter(part => part.length > 0)
+		        .join('&');
+		}
+		exports.querystring = querystring;
+		function querystringSingleKey(key, value, keyPrefix = '') {
+		    const fullKey = keyPrefix + (keyPrefix.length ? `[${key}]` : key);
+		    if (value instanceof Array) {
+		        const multiValue = value.map(singleValue => encodeURIComponent(String(singleValue)))
+		            .join(`&${encodeURIComponent(fullKey)}=`);
+		        return `${encodeURIComponent(fullKey)}=${multiValue}`;
+		    }
+		    if (value instanceof Set) {
+		        const valueAsArray = Array.from(value);
+		        return querystringSingleKey(key, valueAsArray, keyPrefix);
+		    }
+		    if (value instanceof Date) {
+		        return `${encodeURIComponent(fullKey)}=${encodeURIComponent(value.toISOString())}`;
+		    }
+		    if (value instanceof Object) {
+		        return querystring(value, fullKey);
+		    }
+		    return `${encodeURIComponent(fullKey)}=${encodeURIComponent(String(value))}`;
+		}
+		function mapValues(data, fn) {
+		    return Object.keys(data).reduce((acc, key) => ({ ...acc, [key]: fn(data[key]) }), {});
+		}
+		exports.mapValues = mapValues;
+		function canConsumeForm(consumes) {
+		    for (const consume of consumes) {
+		        if ('multipart/form-data' === consume.contentType) {
+		            return true;
+		        }
+		    }
+		    return false;
+		}
+		exports.canConsumeForm = canConsumeForm;
+		class JSONApiResponse {
+		    constructor(raw, transformer = (jsonValue) => jsonValue) {
+		        this.raw = raw;
+		        this.transformer = transformer;
+		    }
+		    async value() {
+		        return this.transformer(await this.raw.json());
+		    }
+		}
+		exports.JSONApiResponse = JSONApiResponse;
+		class VoidApiResponse {
+		    constructor(raw) {
+		        this.raw = raw;
+		    }
+		    async value() {
+		        return undefined;
+		    }
+		}
+		exports.VoidApiResponse = VoidApiResponse;
+		class BlobApiResponse {
+		    constructor(raw) {
+		        this.raw = raw;
+		    }
+		    async value() {
+		        return await this.raw.blob();
+		    }
+		    ;
+		}
+		exports.BlobApiResponse = BlobApiResponse;
+		class TextApiResponse {
+		    constructor(raw) {
+		        this.raw = raw;
+		    }
+		    async value() {
+		        return await this.raw.text();
+		    }
+		    ;
+		}
+		exports.TextApiResponse = TextApiResponse;
+		
+	} (runtime$2));
+	return runtime$2;
+}
+
+var apis$2 = {};
+
+var BulkOperationsApi = {};
+
+var models$2 = {};
+
+var DeleteRequest = {};
+
+var hasRequiredDeleteRequest;
+
+function requireDeleteRequest () {
+	if (hasRequiredDeleteRequest) return DeleteRequest;
+	hasRequiredDeleteRequest = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(DeleteRequest, "__esModule", { value: true });
+	DeleteRequest.DeleteRequestToJSON = DeleteRequest.DeleteRequestFromJSONTyped = DeleteRequest.DeleteRequestFromJSON = DeleteRequest.instanceOfDeleteRequest = void 0;
+	const runtime_1 = requireRuntime$2();
+	/**
+	 * Check if a given object implements the DeleteRequest interface.
+	 */
+	function instanceOfDeleteRequest(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	DeleteRequest.instanceOfDeleteRequest = instanceOfDeleteRequest;
+	function DeleteRequestFromJSON(json) {
+	    return DeleteRequestFromJSONTyped(json);
+	}
+	DeleteRequest.DeleteRequestFromJSON = DeleteRequestFromJSON;
+	function DeleteRequestFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'ids': !(0, runtime_1.exists)(json, 'ids') ? undefined : json['ids'],
+	        'deleteAll': !(0, runtime_1.exists)(json, 'deleteAll') ? undefined : json['deleteAll'],
+	        'namespace': !(0, runtime_1.exists)(json, 'namespace') ? undefined : json['namespace'],
+	        'filter': !(0, runtime_1.exists)(json, 'filter') ? undefined : json['filter'],
+	    };
+	}
+	DeleteRequest.DeleteRequestFromJSONTyped = DeleteRequestFromJSONTyped;
+	function DeleteRequestToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'ids': value.ids,
+	        'deleteAll': value.deleteAll,
+	        'namespace': value.namespace,
+	        'filter': value.filter,
+	    };
+	}
+	DeleteRequest.DeleteRequestToJSON = DeleteRequestToJSON;
+	
+	return DeleteRequest;
+}
+
+var DescribeIndexStatsRequest = {};
+
+var hasRequiredDescribeIndexStatsRequest;
+
+function requireDescribeIndexStatsRequest () {
+	if (hasRequiredDescribeIndexStatsRequest) return DescribeIndexStatsRequest;
+	hasRequiredDescribeIndexStatsRequest = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(DescribeIndexStatsRequest, "__esModule", { value: true });
+	DescribeIndexStatsRequest.DescribeIndexStatsRequestToJSON = DescribeIndexStatsRequest.DescribeIndexStatsRequestFromJSONTyped = DescribeIndexStatsRequest.DescribeIndexStatsRequestFromJSON = DescribeIndexStatsRequest.instanceOfDescribeIndexStatsRequest = void 0;
+	const runtime_1 = requireRuntime$2();
+	/**
+	 * Check if a given object implements the DescribeIndexStatsRequest interface.
+	 */
+	function instanceOfDescribeIndexStatsRequest(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	DescribeIndexStatsRequest.instanceOfDescribeIndexStatsRequest = instanceOfDescribeIndexStatsRequest;
+	function DescribeIndexStatsRequestFromJSON(json) {
+	    return DescribeIndexStatsRequestFromJSONTyped(json);
+	}
+	DescribeIndexStatsRequest.DescribeIndexStatsRequestFromJSON = DescribeIndexStatsRequestFromJSON;
+	function DescribeIndexStatsRequestFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'filter': !(0, runtime_1.exists)(json, 'filter') ? undefined : json['filter'],
+	    };
+	}
+	DescribeIndexStatsRequest.DescribeIndexStatsRequestFromJSONTyped = DescribeIndexStatsRequestFromJSONTyped;
+	function DescribeIndexStatsRequestToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'filter': value.filter,
+	    };
+	}
+	DescribeIndexStatsRequest.DescribeIndexStatsRequestToJSON = DescribeIndexStatsRequestToJSON;
+	
+	return DescribeIndexStatsRequest;
+}
+
+var FetchResponse = {};
+
+var Usage = {};
+
+var hasRequiredUsage;
+
+function requireUsage () {
+	if (hasRequiredUsage) return Usage;
+	hasRequiredUsage = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(Usage, "__esModule", { value: true });
+	Usage.UsageToJSON = Usage.UsageFromJSONTyped = Usage.UsageFromJSON = Usage.instanceOfUsage = void 0;
+	const runtime_1 = requireRuntime$2();
+	/**
+	 * Check if a given object implements the Usage interface.
+	 */
+	function instanceOfUsage(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	Usage.instanceOfUsage = instanceOfUsage;
+	function UsageFromJSON(json) {
+	    return UsageFromJSONTyped(json);
+	}
+	Usage.UsageFromJSON = UsageFromJSON;
+	function UsageFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'readUnits': !(0, runtime_1.exists)(json, 'readUnits') ? undefined : json['readUnits'],
+	    };
+	}
+	Usage.UsageFromJSONTyped = UsageFromJSONTyped;
+	function UsageToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'readUnits': value.readUnits,
+	    };
+	}
+	Usage.UsageToJSON = UsageToJSON;
+	
+	return Usage;
+}
+
+var Vector = {};
+
+var SparseValues = {};
+
+var hasRequiredSparseValues;
+
+function requireSparseValues () {
+	if (hasRequiredSparseValues) return SparseValues;
+	hasRequiredSparseValues = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(SparseValues, "__esModule", { value: true });
+	SparseValues.SparseValuesToJSON = SparseValues.SparseValuesFromJSONTyped = SparseValues.SparseValuesFromJSON = SparseValues.instanceOfSparseValues = void 0;
+	/**
+	 * Check if a given object implements the SparseValues interface.
+	 */
+	function instanceOfSparseValues(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "indices" in value;
+	    isInstance = isInstance && "values" in value;
+	    return isInstance;
+	}
+	SparseValues.instanceOfSparseValues = instanceOfSparseValues;
+	function SparseValuesFromJSON(json) {
+	    return SparseValuesFromJSONTyped(json);
+	}
+	SparseValues.SparseValuesFromJSON = SparseValuesFromJSON;
+	function SparseValuesFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'indices': json['indices'],
+	        'values': json['values'],
+	    };
+	}
+	SparseValues.SparseValuesFromJSONTyped = SparseValuesFromJSONTyped;
+	function SparseValuesToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'indices': value.indices,
+	        'values': value.values,
+	    };
+	}
+	SparseValues.SparseValuesToJSON = SparseValuesToJSON;
+	
+	return SparseValues;
+}
+
+var hasRequiredVector;
+
+function requireVector () {
+	if (hasRequiredVector) return Vector;
+	hasRequiredVector = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(Vector, "__esModule", { value: true });
+	Vector.VectorToJSON = Vector.VectorFromJSONTyped = Vector.VectorFromJSON = Vector.instanceOfVector = void 0;
+	const runtime_1 = requireRuntime$2();
+	const SparseValues_1 = requireSparseValues();
+	/**
+	 * Check if a given object implements the Vector interface.
+	 */
+	function instanceOfVector(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "id" in value;
+	    return isInstance;
+	}
+	Vector.instanceOfVector = instanceOfVector;
+	function VectorFromJSON(json) {
+	    return VectorFromJSONTyped(json);
+	}
+	Vector.VectorFromJSON = VectorFromJSON;
+	function VectorFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'id': json['id'],
+	        'values': !(0, runtime_1.exists)(json, 'values') ? undefined : json['values'],
+	        'sparseValues': !(0, runtime_1.exists)(json, 'sparseValues') ? undefined : (0, SparseValues_1.SparseValuesFromJSON)(json['sparseValues']),
+	        'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : json['metadata'],
+	    };
+	}
+	Vector.VectorFromJSONTyped = VectorFromJSONTyped;
+	function VectorToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'id': value.id,
+	        'values': value.values,
+	        'sparseValues': (0, SparseValues_1.SparseValuesToJSON)(value.sparseValues),
+	        'metadata': value.metadata,
+	    };
+	}
+	Vector.VectorToJSON = VectorToJSON;
+	
+	return Vector;
+}
+
+var hasRequiredFetchResponse;
+
+function requireFetchResponse () {
+	if (hasRequiredFetchResponse) return FetchResponse;
+	hasRequiredFetchResponse = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(FetchResponse, "__esModule", { value: true });
+	FetchResponse.FetchResponseToJSON = FetchResponse.FetchResponseFromJSONTyped = FetchResponse.FetchResponseFromJSON = FetchResponse.instanceOfFetchResponse = void 0;
+	const runtime_1 = requireRuntime$2();
+	const Usage_1 = requireUsage();
+	const Vector_1 = requireVector();
+	/**
+	 * Check if a given object implements the FetchResponse interface.
+	 */
+	function instanceOfFetchResponse(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	FetchResponse.instanceOfFetchResponse = instanceOfFetchResponse;
+	function FetchResponseFromJSON(json) {
+	    return FetchResponseFromJSONTyped(json);
+	}
+	FetchResponse.FetchResponseFromJSON = FetchResponseFromJSON;
+	function FetchResponseFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'vectors': !(0, runtime_1.exists)(json, 'vectors') ? undefined : ((0, runtime_1.mapValues)(json['vectors'], Vector_1.VectorFromJSON)),
+	        'namespace': !(0, runtime_1.exists)(json, 'namespace') ? undefined : json['namespace'],
+	        'usage': !(0, runtime_1.exists)(json, 'usage') ? undefined : (0, Usage_1.UsageFromJSON)(json['usage']),
+	    };
+	}
+	FetchResponse.FetchResponseFromJSONTyped = FetchResponseFromJSONTyped;
+	function FetchResponseToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'vectors': value.vectors === undefined ? undefined : ((0, runtime_1.mapValues)(value.vectors, Vector_1.VectorToJSON)),
+	        'namespace': value.namespace,
+	        'usage': (0, Usage_1.UsageToJSON)(value.usage),
+	    };
+	}
+	FetchResponse.FetchResponseToJSON = FetchResponseToJSON;
+	
+	return FetchResponse;
+}
+
+var Hit = {};
+
+var hasRequiredHit;
+
+function requireHit () {
+	if (hasRequiredHit) return Hit;
+	hasRequiredHit = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(Hit, "__esModule", { value: true });
+	Hit.HitToJSON = Hit.HitFromJSONTyped = Hit.HitFromJSON = Hit.instanceOfHit = void 0;
+	/**
+	 * Check if a given object implements the Hit interface.
+	 */
+	function instanceOfHit(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "_id" in value;
+	    isInstance = isInstance && "_score" in value;
+	    isInstance = isInstance && "fields" in value;
+	    return isInstance;
+	}
+	Hit.instanceOfHit = instanceOfHit;
+	function HitFromJSON(json) {
+	    return HitFromJSONTyped(json);
+	}
+	Hit.HitFromJSON = HitFromJSON;
+	function HitFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        '_id': json['_id'],
+	        '_score': json['_score'],
+	        'fields': json['fields'],
+	    };
+	}
+	Hit.HitFromJSONTyped = HitFromJSONTyped;
+	function HitToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        '_id': value._id,
+	        '_score': value._score,
+	        'fields': value.fields,
+	    };
+	}
+	Hit.HitToJSON = HitToJSON;
+	
+	return Hit;
+}
+
+var ImportErrorMode = {};
+
+var hasRequiredImportErrorMode;
+
+function requireImportErrorMode () {
+	if (hasRequiredImportErrorMode) return ImportErrorMode;
+	hasRequiredImportErrorMode = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ImportErrorMode, "__esModule", { value: true });
+	ImportErrorMode.ImportErrorModeToJSON = ImportErrorMode.ImportErrorModeFromJSONTyped = ImportErrorMode.ImportErrorModeFromJSON = ImportErrorMode.instanceOfImportErrorMode = ImportErrorMode.ImportErrorModeOnErrorEnum = void 0;
+	const runtime_1 = requireRuntime$2();
+	/**
+	 * @export
+	 */
+	ImportErrorMode.ImportErrorModeOnErrorEnum = {
+	    Abort: 'abort',
+	    Continue: 'continue'
+	};
+	/**
+	 * Check if a given object implements the ImportErrorMode interface.
+	 */
+	function instanceOfImportErrorMode(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ImportErrorMode.instanceOfImportErrorMode = instanceOfImportErrorMode;
+	function ImportErrorModeFromJSON(json) {
+	    return ImportErrorModeFromJSONTyped(json);
+	}
+	ImportErrorMode.ImportErrorModeFromJSON = ImportErrorModeFromJSON;
+	function ImportErrorModeFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'onError': !(0, runtime_1.exists)(json, 'onError') ? undefined : json['onError'],
+	    };
+	}
+	ImportErrorMode.ImportErrorModeFromJSONTyped = ImportErrorModeFromJSONTyped;
+	function ImportErrorModeToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'onError': value.onError,
+	    };
+	}
+	ImportErrorMode.ImportErrorModeToJSON = ImportErrorModeToJSON;
+	
+	return ImportErrorMode;
+}
+
+var ImportModel = {};
+
+var hasRequiredImportModel;
+
+function requireImportModel () {
+	if (hasRequiredImportModel) return ImportModel;
+	hasRequiredImportModel = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ImportModel, "__esModule", { value: true });
+	ImportModel.ImportModelToJSON = ImportModel.ImportModelFromJSONTyped = ImportModel.ImportModelFromJSON = ImportModel.instanceOfImportModel = ImportModel.ImportModelStatusEnum = void 0;
+	const runtime_1 = requireRuntime$2();
+	/**
+	 * @export
+	 */
+	ImportModel.ImportModelStatusEnum = {
+	    Pending: 'Pending',
+	    InProgress: 'InProgress',
+	    Failed: 'Failed',
+	    Completed: 'Completed',
+	    Cancelled: 'Cancelled'
+	};
+	/**
+	 * Check if a given object implements the ImportModel interface.
+	 */
+	function instanceOfImportModel(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ImportModel.instanceOfImportModel = instanceOfImportModel;
+	function ImportModelFromJSON(json) {
+	    return ImportModelFromJSONTyped(json);
+	}
+	ImportModel.ImportModelFromJSON = ImportModelFromJSON;
+	function ImportModelFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'id': !(0, runtime_1.exists)(json, 'id') ? undefined : json['id'],
+	        'uri': !(0, runtime_1.exists)(json, 'uri') ? undefined : json['uri'],
+	        'status': !(0, runtime_1.exists)(json, 'status') ? undefined : json['status'],
+	        'createdAt': !(0, runtime_1.exists)(json, 'createdAt') ? undefined : (new Date(json['createdAt'])),
+	        'finishedAt': !(0, runtime_1.exists)(json, 'finishedAt') ? undefined : (new Date(json['finishedAt'])),
+	        'percentComplete': !(0, runtime_1.exists)(json, 'percentComplete') ? undefined : json['percentComplete'],
+	        'recordsImported': !(0, runtime_1.exists)(json, 'recordsImported') ? undefined : json['recordsImported'],
+	        'error': !(0, runtime_1.exists)(json, 'error') ? undefined : json['error'],
+	    };
+	}
+	ImportModel.ImportModelFromJSONTyped = ImportModelFromJSONTyped;
+	function ImportModelToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'id': value.id,
+	        'uri': value.uri,
+	        'status': value.status,
+	        'createdAt': value.createdAt === undefined ? undefined : (value.createdAt.toISOString()),
+	        'finishedAt': value.finishedAt === undefined ? undefined : (value.finishedAt.toISOString()),
+	        'percentComplete': value.percentComplete,
+	        'recordsImported': value.recordsImported,
+	        'error': value.error,
+	    };
+	}
+	ImportModel.ImportModelToJSON = ImportModelToJSON;
+	
+	return ImportModel;
+}
+
+var IndexDescription = {};
+
+var NamespaceSummary = {};
+
+var hasRequiredNamespaceSummary;
+
+function requireNamespaceSummary () {
+	if (hasRequiredNamespaceSummary) return NamespaceSummary;
+	hasRequiredNamespaceSummary = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(NamespaceSummary, "__esModule", { value: true });
+	NamespaceSummary.NamespaceSummaryToJSON = NamespaceSummary.NamespaceSummaryFromJSONTyped = NamespaceSummary.NamespaceSummaryFromJSON = NamespaceSummary.instanceOfNamespaceSummary = void 0;
+	const runtime_1 = requireRuntime$2();
+	/**
+	 * Check if a given object implements the NamespaceSummary interface.
+	 */
+	function instanceOfNamespaceSummary(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	NamespaceSummary.instanceOfNamespaceSummary = instanceOfNamespaceSummary;
+	function NamespaceSummaryFromJSON(json) {
+	    return NamespaceSummaryFromJSONTyped(json);
+	}
+	NamespaceSummary.NamespaceSummaryFromJSON = NamespaceSummaryFromJSON;
+	function NamespaceSummaryFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'vectorCount': !(0, runtime_1.exists)(json, 'vectorCount') ? undefined : json['vectorCount'],
+	    };
+	}
+	NamespaceSummary.NamespaceSummaryFromJSONTyped = NamespaceSummaryFromJSONTyped;
+	function NamespaceSummaryToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'vectorCount': value.vectorCount,
+	    };
+	}
+	NamespaceSummary.NamespaceSummaryToJSON = NamespaceSummaryToJSON;
+	
+	return NamespaceSummary;
+}
+
+var hasRequiredIndexDescription;
+
+function requireIndexDescription () {
+	if (hasRequiredIndexDescription) return IndexDescription;
+	hasRequiredIndexDescription = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(IndexDescription, "__esModule", { value: true });
+	IndexDescription.IndexDescriptionToJSON = IndexDescription.IndexDescriptionFromJSONTyped = IndexDescription.IndexDescriptionFromJSON = IndexDescription.instanceOfIndexDescription = void 0;
+	const runtime_1 = requireRuntime$2();
+	const NamespaceSummary_1 = requireNamespaceSummary();
+	/**
+	 * Check if a given object implements the IndexDescription interface.
+	 */
+	function instanceOfIndexDescription(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	IndexDescription.instanceOfIndexDescription = instanceOfIndexDescription;
+	function IndexDescriptionFromJSON(json) {
+	    return IndexDescriptionFromJSONTyped(json);
+	}
+	IndexDescription.IndexDescriptionFromJSON = IndexDescriptionFromJSON;
+	function IndexDescriptionFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'namespaces': !(0, runtime_1.exists)(json, 'namespaces') ? undefined : ((0, runtime_1.mapValues)(json['namespaces'], NamespaceSummary_1.NamespaceSummaryFromJSON)),
+	        'dimension': !(0, runtime_1.exists)(json, 'dimension') ? undefined : json['dimension'],
+	        'indexFullness': !(0, runtime_1.exists)(json, 'indexFullness') ? undefined : json['indexFullness'],
+	        'totalVectorCount': !(0, runtime_1.exists)(json, 'totalVectorCount') ? undefined : json['totalVectorCount'],
+	        'metric': !(0, runtime_1.exists)(json, 'metric') ? undefined : json['metric'],
+	        'vectorType': !(0, runtime_1.exists)(json, 'vectorType') ? undefined : json['vectorType'],
+	    };
+	}
+	IndexDescription.IndexDescriptionFromJSONTyped = IndexDescriptionFromJSONTyped;
+	function IndexDescriptionToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'namespaces': value.namespaces === undefined ? undefined : ((0, runtime_1.mapValues)(value.namespaces, NamespaceSummary_1.NamespaceSummaryToJSON)),
+	        'dimension': value.dimension,
+	        'indexFullness': value.indexFullness,
+	        'totalVectorCount': value.totalVectorCount,
+	        'metric': value.metric,
+	        'vectorType': value.vectorType,
+	    };
+	}
+	IndexDescription.IndexDescriptionToJSON = IndexDescriptionToJSON;
+	
+	return IndexDescription;
+}
+
+var ListImportsResponse = {};
+
+var Pagination = {};
+
+var hasRequiredPagination;
+
+function requirePagination () {
+	if (hasRequiredPagination) return Pagination;
+	hasRequiredPagination = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(Pagination, "__esModule", { value: true });
+	Pagination.PaginationToJSON = Pagination.PaginationFromJSONTyped = Pagination.PaginationFromJSON = Pagination.instanceOfPagination = void 0;
+	const runtime_1 = requireRuntime$2();
+	/**
+	 * Check if a given object implements the Pagination interface.
+	 */
+	function instanceOfPagination(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	Pagination.instanceOfPagination = instanceOfPagination;
+	function PaginationFromJSON(json) {
+	    return PaginationFromJSONTyped(json);
+	}
+	Pagination.PaginationFromJSON = PaginationFromJSON;
+	function PaginationFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'next': !(0, runtime_1.exists)(json, 'next') ? undefined : json['next'],
+	    };
+	}
+	Pagination.PaginationFromJSONTyped = PaginationFromJSONTyped;
+	function PaginationToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'next': value.next,
+	    };
+	}
+	Pagination.PaginationToJSON = PaginationToJSON;
+	
+	return Pagination;
+}
+
+var hasRequiredListImportsResponse;
+
+function requireListImportsResponse () {
+	if (hasRequiredListImportsResponse) return ListImportsResponse;
+	hasRequiredListImportsResponse = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ListImportsResponse, "__esModule", { value: true });
+	ListImportsResponse.ListImportsResponseToJSON = ListImportsResponse.ListImportsResponseFromJSONTyped = ListImportsResponse.ListImportsResponseFromJSON = ListImportsResponse.instanceOfListImportsResponse = void 0;
+	const runtime_1 = requireRuntime$2();
+	const ImportModel_1 = requireImportModel();
+	const Pagination_1 = requirePagination();
+	/**
+	 * Check if a given object implements the ListImportsResponse interface.
+	 */
+	function instanceOfListImportsResponse(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ListImportsResponse.instanceOfListImportsResponse = instanceOfListImportsResponse;
+	function ListImportsResponseFromJSON(json) {
+	    return ListImportsResponseFromJSONTyped(json);
+	}
+	ListImportsResponse.ListImportsResponseFromJSON = ListImportsResponseFromJSON;
+	function ListImportsResponseFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'data': !(0, runtime_1.exists)(json, 'data') ? undefined : (json['data'].map(ImportModel_1.ImportModelFromJSON)),
+	        'pagination': !(0, runtime_1.exists)(json, 'pagination') ? undefined : (0, Pagination_1.PaginationFromJSON)(json['pagination']),
+	    };
+	}
+	ListImportsResponse.ListImportsResponseFromJSONTyped = ListImportsResponseFromJSONTyped;
+	function ListImportsResponseToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'data': value.data === undefined ? undefined : (value.data.map(ImportModel_1.ImportModelToJSON)),
+	        'pagination': (0, Pagination_1.PaginationToJSON)(value.pagination),
+	    };
+	}
+	ListImportsResponse.ListImportsResponseToJSON = ListImportsResponseToJSON;
+	
+	return ListImportsResponse;
+}
+
+var ListItem = {};
+
+var hasRequiredListItem;
+
+function requireListItem () {
+	if (hasRequiredListItem) return ListItem;
+	hasRequiredListItem = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ListItem, "__esModule", { value: true });
+	ListItem.ListItemToJSON = ListItem.ListItemFromJSONTyped = ListItem.ListItemFromJSON = ListItem.instanceOfListItem = void 0;
+	const runtime_1 = requireRuntime$2();
+	/**
+	 * Check if a given object implements the ListItem interface.
+	 */
+	function instanceOfListItem(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ListItem.instanceOfListItem = instanceOfListItem;
+	function ListItemFromJSON(json) {
+	    return ListItemFromJSONTyped(json);
+	}
+	ListItem.ListItemFromJSON = ListItemFromJSON;
+	function ListItemFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'id': !(0, runtime_1.exists)(json, 'id') ? undefined : json['id'],
+	    };
+	}
+	ListItem.ListItemFromJSONTyped = ListItemFromJSONTyped;
+	function ListItemToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'id': value.id,
+	    };
+	}
+	ListItem.ListItemToJSON = ListItemToJSON;
+	
+	return ListItem;
+}
+
+var ListNamespacesResponse = {};
+
+var NamespaceDescription = {};
+
+var hasRequiredNamespaceDescription;
+
+function requireNamespaceDescription () {
+	if (hasRequiredNamespaceDescription) return NamespaceDescription;
+	hasRequiredNamespaceDescription = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(NamespaceDescription, "__esModule", { value: true });
+	NamespaceDescription.NamespaceDescriptionToJSON = NamespaceDescription.NamespaceDescriptionFromJSONTyped = NamespaceDescription.NamespaceDescriptionFromJSON = NamespaceDescription.instanceOfNamespaceDescription = void 0;
+	const runtime_1 = requireRuntime$2();
+	/**
+	 * Check if a given object implements the NamespaceDescription interface.
+	 */
+	function instanceOfNamespaceDescription(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	NamespaceDescription.instanceOfNamespaceDescription = instanceOfNamespaceDescription;
+	function NamespaceDescriptionFromJSON(json) {
+	    return NamespaceDescriptionFromJSONTyped(json);
+	}
+	NamespaceDescription.NamespaceDescriptionFromJSON = NamespaceDescriptionFromJSON;
+	function NamespaceDescriptionFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'name': !(0, runtime_1.exists)(json, 'name') ? undefined : json['name'],
+	        'recordCount': !(0, runtime_1.exists)(json, 'record_count') ? undefined : json['record_count'],
+	    };
+	}
+	NamespaceDescription.NamespaceDescriptionFromJSONTyped = NamespaceDescriptionFromJSONTyped;
+	function NamespaceDescriptionToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'name': value.name,
+	        'record_count': value.recordCount,
+	    };
+	}
+	NamespaceDescription.NamespaceDescriptionToJSON = NamespaceDescriptionToJSON;
+	
+	return NamespaceDescription;
+}
+
+var hasRequiredListNamespacesResponse;
+
+function requireListNamespacesResponse () {
+	if (hasRequiredListNamespacesResponse) return ListNamespacesResponse;
+	hasRequiredListNamespacesResponse = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ListNamespacesResponse, "__esModule", { value: true });
+	ListNamespacesResponse.ListNamespacesResponseToJSON = ListNamespacesResponse.ListNamespacesResponseFromJSONTyped = ListNamespacesResponse.ListNamespacesResponseFromJSON = ListNamespacesResponse.instanceOfListNamespacesResponse = void 0;
+	const runtime_1 = requireRuntime$2();
+	const NamespaceDescription_1 = requireNamespaceDescription();
+	const Pagination_1 = requirePagination();
+	/**
+	 * Check if a given object implements the ListNamespacesResponse interface.
+	 */
+	function instanceOfListNamespacesResponse(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ListNamespacesResponse.instanceOfListNamespacesResponse = instanceOfListNamespacesResponse;
+	function ListNamespacesResponseFromJSON(json) {
+	    return ListNamespacesResponseFromJSONTyped(json);
+	}
+	ListNamespacesResponse.ListNamespacesResponseFromJSON = ListNamespacesResponseFromJSON;
+	function ListNamespacesResponseFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'namespaces': !(0, runtime_1.exists)(json, 'namespaces') ? undefined : (json['namespaces'].map(NamespaceDescription_1.NamespaceDescriptionFromJSON)),
+	        'pagination': !(0, runtime_1.exists)(json, 'pagination') ? undefined : (0, Pagination_1.PaginationFromJSON)(json['pagination']),
+	    };
+	}
+	ListNamespacesResponse.ListNamespacesResponseFromJSONTyped = ListNamespacesResponseFromJSONTyped;
+	function ListNamespacesResponseToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'namespaces': value.namespaces === undefined ? undefined : (value.namespaces.map(NamespaceDescription_1.NamespaceDescriptionToJSON)),
+	        'pagination': (0, Pagination_1.PaginationToJSON)(value.pagination),
+	    };
+	}
+	ListNamespacesResponse.ListNamespacesResponseToJSON = ListNamespacesResponseToJSON;
+	
+	return ListNamespacesResponse;
+}
+
+var ListResponse = {};
+
+var hasRequiredListResponse;
+
+function requireListResponse () {
+	if (hasRequiredListResponse) return ListResponse;
+	hasRequiredListResponse = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ListResponse, "__esModule", { value: true });
+	ListResponse.ListResponseToJSON = ListResponse.ListResponseFromJSONTyped = ListResponse.ListResponseFromJSON = ListResponse.instanceOfListResponse = void 0;
+	const runtime_1 = requireRuntime$2();
+	const ListItem_1 = requireListItem();
+	const Pagination_1 = requirePagination();
+	const Usage_1 = requireUsage();
+	/**
+	 * Check if a given object implements the ListResponse interface.
+	 */
+	function instanceOfListResponse(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ListResponse.instanceOfListResponse = instanceOfListResponse;
+	function ListResponseFromJSON(json) {
+	    return ListResponseFromJSONTyped(json);
+	}
+	ListResponse.ListResponseFromJSON = ListResponseFromJSON;
+	function ListResponseFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'vectors': !(0, runtime_1.exists)(json, 'vectors') ? undefined : (json['vectors'].map(ListItem_1.ListItemFromJSON)),
+	        'pagination': !(0, runtime_1.exists)(json, 'pagination') ? undefined : (0, Pagination_1.PaginationFromJSON)(json['pagination']),
+	        'namespace': !(0, runtime_1.exists)(json, 'namespace') ? undefined : json['namespace'],
+	        'usage': !(0, runtime_1.exists)(json, 'usage') ? undefined : (0, Usage_1.UsageFromJSON)(json['usage']),
+	    };
+	}
+	ListResponse.ListResponseFromJSONTyped = ListResponseFromJSONTyped;
+	function ListResponseToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'vectors': value.vectors === undefined ? undefined : (value.vectors.map(ListItem_1.ListItemToJSON)),
+	        'pagination': (0, Pagination_1.PaginationToJSON)(value.pagination),
+	        'namespace': value.namespace,
+	        'usage': (0, Usage_1.UsageToJSON)(value.usage),
+	    };
+	}
+	ListResponse.ListResponseToJSON = ListResponseToJSON;
+	
+	return ListResponse;
+}
+
+var ProtobufAny = {};
+
+var hasRequiredProtobufAny;
+
+function requireProtobufAny () {
+	if (hasRequiredProtobufAny) return ProtobufAny;
+	hasRequiredProtobufAny = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ProtobufAny, "__esModule", { value: true });
+	ProtobufAny.ProtobufAnyToJSON = ProtobufAny.ProtobufAnyFromJSONTyped = ProtobufAny.ProtobufAnyFromJSON = ProtobufAny.instanceOfProtobufAny = void 0;
+	const runtime_1 = requireRuntime$2();
+	/**
+	 * Check if a given object implements the ProtobufAny interface.
+	 */
+	function instanceOfProtobufAny(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ProtobufAny.instanceOfProtobufAny = instanceOfProtobufAny;
+	function ProtobufAnyFromJSON(json) {
+	    return ProtobufAnyFromJSONTyped(json);
+	}
+	ProtobufAny.ProtobufAnyFromJSON = ProtobufAnyFromJSON;
+	function ProtobufAnyFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'typeUrl': !(0, runtime_1.exists)(json, 'typeUrl') ? undefined : json['typeUrl'],
+	        'value': !(0, runtime_1.exists)(json, 'value') ? undefined : json['value'],
+	    };
+	}
+	ProtobufAny.ProtobufAnyFromJSONTyped = ProtobufAnyFromJSONTyped;
+	function ProtobufAnyToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'typeUrl': value.typeUrl,
+	        'value': value.value,
+	    };
+	}
+	ProtobufAny.ProtobufAnyToJSON = ProtobufAnyToJSON;
+	
+	return ProtobufAny;
+}
+
+var ProtobufNullValue = {};
+
+var hasRequiredProtobufNullValue;
+
+function requireProtobufNullValue () {
+	if (hasRequiredProtobufNullValue) return ProtobufNullValue;
+	hasRequiredProtobufNullValue = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ProtobufNullValue, "__esModule", { value: true });
+	ProtobufNullValue.ProtobufNullValueToJSON = ProtobufNullValue.ProtobufNullValueFromJSONTyped = ProtobufNullValue.ProtobufNullValueFromJSON = ProtobufNullValue.ProtobufNullValue = void 0;
+	/**
+	 * `NullValue` is a singleton enumeration to represent the null value for the `Value` type union.
+	 * The JSON representation for `NullValue` is JSON `null`.
+	 * @export
+	 */
+	ProtobufNullValue.ProtobufNullValue = {
+	    NullValue: 'NULL_VALUE'
+	};
+	function ProtobufNullValueFromJSON(json) {
+	    return ProtobufNullValueFromJSONTyped(json);
+	}
+	ProtobufNullValue.ProtobufNullValueFromJSON = ProtobufNullValueFromJSON;
+	function ProtobufNullValueFromJSONTyped(json, ignoreDiscriminator) {
+	    return json;
+	}
+	ProtobufNullValue.ProtobufNullValueFromJSONTyped = ProtobufNullValueFromJSONTyped;
+	function ProtobufNullValueToJSON(value) {
+	    return value;
+	}
+	ProtobufNullValue.ProtobufNullValueToJSON = ProtobufNullValueToJSON;
+	
+	return ProtobufNullValue;
+}
+
+var QueryRequest = {};
+
+var QueryVector = {};
+
+var hasRequiredQueryVector;
+
+function requireQueryVector () {
+	if (hasRequiredQueryVector) return QueryVector;
+	hasRequiredQueryVector = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(QueryVector, "__esModule", { value: true });
+	QueryVector.QueryVectorToJSON = QueryVector.QueryVectorFromJSONTyped = QueryVector.QueryVectorFromJSON = QueryVector.instanceOfQueryVector = void 0;
+	const runtime_1 = requireRuntime$2();
+	const SparseValues_1 = requireSparseValues();
+	/**
+	 * Check if a given object implements the QueryVector interface.
+	 */
+	function instanceOfQueryVector(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "values" in value;
+	    return isInstance;
+	}
+	QueryVector.instanceOfQueryVector = instanceOfQueryVector;
+	function QueryVectorFromJSON(json) {
+	    return QueryVectorFromJSONTyped(json);
+	}
+	QueryVector.QueryVectorFromJSON = QueryVectorFromJSON;
+	function QueryVectorFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'values': json['values'],
+	        'sparseValues': !(0, runtime_1.exists)(json, 'sparseValues') ? undefined : (0, SparseValues_1.SparseValuesFromJSON)(json['sparseValues']),
+	        'topK': !(0, runtime_1.exists)(json, 'topK') ? undefined : json['topK'],
+	        'namespace': !(0, runtime_1.exists)(json, 'namespace') ? undefined : json['namespace'],
+	        'filter': !(0, runtime_1.exists)(json, 'filter') ? undefined : json['filter'],
+	    };
+	}
+	QueryVector.QueryVectorFromJSONTyped = QueryVectorFromJSONTyped;
+	function QueryVectorToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'values': value.values,
+	        'sparseValues': (0, SparseValues_1.SparseValuesToJSON)(value.sparseValues),
+	        'topK': value.topK,
+	        'namespace': value.namespace,
+	        'filter': value.filter,
+	    };
+	}
+	QueryVector.QueryVectorToJSON = QueryVectorToJSON;
+	
+	return QueryVector;
+}
+
+var hasRequiredQueryRequest;
+
+function requireQueryRequest () {
+	if (hasRequiredQueryRequest) return QueryRequest;
+	hasRequiredQueryRequest = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(QueryRequest, "__esModule", { value: true });
+	QueryRequest.QueryRequestToJSON = QueryRequest.QueryRequestFromJSONTyped = QueryRequest.QueryRequestFromJSON = QueryRequest.instanceOfQueryRequest = void 0;
+	const runtime_1 = requireRuntime$2();
+	const QueryVector_1 = requireQueryVector();
+	const SparseValues_1 = requireSparseValues();
+	/**
+	 * Check if a given object implements the QueryRequest interface.
+	 */
+	function instanceOfQueryRequest(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "topK" in value;
+	    return isInstance;
+	}
+	QueryRequest.instanceOfQueryRequest = instanceOfQueryRequest;
+	function QueryRequestFromJSON(json) {
+	    return QueryRequestFromJSONTyped(json);
+	}
+	QueryRequest.QueryRequestFromJSON = QueryRequestFromJSON;
+	function QueryRequestFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'namespace': !(0, runtime_1.exists)(json, 'namespace') ? undefined : json['namespace'],
+	        'topK': json['topK'],
+	        'filter': !(0, runtime_1.exists)(json, 'filter') ? undefined : json['filter'],
+	        'includeValues': !(0, runtime_1.exists)(json, 'includeValues') ? undefined : json['includeValues'],
+	        'includeMetadata': !(0, runtime_1.exists)(json, 'includeMetadata') ? undefined : json['includeMetadata'],
+	        'queries': !(0, runtime_1.exists)(json, 'queries') ? undefined : (json['queries'].map(QueryVector_1.QueryVectorFromJSON)),
+	        'vector': !(0, runtime_1.exists)(json, 'vector') ? undefined : json['vector'],
+	        'sparseVector': !(0, runtime_1.exists)(json, 'sparseVector') ? undefined : (0, SparseValues_1.SparseValuesFromJSON)(json['sparseVector']),
+	        'id': !(0, runtime_1.exists)(json, 'id') ? undefined : json['id'],
+	    };
+	}
+	QueryRequest.QueryRequestFromJSONTyped = QueryRequestFromJSONTyped;
+	function QueryRequestToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'namespace': value.namespace,
+	        'topK': value.topK,
+	        'filter': value.filter,
+	        'includeValues': value.includeValues,
+	        'includeMetadata': value.includeMetadata,
+	        'queries': value.queries === undefined ? undefined : (value.queries.map(QueryVector_1.QueryVectorToJSON)),
+	        'vector': value.vector,
+	        'sparseVector': (0, SparseValues_1.SparseValuesToJSON)(value.sparseVector),
+	        'id': value.id,
+	    };
+	}
+	QueryRequest.QueryRequestToJSON = QueryRequestToJSON;
+	
+	return QueryRequest;
+}
+
+var QueryResponse = {};
+
+var ScoredVector = {};
+
+var hasRequiredScoredVector;
+
+function requireScoredVector () {
+	if (hasRequiredScoredVector) return ScoredVector;
+	hasRequiredScoredVector = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ScoredVector, "__esModule", { value: true });
+	ScoredVector.ScoredVectorToJSON = ScoredVector.ScoredVectorFromJSONTyped = ScoredVector.ScoredVectorFromJSON = ScoredVector.instanceOfScoredVector = void 0;
+	const runtime_1 = requireRuntime$2();
+	const SparseValues_1 = requireSparseValues();
+	/**
+	 * Check if a given object implements the ScoredVector interface.
+	 */
+	function instanceOfScoredVector(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "id" in value;
+	    return isInstance;
+	}
+	ScoredVector.instanceOfScoredVector = instanceOfScoredVector;
+	function ScoredVectorFromJSON(json) {
+	    return ScoredVectorFromJSONTyped(json);
+	}
+	ScoredVector.ScoredVectorFromJSON = ScoredVectorFromJSON;
+	function ScoredVectorFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'id': json['id'],
+	        'score': !(0, runtime_1.exists)(json, 'score') ? undefined : json['score'],
+	        'values': !(0, runtime_1.exists)(json, 'values') ? undefined : json['values'],
+	        'sparseValues': !(0, runtime_1.exists)(json, 'sparseValues') ? undefined : (0, SparseValues_1.SparseValuesFromJSON)(json['sparseValues']),
+	        'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : json['metadata'],
+	    };
+	}
+	ScoredVector.ScoredVectorFromJSONTyped = ScoredVectorFromJSONTyped;
+	function ScoredVectorToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'id': value.id,
+	        'score': value.score,
+	        'values': value.values,
+	        'sparseValues': (0, SparseValues_1.SparseValuesToJSON)(value.sparseValues),
+	        'metadata': value.metadata,
+	    };
+	}
+	ScoredVector.ScoredVectorToJSON = ScoredVectorToJSON;
+	
+	return ScoredVector;
+}
+
+var SingleQueryResults = {};
+
+var hasRequiredSingleQueryResults;
+
+function requireSingleQueryResults () {
+	if (hasRequiredSingleQueryResults) return SingleQueryResults;
+	hasRequiredSingleQueryResults = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(SingleQueryResults, "__esModule", { value: true });
+	SingleQueryResults.SingleQueryResultsToJSON = SingleQueryResults.SingleQueryResultsFromJSONTyped = SingleQueryResults.SingleQueryResultsFromJSON = SingleQueryResults.instanceOfSingleQueryResults = void 0;
+	const runtime_1 = requireRuntime$2();
+	const ScoredVector_1 = requireScoredVector();
+	/**
+	 * Check if a given object implements the SingleQueryResults interface.
+	 */
+	function instanceOfSingleQueryResults(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	SingleQueryResults.instanceOfSingleQueryResults = instanceOfSingleQueryResults;
+	function SingleQueryResultsFromJSON(json) {
+	    return SingleQueryResultsFromJSONTyped(json);
+	}
+	SingleQueryResults.SingleQueryResultsFromJSON = SingleQueryResultsFromJSON;
+	function SingleQueryResultsFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'matches': !(0, runtime_1.exists)(json, 'matches') ? undefined : (json['matches'].map(ScoredVector_1.ScoredVectorFromJSON)),
+	        'namespace': !(0, runtime_1.exists)(json, 'namespace') ? undefined : json['namespace'],
+	    };
+	}
+	SingleQueryResults.SingleQueryResultsFromJSONTyped = SingleQueryResultsFromJSONTyped;
+	function SingleQueryResultsToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'matches': value.matches === undefined ? undefined : (value.matches.map(ScoredVector_1.ScoredVectorToJSON)),
+	        'namespace': value.namespace,
+	    };
+	}
+	SingleQueryResults.SingleQueryResultsToJSON = SingleQueryResultsToJSON;
+	
+	return SingleQueryResults;
+}
+
+var hasRequiredQueryResponse;
+
+function requireQueryResponse () {
+	if (hasRequiredQueryResponse) return QueryResponse;
+	hasRequiredQueryResponse = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(QueryResponse, "__esModule", { value: true });
+	QueryResponse.QueryResponseToJSON = QueryResponse.QueryResponseFromJSONTyped = QueryResponse.QueryResponseFromJSON = QueryResponse.instanceOfQueryResponse = void 0;
+	const runtime_1 = requireRuntime$2();
+	const ScoredVector_1 = requireScoredVector();
+	const SingleQueryResults_1 = requireSingleQueryResults();
+	const Usage_1 = requireUsage();
+	/**
+	 * Check if a given object implements the QueryResponse interface.
+	 */
+	function instanceOfQueryResponse(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	QueryResponse.instanceOfQueryResponse = instanceOfQueryResponse;
+	function QueryResponseFromJSON(json) {
+	    return QueryResponseFromJSONTyped(json);
+	}
+	QueryResponse.QueryResponseFromJSON = QueryResponseFromJSON;
+	function QueryResponseFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'results': !(0, runtime_1.exists)(json, 'results') ? undefined : (json['results'].map(SingleQueryResults_1.SingleQueryResultsFromJSON)),
+	        'matches': !(0, runtime_1.exists)(json, 'matches') ? undefined : (json['matches'].map(ScoredVector_1.ScoredVectorFromJSON)),
+	        'namespace': !(0, runtime_1.exists)(json, 'namespace') ? undefined : json['namespace'],
+	        'usage': !(0, runtime_1.exists)(json, 'usage') ? undefined : (0, Usage_1.UsageFromJSON)(json['usage']),
+	    };
+	}
+	QueryResponse.QueryResponseFromJSONTyped = QueryResponseFromJSONTyped;
+	function QueryResponseToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'results': value.results === undefined ? undefined : (value.results.map(SingleQueryResults_1.SingleQueryResultsToJSON)),
+	        'matches': value.matches === undefined ? undefined : (value.matches.map(ScoredVector_1.ScoredVectorToJSON)),
+	        'namespace': value.namespace,
+	        'usage': (0, Usage_1.UsageToJSON)(value.usage),
+	    };
+	}
+	QueryResponse.QueryResponseToJSON = QueryResponseToJSON;
+	
+	return QueryResponse;
+}
+
+var RpcStatus = {};
+
+var hasRequiredRpcStatus;
+
+function requireRpcStatus () {
+	if (hasRequiredRpcStatus) return RpcStatus;
+	hasRequiredRpcStatus = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(RpcStatus, "__esModule", { value: true });
+	RpcStatus.RpcStatusToJSON = RpcStatus.RpcStatusFromJSONTyped = RpcStatus.RpcStatusFromJSON = RpcStatus.instanceOfRpcStatus = void 0;
+	const runtime_1 = requireRuntime$2();
+	const ProtobufAny_1 = requireProtobufAny();
+	/**
+	 * Check if a given object implements the RpcStatus interface.
+	 */
+	function instanceOfRpcStatus(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	RpcStatus.instanceOfRpcStatus = instanceOfRpcStatus;
+	function RpcStatusFromJSON(json) {
+	    return RpcStatusFromJSONTyped(json);
+	}
+	RpcStatus.RpcStatusFromJSON = RpcStatusFromJSON;
+	function RpcStatusFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'code': !(0, runtime_1.exists)(json, 'code') ? undefined : json['code'],
+	        'message': !(0, runtime_1.exists)(json, 'message') ? undefined : json['message'],
+	        'details': !(0, runtime_1.exists)(json, 'details') ? undefined : (json['details'].map(ProtobufAny_1.ProtobufAnyFromJSON)),
+	    };
+	}
+	RpcStatus.RpcStatusFromJSONTyped = RpcStatusFromJSONTyped;
+	function RpcStatusToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'code': value.code,
+	        'message': value.message,
+	        'details': value.details === undefined ? undefined : (value.details.map(ProtobufAny_1.ProtobufAnyToJSON)),
+	    };
+	}
+	RpcStatus.RpcStatusToJSON = RpcStatusToJSON;
+	
+	return RpcStatus;
+}
+
+var SearchRecordsRequest = {};
+
+var SearchRecordsRequestQuery = {};
+
+var SearchRecordsVector = {};
+
+var hasRequiredSearchRecordsVector;
+
+function requireSearchRecordsVector () {
+	if (hasRequiredSearchRecordsVector) return SearchRecordsVector;
+	hasRequiredSearchRecordsVector = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(SearchRecordsVector, "__esModule", { value: true });
+	SearchRecordsVector.SearchRecordsVectorToJSON = SearchRecordsVector.SearchRecordsVectorFromJSONTyped = SearchRecordsVector.SearchRecordsVectorFromJSON = SearchRecordsVector.instanceOfSearchRecordsVector = void 0;
+	const runtime_1 = requireRuntime$2();
+	/**
+	 * Check if a given object implements the SearchRecordsVector interface.
+	 */
+	function instanceOfSearchRecordsVector(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	SearchRecordsVector.instanceOfSearchRecordsVector = instanceOfSearchRecordsVector;
+	function SearchRecordsVectorFromJSON(json) {
+	    return SearchRecordsVectorFromJSONTyped(json);
+	}
+	SearchRecordsVector.SearchRecordsVectorFromJSON = SearchRecordsVectorFromJSON;
+	function SearchRecordsVectorFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'values': !(0, runtime_1.exists)(json, 'values') ? undefined : json['values'],
+	        'sparseValues': !(0, runtime_1.exists)(json, 'sparse_values') ? undefined : json['sparse_values'],
+	        'sparseIndices': !(0, runtime_1.exists)(json, 'sparse_indices') ? undefined : json['sparse_indices'],
+	    };
+	}
+	SearchRecordsVector.SearchRecordsVectorFromJSONTyped = SearchRecordsVectorFromJSONTyped;
+	function SearchRecordsVectorToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'values': value.values,
+	        'sparse_values': value.sparseValues,
+	        'sparse_indices': value.sparseIndices,
+	    };
+	}
+	SearchRecordsVector.SearchRecordsVectorToJSON = SearchRecordsVectorToJSON;
+	
+	return SearchRecordsVector;
+}
+
+var hasRequiredSearchRecordsRequestQuery;
+
+function requireSearchRecordsRequestQuery () {
+	if (hasRequiredSearchRecordsRequestQuery) return SearchRecordsRequestQuery;
+	hasRequiredSearchRecordsRequestQuery = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(SearchRecordsRequestQuery, "__esModule", { value: true });
+	SearchRecordsRequestQuery.SearchRecordsRequestQueryToJSON = SearchRecordsRequestQuery.SearchRecordsRequestQueryFromJSONTyped = SearchRecordsRequestQuery.SearchRecordsRequestQueryFromJSON = SearchRecordsRequestQuery.instanceOfSearchRecordsRequestQuery = void 0;
+	const runtime_1 = requireRuntime$2();
+	const SearchRecordsVector_1 = requireSearchRecordsVector();
+	/**
+	 * Check if a given object implements the SearchRecordsRequestQuery interface.
+	 */
+	function instanceOfSearchRecordsRequestQuery(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "topK" in value;
+	    return isInstance;
+	}
+	SearchRecordsRequestQuery.instanceOfSearchRecordsRequestQuery = instanceOfSearchRecordsRequestQuery;
+	function SearchRecordsRequestQueryFromJSON(json) {
+	    return SearchRecordsRequestQueryFromJSONTyped(json);
+	}
+	SearchRecordsRequestQuery.SearchRecordsRequestQueryFromJSON = SearchRecordsRequestQueryFromJSON;
+	function SearchRecordsRequestQueryFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'topK': json['top_k'],
+	        'filter': !(0, runtime_1.exists)(json, 'filter') ? undefined : json['filter'],
+	        'inputs': !(0, runtime_1.exists)(json, 'inputs') ? undefined : json['inputs'],
+	        'vector': !(0, runtime_1.exists)(json, 'vector') ? undefined : (0, SearchRecordsVector_1.SearchRecordsVectorFromJSON)(json['vector']),
+	        'id': !(0, runtime_1.exists)(json, 'id') ? undefined : json['id'],
+	    };
+	}
+	SearchRecordsRequestQuery.SearchRecordsRequestQueryFromJSONTyped = SearchRecordsRequestQueryFromJSONTyped;
+	function SearchRecordsRequestQueryToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'top_k': value.topK,
+	        'filter': value.filter,
+	        'inputs': value.inputs,
+	        'vector': (0, SearchRecordsVector_1.SearchRecordsVectorToJSON)(value.vector),
+	        'id': value.id,
+	    };
+	}
+	SearchRecordsRequestQuery.SearchRecordsRequestQueryToJSON = SearchRecordsRequestQueryToJSON;
+	
+	return SearchRecordsRequestQuery;
+}
+
+var SearchRecordsRequestRerank = {};
+
+var hasRequiredSearchRecordsRequestRerank;
+
+function requireSearchRecordsRequestRerank () {
+	if (hasRequiredSearchRecordsRequestRerank) return SearchRecordsRequestRerank;
+	hasRequiredSearchRecordsRequestRerank = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(SearchRecordsRequestRerank, "__esModule", { value: true });
+	SearchRecordsRequestRerank.SearchRecordsRequestRerankToJSON = SearchRecordsRequestRerank.SearchRecordsRequestRerankFromJSONTyped = SearchRecordsRequestRerank.SearchRecordsRequestRerankFromJSON = SearchRecordsRequestRerank.instanceOfSearchRecordsRequestRerank = void 0;
+	const runtime_1 = requireRuntime$2();
+	/**
+	 * Check if a given object implements the SearchRecordsRequestRerank interface.
+	 */
+	function instanceOfSearchRecordsRequestRerank(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "model" in value;
+	    isInstance = isInstance && "rankFields" in value;
+	    return isInstance;
+	}
+	SearchRecordsRequestRerank.instanceOfSearchRecordsRequestRerank = instanceOfSearchRecordsRequestRerank;
+	function SearchRecordsRequestRerankFromJSON(json) {
+	    return SearchRecordsRequestRerankFromJSONTyped(json);
+	}
+	SearchRecordsRequestRerank.SearchRecordsRequestRerankFromJSON = SearchRecordsRequestRerankFromJSON;
+	function SearchRecordsRequestRerankFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'model': json['model'],
+	        'rankFields': json['rank_fields'],
+	        'topN': !(0, runtime_1.exists)(json, 'top_n') ? undefined : json['top_n'],
+	        'parameters': !(0, runtime_1.exists)(json, 'parameters') ? undefined : json['parameters'],
+	        'query': !(0, runtime_1.exists)(json, 'query') ? undefined : json['query'],
+	    };
+	}
+	SearchRecordsRequestRerank.SearchRecordsRequestRerankFromJSONTyped = SearchRecordsRequestRerankFromJSONTyped;
+	function SearchRecordsRequestRerankToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'model': value.model,
+	        'rank_fields': value.rankFields,
+	        'top_n': value.topN,
+	        'parameters': value.parameters,
+	        'query': value.query,
+	    };
+	}
+	SearchRecordsRequestRerank.SearchRecordsRequestRerankToJSON = SearchRecordsRequestRerankToJSON;
+	
+	return SearchRecordsRequestRerank;
+}
+
+var hasRequiredSearchRecordsRequest;
+
+function requireSearchRecordsRequest () {
+	if (hasRequiredSearchRecordsRequest) return SearchRecordsRequest;
+	hasRequiredSearchRecordsRequest = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(SearchRecordsRequest, "__esModule", { value: true });
+	SearchRecordsRequest.SearchRecordsRequestToJSON = SearchRecordsRequest.SearchRecordsRequestFromJSONTyped = SearchRecordsRequest.SearchRecordsRequestFromJSON = SearchRecordsRequest.instanceOfSearchRecordsRequest = void 0;
+	const runtime_1 = requireRuntime$2();
+	const SearchRecordsRequestQuery_1 = requireSearchRecordsRequestQuery();
+	const SearchRecordsRequestRerank_1 = requireSearchRecordsRequestRerank();
+	/**
+	 * Check if a given object implements the SearchRecordsRequest interface.
+	 */
+	function instanceOfSearchRecordsRequest(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "query" in value;
+	    return isInstance;
+	}
+	SearchRecordsRequest.instanceOfSearchRecordsRequest = instanceOfSearchRecordsRequest;
+	function SearchRecordsRequestFromJSON(json) {
+	    return SearchRecordsRequestFromJSONTyped(json);
+	}
+	SearchRecordsRequest.SearchRecordsRequestFromJSON = SearchRecordsRequestFromJSON;
+	function SearchRecordsRequestFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'query': (0, SearchRecordsRequestQuery_1.SearchRecordsRequestQueryFromJSON)(json['query']),
+	        'fields': !(0, runtime_1.exists)(json, 'fields') ? undefined : json['fields'],
+	        'rerank': !(0, runtime_1.exists)(json, 'rerank') ? undefined : (0, SearchRecordsRequestRerank_1.SearchRecordsRequestRerankFromJSON)(json['rerank']),
+	    };
+	}
+	SearchRecordsRequest.SearchRecordsRequestFromJSONTyped = SearchRecordsRequestFromJSONTyped;
+	function SearchRecordsRequestToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'query': (0, SearchRecordsRequestQuery_1.SearchRecordsRequestQueryToJSON)(value.query),
+	        'fields': value.fields,
+	        'rerank': (0, SearchRecordsRequestRerank_1.SearchRecordsRequestRerankToJSON)(value.rerank),
+	    };
+	}
+	SearchRecordsRequest.SearchRecordsRequestToJSON = SearchRecordsRequestToJSON;
+	
+	return SearchRecordsRequest;
+}
+
+var SearchRecordsResponse = {};
+
+var SearchRecordsResponseResult = {};
+
+var hasRequiredSearchRecordsResponseResult;
+
+function requireSearchRecordsResponseResult () {
+	if (hasRequiredSearchRecordsResponseResult) return SearchRecordsResponseResult;
+	hasRequiredSearchRecordsResponseResult = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(SearchRecordsResponseResult, "__esModule", { value: true });
+	SearchRecordsResponseResult.SearchRecordsResponseResultToJSON = SearchRecordsResponseResult.SearchRecordsResponseResultFromJSONTyped = SearchRecordsResponseResult.SearchRecordsResponseResultFromJSON = SearchRecordsResponseResult.instanceOfSearchRecordsResponseResult = void 0;
+	const Hit_1 = requireHit();
+	/**
+	 * Check if a given object implements the SearchRecordsResponseResult interface.
+	 */
+	function instanceOfSearchRecordsResponseResult(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "hits" in value;
+	    return isInstance;
+	}
+	SearchRecordsResponseResult.instanceOfSearchRecordsResponseResult = instanceOfSearchRecordsResponseResult;
+	function SearchRecordsResponseResultFromJSON(json) {
+	    return SearchRecordsResponseResultFromJSONTyped(json);
+	}
+	SearchRecordsResponseResult.SearchRecordsResponseResultFromJSON = SearchRecordsResponseResultFromJSON;
+	function SearchRecordsResponseResultFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'hits': (json['hits'].map(Hit_1.HitFromJSON)),
+	    };
+	}
+	SearchRecordsResponseResult.SearchRecordsResponseResultFromJSONTyped = SearchRecordsResponseResultFromJSONTyped;
+	function SearchRecordsResponseResultToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'hits': (value.hits.map(Hit_1.HitToJSON)),
+	    };
+	}
+	SearchRecordsResponseResult.SearchRecordsResponseResultToJSON = SearchRecordsResponseResultToJSON;
+	
+	return SearchRecordsResponseResult;
+}
+
+var SearchUsage = {};
+
+var hasRequiredSearchUsage;
+
+function requireSearchUsage () {
+	if (hasRequiredSearchUsage) return SearchUsage;
+	hasRequiredSearchUsage = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(SearchUsage, "__esModule", { value: true });
+	SearchUsage.SearchUsageToJSON = SearchUsage.SearchUsageFromJSONTyped = SearchUsage.SearchUsageFromJSON = SearchUsage.instanceOfSearchUsage = void 0;
+	const runtime_1 = requireRuntime$2();
+	/**
+	 * Check if a given object implements the SearchUsage interface.
+	 */
+	function instanceOfSearchUsage(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "readUnits" in value;
+	    return isInstance;
+	}
+	SearchUsage.instanceOfSearchUsage = instanceOfSearchUsage;
+	function SearchUsageFromJSON(json) {
+	    return SearchUsageFromJSONTyped(json);
+	}
+	SearchUsage.SearchUsageFromJSON = SearchUsageFromJSON;
+	function SearchUsageFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'readUnits': json['read_units'],
+	        'embedTotalTokens': !(0, runtime_1.exists)(json, 'embed_total_tokens') ? undefined : json['embed_total_tokens'],
+	        'rerankUnits': !(0, runtime_1.exists)(json, 'rerank_units') ? undefined : json['rerank_units'],
+	    };
+	}
+	SearchUsage.SearchUsageFromJSONTyped = SearchUsageFromJSONTyped;
+	function SearchUsageToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'read_units': value.readUnits,
+	        'embed_total_tokens': value.embedTotalTokens,
+	        'rerank_units': value.rerankUnits,
+	    };
+	}
+	SearchUsage.SearchUsageToJSON = SearchUsageToJSON;
+	
+	return SearchUsage;
+}
+
+var hasRequiredSearchRecordsResponse;
+
+function requireSearchRecordsResponse () {
+	if (hasRequiredSearchRecordsResponse) return SearchRecordsResponse;
+	hasRequiredSearchRecordsResponse = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(SearchRecordsResponse, "__esModule", { value: true });
+	SearchRecordsResponse.SearchRecordsResponseToJSON = SearchRecordsResponse.SearchRecordsResponseFromJSONTyped = SearchRecordsResponse.SearchRecordsResponseFromJSON = SearchRecordsResponse.instanceOfSearchRecordsResponse = void 0;
+	const SearchRecordsResponseResult_1 = requireSearchRecordsResponseResult();
+	const SearchUsage_1 = requireSearchUsage();
+	/**
+	 * Check if a given object implements the SearchRecordsResponse interface.
+	 */
+	function instanceOfSearchRecordsResponse(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "result" in value;
+	    isInstance = isInstance && "usage" in value;
+	    return isInstance;
+	}
+	SearchRecordsResponse.instanceOfSearchRecordsResponse = instanceOfSearchRecordsResponse;
+	function SearchRecordsResponseFromJSON(json) {
+	    return SearchRecordsResponseFromJSONTyped(json);
+	}
+	SearchRecordsResponse.SearchRecordsResponseFromJSON = SearchRecordsResponseFromJSON;
+	function SearchRecordsResponseFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'result': (0, SearchRecordsResponseResult_1.SearchRecordsResponseResultFromJSON)(json['result']),
+	        'usage': (0, SearchUsage_1.SearchUsageFromJSON)(json['usage']),
+	    };
+	}
+	SearchRecordsResponse.SearchRecordsResponseFromJSONTyped = SearchRecordsResponseFromJSONTyped;
+	function SearchRecordsResponseToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'result': (0, SearchRecordsResponseResult_1.SearchRecordsResponseResultToJSON)(value.result),
+	        'usage': (0, SearchUsage_1.SearchUsageToJSON)(value.usage),
+	    };
+	}
+	SearchRecordsResponse.SearchRecordsResponseToJSON = SearchRecordsResponseToJSON;
+	
+	return SearchRecordsResponse;
+}
+
+var SearchVector = {};
+
+var hasRequiredSearchVector;
+
+function requireSearchVector () {
+	if (hasRequiredSearchVector) return SearchVector;
+	hasRequiredSearchVector = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(SearchVector, "__esModule", { value: true });
+	SearchVector.SearchVectorToJSON = SearchVector.SearchVectorFromJSONTyped = SearchVector.SearchVectorFromJSON = SearchVector.instanceOfSearchVector = void 0;
+	const runtime_1 = requireRuntime$2();
+	/**
+	 * Check if a given object implements the SearchVector interface.
+	 */
+	function instanceOfSearchVector(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	SearchVector.instanceOfSearchVector = instanceOfSearchVector;
+	function SearchVectorFromJSON(json) {
+	    return SearchVectorFromJSONTyped(json);
+	}
+	SearchVector.SearchVectorFromJSON = SearchVectorFromJSON;
+	function SearchVectorFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'values': !(0, runtime_1.exists)(json, 'values') ? undefined : json['values'],
+	    };
+	}
+	SearchVector.SearchVectorFromJSONTyped = SearchVectorFromJSONTyped;
+	function SearchVectorToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'values': value.values,
+	    };
+	}
+	SearchVector.SearchVectorToJSON = SearchVectorToJSON;
+	
+	return SearchVector;
+}
+
+var StartImportRequest = {};
+
+var hasRequiredStartImportRequest;
+
+function requireStartImportRequest () {
+	if (hasRequiredStartImportRequest) return StartImportRequest;
+	hasRequiredStartImportRequest = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(StartImportRequest, "__esModule", { value: true });
+	StartImportRequest.StartImportRequestToJSON = StartImportRequest.StartImportRequestFromJSONTyped = StartImportRequest.StartImportRequestFromJSON = StartImportRequest.instanceOfStartImportRequest = void 0;
+	const runtime_1 = requireRuntime$2();
+	const ImportErrorMode_1 = requireImportErrorMode();
+	/**
+	 * Check if a given object implements the StartImportRequest interface.
+	 */
+	function instanceOfStartImportRequest(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "uri" in value;
+	    return isInstance;
+	}
+	StartImportRequest.instanceOfStartImportRequest = instanceOfStartImportRequest;
+	function StartImportRequestFromJSON(json) {
+	    return StartImportRequestFromJSONTyped(json);
+	}
+	StartImportRequest.StartImportRequestFromJSON = StartImportRequestFromJSON;
+	function StartImportRequestFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'integrationId': !(0, runtime_1.exists)(json, 'integrationId') ? undefined : json['integrationId'],
+	        'uri': json['uri'],
+	        'errorMode': !(0, runtime_1.exists)(json, 'errorMode') ? undefined : (0, ImportErrorMode_1.ImportErrorModeFromJSON)(json['errorMode']),
+	    };
+	}
+	StartImportRequest.StartImportRequestFromJSONTyped = StartImportRequestFromJSONTyped;
+	function StartImportRequestToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'integrationId': value.integrationId,
+	        'uri': value.uri,
+	        'errorMode': (0, ImportErrorMode_1.ImportErrorModeToJSON)(value.errorMode),
+	    };
+	}
+	StartImportRequest.StartImportRequestToJSON = StartImportRequestToJSON;
+	
+	return StartImportRequest;
+}
+
+var StartImportResponse = {};
+
+var hasRequiredStartImportResponse;
+
+function requireStartImportResponse () {
+	if (hasRequiredStartImportResponse) return StartImportResponse;
+	hasRequiredStartImportResponse = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(StartImportResponse, "__esModule", { value: true });
+	StartImportResponse.StartImportResponseToJSON = StartImportResponse.StartImportResponseFromJSONTyped = StartImportResponse.StartImportResponseFromJSON = StartImportResponse.instanceOfStartImportResponse = void 0;
+	const runtime_1 = requireRuntime$2();
+	/**
+	 * Check if a given object implements the StartImportResponse interface.
+	 */
+	function instanceOfStartImportResponse(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	StartImportResponse.instanceOfStartImportResponse = instanceOfStartImportResponse;
+	function StartImportResponseFromJSON(json) {
+	    return StartImportResponseFromJSONTyped(json);
+	}
+	StartImportResponse.StartImportResponseFromJSON = StartImportResponseFromJSON;
+	function StartImportResponseFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'id': !(0, runtime_1.exists)(json, 'id') ? undefined : json['id'],
+	    };
+	}
+	StartImportResponse.StartImportResponseFromJSONTyped = StartImportResponseFromJSONTyped;
+	function StartImportResponseToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'id': value.id,
+	    };
+	}
+	StartImportResponse.StartImportResponseToJSON = StartImportResponseToJSON;
+	
+	return StartImportResponse;
+}
+
+var UpdateRequest = {};
+
+var hasRequiredUpdateRequest;
+
+function requireUpdateRequest () {
+	if (hasRequiredUpdateRequest) return UpdateRequest;
+	hasRequiredUpdateRequest = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(UpdateRequest, "__esModule", { value: true });
+	UpdateRequest.UpdateRequestToJSON = UpdateRequest.UpdateRequestFromJSONTyped = UpdateRequest.UpdateRequestFromJSON = UpdateRequest.instanceOfUpdateRequest = void 0;
+	const runtime_1 = requireRuntime$2();
+	const SparseValues_1 = requireSparseValues();
+	/**
+	 * Check if a given object implements the UpdateRequest interface.
+	 */
+	function instanceOfUpdateRequest(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "id" in value;
+	    return isInstance;
+	}
+	UpdateRequest.instanceOfUpdateRequest = instanceOfUpdateRequest;
+	function UpdateRequestFromJSON(json) {
+	    return UpdateRequestFromJSONTyped(json);
+	}
+	UpdateRequest.UpdateRequestFromJSON = UpdateRequestFromJSON;
+	function UpdateRequestFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'id': json['id'],
+	        'values': !(0, runtime_1.exists)(json, 'values') ? undefined : json['values'],
+	        'sparseValues': !(0, runtime_1.exists)(json, 'sparseValues') ? undefined : (0, SparseValues_1.SparseValuesFromJSON)(json['sparseValues']),
+	        'setMetadata': !(0, runtime_1.exists)(json, 'setMetadata') ? undefined : json['setMetadata'],
+	        'namespace': !(0, runtime_1.exists)(json, 'namespace') ? undefined : json['namespace'],
+	    };
+	}
+	UpdateRequest.UpdateRequestFromJSONTyped = UpdateRequestFromJSONTyped;
+	function UpdateRequestToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'id': value.id,
+	        'values': value.values,
+	        'sparseValues': (0, SparseValues_1.SparseValuesToJSON)(value.sparseValues),
+	        'setMetadata': value.setMetadata,
+	        'namespace': value.namespace,
+	    };
+	}
+	UpdateRequest.UpdateRequestToJSON = UpdateRequestToJSON;
+	
+	return UpdateRequest;
+}
+
+var UpsertRecord = {};
+
+var hasRequiredUpsertRecord;
+
+function requireUpsertRecord () {
+	if (hasRequiredUpsertRecord) return UpsertRecord;
+	hasRequiredUpsertRecord = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(UpsertRecord, "__esModule", { value: true });
+	UpsertRecord.UpsertRecordToJSON = UpsertRecord.UpsertRecordFromJSONTyped = UpsertRecord.UpsertRecordFromJSON = UpsertRecord.instanceOfUpsertRecord = void 0;
+	/**
+	 * Check if a given object implements the UpsertRecord interface.
+	 */
+	function instanceOfUpsertRecord(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "id" in value;
+	    return isInstance;
+	}
+	UpsertRecord.instanceOfUpsertRecord = instanceOfUpsertRecord;
+	function UpsertRecordFromJSON(json) {
+	    return UpsertRecordFromJSONTyped(json);
+	}
+	UpsertRecord.UpsertRecordFromJSON = UpsertRecordFromJSON;
+	function UpsertRecordFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'id': json['_id'],
+	    };
+	}
+	UpsertRecord.UpsertRecordFromJSONTyped = UpsertRecordFromJSONTyped;
+	function UpsertRecordToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        '_id': value.id,
+	    };
+	}
+	UpsertRecord.UpsertRecordToJSON = UpsertRecordToJSON;
+	
+	return UpsertRecord;
+}
+
+var UpsertRequest = {};
+
+var hasRequiredUpsertRequest;
+
+function requireUpsertRequest () {
+	if (hasRequiredUpsertRequest) return UpsertRequest;
+	hasRequiredUpsertRequest = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(UpsertRequest, "__esModule", { value: true });
+	UpsertRequest.UpsertRequestToJSON = UpsertRequest.UpsertRequestFromJSONTyped = UpsertRequest.UpsertRequestFromJSON = UpsertRequest.instanceOfUpsertRequest = void 0;
+	const runtime_1 = requireRuntime$2();
+	const Vector_1 = requireVector();
+	/**
+	 * Check if a given object implements the UpsertRequest interface.
+	 */
+	function instanceOfUpsertRequest(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "vectors" in value;
+	    return isInstance;
+	}
+	UpsertRequest.instanceOfUpsertRequest = instanceOfUpsertRequest;
+	function UpsertRequestFromJSON(json) {
+	    return UpsertRequestFromJSONTyped(json);
+	}
+	UpsertRequest.UpsertRequestFromJSON = UpsertRequestFromJSON;
+	function UpsertRequestFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'vectors': (json['vectors'].map(Vector_1.VectorFromJSON)),
+	        'namespace': !(0, runtime_1.exists)(json, 'namespace') ? undefined : json['namespace'],
+	    };
+	}
+	UpsertRequest.UpsertRequestFromJSONTyped = UpsertRequestFromJSONTyped;
+	function UpsertRequestToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'vectors': (value.vectors.map(Vector_1.VectorToJSON)),
+	        'namespace': value.namespace,
+	    };
+	}
+	UpsertRequest.UpsertRequestToJSON = UpsertRequestToJSON;
+	
+	return UpsertRequest;
+}
+
+var UpsertResponse = {};
+
+var hasRequiredUpsertResponse;
+
+function requireUpsertResponse () {
+	if (hasRequiredUpsertResponse) return UpsertResponse;
+	hasRequiredUpsertResponse = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(UpsertResponse, "__esModule", { value: true });
+	UpsertResponse.UpsertResponseToJSON = UpsertResponse.UpsertResponseFromJSONTyped = UpsertResponse.UpsertResponseFromJSON = UpsertResponse.instanceOfUpsertResponse = void 0;
+	const runtime_1 = requireRuntime$2();
+	/**
+	 * Check if a given object implements the UpsertResponse interface.
+	 */
+	function instanceOfUpsertResponse(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	UpsertResponse.instanceOfUpsertResponse = instanceOfUpsertResponse;
+	function UpsertResponseFromJSON(json) {
+	    return UpsertResponseFromJSONTyped(json);
+	}
+	UpsertResponse.UpsertResponseFromJSON = UpsertResponseFromJSON;
+	function UpsertResponseFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'upsertedCount': !(0, runtime_1.exists)(json, 'upsertedCount') ? undefined : json['upsertedCount'],
+	    };
+	}
+	UpsertResponse.UpsertResponseFromJSONTyped = UpsertResponseFromJSONTyped;
+	function UpsertResponseToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'upsertedCount': value.upsertedCount,
+	    };
+	}
+	UpsertResponse.UpsertResponseToJSON = UpsertResponseToJSON;
+	
+	return UpsertResponse;
+}
+
+var hasRequiredModels$2;
+
+function requireModels$2 () {
+	if (hasRequiredModels$2) return models$2;
+	hasRequiredModels$2 = 1;
+	(function (exports) {
+		var __createBinding = (models$2 && models$2.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    var desc = Object.getOwnPropertyDescriptor(m, k);
+		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+		      desc = { enumerable: true, get: function() { return m[k]; } };
+		    }
+		    Object.defineProperty(o, k2, desc);
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __exportStar = (models$2 && models$2.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		/* tslint:disable */
+		/* eslint-disable */
+		__exportStar(requireDeleteRequest(), exports);
+		__exportStar(requireDescribeIndexStatsRequest(), exports);
+		__exportStar(requireFetchResponse(), exports);
+		__exportStar(requireHit(), exports);
+		__exportStar(requireImportErrorMode(), exports);
+		__exportStar(requireImportModel(), exports);
+		__exportStar(requireIndexDescription(), exports);
+		__exportStar(requireListImportsResponse(), exports);
+		__exportStar(requireListItem(), exports);
+		__exportStar(requireListNamespacesResponse(), exports);
+		__exportStar(requireListResponse(), exports);
+		__exportStar(requireNamespaceDescription(), exports);
+		__exportStar(requireNamespaceSummary(), exports);
+		__exportStar(requirePagination(), exports);
+		__exportStar(requireProtobufAny(), exports);
+		__exportStar(requireProtobufNullValue(), exports);
+		__exportStar(requireQueryRequest(), exports);
+		__exportStar(requireQueryResponse(), exports);
+		__exportStar(requireQueryVector(), exports);
+		__exportStar(requireRpcStatus(), exports);
+		__exportStar(requireScoredVector(), exports);
+		__exportStar(requireSearchRecordsRequest(), exports);
+		__exportStar(requireSearchRecordsRequestQuery(), exports);
+		__exportStar(requireSearchRecordsRequestRerank(), exports);
+		__exportStar(requireSearchRecordsResponse(), exports);
+		__exportStar(requireSearchRecordsResponseResult(), exports);
+		__exportStar(requireSearchRecordsVector(), exports);
+		__exportStar(requireSearchUsage(), exports);
+		__exportStar(requireSearchVector(), exports);
+		__exportStar(requireSingleQueryResults(), exports);
+		__exportStar(requireSparseValues(), exports);
+		__exportStar(requireStartImportRequest(), exports);
+		__exportStar(requireStartImportResponse(), exports);
+		__exportStar(requireUpdateRequest(), exports);
+		__exportStar(requireUpsertRecord(), exports);
+		__exportStar(requireUpsertRequest(), exports);
+		__exportStar(requireUpsertResponse(), exports);
+		__exportStar(requireUsage(), exports);
+		__exportStar(requireVector(), exports);
+		
+	} (models$2));
+	return models$2;
+}
+
+var hasRequiredBulkOperationsApi;
+
+function requireBulkOperationsApi () {
+	if (hasRequiredBulkOperationsApi) return BulkOperationsApi;
+	hasRequiredBulkOperationsApi = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	var __createBinding = (BulkOperationsApi && BulkOperationsApi.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    var desc = Object.getOwnPropertyDescriptor(m, k);
+	    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+	      desc = { enumerable: true, get: function() { return m[k]; } };
+	    }
+	    Object.defineProperty(o, k2, desc);
+	}) : (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    o[k2] = m[k];
+	}));
+	var __setModuleDefault = (BulkOperationsApi && BulkOperationsApi.__setModuleDefault) || (Object.create ? (function(o, v) {
+	    Object.defineProperty(o, "default", { enumerable: true, value: v });
+	}) : function(o, v) {
+	    o["default"] = v;
+	});
+	var __importStar = (BulkOperationsApi && BulkOperationsApi.__importStar) || function (mod) {
+	    if (mod && mod.__esModule) return mod;
+	    var result = {};
+	    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+	    __setModuleDefault(result, mod);
+	    return result;
+	};
+	Object.defineProperty(BulkOperationsApi, "__esModule", { value: true });
+	BulkOperationsApi.BulkOperationsApi = void 0;
+	const runtime = __importStar(requireRuntime$2());
+	const index_1 = requireModels$2();
+	/**
+	 *
+	 */
+	let BulkOperationsApi$1 = class BulkOperationsApi extends runtime.BaseAPI {
+	    /**
+	     * Cancel an import operation if it is not yet finished. It has no effect if the operation is already finished.  For guidance and examples, see [Import data](https://docs.pinecone.io/guides/index-data/import-data).
+	     * Cancel an import
+	     */
+	    async cancelBulkImportRaw(requestParameters, initOverrides) {
+	        if (requestParameters.id === null || requestParameters.id === undefined) {
+	            throw new runtime.RequiredError('id', 'Required parameter requestParameters.id was null or undefined when calling cancelBulkImport.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/bulk/imports/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+	            method: 'DELETE',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response);
+	    }
+	    /**
+	     * Cancel an import operation if it is not yet finished. It has no effect if the operation is already finished.  For guidance and examples, see [Import data](https://docs.pinecone.io/guides/index-data/import-data).
+	     * Cancel an import
+	     */
+	    async cancelBulkImport(requestParameters, initOverrides) {
+	        const response = await this.cancelBulkImportRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Return details of a specific import operation.  For guidance and examples, see [Import data](https://docs.pinecone.io/guides/index-data/import-data).
+	     * Describe an import
+	     */
+	    async describeBulkImportRaw(requestParameters, initOverrides) {
+	        if (requestParameters.id === null || requestParameters.id === undefined) {
+	            throw new runtime.RequiredError('id', 'Required parameter requestParameters.id was null or undefined when calling describeBulkImport.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/bulk/imports/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+	            method: 'GET',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.ImportModelFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Return details of a specific import operation.  For guidance and examples, see [Import data](https://docs.pinecone.io/guides/index-data/import-data).
+	     * Describe an import
+	     */
+	    async describeBulkImport(requestParameters, initOverrides) {
+	        const response = await this.describeBulkImportRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * List all recent and ongoing import operations.  By default, `list_imports` returns up to 100 imports per page. If the `limit` parameter is set, `list` returns up to that number of imports instead. Whenever there are additional IDs to return, the response also includes a `pagination_token` that you can use to get the next batch of imports. When the response does not include a `pagination_token`, there are no more imports to return.  For guidance and examples, see [Import data](https://docs.pinecone.io/guides/index-data/import-data).
+	     * List imports
+	     */
+	    async listBulkImportsRaw(requestParameters, initOverrides) {
+	        const queryParameters = {};
+	        if (requestParameters.limit !== undefined) {
+	            queryParameters['limit'] = requestParameters.limit;
+	        }
+	        if (requestParameters.paginationToken !== undefined) {
+	            queryParameters['paginationToken'] = requestParameters.paginationToken;
+	        }
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/bulk/imports`,
+	            method: 'GET',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.ListImportsResponseFromJSON)(jsonValue));
+	    }
+	    /**
+	     * List all recent and ongoing import operations.  By default, `list_imports` returns up to 100 imports per page. If the `limit` parameter is set, `list` returns up to that number of imports instead. Whenever there are additional IDs to return, the response also includes a `pagination_token` that you can use to get the next batch of imports. When the response does not include a `pagination_token`, there are no more imports to return.  For guidance and examples, see [Import data](https://docs.pinecone.io/guides/index-data/import-data).
+	     * List imports
+	     */
+	    async listBulkImports(requestParameters = {}, initOverrides) {
+	        const response = await this.listBulkImportsRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Start an asynchronous import of vectors from object storage into an index.  For guidance and examples, see [Import data](https://docs.pinecone.io/guides/index-data/import-data).
+	     * Start import
+	     */
+	    async startBulkImportRaw(requestParameters, initOverrides) {
+	        if (requestParameters.startImportRequest === null || requestParameters.startImportRequest === undefined) {
+	            throw new runtime.RequiredError('startImportRequest', 'Required parameter requestParameters.startImportRequest was null or undefined when calling startBulkImport.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/json';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/bulk/imports`,
+	            method: 'POST',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: (0, index_1.StartImportRequestToJSON)(requestParameters.startImportRequest),
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.StartImportResponseFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Start an asynchronous import of vectors from object storage into an index.  For guidance and examples, see [Import data](https://docs.pinecone.io/guides/index-data/import-data).
+	     * Start import
+	     */
+	    async startBulkImport(requestParameters, initOverrides) {
+	        const response = await this.startBulkImportRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	};
+	BulkOperationsApi.BulkOperationsApi = BulkOperationsApi$1;
+	
+	return BulkOperationsApi;
+}
+
+var NamespaceOperationsApi = {};
+
+var hasRequiredNamespaceOperationsApi;
+
+function requireNamespaceOperationsApi () {
+	if (hasRequiredNamespaceOperationsApi) return NamespaceOperationsApi;
+	hasRequiredNamespaceOperationsApi = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	var __createBinding = (NamespaceOperationsApi && NamespaceOperationsApi.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    var desc = Object.getOwnPropertyDescriptor(m, k);
+	    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+	      desc = { enumerable: true, get: function() { return m[k]; } };
+	    }
+	    Object.defineProperty(o, k2, desc);
+	}) : (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    o[k2] = m[k];
+	}));
+	var __setModuleDefault = (NamespaceOperationsApi && NamespaceOperationsApi.__setModuleDefault) || (Object.create ? (function(o, v) {
+	    Object.defineProperty(o, "default", { enumerable: true, value: v });
+	}) : function(o, v) {
+	    o["default"] = v;
+	});
+	var __importStar = (NamespaceOperationsApi && NamespaceOperationsApi.__importStar) || function (mod) {
+	    if (mod && mod.__esModule) return mod;
+	    var result = {};
+	    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+	    __setModuleDefault(result, mod);
+	    return result;
+	};
+	Object.defineProperty(NamespaceOperationsApi, "__esModule", { value: true });
+	NamespaceOperationsApi.NamespaceOperationsApi = void 0;
+	const runtime = __importStar(requireRuntime$2());
+	const index_1 = requireModels$2();
+	/**
+	 *
+	 */
+	let NamespaceOperationsApi$1 = class NamespaceOperationsApi extends runtime.BaseAPI {
+	    /**
+	     * Delete a namespace from a serverless index. Deleting a namespace is irreversible; all data in the namespace is permanently deleted.  For guidance and examples, see [Manage namespaces](https://docs.pinecone.io/guides/manage-data/manage-namespaces).  **Note:** This operation is not supported for pod-based indexes.
+	     * Delete a namespace
+	     */
+	    async deleteNamespaceRaw(requestParameters, initOverrides) {
+	        if (requestParameters.namespace === null || requestParameters.namespace === undefined) {
+	            throw new runtime.RequiredError('namespace', 'Required parameter requestParameters.namespace was null or undefined when calling deleteNamespace.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/namespaces/{namespace}`.replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))),
+	            method: 'DELETE',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response);
+	    }
+	    /**
+	     * Delete a namespace from a serverless index. Deleting a namespace is irreversible; all data in the namespace is permanently deleted.  For guidance and examples, see [Manage namespaces](https://docs.pinecone.io/guides/manage-data/manage-namespaces).  **Note:** This operation is not supported for pod-based indexes.
+	     * Delete a namespace
+	     */
+	    async deleteNamespace(requestParameters, initOverrides) {
+	        const response = await this.deleteNamespaceRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Describe a namespace in a serverless index, including the total number of vectors in the namespace.  For guidance and examples, see [Manage namespaces](https://docs.pinecone.io/guides/manage-data/manage-namespaces).  **Note:** This operation is not supported for pod-based indexes.
+	     * Describe a namespace
+	     */
+	    async describeNamespaceRaw(requestParameters, initOverrides) {
+	        if (requestParameters.namespace === null || requestParameters.namespace === undefined) {
+	            throw new runtime.RequiredError('namespace', 'Required parameter requestParameters.namespace was null or undefined when calling describeNamespace.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/namespaces/{namespace}`.replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))),
+	            method: 'GET',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.NamespaceDescriptionFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Describe a namespace in a serverless index, including the total number of vectors in the namespace.  For guidance and examples, see [Manage namespaces](https://docs.pinecone.io/guides/manage-data/manage-namespaces).  **Note:** This operation is not supported for pod-based indexes.
+	     * Describe a namespace
+	     */
+	    async describeNamespace(requestParameters, initOverrides) {
+	        const response = await this.describeNamespaceRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * List all namespaces in a serverless index.  Up to 100 namespaces are returned at a time by default, in sorted order (bitwise “C” collation). If the `limit` parameter is set, up to that number of namespaces are returned instead. Whenever there are additional namespaces to return, the response also includes a `pagination_token` that you can use to get the next batch of namespaces. When the response does not include a `pagination_token`, there are no more namespaces to return.  For guidance and examples, see [Manage namespaces](https://docs.pinecone.io/guides/manage-data/manage-namespaces).  **Note:** This operation is not supported for pod-based indexes.
+	     * List namespaces
+	     */
+	    async listNamespacesOperationRaw(requestParameters, initOverrides) {
+	        const queryParameters = {};
+	        if (requestParameters.limit !== undefined) {
+	            queryParameters['limit'] = requestParameters.limit;
+	        }
+	        if (requestParameters.paginationToken !== undefined) {
+	            queryParameters['paginationToken'] = requestParameters.paginationToken;
+	        }
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/namespaces`,
+	            method: 'GET',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.ListNamespacesResponseFromJSON)(jsonValue));
+	    }
+	    /**
+	     * List all namespaces in a serverless index.  Up to 100 namespaces are returned at a time by default, in sorted order (bitwise “C” collation). If the `limit` parameter is set, up to that number of namespaces are returned instead. Whenever there are additional namespaces to return, the response also includes a `pagination_token` that you can use to get the next batch of namespaces. When the response does not include a `pagination_token`, there are no more namespaces to return.  For guidance and examples, see [Manage namespaces](https://docs.pinecone.io/guides/manage-data/manage-namespaces).  **Note:** This operation is not supported for pod-based indexes.
+	     * List namespaces
+	     */
+	    async listNamespacesOperation(requestParameters = {}, initOverrides) {
+	        const response = await this.listNamespacesOperationRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	};
+	NamespaceOperationsApi.NamespaceOperationsApi = NamespaceOperationsApi$1;
+	
+	return NamespaceOperationsApi;
+}
+
+var VectorOperationsApi = {};
+
+var hasRequiredVectorOperationsApi;
+
+function requireVectorOperationsApi () {
+	if (hasRequiredVectorOperationsApi) return VectorOperationsApi;
+	hasRequiredVectorOperationsApi = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Data Plane API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	var __createBinding = (VectorOperationsApi && VectorOperationsApi.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    var desc = Object.getOwnPropertyDescriptor(m, k);
+	    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+	      desc = { enumerable: true, get: function() { return m[k]; } };
+	    }
+	    Object.defineProperty(o, k2, desc);
+	}) : (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    o[k2] = m[k];
+	}));
+	var __setModuleDefault = (VectorOperationsApi && VectorOperationsApi.__setModuleDefault) || (Object.create ? (function(o, v) {
+	    Object.defineProperty(o, "default", { enumerable: true, value: v });
+	}) : function(o, v) {
+	    o["default"] = v;
+	});
+	var __importStar = (VectorOperationsApi && VectorOperationsApi.__importStar) || function (mod) {
+	    if (mod && mod.__esModule) return mod;
+	    var result = {};
+	    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+	    __setModuleDefault(result, mod);
+	    return result;
+	};
+	Object.defineProperty(VectorOperationsApi, "__esModule", { value: true });
+	VectorOperationsApi.VectorOperationsApi = void 0;
+	const runtime = __importStar(requireRuntime$2());
+	const index_1 = requireModels$2();
+	/**
+	 *
+	 */
+	let VectorOperationsApi$1 = class VectorOperationsApi extends runtime.BaseAPI {
+	    /**
+	     * Delete vectors by id from a single namespace.  For guidance and examples, see [Delete data](https://docs.pinecone.io/guides/manage-data/delete-data).
+	     * Delete vectors
+	     */
+	    async deleteVectorsRaw(requestParameters, initOverrides) {
+	        if (requestParameters.deleteRequest === null || requestParameters.deleteRequest === undefined) {
+	            throw new runtime.RequiredError('deleteRequest', 'Required parameter requestParameters.deleteRequest was null or undefined when calling deleteVectors.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/json';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/vectors/delete`,
+	            method: 'POST',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: (0, index_1.DeleteRequestToJSON)(requestParameters.deleteRequest),
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response);
+	    }
+	    /**
+	     * Delete vectors by id from a single namespace.  For guidance and examples, see [Delete data](https://docs.pinecone.io/guides/manage-data/delete-data).
+	     * Delete vectors
+	     */
+	    async deleteVectors(requestParameters, initOverrides) {
+	        const response = await this.deleteVectorsRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Return statistics about the contents of an index, including the vector count per namespace, the number of dimensions, and the index fullness.  Serverless indexes scale automatically as needed, so index fullness is relevant only for pod-based indexes.
+	     * Get index stats
+	     */
+	    async describeIndexStatsRaw(requestParameters, initOverrides) {
+	        if (requestParameters.describeIndexStatsRequest === null || requestParameters.describeIndexStatsRequest === undefined) {
+	            throw new runtime.RequiredError('describeIndexStatsRequest', 'Required parameter requestParameters.describeIndexStatsRequest was null or undefined when calling describeIndexStats.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/json';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/describe_index_stats`,
+	            method: 'POST',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: (0, index_1.DescribeIndexStatsRequestToJSON)(requestParameters.describeIndexStatsRequest),
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.IndexDescriptionFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Return statistics about the contents of an index, including the vector count per namespace, the number of dimensions, and the index fullness.  Serverless indexes scale automatically as needed, so index fullness is relevant only for pod-based indexes.
+	     * Get index stats
+	     */
+	    async describeIndexStats(requestParameters, initOverrides) {
+	        const response = await this.describeIndexStatsRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Look up and return vectors by ID from a single namespace. The returned vectors include the vector data and/or metadata.  For guidance and examples, see [Fetch data](https://docs.pinecone.io/guides/manage-data/fetch-data).
+	     * Fetch vectors
+	     */
+	    async fetchVectorsRaw(requestParameters, initOverrides) {
+	        if (requestParameters.ids === null || requestParameters.ids === undefined) {
+	            throw new runtime.RequiredError('ids', 'Required parameter requestParameters.ids was null or undefined when calling fetchVectors.');
+	        }
+	        const queryParameters = {};
+	        if (requestParameters.ids) {
+	            queryParameters['ids'] = requestParameters.ids;
+	        }
+	        if (requestParameters.namespace !== undefined) {
+	            queryParameters['namespace'] = requestParameters.namespace;
+	        }
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/vectors/fetch`,
+	            method: 'GET',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.FetchResponseFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Look up and return vectors by ID from a single namespace. The returned vectors include the vector data and/or metadata.  For guidance and examples, see [Fetch data](https://docs.pinecone.io/guides/manage-data/fetch-data).
+	     * Fetch vectors
+	     */
+	    async fetchVectors(requestParameters, initOverrides) {
+	        const response = await this.fetchVectorsRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * List the IDs of vectors in a single namespace of a serverless index. An optional prefix can be passed to limit the results to IDs with a common prefix.  Returns up to 100 IDs at a time by default in sorted order (bitwise \"C\" collation). If the `limit` parameter is set, `list` returns up to that number of IDs instead. Whenever there are additional IDs to return, the response also includes a `pagination_token` that you can use to get the next batch of IDs. When the response does not include a `pagination_token`, there are no more IDs to return.  For guidance and examples, see [List record IDs](https://docs.pinecone.io/guides/manage-data/list-record-ids).  **Note:** `list` is supported only for serverless indexes.
+	     * List vector IDs
+	     */
+	    async listVectorsRaw(requestParameters, initOverrides) {
+	        const queryParameters = {};
+	        if (requestParameters.prefix !== undefined) {
+	            queryParameters['prefix'] = requestParameters.prefix;
+	        }
+	        if (requestParameters.limit !== undefined) {
+	            queryParameters['limit'] = requestParameters.limit;
+	        }
+	        if (requestParameters.paginationToken !== undefined) {
+	            queryParameters['paginationToken'] = requestParameters.paginationToken;
+	        }
+	        if (requestParameters.namespace !== undefined) {
+	            queryParameters['namespace'] = requestParameters.namespace;
+	        }
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/vectors/list`,
+	            method: 'GET',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.ListResponseFromJSON)(jsonValue));
+	    }
+	    /**
+	     * List the IDs of vectors in a single namespace of a serverless index. An optional prefix can be passed to limit the results to IDs with a common prefix.  Returns up to 100 IDs at a time by default in sorted order (bitwise \"C\" collation). If the `limit` parameter is set, `list` returns up to that number of IDs instead. Whenever there are additional IDs to return, the response also includes a `pagination_token` that you can use to get the next batch of IDs. When the response does not include a `pagination_token`, there are no more IDs to return.  For guidance and examples, see [List record IDs](https://docs.pinecone.io/guides/manage-data/list-record-ids).  **Note:** `list` is supported only for serverless indexes.
+	     * List vector IDs
+	     */
+	    async listVectors(requestParameters = {}, initOverrides) {
+	        const response = await this.listVectorsRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Search a namespace using a query vector. It retrieves the ids of the most similar items in a namespace, along with their similarity scores.  For guidance, examples, and limits, see [Search](https://docs.pinecone.io/guides/search/search-overview).
+	     * Search with a vector
+	     */
+	    async queryVectorsRaw(requestParameters, initOverrides) {
+	        if (requestParameters.queryRequest === null || requestParameters.queryRequest === undefined) {
+	            throw new runtime.RequiredError('queryRequest', 'Required parameter requestParameters.queryRequest was null or undefined when calling queryVectors.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/json';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/query`,
+	            method: 'POST',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: (0, index_1.QueryRequestToJSON)(requestParameters.queryRequest),
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.QueryResponseFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Search a namespace using a query vector. It retrieves the ids of the most similar items in a namespace, along with their similarity scores.  For guidance, examples, and limits, see [Search](https://docs.pinecone.io/guides/search/search-overview).
+	     * Search with a vector
+	     */
+	    async queryVectors(requestParameters, initOverrides) {
+	        const response = await this.queryVectorsRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Search a namespace with a query text, query vector, or record ID and return the most similar records, along with their similarity scores. Optionally, rerank the initial results based on their relevance to the query.   Searching with text is supported only for [indexes with integrated embedding](https://docs.pinecone.io/guides/indexes/create-an-index#integrated-embedding). Searching with a query vector or record ID is supported for all indexes.   For guidance, examples, and limits, see [Search](https://docs.pinecone.io/guides/search/search-overview).
+	     * Search with text
+	     */
+	    async searchRecordsNamespaceRaw(requestParameters, initOverrides) {
+	        if (requestParameters.namespace === null || requestParameters.namespace === undefined) {
+	            throw new runtime.RequiredError('namespace', 'Required parameter requestParameters.namespace was null or undefined when calling searchRecordsNamespace.');
+	        }
+	        if (requestParameters.searchRecordsRequest === null || requestParameters.searchRecordsRequest === undefined) {
+	            throw new runtime.RequiredError('searchRecordsRequest', 'Required parameter requestParameters.searchRecordsRequest was null or undefined when calling searchRecordsNamespace.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/json';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/records/namespaces/{namespace}/search`.replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))),
+	            method: 'POST',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: (0, index_1.SearchRecordsRequestToJSON)(requestParameters.searchRecordsRequest),
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.SearchRecordsResponseFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Search a namespace with a query text, query vector, or record ID and return the most similar records, along with their similarity scores. Optionally, rerank the initial results based on their relevance to the query.   Searching with text is supported only for [indexes with integrated embedding](https://docs.pinecone.io/guides/indexes/create-an-index#integrated-embedding). Searching with a query vector or record ID is supported for all indexes.   For guidance, examples, and limits, see [Search](https://docs.pinecone.io/guides/search/search-overview).
+	     * Search with text
+	     */
+	    async searchRecordsNamespace(requestParameters, initOverrides) {
+	        const response = await this.searchRecordsNamespaceRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Update a vector in a namespace. If a value is included, it will overwrite the previous value. If a `set_metadata` is included, the values of the fields specified in it will be added or overwrite the previous value.  For guidance and examples, see [Update data](https://docs.pinecone.io/guides/manage-data/update-data).
+	     * Update a vector
+	     */
+	    async updateVectorRaw(requestParameters, initOverrides) {
+	        if (requestParameters.updateRequest === null || requestParameters.updateRequest === undefined) {
+	            throw new runtime.RequiredError('updateRequest', 'Required parameter requestParameters.updateRequest was null or undefined when calling updateVector.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/json';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/vectors/update`,
+	            method: 'POST',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: (0, index_1.UpdateRequestToJSON)(requestParameters.updateRequest),
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response);
+	    }
+	    /**
+	     * Update a vector in a namespace. If a value is included, it will overwrite the previous value. If a `set_metadata` is included, the values of the fields specified in it will be added or overwrite the previous value.  For guidance and examples, see [Update data](https://docs.pinecone.io/guides/manage-data/update-data).
+	     * Update a vector
+	     */
+	    async updateVector(requestParameters, initOverrides) {
+	        const response = await this.updateVectorRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Upsert text into a namespace. Pinecone converts the text to vectors automatically using the hosted embedding model associated with the index.  Upserting text is supported only for [indexes with integrated embedding](https://docs.pinecone.io/reference/api/2025-01/control-plane/create_for_model).  For guidance, examples, and limits, see [Upsert data](https://docs.pinecone.io/guides/index-data/upsert-data).
+	     * Upsert text
+	     */
+	    async upsertRecordsNamespaceRaw(requestParameters, initOverrides) {
+	        if (requestParameters.namespace === null || requestParameters.namespace === undefined) {
+	            throw new runtime.RequiredError('namespace', 'Required parameter requestParameters.namespace was null or undefined when calling upsertRecordsNamespace.');
+	        }
+	        if (requestParameters.upsertRecord === null || requestParameters.upsertRecord === undefined) {
+	            throw new runtime.RequiredError('upsertRecord', 'Required parameter requestParameters.upsertRecord was null or undefined when calling upsertRecordsNamespace.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/x-ndjson';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/records/namespaces/{namespace}/upsert`.replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))),
+	            method: 'POST',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: requestParameters.upsertRecord.map(index_1.UpsertRecordToJSON),
+	        }, initOverrides);
+	        return new runtime.VoidApiResponse(response);
+	    }
+	    /**
+	     * Upsert text into a namespace. Pinecone converts the text to vectors automatically using the hosted embedding model associated with the index.  Upserting text is supported only for [indexes with integrated embedding](https://docs.pinecone.io/reference/api/2025-01/control-plane/create_for_model).  For guidance, examples, and limits, see [Upsert data](https://docs.pinecone.io/guides/index-data/upsert-data).
+	     * Upsert text
+	     */
+	    async upsertRecordsNamespace(requestParameters, initOverrides) {
+	        await this.upsertRecordsNamespaceRaw(requestParameters, initOverrides);
+	    }
+	    /**
+	     * Upsert vectors into a namespace. If a new value is upserted for an existing vector ID, it will overwrite the previous value.  For guidance, examples, and limits, see [Upsert data](https://docs.pinecone.io/guides/index-data/upsert-data).
+	     * Upsert vectors
+	     */
+	    async upsertVectorsRaw(requestParameters, initOverrides) {
+	        if (requestParameters.upsertRequest === null || requestParameters.upsertRequest === undefined) {
+	            throw new runtime.RequiredError('upsertRequest', 'Required parameter requestParameters.upsertRequest was null or undefined when calling upsertVectors.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/json';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/vectors/upsert`,
+	            method: 'POST',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: (0, index_1.UpsertRequestToJSON)(requestParameters.upsertRequest),
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.UpsertResponseFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Upsert vectors into a namespace. If a new value is upserted for an existing vector ID, it will overwrite the previous value.  For guidance, examples, and limits, see [Upsert data](https://docs.pinecone.io/guides/index-data/upsert-data).
+	     * Upsert vectors
+	     */
+	    async upsertVectors(requestParameters, initOverrides) {
+	        const response = await this.upsertVectorsRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	};
+	VectorOperationsApi.VectorOperationsApi = VectorOperationsApi$1;
+	
+	return VectorOperationsApi;
+}
+
+var hasRequiredApis$2;
+
+function requireApis$2 () {
+	if (hasRequiredApis$2) return apis$2;
+	hasRequiredApis$2 = 1;
+	(function (exports) {
+		var __createBinding = (apis$2 && apis$2.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    var desc = Object.getOwnPropertyDescriptor(m, k);
+		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+		      desc = { enumerable: true, get: function() { return m[k]; } };
+		    }
+		    Object.defineProperty(o, k2, desc);
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __exportStar = (apis$2 && apis$2.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		/* tslint:disable */
+		/* eslint-disable */
+		__exportStar(requireBulkOperationsApi(), exports);
+		__exportStar(requireNamespaceOperationsApi(), exports);
+		__exportStar(requireVectorOperationsApi(), exports);
+		
+	} (apis$2));
+	return apis$2;
+}
+
+var api_version$2 = {};
+
+var hasRequiredApi_version$2;
+
+function requireApi_version$2 () {
+	if (hasRequiredApi_version$2) return api_version$2;
+	hasRequiredApi_version$2 = 1;
+	Object.defineProperty(api_version$2, "__esModule", { value: true });
+	api_version$2.X_PINECONE_API_VERSION = void 0;
+	api_version$2.X_PINECONE_API_VERSION = '2025-04';
+	
+	return api_version$2;
+}
+
+var hasRequiredDb_data;
+
+function requireDb_data () {
+	if (hasRequiredDb_data) return db_data;
+	hasRequiredDb_data = 1;
+	(function (exports) {
+		var __createBinding = (db_data && db_data.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    var desc = Object.getOwnPropertyDescriptor(m, k);
+		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+		      desc = { enumerable: true, get: function() { return m[k]; } };
+		    }
+		    Object.defineProperty(o, k2, desc);
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __exportStar = (db_data && db_data.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		/* tslint:disable */
+		/* eslint-disable */
+		__exportStar(requireRuntime$2(), exports);
+		__exportStar(requireApis$2(), exports);
+		__exportStar(requireModels$2(), exports);
+		__exportStar(requireApi_version$2(), exports);
+		
+	} (db_data));
+	return db_data;
+}
+
+var hasRequiredVectorOperationsProvider;
+
+function requireVectorOperationsProvider () {
+	if (hasRequiredVectorOperationsProvider) return vectorOperationsProvider;
+	hasRequiredVectorOperationsProvider = 1;
+	Object.defineProperty(vectorOperationsProvider, "__esModule", { value: true });
+	vectorOperationsProvider.VectorOperationsProvider = void 0;
+	const db_data_1 = requireDb_data();
+	const utils_1 = requireUtils();
+	const indexHostSingleton_1 = requireIndexHostSingleton();
+	const middleware_1 = requireMiddleware();
+	class VectorOperationsProvider {
+	    constructor(config, indexName, indexHostUrl, additionalHeaders) {
+	        this.config = config;
+	        this.indexName = indexName;
+	        this.indexHostUrl = (0, utils_1.normalizeUrl)(indexHostUrl);
+	        this.additionalHeaders = additionalHeaders;
+	    }
+	    async provide() {
+	        if (this.vectorOperations) {
+	            return this.vectorOperations;
+	        }
+	        // If an indexHostUrl has been manually passed we use that,
+	        // otherwise we rely on resolving the host from the IndexHostSingleton
+	        if (this.indexHostUrl) {
+	            this.vectorOperations = this.buildDataOperationsConfig();
+	        }
+	        else {
+	            this.indexHostUrl = await indexHostSingleton_1.IndexHostSingleton.getHostUrl(this.config, this.indexName);
+	            this.vectorOperations = this.buildDataOperationsConfig();
+	        }
+	        return this.vectorOperations;
+	    }
+	    async provideHostUrl() {
+	        return await indexHostSingleton_1.IndexHostSingleton.getHostUrl(this.config, this.indexName);
+	    }
+	    buildDataOperationsConfig() {
+	        const headers = this.additionalHeaders || null;
+	        const indexConfigurationParameters = {
+	            basePath: this.indexHostUrl,
+	            apiKey: this.config.apiKey,
+	            queryParamsStringify: utils_1.queryParamsStringify,
+	            headers: {
+	                'User-Agent': (0, utils_1.buildUserAgent)(this.config),
+	                'X-Pinecone-Api-Version': db_data_1.X_PINECONE_API_VERSION,
+	                ...headers,
+	            },
+	            fetchApi: (0, utils_1.getFetch)(this.config),
+	            middleware: middleware_1.middleware,
+	        };
+	        const indexConfiguration = new db_data_1.Configuration(indexConfigurationParameters);
+	        return new db_data_1.VectorOperationsApi(indexConfiguration);
+	    }
+	}
+	vectorOperationsProvider.VectorOperationsProvider = VectorOperationsProvider;
+	
+	return vectorOperationsProvider;
+}
+
+var list = {};
+
+var hasRequiredList;
+
+function requireList () {
+	if (hasRequiredList) return list;
+	hasRequiredList = 1;
+	Object.defineProperty(list, "__esModule", { value: true });
+	list.listPaginated = void 0;
+	const validateObjectProperties_1 = requireValidateObjectProperties();
+	const ListOptionsProperties = [
+	    'prefix',
+	    'limit',
+	    'paginationToken',
+	];
+	const listPaginated = (apiProvider, namespace) => {
+	    const validator = (options) => {
+	        if (options) {
+	            (0, validateObjectProperties_1.ValidateObjectProperties)(options, ListOptionsProperties);
+	        }
+	        // Don't need to check for empty string prefix or paginationToken, since empty strings evaluate to false
+	        if (options.limit && options.limit < 0) {
+	            throw new Error('`limit` property must be greater than 0');
+	        }
+	    };
+	    return async (options) => {
+	        if (options) {
+	            validator(options);
+	        }
+	        const listRequest = {
+	            ...options,
+	            namespace,
+	        };
+	        const api = await apiProvider.provide();
+	        return await api.listVectors(listRequest);
+	    };
+	};
+	list.listPaginated = listPaginated;
+	
+	return list;
+}
+
+var upsertRecords = {};
+
+var hasRequiredUpsertRecords;
+
+function requireUpsertRecords () {
+	if (hasRequiredUpsertRecords) return upsertRecords;
+	hasRequiredUpsertRecords = 1;
+	Object.defineProperty(upsertRecords, "__esModule", { value: true });
+	upsertRecords.UpsertRecordsCommand = void 0;
+	const errors_1 = requireErrors();
+	const utils_1 = requireUtils();
+	const db_data_1 = requireDb_data();
+	class UpsertRecordsCommand {
+	    constructor(apiProvider, namespace, config) {
+	        this.validator = (records) => {
+	            for (const record of records) {
+	                if (!record.id && !record._id) {
+	                    throw new errors_1.PineconeArgumentError('Every record must include an `id` or `_id` property in order to upsert.');
+	                }
+	            }
+	        };
+	        this.apiProvider = apiProvider;
+	        this.namespace = namespace;
+	        this.config = config;
+	    }
+	    async run(records, maxRetries) {
+	        const fetch = (0, utils_1.getFetch)(this.config);
+	        this.validator(records);
+	        const hostUrl = await this.apiProvider.provideHostUrl();
+	        const upsertRecordsUrl = `${hostUrl}/records/namespaces/${this.namespace}/upsert`;
+	        const requestHeaders = {
+	            'Api-Key': this.config.apiKey,
+	            'User-Agent': (0, utils_1.buildUserAgent)(this.config),
+	            'X-Pinecone-Api-Version': db_data_1.X_PINECONE_API_VERSION,
+	        };
+	        const retryWrapper = new utils_1.RetryOnServerFailure(() => fetch(upsertRecordsUrl, {
+	            method: 'POST',
+	            headers: requestHeaders,
+	            body: toNdJson(records),
+	        }), maxRetries);
+	        const response = await retryWrapper.execute();
+	        if (response.ok) {
+	            return;
+	        }
+	        else {
+	            const err = await (0, errors_1.handleApiError)(new db_data_1.ResponseError(response, 'Response returned an error'), undefined, upsertRecordsUrl);
+	            throw err;
+	        }
+	    }
+	}
+	upsertRecords.UpsertRecordsCommand = UpsertRecordsCommand;
+	function toNdJson(data) {
+	    return data.map((record) => JSON.stringify(record)).join('\n');
+	}
+	
+	return upsertRecords;
+}
+
+var searchRecords = {};
+
+var hasRequiredSearchRecords;
+
+function requireSearchRecords () {
+	if (hasRequiredSearchRecords) return searchRecords;
+	hasRequiredSearchRecords = 1;
+	Object.defineProperty(searchRecords, "__esModule", { value: true });
+	searchRecords.SearchRecordsCommand = void 0;
+	const errors_1 = requireErrors();
+	const utils_1 = requireUtils();
+	class SearchRecordsCommand {
+	    constructor(apiProvider, namespace) {
+	        this.validator = (options) => {
+	            if (!options.query) {
+	                throw new errors_1.PineconeArgumentError('You must pass a `query` object to search.');
+	            }
+	        };
+	        this.apiProvider = apiProvider;
+	        this.namespace = namespace;
+	    }
+	    async run(searchOptions, maxRetries) {
+	        this.validator(searchOptions);
+	        const api = await this.apiProvider.provide();
+	        const retryWrapper = new utils_1.RetryOnServerFailure(api.searchRecordsNamespace.bind(api), maxRetries);
+	        return await retryWrapper.execute({
+	            searchRecordsRequest: searchOptions,
+	            namespace: this.namespace,
+	        });
+	    }
+	}
+	searchRecords.SearchRecordsCommand = SearchRecordsCommand;
+	
+	return searchRecords;
+}
+
+var startImport = {};
+
+var hasRequiredStartImport;
+
+function requireStartImport () {
+	if (hasRequiredStartImport) return startImport;
+	hasRequiredStartImport = 1;
+	Object.defineProperty(startImport, "__esModule", { value: true });
+	startImport.StartImportCommand = void 0;
+	const db_data_1 = requireDb_data();
+	const errors_1 = requireErrors();
+	class StartImportCommand {
+	    constructor(apiProvider, namespace) {
+	        this.apiProvider = apiProvider;
+	        this.namespace = namespace;
+	    }
+	    async run(uri, errorMode, integrationId) {
+	        if (!uri) {
+	            throw new errors_1.PineconeArgumentError('`uri` field is required and must start with the scheme of a supported storage provider.');
+	        }
+	        let error = db_data_1.ImportErrorModeOnErrorEnum.Continue;
+	        if (errorMode) {
+	            if (errorMode.toLowerCase() !== 'continue' &&
+	                errorMode.toLowerCase() !== 'abort') {
+	                throw new errors_1.PineconeArgumentError('`errorMode` must be one of "Continue" or "Abort"');
+	            }
+	            if (errorMode?.toLowerCase() == 'abort') {
+	                error = db_data_1.ImportErrorModeOnErrorEnum.Abort;
+	            }
+	        }
+	        const req = {
+	            startImportRequest: {
+	                uri: uri,
+	                errorMode: { onError: error },
+	                integrationId: integrationId,
+	            },
+	        };
+	        const api = await this.apiProvider.provide();
+	        return await api.startBulkImport(req);
+	    }
+	}
+	startImport.StartImportCommand = StartImportCommand;
+	
+	return startImport;
+}
+
+var listImports = {};
+
+var hasRequiredListImports;
+
+function requireListImports () {
+	if (hasRequiredListImports) return listImports;
+	hasRequiredListImports = 1;
+	Object.defineProperty(listImports, "__esModule", { value: true });
+	listImports.ListImportsCommand = void 0;
+	class ListImportsCommand {
+	    constructor(apiProvider, namespace) {
+	        this.apiProvider = apiProvider;
+	        this.namespace = namespace;
+	    }
+	    async run(limit, paginationToken) {
+	        const req = {
+	            limit: limit,
+	            paginationToken: paginationToken,
+	        };
+	        const api = await this.apiProvider.provide();
+	        return await api.listBulkImports(req);
+	    }
+	}
+	listImports.ListImportsCommand = ListImportsCommand;
+	
+	return listImports;
+}
+
+var describeImport = {};
+
+var hasRequiredDescribeImport;
+
+function requireDescribeImport () {
+	if (hasRequiredDescribeImport) return describeImport;
+	hasRequiredDescribeImport = 1;
+	Object.defineProperty(describeImport, "__esModule", { value: true });
+	describeImport.DescribeImportCommand = void 0;
+	class DescribeImportCommand {
+	    constructor(apiProvider, namespace) {
+	        this.apiProvider = apiProvider;
+	        this.namespace = namespace;
+	    }
+	    async run(id) {
+	        const req = {
+	            id: id,
+	        };
+	        const api = await this.apiProvider.provide();
+	        return await api.describeBulkImport(req);
+	    }
+	}
+	describeImport.DescribeImportCommand = DescribeImportCommand;
+	
+	return describeImport;
+}
+
+var cancelImport = {};
+
+var hasRequiredCancelImport;
+
+function requireCancelImport () {
+	if (hasRequiredCancelImport) return cancelImport;
+	hasRequiredCancelImport = 1;
+	Object.defineProperty(cancelImport, "__esModule", { value: true });
+	cancelImport.CancelImportCommand = void 0;
+	class CancelImportCommand {
+	    constructor(apiProvider, namespace) {
+	        this.apiProvider = apiProvider;
+	        this.namespace = namespace;
+	    }
+	    async run(id) {
+	        const req = {
+	            id: id,
+	        };
+	        const api = await this.apiProvider.provide();
+	        return await api.cancelBulkImport(req);
+	    }
+	}
+	cancelImport.CancelImportCommand = CancelImportCommand;
+	
+	return cancelImport;
+}
+
+var bulkOperationsProvider = {};
+
+var hasRequiredBulkOperationsProvider;
+
+function requireBulkOperationsProvider () {
+	if (hasRequiredBulkOperationsProvider) return bulkOperationsProvider;
+	hasRequiredBulkOperationsProvider = 1;
+	Object.defineProperty(bulkOperationsProvider, "__esModule", { value: true });
+	bulkOperationsProvider.BulkOperationsProvider = void 0;
+	const db_data_1 = requireDb_data();
+	const utils_1 = requireUtils();
+	const indexHostSingleton_1 = requireIndexHostSingleton();
+	const middleware_1 = requireMiddleware();
+	class BulkOperationsProvider {
+	    constructor(config, indexName, indexHostUrl, additionalHeaders) {
+	        this.config = config;
+	        this.indexName = indexName;
+	        this.indexHostUrl = (0, utils_1.normalizeUrl)(indexHostUrl);
+	        this.additionalHeaders = additionalHeaders;
+	    }
+	    async provide() {
+	        if (this.bulkOperations) {
+	            return this.bulkOperations;
+	        }
+	        // If an indexHostUrl has been manually passed we use that,
+	        // otherwise we rely on resolving the host from the IndexHostSingleton
+	        if (this.indexHostUrl) {
+	            this.bulkOperations = this.buildBulkOperationsConfig();
+	        }
+	        else {
+	            this.indexHostUrl = await indexHostSingleton_1.IndexHostSingleton.getHostUrl(this.config, this.indexName);
+	            this.bulkOperations = this.buildBulkOperationsConfig();
+	        }
+	        return this.bulkOperations;
+	    }
+	    buildBulkOperationsConfig() {
+	        const headers = this.additionalHeaders || null;
+	        const indexConfigurationParameters = {
+	            basePath: this.indexHostUrl,
+	            apiKey: this.config.apiKey,
+	            queryParamsStringify: utils_1.queryParamsStringify,
+	            headers: {
+	                'User-Agent': (0, utils_1.buildUserAgent)(this.config),
+	                'X-Pinecone-Api-Version': db_data_1.X_PINECONE_API_VERSION,
+	                ...headers,
+	            },
+	            fetchApi: (0, utils_1.getFetch)(this.config),
+	            middleware: middleware_1.middleware,
+	        };
+	        const indexConfiguration = new db_data_1.Configuration(indexConfigurationParameters);
+	        return new db_data_1.BulkOperationsApi(indexConfiguration);
+	    }
+	}
+	bulkOperationsProvider.BulkOperationsProvider = BulkOperationsProvider;
+	
+	return bulkOperationsProvider;
+}
+
+var namespacesOperationsProvider = {};
+
+var hasRequiredNamespacesOperationsProvider;
+
+function requireNamespacesOperationsProvider () {
+	if (hasRequiredNamespacesOperationsProvider) return namespacesOperationsProvider;
+	hasRequiredNamespacesOperationsProvider = 1;
+	Object.defineProperty(namespacesOperationsProvider, "__esModule", { value: true });
+	namespacesOperationsProvider.NamespaceOperationsProvider = void 0;
+	const db_data_1 = requireDb_data();
+	const utils_1 = requireUtils();
+	const indexHostSingleton_1 = requireIndexHostSingleton();
+	const middleware_1 = requireMiddleware();
+	class NamespaceOperationsProvider {
+	    constructor(config, indexName, indexHostUrl, additionalHeaders) {
+	        this.config = config;
+	        this.indexName = indexName;
+	        this.indexHostUrl = (0, utils_1.normalizeUrl)(indexHostUrl);
+	        this.additionalHeaders = additionalHeaders;
+	    }
+	    async provide() {
+	        if (this.namespaceOperations) {
+	            return this.namespaceOperations;
+	        }
+	        // If an indexHostUrl has been manually passed we use that,
+	        // otherwise we rely on resolving the host from the IndexHostSingleton
+	        if (this.indexHostUrl) {
+	            this.namespaceOperations = this.buildNamespaceOperationsConfig();
+	        }
+	        else {
+	            this.indexHostUrl = await indexHostSingleton_1.IndexHostSingleton.getHostUrl(this.config, this.indexName);
+	            this.namespaceOperations = this.buildNamespaceOperationsConfig();
+	        }
+	        return this.namespaceOperations;
+	    }
+	    buildNamespaceOperationsConfig() {
+	        const headers = this.additionalHeaders || null;
+	        const indexConfigurationParameters = {
+	            basePath: this.indexHostUrl,
+	            apiKey: this.config.apiKey,
+	            queryParamsStringify: utils_1.queryParamsStringify,
+	            headers: {
+	                'User-Agent': (0, utils_1.buildUserAgent)(this.config),
+	                'X-Pinecone-Api-Version': db_data_1.X_PINECONE_API_VERSION,
+	                ...headers,
+	            },
+	            fetchApi: (0, utils_1.getFetch)(this.config),
+	            middleware: middleware_1.middleware,
+	        };
+	        const indexConfiguration = new db_data_1.Configuration(indexConfigurationParameters);
+	        return new db_data_1.NamespaceOperationsApi(indexConfiguration);
+	    }
+	}
+	namespacesOperationsProvider.NamespaceOperationsProvider = NamespaceOperationsProvider;
+	
+	return namespacesOperationsProvider;
+}
+
+var listNamespaces = {};
+
+var hasRequiredListNamespaces;
+
+function requireListNamespaces () {
+	if (hasRequiredListNamespaces) return listNamespaces;
+	hasRequiredListNamespaces = 1;
+	Object.defineProperty(listNamespaces, "__esModule", { value: true });
+	listNamespaces.listNamespaces = void 0;
+	const listNamespaces$1 = (apiProvider) => {
+	    return async (limit, paginationToken) => {
+	        const api = await apiProvider.provide();
+	        return await api.listNamespacesOperation({ limit, paginationToken });
+	    };
+	};
+	listNamespaces.listNamespaces = listNamespaces$1;
+	
+	return listNamespaces;
+}
+
+var describeNamespace = {};
+
+var hasRequiredDescribeNamespace;
+
+function requireDescribeNamespace () {
+	if (hasRequiredDescribeNamespace) return describeNamespace;
+	hasRequiredDescribeNamespace = 1;
+	Object.defineProperty(describeNamespace, "__esModule", { value: true });
+	describeNamespace.describeNamespace = void 0;
+	const describeNamespace$1 = (apiProvider) => {
+	    return async (namespace) => {
+	        const api = await apiProvider.provide();
+	        return await api.describeNamespace({ namespace });
+	    };
+	};
+	describeNamespace.describeNamespace = describeNamespace$1;
+	
+	return describeNamespace;
+}
+
+var deleteNamespace = {};
+
+var hasRequiredDeleteNamespace;
+
+function requireDeleteNamespace () {
+	if (hasRequiredDeleteNamespace) return deleteNamespace;
+	hasRequiredDeleteNamespace = 1;
+	Object.defineProperty(deleteNamespace, "__esModule", { value: true });
+	deleteNamespace.deleteNamespace = void 0;
+	const deleteNamespace$1 = (apiProvider) => {
+	    return async (namespace) => {
+	        const api = await apiProvider.provide();
+	        await api.deleteNamespace({ namespace });
+	        return;
+	    };
+	};
+	deleteNamespace.deleteNamespace = deleteNamespace$1;
+	
+	return deleteNamespace;
+}
+
+var hasRequiredData;
+
+function requireData () {
+	if (hasRequiredData) return data;
+	hasRequiredData = 1;
+	Object.defineProperty(data, "__esModule", { value: true });
+	data.Index = void 0;
+	const upsert_1 = requireUpsert();
+	const fetch_1 = requireFetch();
+	const update_1 = requireUpdate();
+	const query_1 = requireQuery();
+	const deleteOne_1 = requireDeleteOne();
+	const deleteMany_1 = requireDeleteMany();
+	const deleteAll_1 = requireDeleteAll();
+	const describeIndexStats_1 = requireDescribeIndexStats();
+	const vectorOperationsProvider_1 = requireVectorOperationsProvider();
+	const list_1 = requireList();
+	const upsertRecords_1 = requireUpsertRecords();
+	const searchRecords_1 = requireSearchRecords();
+	const startImport_1 = requireStartImport();
+	const listImports_1 = requireListImports();
+	const describeImport_1 = requireDescribeImport();
+	const cancelImport_1 = requireCancelImport();
+	const bulkOperationsProvider_1 = requireBulkOperationsProvider();
+	const namespacesOperationsProvider_1 = requireNamespacesOperationsProvider();
+	const listNamespaces_1 = requireListNamespaces();
+	const describeNamespace_1 = requireDescribeNamespace();
+	const deleteNamespace_1 = requireDeleteNamespace();
+	/**
+	 * The `Index` class is used to perform data operations (upsert, query, etc)
+	 * against Pinecone indexes. Typically, it will be instantiated via a `Pinecone`
+	 * client instance that has already built the required configuration from a
+	 * combination of sources.
+	 *
+	 * ```typescript
+	 * import { Pinecone } from '@pinecone-database/pinecone';
+	 * const pc = new Pinecone()
+	 *
+	 * const index = pc.index('index-name')
+	 * ```
+	 *
+	 * ### Targeting an index, with user-defined Metadata types
+	 *
+	 * If you are storing metadata alongside your vector values inside your Pinecone records, you can pass a type parameter to `index()` in order to get proper TypeScript typechecking when upserting and querying data.
+	 *
+	 * ```typescript
+	 * import { Pinecone } from '@pinecone-database/pinecone';
+	 * const pc = new Pinecone();
+	 *
+	 * type MovieMetadata = {
+	 *   title: string,
+	 *   runtime: numbers,
+	 *   genre: 'comedy' | 'horror' | 'drama' | 'action'
+	 * }
+	 *
+	 * // Specify a custom metadata type while targeting the index
+	 * const index = pc.index<MovieMetadata>('test-index');
+	 *
+	 * // Now you get type errors if upserting malformed metadata
+	 * await index.upsert([{
+	 *   id: '1234',
+	 *   values: [
+	 *     .... // embedding values
+	 *   ],
+	 *   metadata: {
+	 *     genre: 'Gone with the Wind',
+	 *     runtime: 238,
+	 *     genre: 'drama',
+	 *
+	 *     // @ts-expect-error because category property not in MovieMetadata
+	 *     category: 'classic'
+	 *   }
+	 * }])
+	 *
+	 * const results = await index.query({
+	 *    vector: [
+	 *     ... // query embedding
+	 *    ],
+	 *    filter: { genre: { '$eq': 'drama' }}
+	 * })
+	 * const movie = results.matches[0];
+	 *
+	 * if (movie.metadata) {
+	 *   // Since we passed the MovieMetadata type parameter above,
+	 *   // we can interact with metadata fields without having to
+	 *   // do any typecasting.
+	 *   const { title, runtime, genre } = movie.metadata;
+	 *   console.log(`The best match in drama was ${title}`)
+	 * }
+	 * ```
+	 *
+	 * @typeParam T - The type of metadata associated with each record.
+	 */
+	class Index {
+	    /**
+	     * Instantiation of Index is handled by {@link Pinecone}
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     *
+	     * const index = pc.index('my-index');
+	     * ```
+	     *
+	     * @constructor
+	     * @param indexName - The name of the index that will receive operations from this {@link Index} instance.
+	     * @param config - The configuration from the Pinecone client.
+	     * @param namespace - The namespace for the index.
+	     * @param indexHostUrl - An optional override for the host address used for data operations.
+	     * @param additionalHeaders - An optional object of additional header to send with each request.
+	     */
+	    constructor(indexName, config, namespace = '__default__', indexHostUrl, additionalHeaders) {
+	        this.config = config;
+	        this.target = {
+	            index: indexName,
+	            namespace: namespace,
+	            indexHostUrl: indexHostUrl,
+	        };
+	        // vector & record operations
+	        const dataOperationsProvider = new vectorOperationsProvider_1.VectorOperationsProvider(config, indexName, indexHostUrl, additionalHeaders);
+	        this._deleteAll = (0, deleteAll_1.deleteAll)(dataOperationsProvider, namespace);
+	        this._deleteMany = (0, deleteMany_1.deleteMany)(dataOperationsProvider, namespace);
+	        this._deleteOne = (0, deleteOne_1.deleteOne)(dataOperationsProvider, namespace);
+	        this._describeIndexStats = (0, describeIndexStats_1.describeIndexStats)(dataOperationsProvider);
+	        this._listPaginated = (0, list_1.listPaginated)(dataOperationsProvider, namespace);
+	        this._fetchCommand = new fetch_1.FetchCommand(dataOperationsProvider, namespace);
+	        this._queryCommand = new query_1.QueryCommand(dataOperationsProvider, namespace);
+	        this._updateCommand = new update_1.UpdateCommand(dataOperationsProvider, namespace);
+	        this._upsertCommand = new upsert_1.UpsertCommand(dataOperationsProvider, namespace);
+	        this._upsertRecordsCommand = new upsertRecords_1.UpsertRecordsCommand(dataOperationsProvider, namespace, config);
+	        this._searchRecordsCommand = new searchRecords_1.SearchRecordsCommand(dataOperationsProvider, namespace);
+	        // bulk operations
+	        const bulkApiProvider = new bulkOperationsProvider_1.BulkOperationsProvider(config, indexName, indexHostUrl, additionalHeaders);
+	        this._startImportCommand = new startImport_1.StartImportCommand(bulkApiProvider, namespace);
+	        this._listImportsCommand = new listImports_1.ListImportsCommand(bulkApiProvider, namespace);
+	        this._describeImportCommand = new describeImport_1.DescribeImportCommand(bulkApiProvider, namespace);
+	        this._cancelImportCommand = new cancelImport_1.CancelImportCommand(bulkApiProvider, namespace);
+	        // namespace operations
+	        const namespaceApiProvider = new namespacesOperationsProvider_1.NamespaceOperationsProvider(config, indexName, indexHostUrl, additionalHeaders);
+	        this._listNamespacesCommand = (0, listNamespaces_1.listNamespaces)(namespaceApiProvider);
+	        this._describeNamespaceCommand = (0, describeNamespace_1.describeNamespace)(namespaceApiProvider);
+	        this._deleteNamespaceCommand = (0, deleteNamespace_1.deleteNamespace)(namespaceApiProvider);
+	    }
+	    /**
+	     * Delete all records from the targeted namespace. To delete all records from across all namespaces,
+	     * delete the index using {@link Pinecone.deleteIndex} and create a new one using {@link Pinecone.createIndex}.
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const index = pc.index('my-index');
+	     *
+	     * await index.describeIndexStats();
+	     * // {
+	     * //  namespaces: {
+	     * //    '': { recordCount: 10 },
+	     * //   foo: { recordCount: 1 }
+	     * //   },
+	     * //   dimension: 8,
+	     * //   indexFullness: 0,
+	     * //   totalRecordCount: 11
+	     * // }
+	     *
+	     * await index.deleteAll();
+	     *
+	     * // Records from the default namespace '' are now deleted. Records in other namespaces are not modified.
+	     *
+	     * await index.describeIndexStats();
+	     * // {
+	     * //  namespaces: {
+	     * //   foo: { recordCount: 1 }
+	     * //   },
+	     * //   dimension: 8,
+	     * //   indexFullness: 0,
+	     * //   totalRecordCount: 1
+	     * // }
+	     * ```
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns A promise that resolves when the delete is completed.
+	     */
+	    deleteAll() {
+	        return this._deleteAll();
+	    }
+	    /**
+	     * Delete records from the index by either an array of ids, or a filter object.
+	     * See [Filtering with metadata](https://docs.pinecone.io/docs/metadata-filtering#deleting-vectors-by-metadata-filter)
+	     * for more on deleting records with filters.
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const index = pc.index('my-index');
+	     *
+	     * await index.deleteMany(['record-1', 'record-2']);
+	     *
+	     * // or
+	     * await index.deleteMany({ genre: 'classical' });
+	     * ```
+	     * @param options - An array of record id values or a filter object.
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns A promise that resolves when the delete is completed.
+	     */
+	    deleteMany(options) {
+	        return this._deleteMany(options);
+	    }
+	    /**
+	     * Delete a record from the index by id.
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const index = pc.index('my-index');
+	     *
+	     * await index.deleteOne('record-1');
+	     * ```
+	     * @param id - The id of the record to delete.
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns A promise that resolves when the delete is completed.
+	     */
+	    deleteOne(id) {
+	        return this._deleteOne(id);
+	    }
+	    /**
+	     * Describes the index's statistics such as total number of records, records per namespace, and the index's dimension size.
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const index = pc.index('my-index');
+	     *
+	     * await index.describeIndexStats();
+	     * // {
+	     * //  namespaces: {
+	     * //    '': { recordCount: 10 }
+	     * //    foo: { recordCount: 2000 },
+	     * //    bar: { recordCount: 2000 }
+	     * //   },
+	     * //   dimension: 1536,
+	     * //   indexFullness: 0,
+	     * //   totalRecordCount: 4010
+	     * // }
+	     * ```
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns A promise that resolves with the {@link IndexStatsDescription} value when the operation is completed.
+	     */
+	    describeIndexStats() {
+	        return this._describeIndexStats();
+	    }
+	    /**
+	     * The `listPaginated` operation finds vectors based on an id prefix within a single namespace.
+	     * It returns matching ids in a paginated form, with a pagination token to fetch the next page of results.
+	     * This id list can then be passed to fetch or delete options to perform operations on the matching records.
+	     * See [Get record IDs](https://docs.pinecone.io/docs/get-record-ids) for guidance and examples.
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     *
+	     * const index = pc.index('my-index').namespace('my-namespace');
+	     *
+	     * const results = await index.listPaginated({ prefix: 'doc1#' });
+	     * console.log(results);
+	     * // {
+	     * //   vectors: [
+	     * //     { id: 'doc1#01' }, { id: 'doc1#02' }, { id: 'doc1#03' },
+	     * //     { id: 'doc1#04' }, { id: 'doc1#05' },  { id: 'doc1#06' },
+	     * //     { id: 'doc1#07' }, { id: 'doc1#08' }, { id: 'doc1#09' },
+	     * //     ...
+	     * //   ],
+	     * //   pagination: {
+	     * //     next: 'eyJza2lwX3Bhc3QiOiJwcmVUZXN0LS04MCIsInByZWZpeCI6InByZVRlc3QifQ=='
+	     * //   },
+	     * //   namespace: 'my-namespace',
+	     * //   usage: { readUnits: 1 }
+	     * // }
+	     *
+	     * // Fetch the next page of results
+	     * await index.listPaginated({ prefix: 'doc1#', paginationToken: results.pagination.next});
+	     * ```
+	     *
+	     * > ⚠️ **Note:**
+	     * >
+	     * > `listPaginated` is supported only for serverless indexes.
+	     *
+	     * @param options - The {@link ListOptions} for the operation.
+	     * @returns - A promise that resolves with the {@link ListResponse} when the operation is completed.
+	     * @throws {@link Errors.PineconeConnectionError} when invalid environment, project id, or index name is configured.
+	     * @throws {@link Errors.PineconeArgumentError} when invalid arguments are passed.
+	     */
+	    listPaginated(options) {
+	        return this._listPaginated(options);
+	    }
+	    /**
+	     * Returns an {@link Index} targeting the specified namespace. By default, all operations take place inside the default namespace `''`.
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     *
+	     * // Create an Index client instance scoped to operate on a
+	     * // single namespace
+	     * const ns = pc.index('my-index').namespace('my-namespace');
+	     *
+	     * // Now operations against this intance only affect records in
+	     * // the targeted namespace
+	     * ns.upsert([
+	     *   // ... records to upsert in namespace 'my-namespace'
+	     * ])
+	     *
+	     * ns.query({
+	     *   // ... query records in namespace 'my-namespace'
+	     * })
+	     * ```
+	     * This `namespace()` method will inherit custom metadata types if you are chaining the call off an {@link Index} client instance that is typed with a user-specified metadata type. See {@link Pinecone.index} for more info.
+	     *
+	     * @param namespace - The namespace to target within the index. All operations performed with the returned client instance will be scoped only to the targeted namespace.
+	     * @returns An {@link Index} object that can be used to perform data operations scoped to the specified namespace.
+	     */
+	    namespace(namespace) {
+	        return new Index(this.target.index, this.config, namespace, this.target.indexHostUrl);
+	    }
+	    /**
+	     * Upsert records to the index.
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const index = pc.index('my-index');
+	     *
+	     * await index.upsert([{
+	     *  id: 'record-1',
+	     *  values: [0.176, 0.345, 0.263],
+	     * },{
+	     *  id: 'record-2',
+	     *  values: [0.176, 0.345, 0.263],
+	     * }])
+	     * ```
+	     *
+	     * @param data - An array of {@link PineconeRecord} objects to upsert.
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns A promise that resolves when the upsert is completed.
+	     */
+	    async upsert(data) {
+	        return await this._upsertCommand.run(data, this.config.maxRetries);
+	    }
+	    /**
+	     * Fetch records from the index.
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const index = pc.index('my-index');
+	     *
+	     * await index.fetch(['record-1', 'record-2']);
+	     * ```
+	     * @param options - The {@link FetchOptions} for the operation.
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns A promise that resolves with the {@link FetchResponse} when the fetch is completed.
+	     */
+	    async fetch(options) {
+	        return await this._fetchCommand.run(options);
+	    }
+	    /**
+	     * Query records from the index. Query is used to find the `topK` records in the index whose vector values are most
+	     * similar to the vector values of the query according to the distance metric you have configured for your index.
+	     * See [Query data](https://docs.pinecone.io/docs/query-data) for more on querying.
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const index = pc.index('my-index');
+	     *
+	     * await index.query({ topK: 3, id: 'record-1'});
+	     *
+	     * // or
+	     * await index.query({ topK: 3, vector: [0.176, 0.345, 0.263] });
+	     * ```
+	     *
+	     * @param options - The {@link QueryOptions} for the operation.
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns A promise that resolves with the {@link QueryResponse} when the query is completed.
+	     */
+	    async query(options) {
+	        return await this._queryCommand.run(options);
+	    }
+	    /**
+	     * Update a record in the index by id.
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const index = pc.index('imdb-movies');
+	     *
+	     * await index.update({
+	     *   id: '18593',
+	     *   metadata: { genre: 'romance' },
+	     * });
+	     * ```
+	     *
+	     * @param options - The {@link UpdateOptions} for the operation.
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns A promise that resolves when the update is completed.
+	     */
+	    async update(options) {
+	        return await this._updateCommand.run(options, this.config.maxRetries);
+	    }
+	    /**
+	     * Upsert integrated records into a specific namespace within an index.
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const namespace = pc.index('integrated-index').namespace('my-namespace');
+	     *
+	     * await namespace.upsertRecords([
+	     *   {
+	     *     id: 'rec1',
+	     *     chunk_text:
+	     *       "Apple's first product, the Apple I, was released in 1976 and was hand-built by co-founder Steve Wozniak.",
+	     *     category: 'product',
+	     *   },
+	     *   {
+	     *     id: 'rec2',
+	     *     chunk_text:
+	     *       'Apples are a great source of dietary fiber, which supports digestion and helps maintain a healthy gut.',
+	     *     category: 'nutrition',
+	     *   },
+	     *   {
+	     *     id: 'rec3',
+	     *     chunk_text:
+	     *       'Apples originated in Central Asia and have been cultivated for thousands of years, with over 7,500 varieties available today.',
+	     *     category: 'cultivation',
+	     *   },
+	     *   {
+	     *     id: 'rec4',
+	     *     chunk_text:
+	     *       'In 2001, Apple released the iPod, which transformed the music industry by making portable music widely accessible.',
+	     *     category: 'product',
+	     *   },
+	     *   {
+	     *     id: 'rec5',
+	     *     chunk_text:
+	     *       'Apple went public in 1980, making history with one of the largest IPOs at that time.',
+	     *     category: 'milestone',
+	     *   },
+	     *   {
+	     *     id: 'rec6',
+	     *     chunk_text:
+	     *       'Rich in vitamin C and other antioxidants, apples contribute to immune health and may reduce the risk of chronic diseases.',
+	     *     category: 'nutrition',
+	     *   },
+	     *   {
+	     *     id: 'rec7',
+	     *     chunk_text:
+	     *       "Known for its design-forward products, Apple's branding and market strategy have greatly influenced the technology sector and popularized minimalist design worldwide.",
+	     *     category: 'influence',
+	     *   },
+	     *   {
+	     *     id: 'rec8',
+	     *     chunk_text:
+	     *       'The high fiber content in apples can also help regulate blood sugar levels, making them a favorable snack for people with diabetes.',
+	     *     category: 'nutrition',
+	     *   },
+	     * ]);
+	     * ```
+	     *
+	     * @param data - An array of {@link IntegratedRecord} objects to upsert.
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns a promise that resolves when the operation is complete.
+	     */
+	    async upsertRecords(data) {
+	        return await this._upsertRecordsCommand.run(data, this.config.maxRetries);
+	    }
+	    /**
+	     * Search a specific namespace for records within an index.
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const namespace = pc.index('integrated-index').namespace('my-namespace');
+	     *
+	     * const response = await namespace.searchRecords({
+	     *   query: {
+	     *     inputs: { text: 'disease prevention' }, topK: 4 },
+	     *     rerank: {
+	     *       model: 'bge-reranker-v2-m3',
+	     *       topN: 2,
+	     *       rankFields: ['chunk_text'],
+	     *     },
+	     *   fields: ['category', 'chunk_text'],
+	     * });
+	     * console.log(response);
+	     * // {
+	     * //   "result": {
+	     * //     "hits": [
+	     * //       {
+	     * //         "id": "rec6",
+	     * //         "score": 0.1318424493074417,
+	     * //         "fields": {
+	     * //           "category": "nutrition",
+	     * //           "chunk_text": "Rich in vitamin C and other antioxidants, apples contribute to immune health and may reduce the risk of chronic diseases."
+	     * //         }
+	     * //       },
+	     * //       {
+	     * //         "id": "rec2",
+	     * //         "score": 0.004867417272180319,
+	     * //         "fields": {
+	     * //           "category": "nutrition",
+	     * //           "chunk_text": "Apples are a great source of dietary fiber, which supports digestion and helps maintain a healthy gut."
+	     * //         }
+	     * //       }
+	     * //     ]
+	     * //   },
+	     * //   "usage": {
+	     * //     "readUnits": 1,
+	     * //     "embedTotalTokens": 8,
+	     * //     "rerankUnits": 1
+	     * //   }
+	     * // }
+	     * ```
+	     *
+	     * @param options - The {@link SearchRecordsOptions} for the operation.
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns a promise that resolves to {@link SearchRecordsResponse} when the operation is complete.
+	     */
+	    async searchRecords(options) {
+	        return await this._searchRecordsCommand.run(options);
+	    }
+	    /**
+	     * Start an asynchronous import of vectors from object storage into a Pinecone Serverless index.
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const index = pc.index('my-serverless-index');
+	     * console.log(await index.startImport('s3://my-bucket/my-data'));
+	     *
+	     * // {"id":"1"}
+	     * ```
+	     *
+	     * @param uri - (Required) The URI prefix under which the data to import is available. All data within this prefix
+	     * will be listed then imported into the target index. Currently only `s3://` URIs are supported.
+	     * @param integration - (Optional) The name of the storage integration that should be used to access the data.
+	     * Defaults to None.
+	     * @param errorMode - (Optional) Defaults to "Continue". If set to "Continue", the import operation will continue
+	     * even if some records fail to import. To inspect failures in "Continue" mode, send a request to {@link listImports}. Pass
+	     * "Abort" to stop the import operation if any records fail to import.
+	     */
+	    async startImport(uri, errorMode, integration) {
+	        return await this._startImportCommand.run(uri, errorMode, integration);
+	    }
+	    /**
+	     * List all recent and ongoing import operations.
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const index = pc.index('my-serverless-index');
+	     * console.log(await index.listImports());
+	     *
+	     * // {
+	     * //  data: [
+	     * //    {
+	     * //      id: '1',
+	     * //      uri: 's3://dev-bulk-import-datasets-pub/10-records-dim-10',
+	     * //      status: 'Completed',
+	     * //      createdAt: 2024-09-17T16:59:57.973Z,
+	     * //      finishedAt: 2024-09-17T17:00:12.809Z,
+	     * //      percentComplete: 100,
+	     * //      recordsImported: 20,
+	     * //      error: undefined
+	     * //    }
+	     * //  ],
+	     * //  pagination: undefined  // Example is only 1 item, so no pag. token given.
+	     * // }
+	     * ```
+	     *
+	     * @param limit - (Optional) Max number of import operations to return per page.
+	     * @param paginationToken - (Optional) Pagination token to continue a previous listing operation.
+	     */
+	    async listImports(limit, paginationToken) {
+	        return await this._listImportsCommand.run(limit, paginationToken);
+	    }
+	    /**
+	     * Return details of a specific import operation.
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const index = pc.index('my-serverless-index');
+	     * console.log(await index.describeImport('import-id'));
+	     *
+	     * // {
+	     * //  id: '1',
+	     * //  uri: 's3://dev-bulk-import-datasets-pub/10-records-dim-10',
+	     * //  status: 'Completed',
+	     * //  createdAt: 2024-09-17T16:59:57.973Z,
+	     * //  finishedAt: 2024-09-17T17:00:12.809Z,
+	     * //  percentComplete: 100,
+	     * //  recordsImported: 20,
+	     * //  error: undefined
+	     * // }
+	     * ```
+	     *
+	     * @param id - The id of the import operation to describe.
+	     */
+	    async describeImport(id) {
+	        return await this._describeImportCommand.run(id);
+	    }
+	    /**
+	     * Cancel a specific import operation.
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const index = pc.index('my-serverless-index');
+	     * console.log(await index.cancelImport('import-id'));
+	     *
+	     * // {}
+	     * ```
+	     *
+	     * @param id - The id of the import operation to cancel.
+	     */
+	    async cancelImport(id) {
+	        return await this._cancelImportCommand.run(id);
+	    }
+	    /**
+	     * Returns a list of namespaces within the index.
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const index = pc.index('my-serverless-index');
+	     * console.log(await index.listNamespaces(10));
+	     *
+	     * // {
+	     * //   namespaces: [
+	     * //     { name: 'ns-1', recordCount: '1' },
+	     * //     { name: 'ns-2', recordCount: '1' }
+	     * //   ],
+	     * //   pagination: undefined
+	     * // }
+	     * ```
+	     *
+	     * @param limit - (Optional) Max number of import operations to return per page.
+	     * @param paginationToken - (Optional) Pagination token to continue a previous listing operation.
+	     */
+	    async listNamespaces(limit, paginationToken) {
+	        return await this._listNamespacesCommand(limit, paginationToken);
+	    }
+	    /**
+	     * Returns the details of a specific namespace.
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const index = pc.index('my-serverless-index');
+	     * console.log(await index.describeNamespace('ns-1'));
+	     *
+	     * // { name: 'ns-1', recordCount: '1' }
+	     * ```
+	     *
+	     * @param namespace - The namespace to describe.
+	     */
+	    async describeNamespace(namespace) {
+	        return await this._describeNamespaceCommand(namespace);
+	    }
+	    /**
+	     * Deletes a specific namespace from the index, including all records within it.
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const index = pc.index('my-serverless-index');
+	     * await index.deleteNamespace('ns-1');
+	     * ```
+	     *
+	     * @param namespace - The namespace to delete.
+	     */
+	    async deleteNamespace(namespace) {
+	        return await this._deleteNamespaceCommand(namespace);
+	    }
+	}
+	data.Index = Index;
+	
+	return data;
+}
+
+var inference$2 = {};
+
+var inference$1 = {};
+
+var inferenceOperationsBuilder = {};
+
+var inference = {};
+
+var runtime$1 = {};
+
+var hasRequiredRuntime$1;
+
+function requireRuntime$1 () {
+	if (hasRequiredRuntime$1) return runtime$1;
+	hasRequiredRuntime$1 = 1;
+	(function (exports) {
+		/* tslint:disable */
+		/* eslint-disable */
+		/**
+		 * Pinecone Inference API
+		 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+		 *
+		 * The version of the OpenAPI document: 2025-04
+		 * Contact: support@pinecone.io
+		 *
+		 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+		 * https://openapi-generator.tech
+		 * Do not edit the class manually.
+		 */
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.TextApiResponse = exports.BlobApiResponse = exports.VoidApiResponse = exports.JSONApiResponse = exports.canConsumeForm = exports.mapValues = exports.querystring = exports.exists = exports.COLLECTION_FORMATS = exports.RequiredError = exports.FetchError = exports.ResponseError = exports.BaseAPI = exports.DefaultConfig = exports.Configuration = exports.BASE_PATH = void 0;
+		exports.BASE_PATH = "https://api.pinecone.io".replace(/\/+$/, "");
+		class Configuration {
+		    constructor(configuration = {}) {
+		        this.configuration = configuration;
+		    }
+		    set config(configuration) {
+		        this.configuration = configuration;
+		    }
+		    get basePath() {
+		        return this.configuration.basePath != null ? this.configuration.basePath : exports.BASE_PATH;
+		    }
+		    get fetchApi() {
+		        return this.configuration.fetchApi;
+		    }
+		    get middleware() {
+		        return this.configuration.middleware || [];
+		    }
+		    get queryParamsStringify() {
+		        return this.configuration.queryParamsStringify || querystring;
+		    }
+		    get username() {
+		        return this.configuration.username;
+		    }
+		    get password() {
+		        return this.configuration.password;
+		    }
+		    get apiKey() {
+		        const apiKey = this.configuration.apiKey;
+		        if (apiKey) {
+		            return typeof apiKey === 'function' ? apiKey : () => apiKey;
+		        }
+		        return undefined;
+		    }
+		    get accessToken() {
+		        const accessToken = this.configuration.accessToken;
+		        if (accessToken) {
+		            return typeof accessToken === 'function' ? accessToken : async () => accessToken;
+		        }
+		        return undefined;
+		    }
+		    get headers() {
+		        return this.configuration.headers;
+		    }
+		    get credentials() {
+		        return this.configuration.credentials;
+		    }
+		}
+		exports.Configuration = Configuration;
+		exports.DefaultConfig = new Configuration();
+		/**
+		 * This is the base class for all generated API classes.
+		 */
+		class BaseAPI {
+		    constructor(configuration = exports.DefaultConfig) {
+		        this.configuration = configuration;
+		        this.fetchApi = async (url, init) => {
+		            let fetchParams = { url, init };
+		            for (const middleware of this.middleware) {
+		                if (middleware.pre) {
+		                    fetchParams = await middleware.pre({
+		                        fetch: this.fetchApi,
+		                        ...fetchParams,
+		                    }) || fetchParams;
+		                }
+		            }
+		            let response = undefined;
+		            try {
+		                response = await (this.configuration.fetchApi || fetch)(fetchParams.url, fetchParams.init);
+		            }
+		            catch (e) {
+		                for (const middleware of this.middleware) {
+		                    if (middleware.onError) {
+		                        response = await middleware.onError({
+		                            fetch: this.fetchApi,
+		                            url: fetchParams.url,
+		                            init: fetchParams.init,
+		                            error: e,
+		                            response: response ? response.clone() : undefined,
+		                        }) || response;
+		                    }
+		                }
+		                if (response === undefined) {
+		                    if (e instanceof Error) {
+		                        throw new FetchError(e, 'The request failed and the interceptors did not return an alternative response');
+		                    }
+		                    else {
+		                        throw e;
+		                    }
+		                }
+		            }
+		            for (const middleware of this.middleware) {
+		                if (middleware.post) {
+		                    response = await middleware.post({
+		                        fetch: this.fetchApi,
+		                        url: fetchParams.url,
+		                        init: fetchParams.init,
+		                        response: response.clone(),
+		                    }) || response;
+		                }
+		            }
+		            return response;
+		        };
+		        this.middleware = configuration.middleware;
+		    }
+		    withMiddleware(...middlewares) {
+		        const next = this.clone();
+		        next.middleware = next.middleware.concat(...middlewares);
+		        return next;
+		    }
+		    withPreMiddleware(...preMiddlewares) {
+		        const middlewares = preMiddlewares.map((pre) => ({ pre }));
+		        return this.withMiddleware(...middlewares);
+		    }
+		    withPostMiddleware(...postMiddlewares) {
+		        const middlewares = postMiddlewares.map((post) => ({ post }));
+		        return this.withMiddleware(...middlewares);
+		    }
+		    /**
+		     * Check if the given MIME is a JSON MIME.
+		     * JSON MIME examples:
+		     *   application/json
+		     *   application/json; charset=UTF8
+		     *   APPLICATION/JSON
+		     *   application/vnd.company+json
+		     * @param mime - MIME (Multipurpose Internet Mail Extensions)
+		     * @return True if the given MIME is JSON, false otherwise.
+		     */
+		    isJsonMime(mime) {
+		        if (!mime) {
+		            return false;
+		        }
+		        return BaseAPI.jsonRegex.test(mime);
+		    }
+		    async request(context, initOverrides) {
+		        const { url, init } = await this.createFetchParams(context, initOverrides);
+		        const response = await this.fetchApi(url, init);
+		        if (response && (response.status >= 200 && response.status < 300)) {
+		            return response;
+		        }
+		        throw new ResponseError(response, 'Response returned an error code');
+		    }
+		    async createFetchParams(context, initOverrides) {
+		        let url = this.configuration.basePath + context.path;
+		        if (context.query !== undefined && Object.keys(context.query).length !== 0) {
+		            // only add the querystring to the URL if there are query parameters.
+		            // this is done to avoid urls ending with a "?" character which buggy webservers
+		            // do not handle correctly sometimes.
+		            url += '?' + this.configuration.queryParamsStringify(context.query);
+		        }
+		        const headers = Object.assign({}, this.configuration.headers, context.headers);
+		        Object.keys(headers).forEach(key => headers[key] === undefined ? delete headers[key] : {});
+		        const initOverrideFn = typeof initOverrides === "function"
+		            ? initOverrides
+		            : async () => initOverrides;
+		        const initParams = {
+		            method: context.method,
+		            headers,
+		            body: context.body,
+		            credentials: this.configuration.credentials,
+		        };
+		        const overriddenInit = {
+		            ...initParams,
+		            ...(await initOverrideFn({
+		                init: initParams,
+		                context,
+		            }))
+		        };
+		        let body;
+		        if (isFormData(overriddenInit.body)
+		            || (overriddenInit.body instanceof URLSearchParams)
+		            || isBlob(overriddenInit.body)) {
+		            body = overriddenInit.body;
+		        }
+		        else if (this.isJsonMime(headers['Content-Type'])) {
+		            body = JSON.stringify(overriddenInit.body);
+		        }
+		        else {
+		            body = overriddenInit.body;
+		        }
+		        const init = {
+		            ...overriddenInit,
+		            body
+		        };
+		        return { url, init };
+		    }
+		    /**
+		     * Create a shallow clone of `this` by constructing a new instance
+		     * and then shallow cloning data members.
+		     */
+		    clone() {
+		        const constructor = this.constructor;
+		        const next = new constructor(this.configuration);
+		        next.middleware = this.middleware.slice();
+		        return next;
+		    }
+		}
+		exports.BaseAPI = BaseAPI;
+		BaseAPI.jsonRegex = new RegExp('^(:?application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(:?;.*)?$', 'i');
+		function isBlob(value) {
+		    return typeof Blob !== 'undefined' && value instanceof Blob;
+		}
+		function isFormData(value) {
+		    return typeof FormData !== "undefined" && value instanceof FormData;
+		}
+		class ResponseError extends Error {
+		    constructor(response, msg) {
+		        super(msg);
+		        this.response = response;
+		        this.name = "ResponseError";
+		    }
+		}
+		exports.ResponseError = ResponseError;
+		class FetchError extends Error {
+		    constructor(cause, msg) {
+		        super(msg);
+		        this.cause = cause;
+		        this.name = "FetchError";
+		    }
+		}
+		exports.FetchError = FetchError;
+		class RequiredError extends Error {
+		    constructor(field, msg) {
+		        super(msg);
+		        this.field = field;
+		        this.name = "RequiredError";
+		    }
+		}
+		exports.RequiredError = RequiredError;
+		exports.COLLECTION_FORMATS = {
+		    csv: ",",
+		    ssv: " ",
+		    tsv: "\t",
+		    pipes: "|",
+		};
+		function exists(json, key) {
+		    const value = json[key];
+		    return value !== null && value !== undefined;
+		}
+		exports.exists = exists;
+		function querystring(params, prefix = '') {
+		    return Object.keys(params)
+		        .map(key => querystringSingleKey(key, params[key], prefix))
+		        .filter(part => part.length > 0)
+		        .join('&');
+		}
+		exports.querystring = querystring;
+		function querystringSingleKey(key, value, keyPrefix = '') {
+		    const fullKey = keyPrefix + (keyPrefix.length ? `[${key}]` : key);
+		    if (value instanceof Array) {
+		        const multiValue = value.map(singleValue => encodeURIComponent(String(singleValue)))
+		            .join(`&${encodeURIComponent(fullKey)}=`);
+		        return `${encodeURIComponent(fullKey)}=${multiValue}`;
+		    }
+		    if (value instanceof Set) {
+		        const valueAsArray = Array.from(value);
+		        return querystringSingleKey(key, valueAsArray, keyPrefix);
+		    }
+		    if (value instanceof Date) {
+		        return `${encodeURIComponent(fullKey)}=${encodeURIComponent(value.toISOString())}`;
+		    }
+		    if (value instanceof Object) {
+		        return querystring(value, fullKey);
+		    }
+		    return `${encodeURIComponent(fullKey)}=${encodeURIComponent(String(value))}`;
+		}
+		function mapValues(data, fn) {
+		    return Object.keys(data).reduce((acc, key) => ({ ...acc, [key]: fn(data[key]) }), {});
+		}
+		exports.mapValues = mapValues;
+		function canConsumeForm(consumes) {
+		    for (const consume of consumes) {
+		        if ('multipart/form-data' === consume.contentType) {
+		            return true;
+		        }
+		    }
+		    return false;
+		}
+		exports.canConsumeForm = canConsumeForm;
+		class JSONApiResponse {
+		    constructor(raw, transformer = (jsonValue) => jsonValue) {
+		        this.raw = raw;
+		        this.transformer = transformer;
+		    }
+		    async value() {
+		        return this.transformer(await this.raw.json());
+		    }
+		}
+		exports.JSONApiResponse = JSONApiResponse;
+		class VoidApiResponse {
+		    constructor(raw) {
+		        this.raw = raw;
+		    }
+		    async value() {
+		        return undefined;
+		    }
+		}
+		exports.VoidApiResponse = VoidApiResponse;
+		class BlobApiResponse {
+		    constructor(raw) {
+		        this.raw = raw;
+		    }
+		    async value() {
+		        return await this.raw.blob();
+		    }
+		    ;
+		}
+		exports.BlobApiResponse = BlobApiResponse;
+		class TextApiResponse {
+		    constructor(raw) {
+		        this.raw = raw;
+		    }
+		    async value() {
+		        return await this.raw.text();
+		    }
+		    ;
+		}
+		exports.TextApiResponse = TextApiResponse;
+		
+	} (runtime$1));
+	return runtime$1;
+}
+
+var apis$1 = {};
+
+var InferenceApi = {};
+
+var models$1 = {};
+
+var DenseEmbedding = {};
+
+var hasRequiredDenseEmbedding;
+
+function requireDenseEmbedding () {
+	if (hasRequiredDenseEmbedding) return DenseEmbedding;
+	hasRequiredDenseEmbedding = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Inference API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(DenseEmbedding, "__esModule", { value: true });
+	DenseEmbedding.DenseEmbeddingToJSON = DenseEmbedding.DenseEmbeddingFromJSONTyped = DenseEmbedding.DenseEmbeddingFromJSON = DenseEmbedding.instanceOfDenseEmbedding = void 0;
+	/**
+	 * Check if a given object implements the DenseEmbedding interface.
+	 */
+	function instanceOfDenseEmbedding(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "values" in value;
+	    isInstance = isInstance && "vectorType" in value;
+	    return isInstance;
+	}
+	DenseEmbedding.instanceOfDenseEmbedding = instanceOfDenseEmbedding;
+	function DenseEmbeddingFromJSON(json) {
+	    return DenseEmbeddingFromJSONTyped(json);
+	}
+	DenseEmbedding.DenseEmbeddingFromJSON = DenseEmbeddingFromJSON;
+	function DenseEmbeddingFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'values': json['values'],
+	        'vectorType': json['vector_type'],
+	    };
+	}
+	DenseEmbedding.DenseEmbeddingFromJSONTyped = DenseEmbeddingFromJSONTyped;
+	function DenseEmbeddingToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'values': value.values,
+	        'vector_type': value.vectorType,
+	    };
+	}
+	DenseEmbedding.DenseEmbeddingToJSON = DenseEmbeddingToJSON;
+	
+	return DenseEmbedding;
+}
+
+var EmbedRequest = {};
+
+var EmbedRequestInputsInner = {};
+
+var hasRequiredEmbedRequestInputsInner;
+
+function requireEmbedRequestInputsInner () {
+	if (hasRequiredEmbedRequestInputsInner) return EmbedRequestInputsInner;
+	hasRequiredEmbedRequestInputsInner = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Inference API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(EmbedRequestInputsInner, "__esModule", { value: true });
+	EmbedRequestInputsInner.EmbedRequestInputsInnerToJSON = EmbedRequestInputsInner.EmbedRequestInputsInnerFromJSONTyped = EmbedRequestInputsInner.EmbedRequestInputsInnerFromJSON = EmbedRequestInputsInner.instanceOfEmbedRequestInputsInner = void 0;
+	const runtime_1 = requireRuntime$1();
+	/**
+	 * Check if a given object implements the EmbedRequestInputsInner interface.
+	 */
+	function instanceOfEmbedRequestInputsInner(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	EmbedRequestInputsInner.instanceOfEmbedRequestInputsInner = instanceOfEmbedRequestInputsInner;
+	function EmbedRequestInputsInnerFromJSON(json) {
+	    return EmbedRequestInputsInnerFromJSONTyped(json);
+	}
+	EmbedRequestInputsInner.EmbedRequestInputsInnerFromJSON = EmbedRequestInputsInnerFromJSON;
+	function EmbedRequestInputsInnerFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'text': !(0, runtime_1.exists)(json, 'text') ? undefined : json['text'],
+	    };
+	}
+	EmbedRequestInputsInner.EmbedRequestInputsInnerFromJSONTyped = EmbedRequestInputsInnerFromJSONTyped;
+	function EmbedRequestInputsInnerToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'text': value.text,
+	    };
+	}
+	EmbedRequestInputsInner.EmbedRequestInputsInnerToJSON = EmbedRequestInputsInnerToJSON;
+	
+	return EmbedRequestInputsInner;
+}
+
+var hasRequiredEmbedRequest;
+
+function requireEmbedRequest () {
+	if (hasRequiredEmbedRequest) return EmbedRequest;
+	hasRequiredEmbedRequest = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Inference API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(EmbedRequest, "__esModule", { value: true });
+	EmbedRequest.EmbedRequestToJSON = EmbedRequest.EmbedRequestFromJSONTyped = EmbedRequest.EmbedRequestFromJSON = EmbedRequest.instanceOfEmbedRequest = void 0;
+	const runtime_1 = requireRuntime$1();
+	const EmbedRequestInputsInner_1 = requireEmbedRequestInputsInner();
+	/**
+	 * Check if a given object implements the EmbedRequest interface.
+	 */
+	function instanceOfEmbedRequest(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "model" in value;
+	    isInstance = isInstance && "inputs" in value;
+	    return isInstance;
+	}
+	EmbedRequest.instanceOfEmbedRequest = instanceOfEmbedRequest;
+	function EmbedRequestFromJSON(json) {
+	    return EmbedRequestFromJSONTyped(json);
+	}
+	EmbedRequest.EmbedRequestFromJSON = EmbedRequestFromJSON;
+	function EmbedRequestFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'model': json['model'],
+	        'parameters': !(0, runtime_1.exists)(json, 'parameters') ? undefined : json['parameters'],
+	        'inputs': (json['inputs'].map(EmbedRequestInputsInner_1.EmbedRequestInputsInnerFromJSON)),
+	    };
+	}
+	EmbedRequest.EmbedRequestFromJSONTyped = EmbedRequestFromJSONTyped;
+	function EmbedRequestToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'model': value.model,
+	        'parameters': value.parameters,
+	        'inputs': (value.inputs.map(EmbedRequestInputsInner_1.EmbedRequestInputsInnerToJSON)),
+	    };
+	}
+	EmbedRequest.EmbedRequestToJSON = EmbedRequestToJSON;
+	
+	return EmbedRequest;
+}
+
+var Embedding = {};
+
+var SparseEmbedding = {};
+
+var hasRequiredSparseEmbedding;
+
+function requireSparseEmbedding () {
+	if (hasRequiredSparseEmbedding) return SparseEmbedding;
+	hasRequiredSparseEmbedding = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Inference API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(SparseEmbedding, "__esModule", { value: true });
+	SparseEmbedding.SparseEmbeddingToJSON = SparseEmbedding.SparseEmbeddingFromJSONTyped = SparseEmbedding.SparseEmbeddingFromJSON = SparseEmbedding.instanceOfSparseEmbedding = void 0;
+	const runtime_1 = requireRuntime$1();
+	/**
+	 * Check if a given object implements the SparseEmbedding interface.
+	 */
+	function instanceOfSparseEmbedding(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "sparseValues" in value;
+	    isInstance = isInstance && "sparseIndices" in value;
+	    isInstance = isInstance && "vectorType" in value;
+	    return isInstance;
+	}
+	SparseEmbedding.instanceOfSparseEmbedding = instanceOfSparseEmbedding;
+	function SparseEmbeddingFromJSON(json) {
+	    return SparseEmbeddingFromJSONTyped(json);
+	}
+	SparseEmbedding.SparseEmbeddingFromJSON = SparseEmbeddingFromJSON;
+	function SparseEmbeddingFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'sparseValues': json['sparse_values'],
+	        'sparseIndices': json['sparse_indices'],
+	        'sparseTokens': !(0, runtime_1.exists)(json, 'sparse_tokens') ? undefined : json['sparse_tokens'],
+	        'vectorType': json['vector_type'],
+	    };
+	}
+	SparseEmbedding.SparseEmbeddingFromJSONTyped = SparseEmbeddingFromJSONTyped;
+	function SparseEmbeddingToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'sparse_values': value.sparseValues,
+	        'sparse_indices': value.sparseIndices,
+	        'sparse_tokens': value.sparseTokens,
+	        'vector_type': value.vectorType,
+	    };
+	}
+	SparseEmbedding.SparseEmbeddingToJSON = SparseEmbeddingToJSON;
+	
+	return SparseEmbedding;
+}
+
+var hasRequiredEmbedding;
+
+function requireEmbedding () {
+	if (hasRequiredEmbedding) return Embedding;
+	hasRequiredEmbedding = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Inference API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(Embedding, "__esModule", { value: true });
+	Embedding.EmbeddingToJSON = Embedding.EmbeddingFromJSONTyped = Embedding.EmbeddingFromJSON = void 0;
+	const DenseEmbedding_1 = requireDenseEmbedding();
+	const SparseEmbedding_1 = requireSparseEmbedding();
+	function EmbeddingFromJSON(json) {
+	    return EmbeddingFromJSONTyped(json);
+	}
+	Embedding.EmbeddingFromJSON = EmbeddingFromJSON;
+	function EmbeddingFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    switch (json['vector_type']) {
+	        case 'dense':
+	            return { ...(0, DenseEmbedding_1.DenseEmbeddingFromJSONTyped)(json, true), vectorType: 'dense' };
+	        case 'sparse':
+	            return { ...(0, SparseEmbedding_1.SparseEmbeddingFromJSONTyped)(json, true), vectorType: 'sparse' };
+	        default:
+	            throw new Error(`No variant of Embedding exists with 'vectorType=${json['vectorType']}'`);
+	    }
+	}
+	Embedding.EmbeddingFromJSONTyped = EmbeddingFromJSONTyped;
+	function EmbeddingToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    switch (value['vectorType']) {
+	        case 'dense':
+	            return (0, DenseEmbedding_1.DenseEmbeddingToJSON)(value);
+	        case 'sparse':
+	            return (0, SparseEmbedding_1.SparseEmbeddingToJSON)(value);
+	        default:
+	            throw new Error(`No variant of Embedding exists with 'vectorType=${value['vectorType']}'`);
+	    }
+	}
+	Embedding.EmbeddingToJSON = EmbeddingToJSON;
+	
+	return Embedding;
+}
+
+var EmbeddingsList = {};
+
+var EmbeddingsListUsage = {};
+
+var hasRequiredEmbeddingsListUsage;
+
+function requireEmbeddingsListUsage () {
+	if (hasRequiredEmbeddingsListUsage) return EmbeddingsListUsage;
+	hasRequiredEmbeddingsListUsage = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Inference API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(EmbeddingsListUsage, "__esModule", { value: true });
+	EmbeddingsListUsage.EmbeddingsListUsageToJSON = EmbeddingsListUsage.EmbeddingsListUsageFromJSONTyped = EmbeddingsListUsage.EmbeddingsListUsageFromJSON = EmbeddingsListUsage.instanceOfEmbeddingsListUsage = void 0;
+	const runtime_1 = requireRuntime$1();
+	/**
+	 * Check if a given object implements the EmbeddingsListUsage interface.
+	 */
+	function instanceOfEmbeddingsListUsage(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	EmbeddingsListUsage.instanceOfEmbeddingsListUsage = instanceOfEmbeddingsListUsage;
+	function EmbeddingsListUsageFromJSON(json) {
+	    return EmbeddingsListUsageFromJSONTyped(json);
+	}
+	EmbeddingsListUsage.EmbeddingsListUsageFromJSON = EmbeddingsListUsageFromJSON;
+	function EmbeddingsListUsageFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'totalTokens': !(0, runtime_1.exists)(json, 'total_tokens') ? undefined : json['total_tokens'],
+	    };
+	}
+	EmbeddingsListUsage.EmbeddingsListUsageFromJSONTyped = EmbeddingsListUsageFromJSONTyped;
+	function EmbeddingsListUsageToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'total_tokens': value.totalTokens,
+	    };
+	}
+	EmbeddingsListUsage.EmbeddingsListUsageToJSON = EmbeddingsListUsageToJSON;
+	
+	return EmbeddingsListUsage;
+}
+
+var hasRequiredEmbeddingsList;
+
+function requireEmbeddingsList () {
+	if (hasRequiredEmbeddingsList) return EmbeddingsList;
+	hasRequiredEmbeddingsList = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Inference API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(EmbeddingsList, "__esModule", { value: true });
+	EmbeddingsList.EmbeddingsListToJSON = EmbeddingsList.EmbeddingsListFromJSONTyped = EmbeddingsList.EmbeddingsListFromJSON = EmbeddingsList.instanceOfEmbeddingsList = void 0;
+	const Embedding_1 = requireEmbedding();
+	const EmbeddingsListUsage_1 = requireEmbeddingsListUsage();
+	/**
+	 * Check if a given object implements the EmbeddingsList interface.
+	 */
+	function instanceOfEmbeddingsList(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "model" in value;
+	    isInstance = isInstance && "vectorType" in value;
+	    isInstance = isInstance && "data" in value;
+	    isInstance = isInstance && "usage" in value;
+	    return isInstance;
+	}
+	EmbeddingsList.instanceOfEmbeddingsList = instanceOfEmbeddingsList;
+	function EmbeddingsListFromJSON(json) {
+	    return EmbeddingsListFromJSONTyped(json);
+	}
+	EmbeddingsList.EmbeddingsListFromJSON = EmbeddingsListFromJSON;
+	function EmbeddingsListFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'model': json['model'],
+	        'vectorType': json['vector_type'],
+	        'data': (json['data'].map(Embedding_1.EmbeddingFromJSON)),
+	        'usage': (0, EmbeddingsListUsage_1.EmbeddingsListUsageFromJSON)(json['usage']),
+	    };
+	}
+	EmbeddingsList.EmbeddingsListFromJSONTyped = EmbeddingsListFromJSONTyped;
+	function EmbeddingsListToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'model': value.model,
+	        'vector_type': value.vectorType,
+	        'data': (value.data.map(Embedding_1.EmbeddingToJSON)),
+	        'usage': (0, EmbeddingsListUsage_1.EmbeddingsListUsageToJSON)(value.usage),
+	    };
+	}
+	EmbeddingsList.EmbeddingsListToJSON = EmbeddingsListToJSON;
+	
+	return EmbeddingsList;
+}
+
+var ErrorResponse$1 = {};
+
+var ErrorResponseError$1 = {};
+
+var hasRequiredErrorResponseError$1;
+
+function requireErrorResponseError$1 () {
+	if (hasRequiredErrorResponseError$1) return ErrorResponseError$1;
+	hasRequiredErrorResponseError$1 = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Inference API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ErrorResponseError$1, "__esModule", { value: true });
+	ErrorResponseError$1.ErrorResponseErrorToJSON = ErrorResponseError$1.ErrorResponseErrorFromJSONTyped = ErrorResponseError$1.ErrorResponseErrorFromJSON = ErrorResponseError$1.instanceOfErrorResponseError = ErrorResponseError$1.ErrorResponseErrorCodeEnum = void 0;
+	const runtime_1 = requireRuntime$1();
+	/**
+	 * @export
+	 */
+	ErrorResponseError$1.ErrorResponseErrorCodeEnum = {
+	    Ok: 'OK',
+	    Unknown: 'UNKNOWN',
+	    InvalidArgument: 'INVALID_ARGUMENT',
+	    DeadlineExceeded: 'DEADLINE_EXCEEDED',
+	    QuotaExceeded: 'QUOTA_EXCEEDED',
+	    NotFound: 'NOT_FOUND',
+	    AlreadyExists: 'ALREADY_EXISTS',
+	    PermissionDenied: 'PERMISSION_DENIED',
+	    Unauthenticated: 'UNAUTHENTICATED',
+	    ResourceExhausted: 'RESOURCE_EXHAUSTED',
+	    FailedPrecondition: 'FAILED_PRECONDITION',
+	    Aborted: 'ABORTED',
+	    OutOfRange: 'OUT_OF_RANGE',
+	    Unimplemented: 'UNIMPLEMENTED',
+	    Internal: 'INTERNAL',
+	    Unavailable: 'UNAVAILABLE',
+	    DataLoss: 'DATA_LOSS',
+	    Forbidden: 'FORBIDDEN'
+	};
+	/**
+	 * Check if a given object implements the ErrorResponseError interface.
+	 */
+	function instanceOfErrorResponseError(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "code" in value;
+	    isInstance = isInstance && "message" in value;
+	    return isInstance;
+	}
+	ErrorResponseError$1.instanceOfErrorResponseError = instanceOfErrorResponseError;
+	function ErrorResponseErrorFromJSON(json) {
+	    return ErrorResponseErrorFromJSONTyped(json);
+	}
+	ErrorResponseError$1.ErrorResponseErrorFromJSON = ErrorResponseErrorFromJSON;
+	function ErrorResponseErrorFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'code': json['code'],
+	        'message': json['message'],
+	        'details': !(0, runtime_1.exists)(json, 'details') ? undefined : json['details'],
+	    };
+	}
+	ErrorResponseError$1.ErrorResponseErrorFromJSONTyped = ErrorResponseErrorFromJSONTyped;
+	function ErrorResponseErrorToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'code': value.code,
+	        'message': value.message,
+	        'details': value.details,
+	    };
+	}
+	ErrorResponseError$1.ErrorResponseErrorToJSON = ErrorResponseErrorToJSON;
+	
+	return ErrorResponseError$1;
+}
+
+var hasRequiredErrorResponse$1;
+
+function requireErrorResponse$1 () {
+	if (hasRequiredErrorResponse$1) return ErrorResponse$1;
+	hasRequiredErrorResponse$1 = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Inference API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ErrorResponse$1, "__esModule", { value: true });
+	ErrorResponse$1.ErrorResponseToJSON = ErrorResponse$1.ErrorResponseFromJSONTyped = ErrorResponse$1.ErrorResponseFromJSON = ErrorResponse$1.instanceOfErrorResponse = void 0;
+	const ErrorResponseError_1 = requireErrorResponseError$1();
+	/**
+	 * Check if a given object implements the ErrorResponse interface.
+	 */
+	function instanceOfErrorResponse(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "status" in value;
+	    isInstance = isInstance && "error" in value;
+	    return isInstance;
+	}
+	ErrorResponse$1.instanceOfErrorResponse = instanceOfErrorResponse;
+	function ErrorResponseFromJSON(json) {
+	    return ErrorResponseFromJSONTyped(json);
+	}
+	ErrorResponse$1.ErrorResponseFromJSON = ErrorResponseFromJSON;
+	function ErrorResponseFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'status': json['status'],
+	        'error': (0, ErrorResponseError_1.ErrorResponseErrorFromJSON)(json['error']),
+	    };
+	}
+	ErrorResponse$1.ErrorResponseFromJSONTyped = ErrorResponseFromJSONTyped;
+	function ErrorResponseToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'status': value.status,
+	        'error': (0, ErrorResponseError_1.ErrorResponseErrorToJSON)(value.error),
+	    };
+	}
+	ErrorResponse$1.ErrorResponseToJSON = ErrorResponseToJSON;
+	
+	return ErrorResponse$1;
+}
+
+var ModelInfo = {};
+
+var ModelInfoMetric = {};
+
+var hasRequiredModelInfoMetric;
+
+function requireModelInfoMetric () {
+	if (hasRequiredModelInfoMetric) return ModelInfoMetric;
+	hasRequiredModelInfoMetric = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Inference API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ModelInfoMetric, "__esModule", { value: true });
+	ModelInfoMetric.ModelInfoMetricToJSON = ModelInfoMetric.ModelInfoMetricFromJSONTyped = ModelInfoMetric.ModelInfoMetricFromJSON = ModelInfoMetric.ModelInfoMetric = void 0;
+	/**
+	 * A distance metric that the embedding model supports for similarity searches.
+	 * @export
+	 */
+	ModelInfoMetric.ModelInfoMetric = {
+	    Cosine: 'cosine',
+	    Euclidean: 'euclidean',
+	    Dotproduct: 'dotproduct'
+	};
+	function ModelInfoMetricFromJSON(json) {
+	    return ModelInfoMetricFromJSONTyped(json);
+	}
+	ModelInfoMetric.ModelInfoMetricFromJSON = ModelInfoMetricFromJSON;
+	function ModelInfoMetricFromJSONTyped(json, ignoreDiscriminator) {
+	    return json;
+	}
+	ModelInfoMetric.ModelInfoMetricFromJSONTyped = ModelInfoMetricFromJSONTyped;
+	function ModelInfoMetricToJSON(value) {
+	    return value;
+	}
+	ModelInfoMetric.ModelInfoMetricToJSON = ModelInfoMetricToJSON;
+	
+	return ModelInfoMetric;
+}
+
+var ModelInfoSupportedParameter = {};
+
+var ModelInfoSupportedParameterAllowedValuesInner = {};
+
+var hasRequiredModelInfoSupportedParameterAllowedValuesInner;
+
+function requireModelInfoSupportedParameterAllowedValuesInner () {
+	if (hasRequiredModelInfoSupportedParameterAllowedValuesInner) return ModelInfoSupportedParameterAllowedValuesInner;
+	hasRequiredModelInfoSupportedParameterAllowedValuesInner = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Inference API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ModelInfoSupportedParameterAllowedValuesInner, "__esModule", { value: true });
+	ModelInfoSupportedParameterAllowedValuesInner.ModelInfoSupportedParameterAllowedValuesInnerToJSON = ModelInfoSupportedParameterAllowedValuesInner.ModelInfoSupportedParameterAllowedValuesInnerFromJSONTyped = ModelInfoSupportedParameterAllowedValuesInner.ModelInfoSupportedParameterAllowedValuesInnerFromJSON = ModelInfoSupportedParameterAllowedValuesInner.instanceOfModelInfoSupportedParameterAllowedValuesInner = void 0;
+	/**
+	 * Check if a given object implements the ModelInfoSupportedParameterAllowedValuesInner interface.
+	 */
+	function instanceOfModelInfoSupportedParameterAllowedValuesInner(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ModelInfoSupportedParameterAllowedValuesInner.instanceOfModelInfoSupportedParameterAllowedValuesInner = instanceOfModelInfoSupportedParameterAllowedValuesInner;
+	function ModelInfoSupportedParameterAllowedValuesInnerFromJSON(json) {
+	    return ModelInfoSupportedParameterAllowedValuesInnerFromJSONTyped(json);
+	}
+	ModelInfoSupportedParameterAllowedValuesInner.ModelInfoSupportedParameterAllowedValuesInnerFromJSON = ModelInfoSupportedParameterAllowedValuesInnerFromJSON;
+	function ModelInfoSupportedParameterAllowedValuesInnerFromJSONTyped(json, ignoreDiscriminator) {
+	    return json;
+	}
+	ModelInfoSupportedParameterAllowedValuesInner.ModelInfoSupportedParameterAllowedValuesInnerFromJSONTyped = ModelInfoSupportedParameterAllowedValuesInnerFromJSONTyped;
+	function ModelInfoSupportedParameterAllowedValuesInnerToJSON(value) {
+	    return value;
+	}
+	ModelInfoSupportedParameterAllowedValuesInner.ModelInfoSupportedParameterAllowedValuesInnerToJSON = ModelInfoSupportedParameterAllowedValuesInnerToJSON;
+	
+	return ModelInfoSupportedParameterAllowedValuesInner;
+}
+
+var ModelInfoSupportedParameterDefault = {};
+
+var hasRequiredModelInfoSupportedParameterDefault;
+
+function requireModelInfoSupportedParameterDefault () {
+	if (hasRequiredModelInfoSupportedParameterDefault) return ModelInfoSupportedParameterDefault;
+	hasRequiredModelInfoSupportedParameterDefault = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Inference API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ModelInfoSupportedParameterDefault, "__esModule", { value: true });
+	ModelInfoSupportedParameterDefault.ModelInfoSupportedParameterDefaultToJSON = ModelInfoSupportedParameterDefault.ModelInfoSupportedParameterDefaultFromJSONTyped = ModelInfoSupportedParameterDefault.ModelInfoSupportedParameterDefaultFromJSON = ModelInfoSupportedParameterDefault.instanceOfModelInfoSupportedParameterDefault = void 0;
+	/**
+	 * Check if a given object implements the ModelInfoSupportedParameterDefault interface.
+	 */
+	function instanceOfModelInfoSupportedParameterDefault(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ModelInfoSupportedParameterDefault.instanceOfModelInfoSupportedParameterDefault = instanceOfModelInfoSupportedParameterDefault;
+	function ModelInfoSupportedParameterDefaultFromJSON(json) {
+	    return ModelInfoSupportedParameterDefaultFromJSONTyped(json);
+	}
+	ModelInfoSupportedParameterDefault.ModelInfoSupportedParameterDefaultFromJSON = ModelInfoSupportedParameterDefaultFromJSON;
+	function ModelInfoSupportedParameterDefaultFromJSONTyped(json, ignoreDiscriminator) {
+	    return json;
+	}
+	ModelInfoSupportedParameterDefault.ModelInfoSupportedParameterDefaultFromJSONTyped = ModelInfoSupportedParameterDefaultFromJSONTyped;
+	function ModelInfoSupportedParameterDefaultToJSON(value) {
+	    return value;
+	}
+	ModelInfoSupportedParameterDefault.ModelInfoSupportedParameterDefaultToJSON = ModelInfoSupportedParameterDefaultToJSON;
+	
+	return ModelInfoSupportedParameterDefault;
+}
+
+var hasRequiredModelInfoSupportedParameter;
+
+function requireModelInfoSupportedParameter () {
+	if (hasRequiredModelInfoSupportedParameter) return ModelInfoSupportedParameter;
+	hasRequiredModelInfoSupportedParameter = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Inference API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ModelInfoSupportedParameter, "__esModule", { value: true });
+	ModelInfoSupportedParameter.ModelInfoSupportedParameterToJSON = ModelInfoSupportedParameter.ModelInfoSupportedParameterFromJSONTyped = ModelInfoSupportedParameter.ModelInfoSupportedParameterFromJSON = ModelInfoSupportedParameter.instanceOfModelInfoSupportedParameter = void 0;
+	const runtime_1 = requireRuntime$1();
+	const ModelInfoSupportedParameterAllowedValuesInner_1 = requireModelInfoSupportedParameterAllowedValuesInner();
+	const ModelInfoSupportedParameterDefault_1 = requireModelInfoSupportedParameterDefault();
+	/**
+	 * Check if a given object implements the ModelInfoSupportedParameter interface.
+	 */
+	function instanceOfModelInfoSupportedParameter(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "parameter" in value;
+	    isInstance = isInstance && "type" in value;
+	    isInstance = isInstance && "valueType" in value;
+	    isInstance = isInstance && "required" in value;
+	    return isInstance;
+	}
+	ModelInfoSupportedParameter.instanceOfModelInfoSupportedParameter = instanceOfModelInfoSupportedParameter;
+	function ModelInfoSupportedParameterFromJSON(json) {
+	    return ModelInfoSupportedParameterFromJSONTyped(json);
+	}
+	ModelInfoSupportedParameter.ModelInfoSupportedParameterFromJSON = ModelInfoSupportedParameterFromJSON;
+	function ModelInfoSupportedParameterFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'parameter': json['parameter'],
+	        'type': json['type'],
+	        'valueType': json['value_type'],
+	        'required': json['required'],
+	        'allowedValues': !(0, runtime_1.exists)(json, 'allowed_values') ? undefined : (json['allowed_values'].map(ModelInfoSupportedParameterAllowedValuesInner_1.ModelInfoSupportedParameterAllowedValuesInnerFromJSON)),
+	        'min': !(0, runtime_1.exists)(json, 'min') ? undefined : json['min'],
+	        'max': !(0, runtime_1.exists)(json, 'max') ? undefined : json['max'],
+	        '_default': !(0, runtime_1.exists)(json, 'default') ? undefined : (0, ModelInfoSupportedParameterDefault_1.ModelInfoSupportedParameterDefaultFromJSON)(json['default']),
+	    };
+	}
+	ModelInfoSupportedParameter.ModelInfoSupportedParameterFromJSONTyped = ModelInfoSupportedParameterFromJSONTyped;
+	function ModelInfoSupportedParameterToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'parameter': value.parameter,
+	        'type': value.type,
+	        'value_type': value.valueType,
+	        'required': value.required,
+	        'allowed_values': value.allowedValues === undefined ? undefined : (value.allowedValues.map(ModelInfoSupportedParameterAllowedValuesInner_1.ModelInfoSupportedParameterAllowedValuesInnerToJSON)),
+	        'min': value.min,
+	        'max': value.max,
+	        'default': (0, ModelInfoSupportedParameterDefault_1.ModelInfoSupportedParameterDefaultToJSON)(value._default),
+	    };
+	}
+	ModelInfoSupportedParameter.ModelInfoSupportedParameterToJSON = ModelInfoSupportedParameterToJSON;
+	
+	return ModelInfoSupportedParameter;
+}
+
+var hasRequiredModelInfo;
+
+function requireModelInfo () {
+	if (hasRequiredModelInfo) return ModelInfo;
+	hasRequiredModelInfo = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Inference API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ModelInfo, "__esModule", { value: true });
+	ModelInfo.ModelInfoToJSON = ModelInfo.ModelInfoFromJSONTyped = ModelInfo.ModelInfoFromJSON = ModelInfo.instanceOfModelInfo = void 0;
+	const runtime_1 = requireRuntime$1();
+	const ModelInfoMetric_1 = requireModelInfoMetric();
+	const ModelInfoSupportedParameter_1 = requireModelInfoSupportedParameter();
+	/**
+	 * Check if a given object implements the ModelInfo interface.
+	 */
+	function instanceOfModelInfo(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "model" in value;
+	    isInstance = isInstance && "shortDescription" in value;
+	    isInstance = isInstance && "type" in value;
+	    isInstance = isInstance && "supportedParameters" in value;
+	    return isInstance;
+	}
+	ModelInfo.instanceOfModelInfo = instanceOfModelInfo;
+	function ModelInfoFromJSON(json) {
+	    return ModelInfoFromJSONTyped(json);
+	}
+	ModelInfo.ModelInfoFromJSON = ModelInfoFromJSON;
+	function ModelInfoFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'model': json['model'],
+	        'shortDescription': json['short_description'],
+	        'type': json['type'],
+	        'vectorType': !(0, runtime_1.exists)(json, 'vector_type') ? undefined : json['vector_type'],
+	        'defaultDimension': !(0, runtime_1.exists)(json, 'default_dimension') ? undefined : json['default_dimension'],
+	        'modality': !(0, runtime_1.exists)(json, 'modality') ? undefined : json['modality'],
+	        'maxSequenceLength': !(0, runtime_1.exists)(json, 'max_sequence_length') ? undefined : json['max_sequence_length'],
+	        'maxBatchSize': !(0, runtime_1.exists)(json, 'max_batch_size') ? undefined : json['max_batch_size'],
+	        'providerName': !(0, runtime_1.exists)(json, 'provider_name') ? undefined : json['provider_name'],
+	        'supportedDimensions': !(0, runtime_1.exists)(json, 'supported_dimensions') ? undefined : json['supported_dimensions'],
+	        'supportedMetrics': !(0, runtime_1.exists)(json, 'supported_metrics') ? undefined : (json['supported_metrics'].map(ModelInfoMetric_1.ModelInfoMetricFromJSON)),
+	        'supportedParameters': (json['supported_parameters'].map(ModelInfoSupportedParameter_1.ModelInfoSupportedParameterFromJSON)),
+	    };
+	}
+	ModelInfo.ModelInfoFromJSONTyped = ModelInfoFromJSONTyped;
+	function ModelInfoToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'model': value.model,
+	        'short_description': value.shortDescription,
+	        'type': value.type,
+	        'vector_type': value.vectorType,
+	        'default_dimension': value.defaultDimension,
+	        'modality': value.modality,
+	        'max_sequence_length': value.maxSequenceLength,
+	        'max_batch_size': value.maxBatchSize,
+	        'provider_name': value.providerName,
+	        'supported_dimensions': value.supportedDimensions,
+	        'supported_metrics': value.supportedMetrics === undefined ? undefined : (value.supportedMetrics.map(ModelInfoMetric_1.ModelInfoMetricToJSON)),
+	        'supported_parameters': (value.supportedParameters.map(ModelInfoSupportedParameter_1.ModelInfoSupportedParameterToJSON)),
+	    };
+	}
+	ModelInfo.ModelInfoToJSON = ModelInfoToJSON;
+	
+	return ModelInfo;
+}
+
+var ModelInfoList = {};
+
+var hasRequiredModelInfoList;
+
+function requireModelInfoList () {
+	if (hasRequiredModelInfoList) return ModelInfoList;
+	hasRequiredModelInfoList = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Inference API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ModelInfoList, "__esModule", { value: true });
+	ModelInfoList.ModelInfoListToJSON = ModelInfoList.ModelInfoListFromJSONTyped = ModelInfoList.ModelInfoListFromJSON = ModelInfoList.instanceOfModelInfoList = void 0;
+	const runtime_1 = requireRuntime$1();
+	const ModelInfo_1 = requireModelInfo();
+	/**
+	 * Check if a given object implements the ModelInfoList interface.
+	 */
+	function instanceOfModelInfoList(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ModelInfoList.instanceOfModelInfoList = instanceOfModelInfoList;
+	function ModelInfoListFromJSON(json) {
+	    return ModelInfoListFromJSONTyped(json);
+	}
+	ModelInfoList.ModelInfoListFromJSON = ModelInfoListFromJSON;
+	function ModelInfoListFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'models': !(0, runtime_1.exists)(json, 'models') ? undefined : (json['models'].map(ModelInfo_1.ModelInfoFromJSON)),
+	    };
+	}
+	ModelInfoList.ModelInfoListFromJSONTyped = ModelInfoListFromJSONTyped;
+	function ModelInfoListToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'models': value.models === undefined ? undefined : (value.models.map(ModelInfo_1.ModelInfoToJSON)),
+	    };
+	}
+	ModelInfoList.ModelInfoListToJSON = ModelInfoListToJSON;
+	
+	return ModelInfoList;
+}
+
+var RankedDocument = {};
+
+var hasRequiredRankedDocument;
+
+function requireRankedDocument () {
+	if (hasRequiredRankedDocument) return RankedDocument;
+	hasRequiredRankedDocument = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Inference API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(RankedDocument, "__esModule", { value: true });
+	RankedDocument.RankedDocumentToJSON = RankedDocument.RankedDocumentFromJSONTyped = RankedDocument.RankedDocumentFromJSON = RankedDocument.instanceOfRankedDocument = void 0;
+	const runtime_1 = requireRuntime$1();
+	/**
+	 * Check if a given object implements the RankedDocument interface.
+	 */
+	function instanceOfRankedDocument(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "index" in value;
+	    isInstance = isInstance && "score" in value;
+	    return isInstance;
+	}
+	RankedDocument.instanceOfRankedDocument = instanceOfRankedDocument;
+	function RankedDocumentFromJSON(json) {
+	    return RankedDocumentFromJSONTyped(json);
+	}
+	RankedDocument.RankedDocumentFromJSON = RankedDocumentFromJSON;
+	function RankedDocumentFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'index': json['index'],
+	        'score': json['score'],
+	        'document': !(0, runtime_1.exists)(json, 'document') ? undefined : json['document'],
+	    };
+	}
+	RankedDocument.RankedDocumentFromJSONTyped = RankedDocumentFromJSONTyped;
+	function RankedDocumentToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'index': value.index,
+	        'score': value.score,
+	        'document': value.document,
+	    };
+	}
+	RankedDocument.RankedDocumentToJSON = RankedDocumentToJSON;
+	
+	return RankedDocument;
+}
+
+var RerankRequest = {};
+
+var hasRequiredRerankRequest;
+
+function requireRerankRequest () {
+	if (hasRequiredRerankRequest) return RerankRequest;
+	hasRequiredRerankRequest = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Inference API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(RerankRequest, "__esModule", { value: true });
+	RerankRequest.RerankRequestToJSON = RerankRequest.RerankRequestFromJSONTyped = RerankRequest.RerankRequestFromJSON = RerankRequest.instanceOfRerankRequest = void 0;
+	const runtime_1 = requireRuntime$1();
+	/**
+	 * Check if a given object implements the RerankRequest interface.
+	 */
+	function instanceOfRerankRequest(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "model" in value;
+	    isInstance = isInstance && "query" in value;
+	    isInstance = isInstance && "documents" in value;
+	    return isInstance;
+	}
+	RerankRequest.instanceOfRerankRequest = instanceOfRerankRequest;
+	function RerankRequestFromJSON(json) {
+	    return RerankRequestFromJSONTyped(json);
+	}
+	RerankRequest.RerankRequestFromJSON = RerankRequestFromJSON;
+	function RerankRequestFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'model': json['model'],
+	        'query': json['query'],
+	        'topN': !(0, runtime_1.exists)(json, 'top_n') ? undefined : json['top_n'],
+	        'returnDocuments': !(0, runtime_1.exists)(json, 'return_documents') ? undefined : json['return_documents'],
+	        'rankFields': !(0, runtime_1.exists)(json, 'rank_fields') ? undefined : json['rank_fields'],
+	        'documents': json['documents'],
+	        'parameters': !(0, runtime_1.exists)(json, 'parameters') ? undefined : json['parameters'],
+	    };
+	}
+	RerankRequest.RerankRequestFromJSONTyped = RerankRequestFromJSONTyped;
+	function RerankRequestToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'model': value.model,
+	        'query': value.query,
+	        'top_n': value.topN,
+	        'return_documents': value.returnDocuments,
+	        'rank_fields': value.rankFields,
+	        'documents': value.documents,
+	        'parameters': value.parameters,
+	    };
+	}
+	RerankRequest.RerankRequestToJSON = RerankRequestToJSON;
+	
+	return RerankRequest;
+}
+
+var RerankResult = {};
+
+var RerankResultUsage = {};
+
+var hasRequiredRerankResultUsage;
+
+function requireRerankResultUsage () {
+	if (hasRequiredRerankResultUsage) return RerankResultUsage;
+	hasRequiredRerankResultUsage = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Inference API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(RerankResultUsage, "__esModule", { value: true });
+	RerankResultUsage.RerankResultUsageToJSON = RerankResultUsage.RerankResultUsageFromJSONTyped = RerankResultUsage.RerankResultUsageFromJSON = RerankResultUsage.instanceOfRerankResultUsage = void 0;
+	const runtime_1 = requireRuntime$1();
+	/**
+	 * Check if a given object implements the RerankResultUsage interface.
+	 */
+	function instanceOfRerankResultUsage(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	RerankResultUsage.instanceOfRerankResultUsage = instanceOfRerankResultUsage;
+	function RerankResultUsageFromJSON(json) {
+	    return RerankResultUsageFromJSONTyped(json);
+	}
+	RerankResultUsage.RerankResultUsageFromJSON = RerankResultUsageFromJSON;
+	function RerankResultUsageFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'rerankUnits': !(0, runtime_1.exists)(json, 'rerank_units') ? undefined : json['rerank_units'],
+	    };
+	}
+	RerankResultUsage.RerankResultUsageFromJSONTyped = RerankResultUsageFromJSONTyped;
+	function RerankResultUsageToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'rerank_units': value.rerankUnits,
+	    };
+	}
+	RerankResultUsage.RerankResultUsageToJSON = RerankResultUsageToJSON;
+	
+	return RerankResultUsage;
+}
+
+var hasRequiredRerankResult;
+
+function requireRerankResult () {
+	if (hasRequiredRerankResult) return RerankResult;
+	hasRequiredRerankResult = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Inference API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(RerankResult, "__esModule", { value: true });
+	RerankResult.RerankResultToJSON = RerankResult.RerankResultFromJSONTyped = RerankResult.RerankResultFromJSON = RerankResult.instanceOfRerankResult = void 0;
+	const RankedDocument_1 = requireRankedDocument();
+	const RerankResultUsage_1 = requireRerankResultUsage();
+	/**
+	 * Check if a given object implements the RerankResult interface.
+	 */
+	function instanceOfRerankResult(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "model" in value;
+	    isInstance = isInstance && "data" in value;
+	    isInstance = isInstance && "usage" in value;
+	    return isInstance;
+	}
+	RerankResult.instanceOfRerankResult = instanceOfRerankResult;
+	function RerankResultFromJSON(json) {
+	    return RerankResultFromJSONTyped(json);
+	}
+	RerankResult.RerankResultFromJSON = RerankResultFromJSON;
+	function RerankResultFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'model': json['model'],
+	        'data': (json['data'].map(RankedDocument_1.RankedDocumentFromJSON)),
+	        'usage': (0, RerankResultUsage_1.RerankResultUsageFromJSON)(json['usage']),
+	    };
+	}
+	RerankResult.RerankResultFromJSONTyped = RerankResultFromJSONTyped;
+	function RerankResultToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'model': value.model,
+	        'data': (value.data.map(RankedDocument_1.RankedDocumentToJSON)),
+	        'usage': (0, RerankResultUsage_1.RerankResultUsageToJSON)(value.usage),
+	    };
+	}
+	RerankResult.RerankResultToJSON = RerankResultToJSON;
+	
+	return RerankResult;
+}
+
+var hasRequiredModels$1;
+
+function requireModels$1 () {
+	if (hasRequiredModels$1) return models$1;
+	hasRequiredModels$1 = 1;
+	(function (exports) {
+		var __createBinding = (models$1 && models$1.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    var desc = Object.getOwnPropertyDescriptor(m, k);
+		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+		      desc = { enumerable: true, get: function() { return m[k]; } };
+		    }
+		    Object.defineProperty(o, k2, desc);
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __exportStar = (models$1 && models$1.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		/* tslint:disable */
+		/* eslint-disable */
+		__exportStar(requireDenseEmbedding(), exports);
+		__exportStar(requireEmbedRequest(), exports);
+		__exportStar(requireEmbedRequestInputsInner(), exports);
+		__exportStar(requireEmbedding(), exports);
+		__exportStar(requireEmbeddingsList(), exports);
+		__exportStar(requireEmbeddingsListUsage(), exports);
+		__exportStar(requireErrorResponse$1(), exports);
+		__exportStar(requireErrorResponseError$1(), exports);
+		__exportStar(requireModelInfo(), exports);
+		__exportStar(requireModelInfoList(), exports);
+		__exportStar(requireModelInfoMetric(), exports);
+		__exportStar(requireModelInfoSupportedParameter(), exports);
+		__exportStar(requireModelInfoSupportedParameterAllowedValuesInner(), exports);
+		__exportStar(requireModelInfoSupportedParameterDefault(), exports);
+		__exportStar(requireRankedDocument(), exports);
+		__exportStar(requireRerankRequest(), exports);
+		__exportStar(requireRerankResult(), exports);
+		__exportStar(requireRerankResultUsage(), exports);
+		__exportStar(requireSparseEmbedding(), exports);
+		
+	} (models$1));
+	return models$1;
+}
+
+var hasRequiredInferenceApi;
+
+function requireInferenceApi () {
+	if (hasRequiredInferenceApi) return InferenceApi;
+	hasRequiredInferenceApi = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Inference API
+	 * Pinecone is a vector database that makes it easy to search and retrieve billions of high-dimensional vectors.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	var __createBinding = (InferenceApi && InferenceApi.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    var desc = Object.getOwnPropertyDescriptor(m, k);
+	    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+	      desc = { enumerable: true, get: function() { return m[k]; } };
+	    }
+	    Object.defineProperty(o, k2, desc);
+	}) : (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    o[k2] = m[k];
+	}));
+	var __setModuleDefault = (InferenceApi && InferenceApi.__setModuleDefault) || (Object.create ? (function(o, v) {
+	    Object.defineProperty(o, "default", { enumerable: true, value: v });
+	}) : function(o, v) {
+	    o["default"] = v;
+	});
+	var __importStar = (InferenceApi && InferenceApi.__importStar) || function (mod) {
+	    if (mod && mod.__esModule) return mod;
+	    var result = {};
+	    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+	    __setModuleDefault(result, mod);
+	    return result;
+	};
+	Object.defineProperty(InferenceApi, "__esModule", { value: true });
+	InferenceApi.InferenceApi = void 0;
+	const runtime = __importStar(requireRuntime$1());
+	const index_1 = requireModels$1();
+	/**
+	 *
+	 */
+	let InferenceApi$1 = class InferenceApi extends runtime.BaseAPI {
+	    /**
+	     * Generate vector embeddings for input data. This endpoint uses Pinecone\'s [hosted embedding models](https://docs.pinecone.io/guides/index-data/create-an-index#embedding-models).
+	     * Generate vectors
+	     */
+	    async embedRaw(requestParameters, initOverrides) {
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/json';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/embed`,
+	            method: 'POST',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: (0, index_1.EmbedRequestToJSON)(requestParameters.embedRequest),
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.EmbeddingsListFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Generate vector embeddings for input data. This endpoint uses Pinecone\'s [hosted embedding models](https://docs.pinecone.io/guides/index-data/create-an-index#embedding-models).
+	     * Generate vectors
+	     */
+	    async embed(requestParameters = {}, initOverrides) {
+	        const response = await this.embedRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Get a description of a model hosted by Pinecone.   You can use hosted models as an integrated part of Pinecone operations or for standalone embedding and reranking. For more details, see [Vector embedding](https://docs.pinecone.io/guides/index-data/indexing-overview#vector-embedding) and [Rerank results](https://docs.pinecone.io/guides/search/rerank-results).
+	     * Describe a model
+	     */
+	    async getModelRaw(requestParameters, initOverrides) {
+	        if (requestParameters.modelName === null || requestParameters.modelName === undefined) {
+	            throw new runtime.RequiredError('modelName', 'Required parameter requestParameters.modelName was null or undefined when calling getModel.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/models/{model_name}`.replace(`{${"model_name"}}`, encodeURIComponent(String(requestParameters.modelName))),
+	            method: 'GET',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.ModelInfoFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Get a description of a model hosted by Pinecone.   You can use hosted models as an integrated part of Pinecone operations or for standalone embedding and reranking. For more details, see [Vector embedding](https://docs.pinecone.io/guides/index-data/indexing-overview#vector-embedding) and [Rerank results](https://docs.pinecone.io/guides/search/rerank-results).
+	     * Describe a model
+	     */
+	    async getModel(requestParameters, initOverrides) {
+	        const response = await this.getModelRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * List the embedding and reranking models hosted by Pinecone.   You can use hosted models as an integrated part of Pinecone operations or for standalone embedding and reranking. For more details, see [Vector embedding](https://docs.pinecone.io/guides/index-data/indexing-overview#vector-embedding) and [Rerank results](https://docs.pinecone.io/guides/search/rerank-results).
+	     * List available models
+	     */
+	    async listModelsRaw(requestParameters, initOverrides) {
+	        const queryParameters = {};
+	        if (requestParameters.type !== undefined) {
+	            queryParameters['type'] = requestParameters.type;
+	        }
+	        if (requestParameters.vectorType !== undefined) {
+	            queryParameters['vector_type'] = requestParameters.vectorType;
+	        }
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/models`,
+	            method: 'GET',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.ModelInfoListFromJSON)(jsonValue));
+	    }
+	    /**
+	     * List the embedding and reranking models hosted by Pinecone.   You can use hosted models as an integrated part of Pinecone operations or for standalone embedding and reranking. For more details, see [Vector embedding](https://docs.pinecone.io/guides/index-data/indexing-overview#vector-embedding) and [Rerank results](https://docs.pinecone.io/guides/search/rerank-results).
+	     * List available models
+	     */
+	    async listModels(requestParameters = {}, initOverrides) {
+	        const response = await this.listModelsRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Rerank results according to their relevance to a query.  For guidance and examples, see [Rerank results](https://docs.pinecone.io/guides/search/rerank-results).
+	     * Rerank documents
+	     */
+	    async rerankRaw(requestParameters, initOverrides) {
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/json';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/rerank`,
+	            method: 'POST',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: (0, index_1.RerankRequestToJSON)(requestParameters.rerankRequest),
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.RerankResultFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Rerank results according to their relevance to a query.  For guidance and examples, see [Rerank results](https://docs.pinecone.io/guides/search/rerank-results).
+	     * Rerank documents
+	     */
+	    async rerank(requestParameters = {}, initOverrides) {
+	        const response = await this.rerankRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	};
+	InferenceApi.InferenceApi = InferenceApi$1;
+	
+	return InferenceApi;
+}
+
+var hasRequiredApis$1;
+
+function requireApis$1 () {
+	if (hasRequiredApis$1) return apis$1;
+	hasRequiredApis$1 = 1;
+	(function (exports) {
+		var __createBinding = (apis$1 && apis$1.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    var desc = Object.getOwnPropertyDescriptor(m, k);
+		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+		      desc = { enumerable: true, get: function() { return m[k]; } };
+		    }
+		    Object.defineProperty(o, k2, desc);
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __exportStar = (apis$1 && apis$1.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		/* tslint:disable */
+		/* eslint-disable */
+		__exportStar(requireInferenceApi(), exports);
+		
+	} (apis$1));
+	return apis$1;
+}
+
+var api_version$1 = {};
+
+var hasRequiredApi_version$1;
+
+function requireApi_version$1 () {
+	if (hasRequiredApi_version$1) return api_version$1;
+	hasRequiredApi_version$1 = 1;
+	Object.defineProperty(api_version$1, "__esModule", { value: true });
+	api_version$1.X_PINECONE_API_VERSION = void 0;
+	api_version$1.X_PINECONE_API_VERSION = '2025-04';
+	
+	return api_version$1;
+}
+
+var hasRequiredInference$2;
+
+function requireInference$2 () {
+	if (hasRequiredInference$2) return inference;
+	hasRequiredInference$2 = 1;
+	(function (exports) {
+		var __createBinding = (inference && inference.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    var desc = Object.getOwnPropertyDescriptor(m, k);
+		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+		      desc = { enumerable: true, get: function() { return m[k]; } };
+		    }
+		    Object.defineProperty(o, k2, desc);
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __exportStar = (inference && inference.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		/* tslint:disable */
+		/* eslint-disable */
+		__exportStar(requireRuntime$1(), exports);
+		__exportStar(requireApis$1(), exports);
+		__exportStar(requireModels$1(), exports);
+		__exportStar(requireApi_version$1(), exports);
+		
+	} (inference));
+	return inference;
+}
+
+var hasRequiredInferenceOperationsBuilder;
+
+function requireInferenceOperationsBuilder () {
+	if (hasRequiredInferenceOperationsBuilder) return inferenceOperationsBuilder;
+	hasRequiredInferenceOperationsBuilder = 1;
+	Object.defineProperty(inferenceOperationsBuilder, "__esModule", { value: true });
+	inferenceOperationsBuilder.inferenceOperationsBuilder = void 0;
+	const inference_1 = requireInference$2();
+	const utils_1 = requireUtils();
+	const middleware_1 = requireMiddleware();
+	const inferenceOperationsBuilder$1 = (config) => {
+	    const { apiKey } = config;
+	    const controllerPath = (0, utils_1.normalizeUrl)(config.controllerHostUrl) || 'https://api.pinecone.io';
+	    const headers = config.additionalHeaders || null;
+	    const apiConfig = {
+	        basePath: controllerPath,
+	        apiKey,
+	        queryParamsStringify: utils_1.queryParamsStringify,
+	        headers: {
+	            'User-Agent': (0, utils_1.buildUserAgent)(config),
+	            'X-Pinecone-Api-Version': inference_1.X_PINECONE_API_VERSION,
+	            ...headers,
+	        },
+	        fetchApi: (0, utils_1.getFetch)(config),
+	        middleware: middleware_1.middleware,
+	    };
+	    return new inference_1.InferenceApi(new inference_1.Configuration(apiConfig));
+	};
+	inferenceOperationsBuilder.inferenceOperationsBuilder = inferenceOperationsBuilder$1;
+	
+	return inferenceOperationsBuilder;
+}
+
+var embed = {};
+
+var hasRequiredEmbed;
+
+function requireEmbed () {
+	if (hasRequiredEmbed) return embed;
+	hasRequiredEmbed = 1;
+	Object.defineProperty(embed, "__esModule", { value: true });
+	embed.embed = void 0;
+	const embed$1 = (infApi) => {
+	    return async (model, inputs, params) => {
+	        const typedAndFormattedInputs = inputs.map((str) => {
+	            return { text: str };
+	        });
+	        if (params && params.inputType) {
+	            // Rename `inputType` to `input_type`
+	            params.input_type = params.inputType;
+	            delete params.inputType;
+	        }
+	        const typedRequest = {
+	            embedRequest: {
+	                model: model,
+	                inputs: typedAndFormattedInputs,
+	                parameters: params,
+	            },
+	        };
+	        return await infApi.embed(typedRequest);
+	    };
+	};
+	embed.embed = embed$1;
+	
+	return embed;
+}
+
+var rerank = {};
+
+var hasRequiredRerank;
+
+function requireRerank () {
+	if (hasRequiredRerank) return rerank;
+	hasRequiredRerank = 1;
+	Object.defineProperty(rerank, "__esModule", { value: true });
+	rerank.rerank = void 0;
+	const errors_1 = requireErrors();
+	const rerank$1 = (infApi) => {
+	    return async (model, query, documents, options = {}) => {
+	        if (documents.length == 0) {
+	            throw new errors_1.PineconeArgumentError('You must pass at least one document to rerank');
+	        }
+	        if (query.length == 0) {
+	            throw new errors_1.PineconeArgumentError('You must pass a query to rerank');
+	        }
+	        if (model.length == 0) {
+	            throw new errors_1.PineconeArgumentError('You must pass the name of a supported reranking model in order to rerank' +
+	                ' documents. See https://docs.pinecone.io/models for supported models.');
+	        }
+	        const { topN = documents.length, returnDocuments = true, parameters = {}, } = options;
+	        let { rankFields = ['text'] } = options;
+	        // Validate and standardize documents to ensure they are in object format
+	        const newDocuments = documents.map((doc) => typeof doc === 'string' ? { text: doc } : doc);
+	        if (!options.rankFields) {
+	            if (!newDocuments.every((doc) => typeof doc === 'object' && doc.text)) {
+	                throw new errors_1.PineconeArgumentError('Documents must be a list of strings or objects containing the "text" field');
+	            }
+	        }
+	        if (options.rankFields) {
+	            rankFields = options.rankFields;
+	        }
+	        const req = {
+	            rerankRequest: {
+	                model: model,
+	                query: query,
+	                documents: newDocuments,
+	                topN: topN,
+	                returnDocuments: returnDocuments,
+	                rankFields: rankFields,
+	                parameters: parameters,
+	            },
+	        };
+	        return await infApi.rerank(req);
+	    };
+	};
+	rerank.rerank = rerank$1;
+	
+	return rerank;
+}
+
+var getModel = {};
+
+var hasRequiredGetModel;
+
+function requireGetModel () {
+	if (hasRequiredGetModel) return getModel;
+	hasRequiredGetModel = 1;
+	Object.defineProperty(getModel, "__esModule", { value: true });
+	getModel.getModel = void 0;
+	const errors_1 = requireErrors();
+	const getModel$1 = (infApi) => {
+	    return async (modelName) => {
+	        if (!modelName) {
+	            throw new errors_1.PineconeArgumentError('You must pass a non-empty string for `modelName` in order to get a model');
+	        }
+	        return await infApi.getModel({ modelName });
+	    };
+	};
+	getModel.getModel = getModel$1;
+	
+	return getModel;
+}
+
+var listModels = {};
+
+var hasRequiredListModels;
+
+function requireListModels () {
+	if (hasRequiredListModels) return listModels;
+	hasRequiredListModels = 1;
+	Object.defineProperty(listModels, "__esModule", { value: true });
+	listModels.listModels = void 0;
+	const listModels$1 = (infApi) => {
+	    return async (options) => {
+	        return await infApi.listModels(options);
+	    };
+	};
+	listModels.listModels = listModels$1;
+	
+	return listModels;
+}
+
+var hasRequiredInference$1;
+
+function requireInference$1 () {
+	if (hasRequiredInference$1) return inference$1;
+	hasRequiredInference$1 = 1;
+	Object.defineProperty(inference$1, "__esModule", { value: true });
+	inference$1.Inference = void 0;
+	const inferenceOperationsBuilder_1 = requireInferenceOperationsBuilder();
+	const embed_1 = requireEmbed();
+	const rerank_1 = requireRerank();
+	const getModel_1 = requireGetModel();
+	const listModels_1 = requireListModels();
+	/* The Inference class uses the Inference API to generate embeddings, rerank documents, and work with models.  */
+	class Inference {
+	    constructor(config) {
+	        this.config = config;
+	        const inferenceApi = (0, inferenceOperationsBuilder_1.inferenceOperationsBuilder)(this.config);
+	        this._embed = (0, embed_1.embed)(inferenceApi);
+	        this._rerank = (0, rerank_1.rerank)(inferenceApi);
+	        this._listModels = (0, listModels_1.listModels)(inferenceApi);
+	        this._getModel = (0, getModel_1.getModel)(inferenceApi);
+	    }
+	    /**
+	     * Generates embeddings for the provided inputs using the specified model and (optional) parameters.
+	     *
+	     * @example
+	     * ````typescript
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     *
+	     * const inputs = ['Who created the first computer?'];
+	     * const model = 'multilingual-e5-large';
+	     * const parameters = {
+	     *   inputType: 'passage',
+	     *   truncate: 'END',
+	     * };
+	     * const embeddings = await pc.inference.embed(model, inputs, parameters);
+	     * console.log(embeddings);
+	     * // {
+	     * //   model: 'multilingual-e5-large',
+	     * //   vectorType: 'dense',
+	     * //   data: [ { values: [Array], vectorType: 'dense' } ],
+	     * //   usage: { totalTokens: 10 }
+	     * // }
+	     * ```
+	     *
+	     * @param model - The model to use for generating embeddings.
+	     * @param inputs - A list of items to generate embeddings for.
+	     * @param params - A dictionary of parameters to use when generating embeddings.
+	     * @returns A promise that resolves to {@link EmbeddingsList}.
+	     * */
+	    embed(model, inputs, params) {
+	        return this._embed(model, inputs, params);
+	    }
+	    /**
+	     * Rerank documents against a query with a reranking model. Each document is ranked in descending relevance order
+	     * against the query provided.
+	     *
+	     * @example
+	     * ````typescript
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const rerankingModel = 'bge-reranker-v2-m3';
+	     * const myQuery = 'What are some good Turkey dishes for Thanksgiving?';
+	     *
+	     * // Option 1: Documents as an array of strings
+	     * const myDocsStrings = [
+	     *   'I love turkey sandwiches with pastrami',
+	     *   'A lemon brined Turkey with apple sausage stuffing is a classic Thanksgiving main',
+	     *   'My favorite Thanksgiving dish is pumpkin pie',
+	     *   'Turkey is a great source of protein',
+	     * ];
+	     *
+	     * // Option 1 response
+	     * const response = await pc.inference.rerank(
+	     *   rerankingModel,
+	     *   myQuery,
+	     *   myDocsStrings
+	     * );
+	     * console.log(response);
+	     * // {
+	     * // model: 'bge-reranker-v2-m3',
+	     * // data: [
+	     * //   { index: 1, score: 0.5633179, document: [Object] },
+	     * //   { index: 2, score: 0.02013874, document: [Object] },
+	     * //   { index: 3, score: 0.00035419367, document: [Object] },
+	     * //   { index: 0, score: 0.00021485926, document: [Object] }
+	     * // ],
+	     * // usage: { rerankUnits: 1 }
+	     * // }
+	     *
+	     * // Option 2: Documents as an array of objects
+	     * const myDocsObjs = [
+	     *   {
+	     *     title: 'Turkey Sandwiches',
+	     *     body: 'I love turkey sandwiches with pastrami',
+	     *   },
+	     *   {
+	     *     title: 'Lemon Turkey',
+	     *     body: 'A lemon brined Turkey with apple sausage stuffing is a classic Thanksgiving main',
+	     *   },
+	     *   {
+	     *     title: 'Thanksgiving',
+	     *     body: 'My favorite Thanksgiving dish is pumpkin pie',
+	     *   },
+	     *   { title: 'Protein Sources', body: 'Turkey is a great source of protein' },
+	     * ];
+	     *
+	     * // Option 2: Options object declaring which custom key to rerank on
+	     * // Note: If no custom key is passed via `rankFields`, each doc must contain a `text` key, and that will act as the default)
+	     * const rerankOptions = {
+	     *   topN: 3,
+	     *   returnDocuments: false,
+	     *   rankFields: ['body'],
+	     *   parameters: {
+	     *     inputType: 'passage',
+	     *     truncate: 'END',
+	     *   },
+	     * };
+	     *
+	     * // Option 2 response
+	     * const response = await pc.inference.rerank(
+	     *   rerankingModel,
+	     *   myQuery,
+	     *   myDocsObjs,
+	     *   rerankOptions
+	     * );
+	     * console.log(response);
+	     * // {
+	     * // model: 'bge-reranker-v2-m3',
+	     * // data: [
+	     * //   { index: 1, score: 0.5633179, document: undefined },
+	     * //   { index: 2, score: 0.02013874, document: undefined },
+	     * //   { index: 3, score: 0.00035419367, document: undefined },
+	     * // ],
+	     * // usage: { rerankUnits: 1 }
+	     * //}
+	     * ```
+	     *
+	     * @param model - (Required) The model to use for reranking. Currently, the only available model is "[bge-reranker-v2-m3](https://docs.pinecone.io/models/bge-reranker-v2-m3)"}.
+	     * @param query - (Required) The query to rerank documents against.
+	     * @param documents - (Required) An array of documents to rerank. The array can either be an array of strings or
+	     * an array of objects.
+	     * @param options - (Optional) Additional options to send with the reranking request. See {@link RerankOptions} for more details.
+	     * */
+	    async rerank(model, query, documents, options) {
+	        return this._rerank(model, query, documents, options);
+	    }
+	    /**
+	     * List available models hosted by Pinecone.
+	     *
+	     * @example
+	     * ````typescript
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     *
+	     * const models = await pc.inference.listModels();
+	     * console.log(models);
+	     * // {
+	     * //   models: [
+	     * //     {
+	     * //       model: 'llama-text-embed-v2',
+	     * //       shortDescription: 'A high performance dense embedding model optimized for multilingual and cross-lingual text question-answering retrieval with support for long documents (up to 2048 tokens) and dynamic embedding size (Matryoshka Embeddings).',
+	     * //       type: 'embed',
+	     * //       vectorType: 'dense',
+	     * //       defaultDimension: 1024,
+	     * //       modality: 'text',
+	     * //       maxSequenceLength: 2048,
+	     * //       maxBatchSize: 96,
+	     * //       providerName: 'NVIDIA',
+	     * //       supportedDimensions: [Array],
+	     * //       supportedMetrics: [Array],
+	     * //       supportedParameters: [Array]
+	     * //     },
+	     * //     ...
+	     * //     {
+	     * //       model: 'pinecone-rerank-v0',
+	     * //       shortDescription: 'A state of the art reranking model that out-performs competitors on widely accepted benchmarks. It can handle chunks up to 512 tokens (1-2 paragraphs)',
+	     * //       type: 'rerank',
+	     * //       vectorType: undefined,
+	     * //       defaultDimension: undefined,
+	     * //       modality: 'text',
+	     * //       maxSequenceLength: 512,
+	     * //       maxBatchSize: 100,
+	     * //       providerName: 'Pinecone',
+	     * //       supportedDimensions: undefined,
+	     * //       supportedMetrics: undefined,
+	     * //       supportedParameters: [Array]
+	     * //     }
+	     * //   ]
+	     * // }
+	     * ```
+	     *
+	     * @param options - (Optional) A {@link ListModelsOptions} object to filter the models returned.
+	     * @returns A promise that resolves to {@link ModelInfoList}.
+	     * */
+	    async listModels(options) {
+	        return this._listModels(options);
+	    }
+	    /**
+	     * Get the information for a model hosted by Pinecone.
+	     *
+	     * @example
+	     * ````typescript
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     *
+	     * const model = await pc.inference.getModel('pinecone-sparse-english-v0');
+	     * console.log(model);
+	     * // {
+	     * //   model: 'pinecone-sparse-english-v0',
+	     * //   shortDescription: 'A sparse embedding model for converting text to sparse vectors for keyword or hybrid semantic/keyword search. Built on the innovations of the DeepImpact architecture.',
+	     * //   type: 'embed',
+	     * //   vectorType: 'sparse',
+	     * //   defaultDimension: undefined,
+	     * //   modality: 'text',
+	     * //   maxSequenceLength: 512,
+	     * //   maxBatchSize: 96,
+	     * //   providerName: 'Pinecone',
+	     * //   supportedDimensions: undefined,
+	     * //   supportedMetrics: [ 'DotProduct' ],
+	     * //   supportedParameters: [
+	     * //     {
+	     * //       parameter: 'input_type',
+	     * //       type: 'one_of',
+	     * //       valueType: 'string',
+	     * //       required: true,
+	     * //       allowedValues: [Array],
+	     * //       min: undefined,
+	     * //       max: undefined,
+	     * //       _default: undefined
+	     * //     },
+	     * //     {
+	     * //       parameter: 'truncate',
+	     * //       type: 'one_of',
+	     * //       valueType: 'string',
+	     * //       required: false,
+	     * //       allowedValues: [Array],
+	     * //       min: undefined,
+	     * //       max: undefined,
+	     * //       _default: 'END'
+	     * //     },
+	     * //     {
+	     * //       parameter: 'return_tokens',
+	     * //       type: 'any',
+	     * //       valueType: 'boolean',
+	     * //       required: false,
+	     * //       allowedValues: undefined,
+	     * //       min: undefined,
+	     * //       max: undefined,
+	     * //       _default: false
+	     * //     }
+	     * //   ]
+	     * // }
+	     * ```
+	     *
+	     * @param modelName - The model name you would like to describe.
+	     * @returns A promise that resolves to {@link ModelInfo}.
+	     * */
+	    async getModel(modelName) {
+	        return this._getModel(modelName);
+	    }
+	}
+	inference$1.Inference = Inference;
+	
+	return inference$1;
+}
+
+var hasRequiredInference;
+
+function requireInference () {
+	if (hasRequiredInference) return inference$2;
+	hasRequiredInference = 1;
+	(function (exports) {
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.listModels = exports.getModel = exports.rerank = exports.embed = exports.inferenceOperationsBuilder = exports.Inference = void 0;
+		var inference_1 = requireInference$1();
+		Object.defineProperty(exports, "Inference", { enumerable: true, get: function () { return inference_1.Inference; } });
+		var inferenceOperationsBuilder_1 = requireInferenceOperationsBuilder();
+		Object.defineProperty(exports, "inferenceOperationsBuilder", { enumerable: true, get: function () { return inferenceOperationsBuilder_1.inferenceOperationsBuilder; } });
+		var embed_1 = requireEmbed();
+		Object.defineProperty(exports, "embed", { enumerable: true, get: function () { return embed_1.embed; } });
+		var rerank_1 = requireRerank();
+		Object.defineProperty(exports, "rerank", { enumerable: true, get: function () { return rerank_1.rerank; } });
+		var getModel_1 = requireGetModel();
+		Object.defineProperty(exports, "getModel", { enumerable: true, get: function () { return getModel_1.getModel; } });
+		var listModels_1 = requireListModels();
+		Object.defineProperty(exports, "listModels", { enumerable: true, get: function () { return listModels_1.listModels; } });
+		
+	} (inference$2));
+	return inference$2;
+}
+
+var assistant = {};
+
+var chat = {};
+
+var assistant_data = {};
+
+var runtime = {};
+
+var hasRequiredRuntime;
+
+function requireRuntime () {
+	if (hasRequiredRuntime) return runtime;
+	hasRequiredRuntime = 1;
+	(function (exports) {
+		/* tslint:disable */
+		/* eslint-disable */
+		/**
+		 * Pinecone Assistant Data Plane API
+		 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+		 *
+		 * The version of the OpenAPI document: 2025-04
+		 * Contact: support@pinecone.io
+		 *
+		 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+		 * https://openapi-generator.tech
+		 * Do not edit the class manually.
+		 */
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.TextApiResponse = exports.BlobApiResponse = exports.VoidApiResponse = exports.JSONApiResponse = exports.canConsumeForm = exports.mapValues = exports.querystring = exports.exists = exports.COLLECTION_FORMATS = exports.RequiredError = exports.FetchError = exports.ResponseError = exports.BaseAPI = exports.DefaultConfig = exports.Configuration = exports.BASE_PATH = void 0;
+		exports.BASE_PATH = "https://unknown".replace(/\/+$/, "");
+		class Configuration {
+		    constructor(configuration = {}) {
+		        this.configuration = configuration;
+		    }
+		    set config(configuration) {
+		        this.configuration = configuration;
+		    }
+		    get basePath() {
+		        return this.configuration.basePath != null ? this.configuration.basePath : exports.BASE_PATH;
+		    }
+		    get fetchApi() {
+		        return this.configuration.fetchApi;
+		    }
+		    get middleware() {
+		        return this.configuration.middleware || [];
+		    }
+		    get queryParamsStringify() {
+		        return this.configuration.queryParamsStringify || querystring;
+		    }
+		    get username() {
+		        return this.configuration.username;
+		    }
+		    get password() {
+		        return this.configuration.password;
+		    }
+		    get apiKey() {
+		        const apiKey = this.configuration.apiKey;
+		        if (apiKey) {
+		            return typeof apiKey === 'function' ? apiKey : () => apiKey;
+		        }
+		        return undefined;
+		    }
+		    get accessToken() {
+		        const accessToken = this.configuration.accessToken;
+		        if (accessToken) {
+		            return typeof accessToken === 'function' ? accessToken : async () => accessToken;
+		        }
+		        return undefined;
+		    }
+		    get headers() {
+		        return this.configuration.headers;
+		    }
+		    get credentials() {
+		        return this.configuration.credentials;
+		    }
+		}
+		exports.Configuration = Configuration;
+		exports.DefaultConfig = new Configuration();
+		/**
+		 * This is the base class for all generated API classes.
+		 */
+		class BaseAPI {
+		    constructor(configuration = exports.DefaultConfig) {
+		        this.configuration = configuration;
+		        this.fetchApi = async (url, init) => {
+		            let fetchParams = { url, init };
+		            for (const middleware of this.middleware) {
+		                if (middleware.pre) {
+		                    fetchParams = await middleware.pre({
+		                        fetch: this.fetchApi,
+		                        ...fetchParams,
+		                    }) || fetchParams;
+		                }
+		            }
+		            let response = undefined;
+		            try {
+		                response = await (this.configuration.fetchApi || fetch)(fetchParams.url, fetchParams.init);
+		            }
+		            catch (e) {
+		                for (const middleware of this.middleware) {
+		                    if (middleware.onError) {
+		                        response = await middleware.onError({
+		                            fetch: this.fetchApi,
+		                            url: fetchParams.url,
+		                            init: fetchParams.init,
+		                            error: e,
+		                            response: response ? response.clone() : undefined,
+		                        }) || response;
+		                    }
+		                }
+		                if (response === undefined) {
+		                    if (e instanceof Error) {
+		                        throw new FetchError(e, 'The request failed and the interceptors did not return an alternative response');
+		                    }
+		                    else {
+		                        throw e;
+		                    }
+		                }
+		            }
+		            for (const middleware of this.middleware) {
+		                if (middleware.post) {
+		                    response = await middleware.post({
+		                        fetch: this.fetchApi,
+		                        url: fetchParams.url,
+		                        init: fetchParams.init,
+		                        response: response.clone(),
+		                    }) || response;
+		                }
+		            }
+		            return response;
+		        };
+		        this.middleware = configuration.middleware;
+		    }
+		    withMiddleware(...middlewares) {
+		        const next = this.clone();
+		        next.middleware = next.middleware.concat(...middlewares);
+		        return next;
+		    }
+		    withPreMiddleware(...preMiddlewares) {
+		        const middlewares = preMiddlewares.map((pre) => ({ pre }));
+		        return this.withMiddleware(...middlewares);
+		    }
+		    withPostMiddleware(...postMiddlewares) {
+		        const middlewares = postMiddlewares.map((post) => ({ post }));
+		        return this.withMiddleware(...middlewares);
+		    }
+		    /**
+		     * Check if the given MIME is a JSON MIME.
+		     * JSON MIME examples:
+		     *   application/json
+		     *   application/json; charset=UTF8
+		     *   APPLICATION/JSON
+		     *   application/vnd.company+json
+		     * @param mime - MIME (Multipurpose Internet Mail Extensions)
+		     * @return True if the given MIME is JSON, false otherwise.
+		     */
+		    isJsonMime(mime) {
+		        if (!mime) {
+		            return false;
+		        }
+		        return BaseAPI.jsonRegex.test(mime);
+		    }
+		    async request(context, initOverrides) {
+		        const { url, init } = await this.createFetchParams(context, initOverrides);
+		        const response = await this.fetchApi(url, init);
+		        if (response && (response.status >= 200 && response.status < 300)) {
+		            return response;
+		        }
+		        throw new ResponseError(response, 'Response returned an error code');
+		    }
+		    async createFetchParams(context, initOverrides) {
+		        let url = this.configuration.basePath + context.path;
+		        if (context.query !== undefined && Object.keys(context.query).length !== 0) {
+		            // only add the querystring to the URL if there are query parameters.
+		            // this is done to avoid urls ending with a "?" character which buggy webservers
+		            // do not handle correctly sometimes.
+		            url += '?' + this.configuration.queryParamsStringify(context.query);
+		        }
+		        const headers = Object.assign({}, this.configuration.headers, context.headers);
+		        Object.keys(headers).forEach(key => headers[key] === undefined ? delete headers[key] : {});
+		        const initOverrideFn = typeof initOverrides === "function"
+		            ? initOverrides
+		            : async () => initOverrides;
+		        const initParams = {
+		            method: context.method,
+		            headers,
+		            body: context.body,
+		            credentials: this.configuration.credentials,
+		        };
+		        const overriddenInit = {
+		            ...initParams,
+		            ...(await initOverrideFn({
+		                init: initParams,
+		                context,
+		            }))
+		        };
+		        let body;
+		        if (isFormData(overriddenInit.body)
+		            || (overriddenInit.body instanceof URLSearchParams)
+		            || isBlob(overriddenInit.body)) {
+		            body = overriddenInit.body;
+		        }
+		        else if (this.isJsonMime(headers['Content-Type'])) {
+		            body = JSON.stringify(overriddenInit.body);
+		        }
+		        else {
+		            body = overriddenInit.body;
+		        }
+		        const init = {
+		            ...overriddenInit,
+		            body
+		        };
+		        return { url, init };
+		    }
+		    /**
+		     * Create a shallow clone of `this` by constructing a new instance
+		     * and then shallow cloning data members.
+		     */
+		    clone() {
+		        const constructor = this.constructor;
+		        const next = new constructor(this.configuration);
+		        next.middleware = this.middleware.slice();
+		        return next;
+		    }
+		}
+		exports.BaseAPI = BaseAPI;
+		BaseAPI.jsonRegex = new RegExp('^(:?application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(:?;.*)?$', 'i');
+		function isBlob(value) {
+		    return typeof Blob !== 'undefined' && value instanceof Blob;
+		}
+		function isFormData(value) {
+		    return typeof FormData !== "undefined" && value instanceof FormData;
+		}
+		class ResponseError extends Error {
+		    constructor(response, msg) {
+		        super(msg);
+		        this.response = response;
+		        this.name = "ResponseError";
+		    }
+		}
+		exports.ResponseError = ResponseError;
+		class FetchError extends Error {
+		    constructor(cause, msg) {
+		        super(msg);
+		        this.cause = cause;
+		        this.name = "FetchError";
+		    }
+		}
+		exports.FetchError = FetchError;
+		class RequiredError extends Error {
+		    constructor(field, msg) {
+		        super(msg);
+		        this.field = field;
+		        this.name = "RequiredError";
+		    }
+		}
+		exports.RequiredError = RequiredError;
+		exports.COLLECTION_FORMATS = {
+		    csv: ",",
+		    ssv: " ",
+		    tsv: "\t",
+		    pipes: "|",
+		};
+		function exists(json, key) {
+		    const value = json[key];
+		    return value !== null && value !== undefined;
+		}
+		exports.exists = exists;
+		function querystring(params, prefix = '') {
+		    return Object.keys(params)
+		        .map(key => querystringSingleKey(key, params[key], prefix))
+		        .filter(part => part.length > 0)
+		        .join('&');
+		}
+		exports.querystring = querystring;
+		function querystringSingleKey(key, value, keyPrefix = '') {
+		    const fullKey = keyPrefix + (keyPrefix.length ? `[${key}]` : key);
+		    if (value instanceof Array) {
+		        const multiValue = value.map(singleValue => encodeURIComponent(String(singleValue)))
+		            .join(`&${encodeURIComponent(fullKey)}=`);
+		        return `${encodeURIComponent(fullKey)}=${multiValue}`;
+		    }
+		    if (value instanceof Set) {
+		        const valueAsArray = Array.from(value);
+		        return querystringSingleKey(key, valueAsArray, keyPrefix);
+		    }
+		    if (value instanceof Date) {
+		        return `${encodeURIComponent(fullKey)}=${encodeURIComponent(value.toISOString())}`;
+		    }
+		    if (value instanceof Object) {
+		        return querystring(value, fullKey);
+		    }
+		    return `${encodeURIComponent(fullKey)}=${encodeURIComponent(String(value))}`;
+		}
+		function mapValues(data, fn) {
+		    return Object.keys(data).reduce((acc, key) => ({ ...acc, [key]: fn(data[key]) }), {});
+		}
+		exports.mapValues = mapValues;
+		function canConsumeForm(consumes) {
+		    for (const consume of consumes) {
+		        if ('multipart/form-data' === consume.contentType) {
+		            return true;
+		        }
+		    }
+		    return false;
+		}
+		exports.canConsumeForm = canConsumeForm;
+		class JSONApiResponse {
+		    constructor(raw, transformer = (jsonValue) => jsonValue) {
+		        this.raw = raw;
+		        this.transformer = transformer;
+		    }
+		    async value() {
+		        return this.transformer(await this.raw.json());
+		    }
+		}
+		exports.JSONApiResponse = JSONApiResponse;
+		class VoidApiResponse {
+		    constructor(raw) {
+		        this.raw = raw;
+		    }
+		    async value() {
+		        return undefined;
+		    }
+		}
+		exports.VoidApiResponse = VoidApiResponse;
+		class BlobApiResponse {
+		    constructor(raw) {
+		        this.raw = raw;
+		    }
+		    async value() {
+		        return await this.raw.blob();
+		    }
+		    ;
+		}
+		exports.BlobApiResponse = BlobApiResponse;
+		class TextApiResponse {
+		    constructor(raw) {
+		        this.raw = raw;
+		    }
+		    async value() {
+		        return await this.raw.text();
+		    }
+		    ;
+		}
+		exports.TextApiResponse = TextApiResponse;
+		
+	} (runtime));
+	return runtime;
+}
+
+var apis = {};
+
+var ManageAssistantsApi = {};
+
+var models = {};
+
+var AssistantFileModel = {};
+
+var hasRequiredAssistantFileModel;
+
+function requireAssistantFileModel () {
+	if (hasRequiredAssistantFileModel) return AssistantFileModel;
+	hasRequiredAssistantFileModel = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(AssistantFileModel, "__esModule", { value: true });
+	AssistantFileModel.AssistantFileModelToJSON = AssistantFileModel.AssistantFileModelFromJSONTyped = AssistantFileModel.AssistantFileModelFromJSON = AssistantFileModel.instanceOfAssistantFileModel = AssistantFileModel.AssistantFileModelStatusEnum = void 0;
+	const runtime_1 = requireRuntime();
+	/**
+	 * @export
+	 */
+	AssistantFileModel.AssistantFileModelStatusEnum = {
+	    Processing: 'Processing',
+	    Available: 'Available',
+	    Deleting: 'Deleting',
+	    ProcessingFailed: 'ProcessingFailed'
+	};
+	/**
+	 * Check if a given object implements the AssistantFileModel interface.
+	 */
+	function instanceOfAssistantFileModel(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "name" in value;
+	    isInstance = isInstance && "id" in value;
+	    return isInstance;
+	}
+	AssistantFileModel.instanceOfAssistantFileModel = instanceOfAssistantFileModel;
+	function AssistantFileModelFromJSON(json) {
+	    return AssistantFileModelFromJSONTyped(json);
+	}
+	AssistantFileModel.AssistantFileModelFromJSON = AssistantFileModelFromJSON;
+	function AssistantFileModelFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'name': json['name'],
+	        'id': json['id'],
+	        'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : json['metadata'],
+	        'createdOn': !(0, runtime_1.exists)(json, 'created_on') ? undefined : (new Date(json['created_on'])),
+	        'updatedOn': !(0, runtime_1.exists)(json, 'updated_on') ? undefined : (new Date(json['updated_on'])),
+	        'status': !(0, runtime_1.exists)(json, 'status') ? undefined : json['status'],
+	        'percentDone': !(0, runtime_1.exists)(json, 'percent_done') ? undefined : json['percent_done'],
+	        'signedUrl': !(0, runtime_1.exists)(json, 'signed_url') ? undefined : json['signed_url'],
+	        'errorMessage': !(0, runtime_1.exists)(json, 'error_message') ? undefined : json['error_message'],
+	    };
+	}
+	AssistantFileModel.AssistantFileModelFromJSONTyped = AssistantFileModelFromJSONTyped;
+	function AssistantFileModelToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'name': value.name,
+	        'id': value.id,
+	        'metadata': value.metadata,
+	        'created_on': value.createdOn === undefined ? undefined : (value.createdOn.toISOString()),
+	        'updated_on': value.updatedOn === undefined ? undefined : (value.updatedOn.toISOString()),
+	        'status': value.status,
+	        'percent_done': value.percentDone,
+	        'signed_url': value.signedUrl,
+	        'error_message': value.errorMessage,
+	    };
+	}
+	AssistantFileModel.AssistantFileModelToJSON = AssistantFileModelToJSON;
+	
+	return AssistantFileModel;
+}
+
+var Chat$1 = {};
+
+var ContextOptionsModel = {};
+
+var hasRequiredContextOptionsModel;
+
+function requireContextOptionsModel () {
+	if (hasRequiredContextOptionsModel) return ContextOptionsModel;
+	hasRequiredContextOptionsModel = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ContextOptionsModel, "__esModule", { value: true });
+	ContextOptionsModel.ContextOptionsModelToJSON = ContextOptionsModel.ContextOptionsModelFromJSONTyped = ContextOptionsModel.ContextOptionsModelFromJSON = ContextOptionsModel.instanceOfContextOptionsModel = void 0;
+	const runtime_1 = requireRuntime();
+	/**
+	 * Check if a given object implements the ContextOptionsModel interface.
+	 */
+	function instanceOfContextOptionsModel(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ContextOptionsModel.instanceOfContextOptionsModel = instanceOfContextOptionsModel;
+	function ContextOptionsModelFromJSON(json) {
+	    return ContextOptionsModelFromJSONTyped(json);
+	}
+	ContextOptionsModel.ContextOptionsModelFromJSON = ContextOptionsModelFromJSON;
+	function ContextOptionsModelFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'topK': !(0, runtime_1.exists)(json, 'top_k') ? undefined : json['top_k'],
+	        'snippetSize': !(0, runtime_1.exists)(json, 'snippet_size') ? undefined : json['snippet_size'],
+	    };
+	}
+	ContextOptionsModel.ContextOptionsModelFromJSONTyped = ContextOptionsModelFromJSONTyped;
+	function ContextOptionsModelToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'top_k': value.topK,
+	        'snippet_size': value.snippetSize,
+	    };
+	}
+	ContextOptionsModel.ContextOptionsModelToJSON = ContextOptionsModelToJSON;
+	
+	return ContextOptionsModel;
+}
+
+var MessageModel = {};
+
+var hasRequiredMessageModel;
+
+function requireMessageModel () {
+	if (hasRequiredMessageModel) return MessageModel;
+	hasRequiredMessageModel = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(MessageModel, "__esModule", { value: true });
+	MessageModel.MessageModelToJSON = MessageModel.MessageModelFromJSONTyped = MessageModel.MessageModelFromJSON = MessageModel.instanceOfMessageModel = void 0;
+	const runtime_1 = requireRuntime();
+	/**
+	 * Check if a given object implements the MessageModel interface.
+	 */
+	function instanceOfMessageModel(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	MessageModel.instanceOfMessageModel = instanceOfMessageModel;
+	function MessageModelFromJSON(json) {
+	    return MessageModelFromJSONTyped(json);
+	}
+	MessageModel.MessageModelFromJSON = MessageModelFromJSON;
+	function MessageModelFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'role': !(0, runtime_1.exists)(json, 'role') ? undefined : json['role'],
+	        'content': !(0, runtime_1.exists)(json, 'content') ? undefined : json['content'],
+	    };
+	}
+	MessageModel.MessageModelFromJSONTyped = MessageModelFromJSONTyped;
+	function MessageModelToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'role': value.role,
+	        'content': value.content,
+	    };
+	}
+	MessageModel.MessageModelToJSON = MessageModelToJSON;
+	
+	return MessageModel;
+}
+
+var hasRequiredChat$1;
+
+function requireChat$1 () {
+	if (hasRequiredChat$1) return Chat$1;
+	hasRequiredChat$1 = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(Chat$1, "__esModule", { value: true });
+	Chat$1.ChatToJSON = Chat$1.ChatFromJSONTyped = Chat$1.ChatFromJSON = Chat$1.instanceOfChat = Chat$1.ChatModelEnum = void 0;
+	const runtime_1 = requireRuntime();
+	const ContextOptionsModel_1 = requireContextOptionsModel();
+	const MessageModel_1 = requireMessageModel();
+	/**
+	 * @export
+	 */
+	Chat$1.ChatModelEnum = {
+	    Gpt4o: 'gpt-4o',
+	    Gpt41: 'gpt-4.1',
+	    O4Mini: 'o4-mini',
+	    Claude35Sonnet: 'claude-3-5-sonnet',
+	    Claude37Sonnet: 'claude-3-7-sonnet',
+	    Gemini25Pro: 'gemini-2.5-pro'
+	};
+	/**
+	 * Check if a given object implements the Chat interface.
+	 */
+	function instanceOfChat(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "messages" in value;
+	    return isInstance;
+	}
+	Chat$1.instanceOfChat = instanceOfChat;
+	function ChatFromJSON(json) {
+	    return ChatFromJSONTyped(json);
+	}
+	Chat$1.ChatFromJSON = ChatFromJSON;
+	function ChatFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'messages': (json['messages'].map(MessageModel_1.MessageModelFromJSON)),
+	        'stream': !(0, runtime_1.exists)(json, 'stream') ? undefined : json['stream'],
+	        'model': !(0, runtime_1.exists)(json, 'model') ? undefined : json['model'],
+	        'temperature': !(0, runtime_1.exists)(json, 'temperature') ? undefined : json['temperature'],
+	        'filter': !(0, runtime_1.exists)(json, 'filter') ? undefined : json['filter'],
+	        'jsonResponse': !(0, runtime_1.exists)(json, 'json_response') ? undefined : json['json_response'],
+	        'includeHighlights': !(0, runtime_1.exists)(json, 'include_highlights') ? undefined : json['include_highlights'],
+	        'contextOptions': !(0, runtime_1.exists)(json, 'context_options') ? undefined : (0, ContextOptionsModel_1.ContextOptionsModelFromJSON)(json['context_options']),
+	    };
+	}
+	Chat$1.ChatFromJSONTyped = ChatFromJSONTyped;
+	function ChatToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'messages': (value.messages.map(MessageModel_1.MessageModelToJSON)),
+	        'stream': value.stream,
+	        'model': value.model,
+	        'temperature': value.temperature,
+	        'filter': value.filter,
+	        'json_response': value.jsonResponse,
+	        'include_highlights': value.includeHighlights,
+	        'context_options': (0, ContextOptionsModel_1.ContextOptionsModelToJSON)(value.contextOptions),
+	    };
+	}
+	Chat$1.ChatToJSON = ChatToJSON;
+	
+	return Chat$1;
+}
+
+var ChatCompletionAssistant200Response = {};
+
+var ChatCompletionAssistant200ResponseChoicesInner = {};
+
+var ChatCompletionAssistant200ResponseChoicesInnerDelta = {};
+
+var hasRequiredChatCompletionAssistant200ResponseChoicesInnerDelta;
+
+function requireChatCompletionAssistant200ResponseChoicesInnerDelta () {
+	if (hasRequiredChatCompletionAssistant200ResponseChoicesInnerDelta) return ChatCompletionAssistant200ResponseChoicesInnerDelta;
+	hasRequiredChatCompletionAssistant200ResponseChoicesInnerDelta = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ChatCompletionAssistant200ResponseChoicesInnerDelta, "__esModule", { value: true });
+	ChatCompletionAssistant200ResponseChoicesInnerDelta.ChatCompletionAssistant200ResponseChoicesInnerDeltaToJSON = ChatCompletionAssistant200ResponseChoicesInnerDelta.ChatCompletionAssistant200ResponseChoicesInnerDeltaFromJSONTyped = ChatCompletionAssistant200ResponseChoicesInnerDelta.ChatCompletionAssistant200ResponseChoicesInnerDeltaFromJSON = ChatCompletionAssistant200ResponseChoicesInnerDelta.instanceOfChatCompletionAssistant200ResponseChoicesInnerDelta = void 0;
+	const runtime_1 = requireRuntime();
+	/**
+	 * Check if a given object implements the ChatCompletionAssistant200ResponseChoicesInnerDelta interface.
+	 */
+	function instanceOfChatCompletionAssistant200ResponseChoicesInnerDelta(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ChatCompletionAssistant200ResponseChoicesInnerDelta.instanceOfChatCompletionAssistant200ResponseChoicesInnerDelta = instanceOfChatCompletionAssistant200ResponseChoicesInnerDelta;
+	function ChatCompletionAssistant200ResponseChoicesInnerDeltaFromJSON(json) {
+	    return ChatCompletionAssistant200ResponseChoicesInnerDeltaFromJSONTyped(json);
+	}
+	ChatCompletionAssistant200ResponseChoicesInnerDelta.ChatCompletionAssistant200ResponseChoicesInnerDeltaFromJSON = ChatCompletionAssistant200ResponseChoicesInnerDeltaFromJSON;
+	function ChatCompletionAssistant200ResponseChoicesInnerDeltaFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'role': !(0, runtime_1.exists)(json, 'role') ? undefined : json['role'],
+	        'content': !(0, runtime_1.exists)(json, 'content') ? undefined : json['content'],
+	    };
+	}
+	ChatCompletionAssistant200ResponseChoicesInnerDelta.ChatCompletionAssistant200ResponseChoicesInnerDeltaFromJSONTyped = ChatCompletionAssistant200ResponseChoicesInnerDeltaFromJSONTyped;
+	function ChatCompletionAssistant200ResponseChoicesInnerDeltaToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'role': value.role,
+	        'content': value.content,
+	    };
+	}
+	ChatCompletionAssistant200ResponseChoicesInnerDelta.ChatCompletionAssistant200ResponseChoicesInnerDeltaToJSON = ChatCompletionAssistant200ResponseChoicesInnerDeltaToJSON;
+	
+	return ChatCompletionAssistant200ResponseChoicesInnerDelta;
+}
+
+var hasRequiredChatCompletionAssistant200ResponseChoicesInner;
+
+function requireChatCompletionAssistant200ResponseChoicesInner () {
+	if (hasRequiredChatCompletionAssistant200ResponseChoicesInner) return ChatCompletionAssistant200ResponseChoicesInner;
+	hasRequiredChatCompletionAssistant200ResponseChoicesInner = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ChatCompletionAssistant200ResponseChoicesInner, "__esModule", { value: true });
+	ChatCompletionAssistant200ResponseChoicesInner.ChatCompletionAssistant200ResponseChoicesInnerToJSON = ChatCompletionAssistant200ResponseChoicesInner.ChatCompletionAssistant200ResponseChoicesInnerFromJSONTyped = ChatCompletionAssistant200ResponseChoicesInner.ChatCompletionAssistant200ResponseChoicesInnerFromJSON = ChatCompletionAssistant200ResponseChoicesInner.instanceOfChatCompletionAssistant200ResponseChoicesInner = ChatCompletionAssistant200ResponseChoicesInner.ChatCompletionAssistant200ResponseChoicesInnerFinishReasonEnum = void 0;
+	const runtime_1 = requireRuntime();
+	const ChatCompletionAssistant200ResponseChoicesInnerDelta_1 = requireChatCompletionAssistant200ResponseChoicesInnerDelta();
+	/**
+	 * @export
+	 */
+	ChatCompletionAssistant200ResponseChoicesInner.ChatCompletionAssistant200ResponseChoicesInnerFinishReasonEnum = {
+	    Stop: 'stop',
+	    Length: 'length',
+	    ContentFilter: 'content_filter',
+	    FunctionCall: 'function_call'
+	};
+	/**
+	 * Check if a given object implements the ChatCompletionAssistant200ResponseChoicesInner interface.
+	 */
+	function instanceOfChatCompletionAssistant200ResponseChoicesInner(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ChatCompletionAssistant200ResponseChoicesInner.instanceOfChatCompletionAssistant200ResponseChoicesInner = instanceOfChatCompletionAssistant200ResponseChoicesInner;
+	function ChatCompletionAssistant200ResponseChoicesInnerFromJSON(json) {
+	    return ChatCompletionAssistant200ResponseChoicesInnerFromJSONTyped(json);
+	}
+	ChatCompletionAssistant200ResponseChoicesInner.ChatCompletionAssistant200ResponseChoicesInnerFromJSON = ChatCompletionAssistant200ResponseChoicesInnerFromJSON;
+	function ChatCompletionAssistant200ResponseChoicesInnerFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'finishReason': !(0, runtime_1.exists)(json, 'finish_reason') ? undefined : json['finish_reason'],
+	        'index': !(0, runtime_1.exists)(json, 'index') ? undefined : json['index'],
+	        'delta': !(0, runtime_1.exists)(json, 'delta') ? undefined : (0, ChatCompletionAssistant200ResponseChoicesInnerDelta_1.ChatCompletionAssistant200ResponseChoicesInnerDeltaFromJSON)(json['delta']),
+	    };
+	}
+	ChatCompletionAssistant200ResponseChoicesInner.ChatCompletionAssistant200ResponseChoicesInnerFromJSONTyped = ChatCompletionAssistant200ResponseChoicesInnerFromJSONTyped;
+	function ChatCompletionAssistant200ResponseChoicesInnerToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'finish_reason': value.finishReason,
+	        'index': value.index,
+	        'delta': (0, ChatCompletionAssistant200ResponseChoicesInnerDelta_1.ChatCompletionAssistant200ResponseChoicesInnerDeltaToJSON)(value.delta),
+	    };
+	}
+	ChatCompletionAssistant200ResponseChoicesInner.ChatCompletionAssistant200ResponseChoicesInnerToJSON = ChatCompletionAssistant200ResponseChoicesInnerToJSON;
+	
+	return ChatCompletionAssistant200ResponseChoicesInner;
+}
+
+var hasRequiredChatCompletionAssistant200Response;
+
+function requireChatCompletionAssistant200Response () {
+	if (hasRequiredChatCompletionAssistant200Response) return ChatCompletionAssistant200Response;
+	hasRequiredChatCompletionAssistant200Response = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ChatCompletionAssistant200Response, "__esModule", { value: true });
+	ChatCompletionAssistant200Response.ChatCompletionAssistant200ResponseToJSON = ChatCompletionAssistant200Response.ChatCompletionAssistant200ResponseFromJSONTyped = ChatCompletionAssistant200Response.ChatCompletionAssistant200ResponseFromJSON = ChatCompletionAssistant200Response.instanceOfChatCompletionAssistant200Response = void 0;
+	const runtime_1 = requireRuntime();
+	const ChatCompletionAssistant200ResponseChoicesInner_1 = requireChatCompletionAssistant200ResponseChoicesInner();
+	/**
+	 * Check if a given object implements the ChatCompletionAssistant200Response interface.
+	 */
+	function instanceOfChatCompletionAssistant200Response(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ChatCompletionAssistant200Response.instanceOfChatCompletionAssistant200Response = instanceOfChatCompletionAssistant200Response;
+	function ChatCompletionAssistant200ResponseFromJSON(json) {
+	    return ChatCompletionAssistant200ResponseFromJSONTyped(json);
+	}
+	ChatCompletionAssistant200Response.ChatCompletionAssistant200ResponseFromJSON = ChatCompletionAssistant200ResponseFromJSON;
+	function ChatCompletionAssistant200ResponseFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'id': !(0, runtime_1.exists)(json, 'id') ? undefined : json['id'],
+	        'choices': !(0, runtime_1.exists)(json, 'choices') ? undefined : (json['choices'].map(ChatCompletionAssistant200ResponseChoicesInner_1.ChatCompletionAssistant200ResponseChoicesInnerFromJSON)),
+	        'model': !(0, runtime_1.exists)(json, 'model') ? undefined : json['model'],
+	    };
+	}
+	ChatCompletionAssistant200Response.ChatCompletionAssistant200ResponseFromJSONTyped = ChatCompletionAssistant200ResponseFromJSONTyped;
+	function ChatCompletionAssistant200ResponseToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'id': value.id,
+	        'choices': value.choices === undefined ? undefined : (value.choices.map(ChatCompletionAssistant200ResponseChoicesInner_1.ChatCompletionAssistant200ResponseChoicesInnerToJSON)),
+	        'model': value.model,
+	    };
+	}
+	ChatCompletionAssistant200Response.ChatCompletionAssistant200ResponseToJSON = ChatCompletionAssistant200ResponseToJSON;
+	
+	return ChatCompletionAssistant200Response;
+}
+
+var ChatCompletionModel = {};
+
+var ChoiceModel = {};
+
+var hasRequiredChoiceModel;
+
+function requireChoiceModel () {
+	if (hasRequiredChoiceModel) return ChoiceModel;
+	hasRequiredChoiceModel = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ChoiceModel, "__esModule", { value: true });
+	ChoiceModel.ChoiceModelToJSON = ChoiceModel.ChoiceModelFromJSONTyped = ChoiceModel.ChoiceModelFromJSON = ChoiceModel.instanceOfChoiceModel = ChoiceModel.ChoiceModelFinishReasonEnum = void 0;
+	const runtime_1 = requireRuntime();
+	const MessageModel_1 = requireMessageModel();
+	/**
+	 * @export
+	 */
+	ChoiceModel.ChoiceModelFinishReasonEnum = {
+	    Stop: 'stop',
+	    Length: 'length',
+	    ContentFilter: 'content_filter',
+	    FunctionCall: 'function_call'
+	};
+	/**
+	 * Check if a given object implements the ChoiceModel interface.
+	 */
+	function instanceOfChoiceModel(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ChoiceModel.instanceOfChoiceModel = instanceOfChoiceModel;
+	function ChoiceModelFromJSON(json) {
+	    return ChoiceModelFromJSONTyped(json);
+	}
+	ChoiceModel.ChoiceModelFromJSON = ChoiceModelFromJSON;
+	function ChoiceModelFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'finishReason': !(0, runtime_1.exists)(json, 'finish_reason') ? undefined : json['finish_reason'],
+	        'index': !(0, runtime_1.exists)(json, 'index') ? undefined : json['index'],
+	        'message': !(0, runtime_1.exists)(json, 'message') ? undefined : (0, MessageModel_1.MessageModelFromJSON)(json['message']),
+	    };
+	}
+	ChoiceModel.ChoiceModelFromJSONTyped = ChoiceModelFromJSONTyped;
+	function ChoiceModelToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'finish_reason': value.finishReason,
+	        'index': value.index,
+	        'message': (0, MessageModel_1.MessageModelToJSON)(value.message),
+	    };
+	}
+	ChoiceModel.ChoiceModelToJSON = ChoiceModelToJSON;
+	
+	return ChoiceModel;
+}
+
+var UsageModel = {};
+
+var hasRequiredUsageModel;
+
+function requireUsageModel () {
+	if (hasRequiredUsageModel) return UsageModel;
+	hasRequiredUsageModel = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(UsageModel, "__esModule", { value: true });
+	UsageModel.UsageModelToJSON = UsageModel.UsageModelFromJSONTyped = UsageModel.UsageModelFromJSON = UsageModel.instanceOfUsageModel = void 0;
+	const runtime_1 = requireRuntime();
+	/**
+	 * Check if a given object implements the UsageModel interface.
+	 */
+	function instanceOfUsageModel(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	UsageModel.instanceOfUsageModel = instanceOfUsageModel;
+	function UsageModelFromJSON(json) {
+	    return UsageModelFromJSONTyped(json);
+	}
+	UsageModel.UsageModelFromJSON = UsageModelFromJSON;
+	function UsageModelFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'promptTokens': !(0, runtime_1.exists)(json, 'prompt_tokens') ? undefined : json['prompt_tokens'],
+	        'completionTokens': !(0, runtime_1.exists)(json, 'completion_tokens') ? undefined : json['completion_tokens'],
+	        'totalTokens': !(0, runtime_1.exists)(json, 'total_tokens') ? undefined : json['total_tokens'],
+	    };
+	}
+	UsageModel.UsageModelFromJSONTyped = UsageModelFromJSONTyped;
+	function UsageModelToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'prompt_tokens': value.promptTokens,
+	        'completion_tokens': value.completionTokens,
+	        'total_tokens': value.totalTokens,
+	    };
+	}
+	UsageModel.UsageModelToJSON = UsageModelToJSON;
+	
+	return UsageModel;
+}
+
+var hasRequiredChatCompletionModel;
+
+function requireChatCompletionModel () {
+	if (hasRequiredChatCompletionModel) return ChatCompletionModel;
+	hasRequiredChatCompletionModel = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ChatCompletionModel, "__esModule", { value: true });
+	ChatCompletionModel.ChatCompletionModelToJSON = ChatCompletionModel.ChatCompletionModelFromJSONTyped = ChatCompletionModel.ChatCompletionModelFromJSON = ChatCompletionModel.instanceOfChatCompletionModel = void 0;
+	const runtime_1 = requireRuntime();
+	const ChoiceModel_1 = requireChoiceModel();
+	const UsageModel_1 = requireUsageModel();
+	/**
+	 * Check if a given object implements the ChatCompletionModel interface.
+	 */
+	function instanceOfChatCompletionModel(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ChatCompletionModel.instanceOfChatCompletionModel = instanceOfChatCompletionModel;
+	function ChatCompletionModelFromJSON(json) {
+	    return ChatCompletionModelFromJSONTyped(json);
+	}
+	ChatCompletionModel.ChatCompletionModelFromJSON = ChatCompletionModelFromJSON;
+	function ChatCompletionModelFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'id': !(0, runtime_1.exists)(json, 'id') ? undefined : json['id'],
+	        'choices': !(0, runtime_1.exists)(json, 'choices') ? undefined : (json['choices'].map(ChoiceModel_1.ChoiceModelFromJSON)),
+	        'model': !(0, runtime_1.exists)(json, 'model') ? undefined : json['model'],
+	        'usage': !(0, runtime_1.exists)(json, 'usage') ? undefined : (0, UsageModel_1.UsageModelFromJSON)(json['usage']),
+	    };
+	}
+	ChatCompletionModel.ChatCompletionModelFromJSONTyped = ChatCompletionModelFromJSONTyped;
+	function ChatCompletionModelToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'id': value.id,
+	        'choices': value.choices === undefined ? undefined : (value.choices.map(ChoiceModel_1.ChoiceModelToJSON)),
+	        'model': value.model,
+	        'usage': (0, UsageModel_1.UsageModelToJSON)(value.usage),
+	    };
+	}
+	ChatCompletionModel.ChatCompletionModelToJSON = ChatCompletionModelToJSON;
+	
+	return ChatCompletionModel;
+}
+
+var ChatModel = {};
+
+var CitationModel = {};
+
+var ReferenceModel = {};
+
+var HighlightModel = {};
+
+var hasRequiredHighlightModel;
+
+function requireHighlightModel () {
+	if (hasRequiredHighlightModel) return HighlightModel;
+	hasRequiredHighlightModel = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(HighlightModel, "__esModule", { value: true });
+	HighlightModel.HighlightModelToJSON = HighlightModel.HighlightModelFromJSONTyped = HighlightModel.HighlightModelFromJSON = HighlightModel.instanceOfHighlightModel = void 0;
+	/**
+	 * Check if a given object implements the HighlightModel interface.
+	 */
+	function instanceOfHighlightModel(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "type" in value;
+	    isInstance = isInstance && "content" in value;
+	    return isInstance;
+	}
+	HighlightModel.instanceOfHighlightModel = instanceOfHighlightModel;
+	function HighlightModelFromJSON(json) {
+	    return HighlightModelFromJSONTyped(json);
+	}
+	HighlightModel.HighlightModelFromJSON = HighlightModelFromJSON;
+	function HighlightModelFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'type': json['type'],
+	        'content': json['content'],
+	    };
+	}
+	HighlightModel.HighlightModelFromJSONTyped = HighlightModelFromJSONTyped;
+	function HighlightModelToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'type': value.type,
+	        'content': value.content,
+	    };
+	}
+	HighlightModel.HighlightModelToJSON = HighlightModelToJSON;
+	
+	return HighlightModel;
+}
+
+var hasRequiredReferenceModel;
+
+function requireReferenceModel () {
+	if (hasRequiredReferenceModel) return ReferenceModel;
+	hasRequiredReferenceModel = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ReferenceModel, "__esModule", { value: true });
+	ReferenceModel.ReferenceModelToJSON = ReferenceModel.ReferenceModelFromJSONTyped = ReferenceModel.ReferenceModelFromJSON = ReferenceModel.instanceOfReferenceModel = void 0;
+	const runtime_1 = requireRuntime();
+	const AssistantFileModel_1 = requireAssistantFileModel();
+	const HighlightModel_1 = requireHighlightModel();
+	/**
+	 * Check if a given object implements the ReferenceModel interface.
+	 */
+	function instanceOfReferenceModel(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ReferenceModel.instanceOfReferenceModel = instanceOfReferenceModel;
+	function ReferenceModelFromJSON(json) {
+	    return ReferenceModelFromJSONTyped(json);
+	}
+	ReferenceModel.ReferenceModelFromJSON = ReferenceModelFromJSON;
+	function ReferenceModelFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'file': !(0, runtime_1.exists)(json, 'file') ? undefined : (0, AssistantFileModel_1.AssistantFileModelFromJSON)(json['file']),
+	        'pages': !(0, runtime_1.exists)(json, 'pages') ? undefined : json['pages'],
+	        'highlight': !(0, runtime_1.exists)(json, 'highlight') ? undefined : (0, HighlightModel_1.HighlightModelFromJSON)(json['highlight']),
+	    };
+	}
+	ReferenceModel.ReferenceModelFromJSONTyped = ReferenceModelFromJSONTyped;
+	function ReferenceModelToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'file': (0, AssistantFileModel_1.AssistantFileModelToJSON)(value.file),
+	        'pages': value.pages,
+	        'highlight': (0, HighlightModel_1.HighlightModelToJSON)(value.highlight),
+	    };
+	}
+	ReferenceModel.ReferenceModelToJSON = ReferenceModelToJSON;
+	
+	return ReferenceModel;
+}
+
+var hasRequiredCitationModel;
+
+function requireCitationModel () {
+	if (hasRequiredCitationModel) return CitationModel;
+	hasRequiredCitationModel = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(CitationModel, "__esModule", { value: true });
+	CitationModel.CitationModelToJSON = CitationModel.CitationModelFromJSONTyped = CitationModel.CitationModelFromJSON = CitationModel.instanceOfCitationModel = void 0;
+	const runtime_1 = requireRuntime();
+	const ReferenceModel_1 = requireReferenceModel();
+	/**
+	 * Check if a given object implements the CitationModel interface.
+	 */
+	function instanceOfCitationModel(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	CitationModel.instanceOfCitationModel = instanceOfCitationModel;
+	function CitationModelFromJSON(json) {
+	    return CitationModelFromJSONTyped(json);
+	}
+	CitationModel.CitationModelFromJSON = CitationModelFromJSON;
+	function CitationModelFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'position': !(0, runtime_1.exists)(json, 'position') ? undefined : json['position'],
+	        'references': !(0, runtime_1.exists)(json, 'references') ? undefined : (json['references'].map(ReferenceModel_1.ReferenceModelFromJSON)),
+	    };
+	}
+	CitationModel.CitationModelFromJSONTyped = CitationModelFromJSONTyped;
+	function CitationModelToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'position': value.position,
+	        'references': value.references === undefined ? undefined : (value.references.map(ReferenceModel_1.ReferenceModelToJSON)),
+	    };
+	}
+	CitationModel.CitationModelToJSON = CitationModelToJSON;
+	
+	return CitationModel;
+}
+
+var hasRequiredChatModel;
+
+function requireChatModel () {
+	if (hasRequiredChatModel) return ChatModel;
+	hasRequiredChatModel = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ChatModel, "__esModule", { value: true });
+	ChatModel.ChatModelToJSON = ChatModel.ChatModelFromJSONTyped = ChatModel.ChatModelFromJSON = ChatModel.instanceOfChatModel = ChatModel.ChatModelFinishReasonEnum = void 0;
+	const runtime_1 = requireRuntime();
+	const CitationModel_1 = requireCitationModel();
+	const MessageModel_1 = requireMessageModel();
+	const UsageModel_1 = requireUsageModel();
+	/**
+	 * @export
+	 */
+	ChatModel.ChatModelFinishReasonEnum = {
+	    Stop: 'stop',
+	    Length: 'length',
+	    ContentFilter: 'content_filter',
+	    FunctionCall: 'function_call'
+	};
+	/**
+	 * Check if a given object implements the ChatModel interface.
+	 */
+	function instanceOfChatModel(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ChatModel.instanceOfChatModel = instanceOfChatModel;
+	function ChatModelFromJSON(json) {
+	    return ChatModelFromJSONTyped(json);
+	}
+	ChatModel.ChatModelFromJSON = ChatModelFromJSON;
+	function ChatModelFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'id': !(0, runtime_1.exists)(json, 'id') ? undefined : json['id'],
+	        'finishReason': !(0, runtime_1.exists)(json, 'finish_reason') ? undefined : json['finish_reason'],
+	        'message': !(0, runtime_1.exists)(json, 'message') ? undefined : (0, MessageModel_1.MessageModelFromJSON)(json['message']),
+	        'model': !(0, runtime_1.exists)(json, 'model') ? undefined : json['model'],
+	        'citations': !(0, runtime_1.exists)(json, 'citations') ? undefined : (json['citations'].map(CitationModel_1.CitationModelFromJSON)),
+	        'usage': !(0, runtime_1.exists)(json, 'usage') ? undefined : (0, UsageModel_1.UsageModelFromJSON)(json['usage']),
+	    };
+	}
+	ChatModel.ChatModelFromJSONTyped = ChatModelFromJSONTyped;
+	function ChatModelToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'id': value.id,
+	        'finish_reason': value.finishReason,
+	        'message': (0, MessageModel_1.MessageModelToJSON)(value.message),
+	        'model': value.model,
+	        'citations': value.citations === undefined ? undefined : (value.citations.map(CitationModel_1.CitationModelToJSON)),
+	        'usage': (0, UsageModel_1.UsageModelToJSON)(value.usage),
+	    };
+	}
+	ChatModel.ChatModelToJSON = ChatModelToJSON;
+	
+	return ChatModel;
+}
+
+var ContextModel = {};
+
+var SnippetModel = {};
+
+var hasRequiredSnippetModel;
+
+function requireSnippetModel () {
+	if (hasRequiredSnippetModel) return SnippetModel;
+	hasRequiredSnippetModel = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(SnippetModel, "__esModule", { value: true });
+	SnippetModel.SnippetModelToJSON = SnippetModel.SnippetModelFromJSONTyped = SnippetModel.SnippetModelFromJSON = SnippetModel.instanceOfSnippetModel = SnippetModel.SnippetModelTypeEnum = void 0;
+	const runtime_1 = requireRuntime();
+	/**
+	 * @export
+	 */
+	SnippetModel.SnippetModelTypeEnum = {
+	    Text: 'text'
+	};
+	/**
+	 * Check if a given object implements the SnippetModel interface.
+	 */
+	function instanceOfSnippetModel(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "content" in value;
+	    isInstance = isInstance && "score" in value;
+	    isInstance = isInstance && "reference" in value;
+	    return isInstance;
+	}
+	SnippetModel.instanceOfSnippetModel = instanceOfSnippetModel;
+	function SnippetModelFromJSON(json) {
+	    return SnippetModelFromJSONTyped(json);
+	}
+	SnippetModel.SnippetModelFromJSON = SnippetModelFromJSON;
+	function SnippetModelFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'type': !(0, runtime_1.exists)(json, 'type') ? undefined : json['type'],
+	        'content': json['content'],
+	        'score': json['score'],
+	        'reference': json['reference'],
+	    };
+	}
+	SnippetModel.SnippetModelFromJSONTyped = SnippetModelFromJSONTyped;
+	function SnippetModelToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'type': value.type,
+	        'content': value.content,
+	        'score': value.score,
+	        'reference': value.reference,
+	    };
+	}
+	SnippetModel.SnippetModelToJSON = SnippetModelToJSON;
+	
+	return SnippetModel;
+}
+
+var hasRequiredContextModel;
+
+function requireContextModel () {
+	if (hasRequiredContextModel) return ContextModel;
+	hasRequiredContextModel = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ContextModel, "__esModule", { value: true });
+	ContextModel.ContextModelToJSON = ContextModel.ContextModelFromJSONTyped = ContextModel.ContextModelFromJSON = ContextModel.instanceOfContextModel = void 0;
+	const runtime_1 = requireRuntime();
+	const SnippetModel_1 = requireSnippetModel();
+	const UsageModel_1 = requireUsageModel();
+	/**
+	 * Check if a given object implements the ContextModel interface.
+	 */
+	function instanceOfContextModel(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "snippets" in value;
+	    isInstance = isInstance && "usage" in value;
+	    return isInstance;
+	}
+	ContextModel.instanceOfContextModel = instanceOfContextModel;
+	function ContextModelFromJSON(json) {
+	    return ContextModelFromJSONTyped(json);
+	}
+	ContextModel.ContextModelFromJSON = ContextModelFromJSON;
+	function ContextModelFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'id': !(0, runtime_1.exists)(json, 'id') ? undefined : json['id'],
+	        'snippets': (json['snippets'].map(SnippetModel_1.SnippetModelFromJSON)),
+	        'usage': (0, UsageModel_1.UsageModelFromJSON)(json['usage']),
+	    };
+	}
+	ContextModel.ContextModelFromJSONTyped = ContextModelFromJSONTyped;
+	function ContextModelToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'id': value.id,
+	        'snippets': (value.snippets.map(SnippetModel_1.SnippetModelToJSON)),
+	        'usage': (0, UsageModel_1.UsageModelToJSON)(value.usage),
+	    };
+	}
+	ContextModel.ContextModelToJSON = ContextModelToJSON;
+	
+	return ContextModel;
+}
+
+var ContextRequest = {};
+
+var hasRequiredContextRequest;
+
+function requireContextRequest () {
+	if (hasRequiredContextRequest) return ContextRequest;
+	hasRequiredContextRequest = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ContextRequest, "__esModule", { value: true });
+	ContextRequest.ContextRequestToJSON = ContextRequest.ContextRequestFromJSONTyped = ContextRequest.ContextRequestFromJSON = ContextRequest.instanceOfContextRequest = void 0;
+	const runtime_1 = requireRuntime();
+	const MessageModel_1 = requireMessageModel();
+	/**
+	 * Check if a given object implements the ContextRequest interface.
+	 */
+	function instanceOfContextRequest(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ContextRequest.instanceOfContextRequest = instanceOfContextRequest;
+	function ContextRequestFromJSON(json) {
+	    return ContextRequestFromJSONTyped(json);
+	}
+	ContextRequest.ContextRequestFromJSON = ContextRequestFromJSON;
+	function ContextRequestFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'query': !(0, runtime_1.exists)(json, 'query') ? undefined : json['query'],
+	        'filter': !(0, runtime_1.exists)(json, 'filter') ? undefined : json['filter'],
+	        'messages': !(0, runtime_1.exists)(json, 'messages') ? undefined : (json['messages'].map(MessageModel_1.MessageModelFromJSON)),
+	        'topK': !(0, runtime_1.exists)(json, 'top_k') ? undefined : json['top_k'],
+	        'snippetSize': !(0, runtime_1.exists)(json, 'snippet_size') ? undefined : json['snippet_size'],
+	    };
+	}
+	ContextRequest.ContextRequestFromJSONTyped = ContextRequestFromJSONTyped;
+	function ContextRequestToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'query': value.query,
+	        'filter': value.filter,
+	        'messages': value.messages === undefined ? undefined : (value.messages.map(MessageModel_1.MessageModelToJSON)),
+	        'top_k': value.topK,
+	        'snippet_size': value.snippetSize,
+	    };
+	}
+	ContextRequest.ContextRequestToJSON = ContextRequestToJSON;
+	
+	return ContextRequest;
+}
+
+var ErrorResponse = {};
+
+var ErrorResponseError = {};
+
+var hasRequiredErrorResponseError;
+
+function requireErrorResponseError () {
+	if (hasRequiredErrorResponseError) return ErrorResponseError;
+	hasRequiredErrorResponseError = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ErrorResponseError, "__esModule", { value: true });
+	ErrorResponseError.ErrorResponseErrorToJSON = ErrorResponseError.ErrorResponseErrorFromJSONTyped = ErrorResponseError.ErrorResponseErrorFromJSON = ErrorResponseError.instanceOfErrorResponseError = ErrorResponseError.ErrorResponseErrorCodeEnum = void 0;
+	const runtime_1 = requireRuntime();
+	/**
+	 * @export
+	 */
+	ErrorResponseError.ErrorResponseErrorCodeEnum = {
+	    Ok: 'OK',
+	    Unknown: 'UNKNOWN',
+	    InvalidArgument: 'INVALID_ARGUMENT',
+	    DeadlineExceeded: 'DEADLINE_EXCEEDED',
+	    QuotaExceeded: 'QUOTA_EXCEEDED',
+	    NotFound: 'NOT_FOUND',
+	    AlreadyExists: 'ALREADY_EXISTS',
+	    PermissionDenied: 'PERMISSION_DENIED',
+	    Unauthenticated: 'UNAUTHENTICATED',
+	    ResourceExhausted: 'RESOURCE_EXHAUSTED',
+	    FailedPrecondition: 'FAILED_PRECONDITION',
+	    Aborted: 'ABORTED',
+	    OutOfRange: 'OUT_OF_RANGE',
+	    Unimplemented: 'UNIMPLEMENTED',
+	    Internal: 'INTERNAL',
+	    Unavailable: 'UNAVAILABLE',
+	    DataLoss: 'DATA_LOSS',
+	    Forbidden: 'FORBIDDEN'
+	};
+	/**
+	 * Check if a given object implements the ErrorResponseError interface.
+	 */
+	function instanceOfErrorResponseError(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "code" in value;
+	    isInstance = isInstance && "message" in value;
+	    return isInstance;
+	}
+	ErrorResponseError.instanceOfErrorResponseError = instanceOfErrorResponseError;
+	function ErrorResponseErrorFromJSON(json) {
+	    return ErrorResponseErrorFromJSONTyped(json);
+	}
+	ErrorResponseError.ErrorResponseErrorFromJSON = ErrorResponseErrorFromJSON;
+	function ErrorResponseErrorFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'code': json['code'],
+	        'message': json['message'],
+	        'details': !(0, runtime_1.exists)(json, 'details') ? undefined : json['details'],
+	    };
+	}
+	ErrorResponseError.ErrorResponseErrorFromJSONTyped = ErrorResponseErrorFromJSONTyped;
+	function ErrorResponseErrorToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'code': value.code,
+	        'message': value.message,
+	        'details': value.details,
+	    };
+	}
+	ErrorResponseError.ErrorResponseErrorToJSON = ErrorResponseErrorToJSON;
+	
+	return ErrorResponseError;
+}
+
+var hasRequiredErrorResponse;
+
+function requireErrorResponse () {
+	if (hasRequiredErrorResponse) return ErrorResponse;
+	hasRequiredErrorResponse = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ErrorResponse, "__esModule", { value: true });
+	ErrorResponse.ErrorResponseToJSON = ErrorResponse.ErrorResponseFromJSONTyped = ErrorResponse.ErrorResponseFromJSON = ErrorResponse.instanceOfErrorResponse = void 0;
+	const ErrorResponseError_1 = requireErrorResponseError();
+	/**
+	 * Check if a given object implements the ErrorResponse interface.
+	 */
+	function instanceOfErrorResponse(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "status" in value;
+	    isInstance = isInstance && "error" in value;
+	    return isInstance;
+	}
+	ErrorResponse.instanceOfErrorResponse = instanceOfErrorResponse;
+	function ErrorResponseFromJSON(json) {
+	    return ErrorResponseFromJSONTyped(json);
+	}
+	ErrorResponse.ErrorResponseFromJSON = ErrorResponseFromJSON;
+	function ErrorResponseFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'status': json['status'],
+	        'error': (0, ErrorResponseError_1.ErrorResponseErrorFromJSON)(json['error']),
+	    };
+	}
+	ErrorResponse.ErrorResponseFromJSONTyped = ErrorResponseFromJSONTyped;
+	function ErrorResponseToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'status': value.status,
+	        'error': (0, ErrorResponseError_1.ErrorResponseErrorToJSON)(value.error),
+	    };
+	}
+	ErrorResponse.ErrorResponseToJSON = ErrorResponseToJSON;
+	
+	return ErrorResponse;
+}
+
+var ListFiles200Response = {};
+
+var hasRequiredListFiles200Response;
+
+function requireListFiles200Response () {
+	if (hasRequiredListFiles200Response) return ListFiles200Response;
+	hasRequiredListFiles200Response = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(ListFiles200Response, "__esModule", { value: true });
+	ListFiles200Response.ListFiles200ResponseToJSON = ListFiles200Response.ListFiles200ResponseFromJSONTyped = ListFiles200Response.ListFiles200ResponseFromJSON = ListFiles200Response.instanceOfListFiles200Response = void 0;
+	const runtime_1 = requireRuntime();
+	const AssistantFileModel_1 = requireAssistantFileModel();
+	/**
+	 * Check if a given object implements the ListFiles200Response interface.
+	 */
+	function instanceOfListFiles200Response(value) {
+	    let isInstance = true;
+	    return isInstance;
+	}
+	ListFiles200Response.instanceOfListFiles200Response = instanceOfListFiles200Response;
+	function ListFiles200ResponseFromJSON(json) {
+	    return ListFiles200ResponseFromJSONTyped(json);
+	}
+	ListFiles200Response.ListFiles200ResponseFromJSON = ListFiles200ResponseFromJSON;
+	function ListFiles200ResponseFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'files': !(0, runtime_1.exists)(json, 'files') ? undefined : (json['files'].map(AssistantFileModel_1.AssistantFileModelFromJSON)),
+	    };
+	}
+	ListFiles200Response.ListFiles200ResponseFromJSONTyped = ListFiles200ResponseFromJSONTyped;
+	function ListFiles200ResponseToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'files': value.files === undefined ? undefined : (value.files.map(AssistantFileModel_1.AssistantFileModelToJSON)),
+	    };
+	}
+	ListFiles200Response.ListFiles200ResponseToJSON = ListFiles200ResponseToJSON;
+	
+	return ListFiles200Response;
+}
+
+var SearchCompletions = {};
+
+var hasRequiredSearchCompletions;
+
+function requireSearchCompletions () {
+	if (hasRequiredSearchCompletions) return SearchCompletions;
+	hasRequiredSearchCompletions = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	Object.defineProperty(SearchCompletions, "__esModule", { value: true });
+	SearchCompletions.SearchCompletionsToJSON = SearchCompletions.SearchCompletionsFromJSONTyped = SearchCompletions.SearchCompletionsFromJSON = SearchCompletions.instanceOfSearchCompletions = SearchCompletions.SearchCompletionsModelEnum = void 0;
+	const runtime_1 = requireRuntime();
+	const MessageModel_1 = requireMessageModel();
+	/**
+	 * @export
+	 */
+	SearchCompletions.SearchCompletionsModelEnum = {
+	    Gpt4o: 'gpt-4o',
+	    Gpt41: 'gpt-4.1',
+	    O4Mini: 'o4-mini',
+	    Claude35Sonnet: 'claude-3-5-sonnet',
+	    Claude37Sonnet: 'claude-3-7-sonnet',
+	    Gemini25Pro: 'gemini-2.5-pro'
+	};
+	/**
+	 * Check if a given object implements the SearchCompletions interface.
+	 */
+	function instanceOfSearchCompletions(value) {
+	    let isInstance = true;
+	    isInstance = isInstance && "messages" in value;
+	    return isInstance;
+	}
+	SearchCompletions.instanceOfSearchCompletions = instanceOfSearchCompletions;
+	function SearchCompletionsFromJSON(json) {
+	    return SearchCompletionsFromJSONTyped(json);
+	}
+	SearchCompletions.SearchCompletionsFromJSON = SearchCompletionsFromJSON;
+	function SearchCompletionsFromJSONTyped(json, ignoreDiscriminator) {
+	    if ((json === undefined) || (json === null)) {
+	        return json;
+	    }
+	    return {
+	        'messages': (json['messages'].map(MessageModel_1.MessageModelFromJSON)),
+	        'stream': !(0, runtime_1.exists)(json, 'stream') ? undefined : json['stream'],
+	        'model': !(0, runtime_1.exists)(json, 'model') ? undefined : json['model'],
+	        'temperature': !(0, runtime_1.exists)(json, 'temperature') ? undefined : json['temperature'],
+	        'filter': !(0, runtime_1.exists)(json, 'filter') ? undefined : json['filter'],
+	    };
+	}
+	SearchCompletions.SearchCompletionsFromJSONTyped = SearchCompletionsFromJSONTyped;
+	function SearchCompletionsToJSON(value) {
+	    if (value === undefined) {
+	        return undefined;
+	    }
+	    if (value === null) {
+	        return null;
+	    }
+	    return {
+	        'messages': (value.messages.map(MessageModel_1.MessageModelToJSON)),
+	        'stream': value.stream,
+	        'model': value.model,
+	        'temperature': value.temperature,
+	        'filter': value.filter,
+	    };
+	}
+	SearchCompletions.SearchCompletionsToJSON = SearchCompletionsToJSON;
+	
+	return SearchCompletions;
+}
+
+var hasRequiredModels;
+
+function requireModels () {
+	if (hasRequiredModels) return models;
+	hasRequiredModels = 1;
+	(function (exports) {
+		var __createBinding = (models && models.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    var desc = Object.getOwnPropertyDescriptor(m, k);
+		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+		      desc = { enumerable: true, get: function() { return m[k]; } };
+		    }
+		    Object.defineProperty(o, k2, desc);
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __exportStar = (models && models.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		/* tslint:disable */
+		/* eslint-disable */
+		__exportStar(requireAssistantFileModel(), exports);
+		__exportStar(requireChat$1(), exports);
+		__exportStar(requireChatCompletionAssistant200Response(), exports);
+		__exportStar(requireChatCompletionAssistant200ResponseChoicesInner(), exports);
+		__exportStar(requireChatCompletionAssistant200ResponseChoicesInnerDelta(), exports);
+		__exportStar(requireChatCompletionModel(), exports);
+		__exportStar(requireChatModel(), exports);
+		__exportStar(requireChoiceModel(), exports);
+		__exportStar(requireCitationModel(), exports);
+		__exportStar(requireContextModel(), exports);
+		__exportStar(requireContextOptionsModel(), exports);
+		__exportStar(requireContextRequest(), exports);
+		__exportStar(requireErrorResponse(), exports);
+		__exportStar(requireErrorResponseError(), exports);
+		__exportStar(requireHighlightModel(), exports);
+		__exportStar(requireListFiles200Response(), exports);
+		__exportStar(requireMessageModel(), exports);
+		__exportStar(requireReferenceModel(), exports);
+		__exportStar(requireSearchCompletions(), exports);
+		__exportStar(requireSnippetModel(), exports);
+		__exportStar(requireUsageModel(), exports);
+		
+	} (models));
+	return models;
+}
+
+var hasRequiredManageAssistantsApi;
+
+function requireManageAssistantsApi () {
+	if (hasRequiredManageAssistantsApi) return ManageAssistantsApi;
+	hasRequiredManageAssistantsApi = 1;
+	/* tslint:disable */
+	/* eslint-disable */
+	/**
+	 * Pinecone Assistant Data Plane API
+	 * Pinecone Assistant Engine is a context engine to store and retrieve relevant knowledge from millions of documents at scale. This API supports interactions with assistants.
+	 *
+	 * The version of the OpenAPI document: 2025-04
+	 * Contact: support@pinecone.io
+	 *
+	 * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+	 * https://openapi-generator.tech
+	 * Do not edit the class manually.
+	 */
+	var __createBinding = (ManageAssistantsApi && ManageAssistantsApi.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    var desc = Object.getOwnPropertyDescriptor(m, k);
+	    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+	      desc = { enumerable: true, get: function() { return m[k]; } };
+	    }
+	    Object.defineProperty(o, k2, desc);
+	}) : (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    o[k2] = m[k];
+	}));
+	var __setModuleDefault = (ManageAssistantsApi && ManageAssistantsApi.__setModuleDefault) || (Object.create ? (function(o, v) {
+	    Object.defineProperty(o, "default", { enumerable: true, value: v });
+	}) : function(o, v) {
+	    o["default"] = v;
+	});
+	var __importStar = (ManageAssistantsApi && ManageAssistantsApi.__importStar) || function (mod) {
+	    if (mod && mod.__esModule) return mod;
+	    var result = {};
+	    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+	    __setModuleDefault(result, mod);
+	    return result;
+	};
+	Object.defineProperty(ManageAssistantsApi, "__esModule", { value: true });
+	ManageAssistantsApi.DescribeFileIncludeUrlEnum = ManageAssistantsApi.ManageAssistantsApi = void 0;
+	const runtime = __importStar(requireRuntime());
+	const index_1 = requireModels();
+	/**
+	 *
+	 */
+	let ManageAssistantsApi$1 = class ManageAssistantsApi extends runtime.BaseAPI {
+	    /**
+	     * Chat with an assistant and get back citations in structured form.   This is the recommended way to chat with an assistant, as it offers more functionality and control over the assistant\'s responses and references than the OpenAI-compatible chat interface.  For guidance and examples, see [Chat with an assistant](https://docs.pinecone.io/guides/assistant/chat-with-assistant).
+	     * Chat with an assistant
+	     */
+	    async chatAssistantRaw(requestParameters, initOverrides) {
+	        if (requestParameters.assistantName === null || requestParameters.assistantName === undefined) {
+	            throw new runtime.RequiredError('assistantName', 'Required parameter requestParameters.assistantName was null or undefined when calling chatAssistant.');
+	        }
+	        if (requestParameters.chat === null || requestParameters.chat === undefined) {
+	            throw new runtime.RequiredError('chat', 'Required parameter requestParameters.chat was null or undefined when calling chatAssistant.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/json';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/chat/{assistant_name}`.replace(`{${"assistant_name"}}`, encodeURIComponent(String(requestParameters.assistantName))),
+	            method: 'POST',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: (0, index_1.ChatToJSON)(requestParameters.chat),
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.ChatModelFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Chat with an assistant and get back citations in structured form.   This is the recommended way to chat with an assistant, as it offers more functionality and control over the assistant\'s responses and references than the OpenAI-compatible chat interface.  For guidance and examples, see [Chat with an assistant](https://docs.pinecone.io/guides/assistant/chat-with-assistant).
+	     * Chat with an assistant
+	     */
+	    async chatAssistant(requestParameters, initOverrides) {
+	        const response = await this.chatAssistantRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Chat with an assistant. This endpoint is based on the OpenAI Chat Completion API, a commonly used and adopted API.   It is useful if you need inline citations or OpenAI-compatible responses, but has limited functionality compared to the standard chat interface.  For guidance and examples, see [Chat with an assistant](https://docs.pinecone.io/guides/assistant/chat-with-assistant).
+	     * Chat through an OpenAI-compatible interface
+	     */
+	    async chatCompletionAssistantRaw(requestParameters, initOverrides) {
+	        if (requestParameters.assistantName === null || requestParameters.assistantName === undefined) {
+	            throw new runtime.RequiredError('assistantName', 'Required parameter requestParameters.assistantName was null or undefined when calling chatCompletionAssistant.');
+	        }
+	        if (requestParameters.searchCompletions === null || requestParameters.searchCompletions === undefined) {
+	            throw new runtime.RequiredError('searchCompletions', 'Required parameter requestParameters.searchCompletions was null or undefined when calling chatCompletionAssistant.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/json';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/chat/{assistant_name}/chat/completions`.replace(`{${"assistant_name"}}`, encodeURIComponent(String(requestParameters.assistantName))),
+	            method: 'POST',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: (0, index_1.SearchCompletionsToJSON)(requestParameters.searchCompletions),
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.ChatCompletionModelFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Chat with an assistant. This endpoint is based on the OpenAI Chat Completion API, a commonly used and adopted API.   It is useful if you need inline citations or OpenAI-compatible responses, but has limited functionality compared to the standard chat interface.  For guidance and examples, see [Chat with an assistant](https://docs.pinecone.io/guides/assistant/chat-with-assistant).
+	     * Chat through an OpenAI-compatible interface
+	     */
+	    async chatCompletionAssistant(requestParameters, initOverrides) {
+	        const response = await this.chatCompletionAssistantRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Retrieve context snippets from an assistant to use as part of RAG or any agentic flow.  For guidance and examples, see [Retrieve context snippets](https://docs.pinecone.io/guides/assistant/retrieve-context-snippets).
+	     * Retrieve context from an assistant
+	     */
+	    async contextAssistantRaw(requestParameters, initOverrides) {
+	        if (requestParameters.assistantName === null || requestParameters.assistantName === undefined) {
+	            throw new runtime.RequiredError('assistantName', 'Required parameter requestParameters.assistantName was null or undefined when calling contextAssistant.');
+	        }
+	        if (requestParameters.contextRequest === null || requestParameters.contextRequest === undefined) {
+	            throw new runtime.RequiredError('contextRequest', 'Required parameter requestParameters.contextRequest was null or undefined when calling contextAssistant.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        headerParameters['Content-Type'] = 'application/json';
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/chat/{assistant_name}/context`.replace(`{${"assistant_name"}}`, encodeURIComponent(String(requestParameters.assistantName))),
+	            method: 'POST',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: (0, index_1.ContextRequestToJSON)(requestParameters.contextRequest),
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.ContextModelFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Retrieve context snippets from an assistant to use as part of RAG or any agentic flow.  For guidance and examples, see [Retrieve context snippets](https://docs.pinecone.io/guides/assistant/retrieve-context-snippets).
+	     * Retrieve context from an assistant
+	     */
+	    async contextAssistant(requestParameters, initOverrides) {
+	        const response = await this.contextAssistantRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Delete an uploaded file from an assistant.  For guidance and examples, see [Manage files](https://docs.pinecone.io/guides/assistant/manage-files#delete-a-file).
+	     * Delete an uploaded file
+	     */
+	    async deleteFileRaw(requestParameters, initOverrides) {
+	        if (requestParameters.assistantName === null || requestParameters.assistantName === undefined) {
+	            throw new runtime.RequiredError('assistantName', 'Required parameter requestParameters.assistantName was null or undefined when calling deleteFile.');
+	        }
+	        if (requestParameters.assistantFileId === null || requestParameters.assistantFileId === undefined) {
+	            throw new runtime.RequiredError('assistantFileId', 'Required parameter requestParameters.assistantFileId was null or undefined when calling deleteFile.');
+	        }
+	        const queryParameters = {};
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/files/{assistant_name}/{assistant_file_id}`.replace(`{${"assistant_name"}}`, encodeURIComponent(String(requestParameters.assistantName))).replace(`{${"assistant_file_id"}}`, encodeURIComponent(String(requestParameters.assistantFileId))),
+	            method: 'DELETE',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.VoidApiResponse(response);
+	    }
+	    /**
+	     * Delete an uploaded file from an assistant.  For guidance and examples, see [Manage files](https://docs.pinecone.io/guides/assistant/manage-files#delete-a-file).
+	     * Delete an uploaded file
+	     */
+	    async deleteFile(requestParameters, initOverrides) {
+	        await this.deleteFileRaw(requestParameters, initOverrides);
+	    }
+	    /**
+	     * Get the status and metadata of a file uploaded to an assistant.  For guidance and examples, see [Manage files](https://docs.pinecone.io/guides/assistant/manage-files#get-the-status-of-a-file).
+	     * Describe a file upload
+	     */
+	    async describeFileRaw(requestParameters, initOverrides) {
+	        if (requestParameters.assistantName === null || requestParameters.assistantName === undefined) {
+	            throw new runtime.RequiredError('assistantName', 'Required parameter requestParameters.assistantName was null or undefined when calling describeFile.');
+	        }
+	        if (requestParameters.assistantFileId === null || requestParameters.assistantFileId === undefined) {
+	            throw new runtime.RequiredError('assistantFileId', 'Required parameter requestParameters.assistantFileId was null or undefined when calling describeFile.');
+	        }
+	        const queryParameters = {};
+	        if (requestParameters.includeUrl !== undefined) {
+	            queryParameters['include_url'] = requestParameters.includeUrl;
+	        }
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/files/{assistant_name}/{assistant_file_id}`.replace(`{${"assistant_name"}}`, encodeURIComponent(String(requestParameters.assistantName))).replace(`{${"assistant_file_id"}}`, encodeURIComponent(String(requestParameters.assistantFileId))),
+	            method: 'GET',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.AssistantFileModelFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Get the status and metadata of a file uploaded to an assistant.  For guidance and examples, see [Manage files](https://docs.pinecone.io/guides/assistant/manage-files#get-the-status-of-a-file).
+	     * Describe a file upload
+	     */
+	    async describeFile(requestParameters, initOverrides) {
+	        const response = await this.describeFileRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * List all files in an assistant, with an option to filter files with metadata.  For guidance and examples, see [Manage files](https://docs.pinecone.io/guides/assistant/manage-files#list-files-in-an-assistant).
+	     * List Files
+	     */
+	    async listFilesRaw(requestParameters, initOverrides) {
+	        if (requestParameters.assistantName === null || requestParameters.assistantName === undefined) {
+	            throw new runtime.RequiredError('assistantName', 'Required parameter requestParameters.assistantName was null or undefined when calling listFiles.');
+	        }
+	        const queryParameters = {};
+	        if (requestParameters.filter !== undefined) {
+	            queryParameters['filter'] = requestParameters.filter;
+	        }
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const response = await this.request({
+	            path: `/files/{assistant_name}`.replace(`{${"assistant_name"}}`, encodeURIComponent(String(requestParameters.assistantName))),
+	            method: 'GET',
+	            headers: headerParameters,
+	            query: queryParameters,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.ListFiles200ResponseFromJSON)(jsonValue));
+	    }
+	    /**
+	     * List all files in an assistant, with an option to filter files with metadata.  For guidance and examples, see [Manage files](https://docs.pinecone.io/guides/assistant/manage-files#list-files-in-an-assistant).
+	     * List Files
+	     */
+	    async listFiles(requestParameters, initOverrides) {
+	        const response = await this.listFilesRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	    /**
+	     * Upload a file to the specified assistant.  For guidance and examples, see [Manage files](https://docs.pinecone.io/guides/assistant/manage-files#upload-a-local-file).
+	     * Upload file to assistant
+	     */
+	    async uploadFileRaw(requestParameters, initOverrides) {
+	        if (requestParameters.assistantName === null || requestParameters.assistantName === undefined) {
+	            throw new runtime.RequiredError('assistantName', 'Required parameter requestParameters.assistantName was null or undefined when calling uploadFile.');
+	        }
+	        if (requestParameters.file === null || requestParameters.file === undefined) {
+	            throw new runtime.RequiredError('file', 'Required parameter requestParameters.file was null or undefined when calling uploadFile.');
+	        }
+	        const queryParameters = {};
+	        if (requestParameters.metadata !== undefined) {
+	            queryParameters['metadata'] = requestParameters.metadata;
+	        }
+	        const headerParameters = {};
+	        if (this.configuration && this.configuration.apiKey) {
+	            headerParameters["Api-Key"] = this.configuration.apiKey("Api-Key"); // ApiKeyAuth authentication
+	        }
+	        const consumes = [
+	            { contentType: 'multipart/form-data' },
+	        ];
+	        // @ts-ignore: canConsumeForm may be unused
+	        const canConsumeForm = runtime.canConsumeForm(consumes);
+	        let formParams;
+	        let useForm = false;
+	        // use FormData to transmit files using content-type "multipart/form-data"
+	        useForm = canConsumeForm;
+	        if (useForm) {
+	            formParams = new FormData();
+	        }
+	        else {
+	            formParams = new URLSearchParams();
+	        }
+	        if (requestParameters.file !== undefined) {
+	            formParams.append('file', requestParameters.file);
+	        }
+	        const response = await this.request({
+	            path: `/files/{assistant_name}`.replace(`{${"assistant_name"}}`, encodeURIComponent(String(requestParameters.assistantName))),
+	            method: 'POST',
+	            headers: headerParameters,
+	            query: queryParameters,
+	            body: formParams,
+	        }, initOverrides);
+	        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.AssistantFileModelFromJSON)(jsonValue));
+	    }
+	    /**
+	     * Upload a file to the specified assistant.  For guidance and examples, see [Manage files](https://docs.pinecone.io/guides/assistant/manage-files#upload-a-local-file).
+	     * Upload file to assistant
+	     */
+	    async uploadFile(requestParameters, initOverrides) {
+	        const response = await this.uploadFileRaw(requestParameters, initOverrides);
+	        return await response.value();
+	    }
+	};
+	ManageAssistantsApi.ManageAssistantsApi = ManageAssistantsApi$1;
+	/**
+	 * @export
+	 */
+	ManageAssistantsApi.DescribeFileIncludeUrlEnum = {
+	    True: 'true',
+	    False: 'false'
+	};
+	
+	return ManageAssistantsApi;
+}
+
+var hasRequiredApis;
+
+function requireApis () {
+	if (hasRequiredApis) return apis;
+	hasRequiredApis = 1;
+	(function (exports) {
+		var __createBinding = (apis && apis.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    var desc = Object.getOwnPropertyDescriptor(m, k);
+		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+		      desc = { enumerable: true, get: function() { return m[k]; } };
+		    }
+		    Object.defineProperty(o, k2, desc);
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __exportStar = (apis && apis.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		/* tslint:disable */
+		/* eslint-disable */
+		__exportStar(requireManageAssistantsApi(), exports);
+		
+	} (apis));
+	return apis;
+}
+
+var api_version = {};
+
+var hasRequiredApi_version;
+
+function requireApi_version () {
+	if (hasRequiredApi_version) return api_version;
+	hasRequiredApi_version = 1;
+	Object.defineProperty(api_version, "__esModule", { value: true });
+	api_version.X_PINECONE_API_VERSION = void 0;
+	api_version.X_PINECONE_API_VERSION = '2025-04';
+	
+	return api_version;
+}
+
+var hasRequiredAssistant_data;
+
+function requireAssistant_data () {
+	if (hasRequiredAssistant_data) return assistant_data;
+	hasRequiredAssistant_data = 1;
+	(function (exports) {
+		var __createBinding = (assistant_data && assistant_data.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    var desc = Object.getOwnPropertyDescriptor(m, k);
+		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+		      desc = { enumerable: true, get: function() { return m[k]; } };
+		    }
+		    Object.defineProperty(o, k2, desc);
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __exportStar = (assistant_data && assistant_data.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		/* tslint:disable */
+		/* eslint-disable */
+		__exportStar(requireRuntime(), exports);
+		__exportStar(requireApis(), exports);
+		__exportStar(requireModels(), exports);
+		__exportStar(requireApi_version(), exports);
+		
+	} (assistant_data));
+	return assistant_data;
+}
+
+var types = {};
+
+var hasRequiredTypes;
+
+function requireTypes () {
+	if (hasRequiredTypes) return types;
+	hasRequiredTypes = 1;
+	Object.defineProperty(types, "__esModule", { value: true });
+	types.FinishReasonEnum = types.UploadFileOptionsType = types.ContextOptionsType = types.ChatCompletionOptionsType = types.ChatOptionsType = types.ChatModelEnum = types.AssistantFileStatusEnum = types.ListFilesOptionsType = void 0;
+	types.ListFilesOptionsType = ['filter'];
+	/**
+	 * Enum representing the possible statuses of an assistant file.
+	 *
+	 * - `Processing`: The file is currently being processed and is not yet available.
+	 * - `Available`: The file has been processed and is ready for use.
+	 * - `Deleting`: The file is in the process of being deleted.
+	 * - `ProcessingFailed`: There was an error encountered will processing.
+	 */
+	types.AssistantFileStatusEnum = {
+	    Processing: 'Processing',
+	    Available: 'Available',
+	    Deleting: 'Deleting',
+	    ProcessingFailed: 'ProcessingFailed',
+	};
+	/**
+	 * An enum representing the models that can be used for chatting with an assistant. The default is 'gpt-4o'.
+	 */
+	types.ChatModelEnum = {
+	    Gpt4o: 'gpt-4o',
+	    Claude35Sonnet: 'claude-3-5-sonnet',
+	};
+	types.ChatOptionsType = [
+	    'messages',
+	    'model',
+	    'temperature',
+	    'filter',
+	    'jsonResponse',
+	    'includeHighlights',
+	    'topK',
+	    'contextOptions',
+	];
+	types.ChatCompletionOptionsType = [
+	    'messages',
+	    'model',
+	    'temperature',
+	    'filter',
+	];
+	types.ContextOptionsType = [
+	    'query',
+	    'filter',
+	    'messages',
+	    'topK',
+	];
+	types.UploadFileOptionsType = [
+	    'path',
+	    'metadata',
+	];
+	/**
+	 * Enum representing the reasons why a response generation may finish.
+	 *
+	 * - `Stop`: The response was completed normally.
+	 * - `Length`: The response was truncated due to length constraints.
+	 * - `ContentFilter`: The response was stopped by a content filter.
+	 * - `FunctionCall`: The response generation was interrupted by a function call.
+	 */
+	types.FinishReasonEnum = {
+	    Stop: 'stop',
+	    Length: 'length',
+	    ContentFilter: 'content_filter',
+	    FunctionCall: 'function_call',
+	};
+	
+	return types;
+}
+
+var hasRequiredChat;
+
+function requireChat () {
+	if (hasRequiredChat) return chat;
+	hasRequiredChat = 1;
+	(function (exports) {
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.modelValidation = exports.messagesValidation = exports.validateChatOptions = exports.chat = void 0;
+		const assistant_data_1 = requireAssistant_data();
+		const utils_1 = requireUtils();
+		const types_1 = requireTypes();
+		const validateObjectProperties_1 = requireValidateObjectProperties();
+		const errors_1 = requireErrors();
+		const chat = (assistantName, apiProvider) => {
+		    return async (options) => {
+		        (0, exports.validateChatOptions)(options);
+		        const api = await apiProvider.provideData();
+		        const messages = (0, exports.messagesValidation)(options);
+		        const model = (0, exports.modelValidation)(options);
+		        const request = {
+		            assistantName: assistantName,
+		            chat: {
+		                messages: messages,
+		                stream: false,
+		                model: model,
+		                filter: options.filter,
+		                jsonResponse: options.jsonResponse,
+		                includeHighlights: options.includeHighlights,
+		                contextOptions: {
+		                    // use topK from contextOptions if provided, otherwise use topK from options
+		                    topK: options.contextOptions?.topK || options.topK,
+		                    snippetSize: options.contextOptions?.snippetSize,
+		                },
+		            },
+		        };
+		        const retryWrapper = new utils_1.RetryOnServerFailure(() => api.chatAssistant(request));
+		        return await retryWrapper.execute();
+		    };
+		};
+		exports.chat = chat;
+		const validateChatOptions = (options) => {
+		    if (!options || !options.messages) {
+		        throw new errors_1.PineconeArgumentError('You must pass an object with required properties (`messages`) to chat with an assistant.');
+		    }
+		    (0, validateObjectProperties_1.ValidateObjectProperties)(options, types_1.ChatOptionsType);
+		    if (options.model) {
+		        if (!Object.values(assistant_data_1.ChatModelEnum).includes(options.model)) {
+		            throw new errors_1.PineconeArgumentError(`Invalid model: "${options.model}". Must be one of: ${Object.values(assistant_data_1.ChatModelEnum)
+		                .map((model) => `"${model}"`)
+		                .join(', ')}.`);
+		        }
+		    }
+		};
+		exports.validateChatOptions = validateChatOptions;
+		/**
+		 * Validates the messages passed to the Assistant.
+		 *
+		 * @param options - A {@link ChatRequest} object containing the messages to send to the Assistant.
+		 * @throws An Error `role` key is not one of `user` or `assistant`.
+		 * @throws An Error if the message object does not have exactly two keys: `role` and `content`.
+		 * @returns An array of {@link MessageModel} objects containing the messages to send to the Assistant.
+		 */
+		const messagesValidation = (options) => {
+		    let messages = [];
+		    // If messages are passed as a list of strings:
+		    if (options.messages && typeof options.messages[0] == 'string') {
+		        // role defaults to user if not specified
+		        messages = options.messages.map((message) => {
+		            return { role: 'user', content: message };
+		        });
+		    }
+		    // If messages are passed as a list of objects:
+		    if (Array.isArray(options.messages) &&
+		        typeof options.messages[0] === 'object') {
+		        if (options.messages[0]['role']) {
+		            if (options.messages[0]['role'].toLowerCase() !== 'user' &&
+		                options.messages[0]['role'].toLowerCase() !== 'assistant') {
+		                throw new Error('No role specified in message object. Must be one of "user" or "assistant"');
+		            }
+		        }
+		        // Extract unique keys from all messages
+		        const keys = Array.from(new Set(options.messages.flatMap((message) => Object.keys(message))));
+		        if (keys.length !== 2) {
+		            throw new Error('Message object must have exactly two keys: "role" and "content"');
+		        }
+		        // Cast messages after validating keys
+		        return (messages = options.messages);
+		    }
+		    return messages;
+		};
+		exports.messagesValidation = messagesValidation;
+		/**
+		 * Validates the model passed to the Assistant.
+		 *
+		 * @param options - A {@link ChatRequest} object containing the model to use for the Assistant.
+		 * @throws An Error if the model is not one of the available models as outlined in {@link ChatModelEnum}.
+		 */
+		const modelValidation = (options) => {
+		    const allowedModels = Object.values(assistant_data_1.ChatModelEnum);
+		    // Make sure passed string for 'model' matches one of the Enum values; default to Gpt4o
+		    let model = assistant_data_1.ChatModelEnum.Gpt4o;
+		    if (options.model) {
+		        if (!allowedModels.includes(options.model)) {
+		            throw new Error(`Invalid model specified. Must be one of ${allowedModels
+		                .map((m) => `"${m}"`)
+		                .join(', ')}:`);
+		        }
+		        else {
+		            model = options.model;
+		        }
+		    }
+		    return model;
+		};
+		exports.modelValidation = modelValidation;
+		
+	} (chat));
+	return chat;
+}
+
+var chatCompletion = {};
+
+var hasRequiredChatCompletion;
+
+function requireChatCompletion () {
+	if (hasRequiredChatCompletion) return chatCompletion;
+	hasRequiredChatCompletion = 1;
+	Object.defineProperty(chatCompletion, "__esModule", { value: true });
+	chatCompletion.chatCompletion = void 0;
+	const chat_1 = requireChat();
+	const utils_1 = requireUtils();
+	const chatCompletion$1 = (assistantName, apiProvider) => {
+	    return async (options) => {
+	        (0, chat_1.validateChatOptions)(options);
+	        const api = await apiProvider.provideData();
+	        const messages = (0, chat_1.messagesValidation)(options);
+	        const model = (0, chat_1.modelValidation)(options);
+	        const request = {
+	            assistantName: assistantName,
+	            searchCompletions: {
+	                messages: messages,
+	                stream: false,
+	                model: model,
+	                filter: options.filter,
+	            },
+	        };
+	        const retryWrapper = new utils_1.RetryOnServerFailure(() => api.chatCompletionAssistant(request));
+	        return await retryWrapper.execute();
+	    };
+	};
+	chatCompletion.chatCompletion = chatCompletion$1;
+	
+	return chatCompletion;
+}
+
+var chatStream = {};
+
+var hasRequiredChatStream;
+
+function requireChatStream () {
+	if (hasRequiredChatStream) return chatStream;
+	hasRequiredChatStream = 1;
+	Object.defineProperty(chatStream, "__esModule", { value: true });
+	chatStream.chatStream = void 0;
+	const assistant_data_1 = requireAssistant_data();
+	const utils_1 = requireUtils();
+	const errors_1 = requireErrors();
+	const node_stream_1 = require$$3$2;
+	const chat_1 = requireChat();
+	const chatStream$1 = (assistantName, apiProvider, config) => {
+	    return async (options) => {
+	        const fetch = (0, utils_1.getFetch)(config);
+	        (0, chat_1.validateChatOptions)(options);
+	        const hostUrl = await apiProvider.provideHostUrl();
+	        const chatUrl = `${hostUrl}/chat/${assistantName}`;
+	        const requestHeaders = {
+	            'Api-Key': config.apiKey,
+	            'User-Agent': (0, utils_1.buildUserAgent)(config),
+	            'X-Pinecone-Api-Version': assistant_data_1.X_PINECONE_API_VERSION,
+	        };
+	        // format context options
+	        let contextOptions = undefined;
+	        if (options.contextOptions?.topK || options.contextOptions?.snippetSize) {
+	            contextOptions = {
+	                top_k: options.contextOptions?.topK || options.topK,
+	                snippet_size: options.contextOptions?.snippetSize,
+	            };
+	        }
+	        else if (options.topK) {
+	            contextOptions = {
+	                top_k: options.topK,
+	            };
+	        }
+	        // we call the API directly via fetch, so we need to snake_case the keys (normally generated code handles this)
+	        const response = await fetch(chatUrl, {
+	            method: 'POST',
+	            headers: requestHeaders,
+	            body: JSON.stringify({
+	                messages: (0, chat_1.messagesValidation)(options),
+	                stream: true,
+	                model: (0, chat_1.modelValidation)(options),
+	                filter: options.filter,
+	                json_response: options.jsonResponse,
+	                include_highlights: options.includeHighlights,
+	                context_options: contextOptions,
+	            }),
+	        });
+	        if (response.ok && response.body) {
+	            const nodeReadable = node_stream_1.Readable.fromWeb(response.body);
+	            return new utils_1.ChatStream(nodeReadable);
+	        }
+	        else {
+	            const err = await (0, errors_1.handleApiError)(new assistant_data_1.ResponseError(response, 'Response returned an error'), undefined, chatUrl);
+	            throw err;
+	        }
+	    };
+	};
+	chatStream.chatStream = chatStream$1;
+	
+	return chatStream;
+}
+
+var chatCompletionStream = {};
+
+var hasRequiredChatCompletionStream;
+
+function requireChatCompletionStream () {
+	if (hasRequiredChatCompletionStream) return chatCompletionStream;
+	hasRequiredChatCompletionStream = 1;
+	Object.defineProperty(chatCompletionStream, "__esModule", { value: true });
+	chatCompletionStream.chatCompletionStream = void 0;
+	const assistant_data_1 = requireAssistant_data();
+	const utils_1 = requireUtils();
+	const errors_1 = requireErrors();
+	const node_stream_1 = require$$3$2;
+	const chat_1 = requireChat();
+	const chatCompletionStream$1 = (assistantName, apiProvider, config) => {
+	    return async (options) => {
+	        const fetch = (0, utils_1.getFetch)(config);
+	        (0, chat_1.validateChatOptions)(options);
+	        const hostUrl = await apiProvider.provideHostUrl();
+	        const chatUrl = `${hostUrl}/chat/${assistantName}/chat/completions`;
+	        const requestHeaders = {
+	            'Api-Key': config.apiKey,
+	            'User-Agent': (0, utils_1.buildUserAgent)(config),
+	            'X-Pinecone-Api-Version': assistant_data_1.X_PINECONE_API_VERSION,
+	        };
+	        const response = await fetch(chatUrl, {
+	            method: 'POST',
+	            headers: requestHeaders,
+	            body: JSON.stringify({
+	                messages: (0, chat_1.messagesValidation)(options),
+	                stream: true,
+	                model: (0, chat_1.modelValidation)(options),
+	                filter: options.filter,
+	            }),
+	        });
+	        if (response.ok && response.body) {
+	            const nodeReadable = node_stream_1.Readable.fromWeb(response.body);
+	            return new utils_1.ChatStream(nodeReadable);
+	        }
+	        else {
+	            const err = await (0, errors_1.handleApiError)(new assistant_data_1.ResponseError(response, 'Response returned an error'), undefined, chatUrl);
+	            throw err;
+	        }
+	    };
+	};
+	chatCompletionStream.chatCompletionStream = chatCompletionStream$1;
+	
+	return chatCompletionStream;
+}
+
+var listFiles = {};
+
+var hasRequiredListFiles;
+
+function requireListFiles () {
+	if (hasRequiredListFiles) return listFiles;
+	hasRequiredListFiles = 1;
+	Object.defineProperty(listFiles, "__esModule", { value: true });
+	listFiles.listFiles = void 0;
+	/**
+	 * Lists files (with optional filter) uploaded to an Assistant.
+	 *
+	 * @example
+	 * ```typescript
+	 * import { Pinecone } from '@pinecone-database/pinecone';
+	 * const pc = new Pinecone();
+	 * const assistantName = 'test1';
+	 * const assistant = pc.Assistant(assistantName);
+	 * const files = await assistant.listFiles({filter: {metadata: {key: 'value'}}});
+	 * console.log(files);
+	 * // {
+	 * //  files: [
+	 * //    {
+	 * //      name: 'test-file.txt',
+	 * //      id: '1a56ddd0-c6d8-4295-80c0-9bfd6f5cb87b',
+	 * //      metadata: [Object],
+	 * //      createdOn: 2025-01-06T19:14:21.969Z,
+	 * //      updatedOn: 2025-01-06T19:14:36.925Z,
+	 * //      status: 'Available',
+	 * //      percentDone: 1,
+	 * //      signedUrl: undefined,
+	 * //      errorMessage: undefined
+	 * //    }
+	 * //  ]
+	 * // }
+	 * ```
+	 * @param assistantName - The name of the Assistant that the files are uploaded to.
+	 * @param api - The API object to use to send the request.
+	 */
+	const listFiles$1 = (assistantName, apiProvider) => {
+	    return async (options) => {
+	        const api = await apiProvider.provideData();
+	        const request = {
+	            assistantName: assistantName,
+	            filter: options.filter,
+	        };
+	        return await api.listFiles(request);
+	    };
+	};
+	listFiles.listFiles = listFiles$1;
+	
+	return listFiles;
+}
+
+var describeFile = {};
+
+var hasRequiredDescribeFile;
+
+function requireDescribeFile () {
+	if (hasRequiredDescribeFile) return describeFile;
+	hasRequiredDescribeFile = 1;
+	Object.defineProperty(describeFile, "__esModule", { value: true });
+	describeFile.describeFile = void 0;
+	const errors_1 = requireErrors();
+	/**
+	 * Describes a file uploaded to an Assistant.
+	 *
+	 * @example
+	 * ```typescript
+	 * import { Pinecone } from '@pinecone-database/pinecone';
+	 * const pc = new Pinecone();
+	 * const assistantName = 'test1';
+	 * const assistant = pc.Assistant(assistantName);
+	 * const files = await assistant.listFiles();
+	 * let fileId: string;
+	 * if (files.files) {
+	 *     fileId = files.files[0].id;
+	 * } else {
+	 *     fileId = '';
+	 * }
+	 * const resp = await assistant.describeFile({fileId: fileId})
+	 * console.log(resp);
+	 * // {
+	 * //  name: 'test-file.txt',
+	 * //  id: '1a56ddd0-c6d8-4295-80c0-9bfd6f5cb87b',
+	 * //  metadata: undefined,
+	 * //  createdOn: 2025-01-06T19:14:21.969Z,
+	 * //  updatedOn: 2025-01-06T19:14:36.925Z,
+	 * //  status: 'Available',
+	 * //  percentDone: 1,
+	 * //  signedUrl: undefined,
+	 * //   errorMessage: undefined
+	 * // }
+	 * ```
+	 *
+	 * @param assistantName - The name of the Assistant that the file is uploaded to.
+	 * @param api - The API object to use to send the request.
+	 * @returns A promise that resolves to a {@link AssistantFile} object containing the file details.
+	 */
+	const describeFile$1 = (assistantName, apiProvider) => {
+	    return async (fileId, includeUrl) => {
+	        if (!fileId) {
+	            throw new errors_1.PineconeArgumentError('You must pass the fileId of a file to describe.');
+	        }
+	        const api = await apiProvider.provideData();
+	        const request = {
+	            assistantName: assistantName,
+	            assistantFileId: fileId,
+	            includeUrl: includeUrl.toString(),
+	        };
+	        return await api.describeFile(request);
+	    };
+	};
+	describeFile.describeFile = describeFile$1;
+	
+	return describeFile;
+}
+
+var deleteFile = {};
+
+var hasRequiredDeleteFile;
+
+function requireDeleteFile () {
+	if (hasRequiredDeleteFile) return deleteFile;
+	hasRequiredDeleteFile = 1;
+	Object.defineProperty(deleteFile, "__esModule", { value: true });
+	deleteFile.deleteFile = void 0;
+	const errors_1 = requireErrors();
+	/**
+	 * Deletes a file uploaded to an Assistant by ID.
+	 *
+	 * @example
+	 * ```typescript
+	 * import { Pinecone } from '@pinecone-database/pinecone';
+	 * const pc = new Pinecone();
+	 * const assistantName = 'test1';
+	 * const assistant = pc.Assistant(assistantName);
+	 * const files = await assistant.listFiles();
+	 * let fileId: string;
+	 * if (files.files) {
+	 *    fileId = files.files[0].id;
+	 *    await assistant.deleteFile({fileId: fileId});
+	 *  }
+	 * ```
+	 *
+	 * @param assistantName - The name of the Assistant to delete the file from.
+	 * @param api - The Pinecone API object.
+	 */
+	const deleteFile$1 = (assistantName, apiProvider) => {
+	    return async (fileId) => {
+	        if (!fileId) {
+	            throw new errors_1.PineconeArgumentError('You must pass the fileId of a file to delete.');
+	        }
+	        const api = await apiProvider.provideData();
+	        const request = {
+	            assistantName: assistantName,
+	            assistantFileId: fileId,
+	        };
+	        return await api.deleteFile(request);
+	    };
+	};
+	deleteFile.deleteFile = deleteFile$1;
+	
+	return deleteFile;
+}
+
+var uploadFile = {};
+
+var hasRequiredUploadFile;
+
+function requireUploadFile () {
+	if (hasRequiredUploadFile) return uploadFile;
+	hasRequiredUploadFile = 1;
+	var __importDefault = (uploadFile && uploadFile.__importDefault) || function (mod) {
+	    return (mod && mod.__esModule) ? mod : { "default": mod };
+	};
+	Object.defineProperty(uploadFile, "__esModule", { value: true });
+	uploadFile.uploadFile = void 0;
+	const assistant_data_1 = requireAssistant_data();
+	const errors_1 = requireErrors();
+	const utils_1 = requireUtils();
+	const fs_1 = __importDefault(require$$3$1);
+	const path_1 = __importDefault(require$$1$2);
+	const uploadFile$1 = (assistantName, apiProvider, config) => {
+	    return async (options) => {
+	        const fetch = (0, utils_1.getFetch)(config);
+	        validateUploadFileOptions(options);
+	        const fileBuffer = fs_1.default.readFileSync(options.path);
+	        const fileName = path_1.default.basename(options.path);
+	        const mimeType = getMimeType(fileName);
+	        const fileBlob = new Blob([fileBuffer], { type: mimeType });
+	        const formData = new FormData();
+	        formData.append('file', fileBlob, fileName);
+	        const hostUrl = await apiProvider.provideHostUrl();
+	        let filesUrl = `${hostUrl}/files/${assistantName}`;
+	        const requestHeaders = {
+	            'Api-Key': config.apiKey,
+	            'User-Agent': (0, utils_1.buildUserAgent)(config),
+	            'X-Pinecone-Api-Version': assistant_data_1.X_PINECONE_API_VERSION,
+	        };
+	        if (options.metadata) {
+	            const encodedMetadata = encodeURIComponent(JSON.stringify(options.metadata));
+	            filesUrl += `?metadata=${encodedMetadata}`;
+	        }
+	        const response = await fetch(filesUrl, {
+	            method: 'POST',
+	            headers: requestHeaders,
+	            body: formData,
+	        });
+	        if (response.ok) {
+	            const assistantFileModel = new assistant_data_1.JSONApiResponse(response, (jsonValue) => (0, assistant_data_1.AssistantFileModelFromJSON)(jsonValue)).value();
+	            return assistantFileModel;
+	        }
+	        else {
+	            const err = await (0, errors_1.handleApiError)(new assistant_data_1.ResponseError(response, 'Response returned an error'), undefined, filesUrl);
+	            throw err;
+	        }
+	    };
+	};
+	uploadFile.uploadFile = uploadFile$1;
+	const validateUploadFileOptions = (options) => {
+	    if (!options || !options.path) {
+	        throw new errors_1.PineconeArgumentError('You must pass an object with required properties (`path`) to upload a file.');
+	    }
+	};
+	// get mime types for accepted file types
+	function getMimeType(filePath) {
+	    const extensionToMimeType = {
+	        pdf: 'application/pdf',
+	        json: 'application/json',
+	        txt: 'text/plain',
+	        md: 'text/markdown',
+	        docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+	    };
+	    // Extract file extension and ensure it's lowercase
+	    const parts = filePath.split('.');
+	    if (parts.length < 2) {
+	        return 'application/octet-stream'; // Default for files without extensions
+	    }
+	    const ext = parts.pop();
+	    const extension = ext ? ext.toLowerCase() : '';
+	    // Return the MIME type or a default value for unsupported types
+	    return extensionToMimeType[extension];
+	}
+	
+	return uploadFile;
+}
+
+var asstDataOperationsProvider = {};
+
+var hasRequiredAsstDataOperationsProvider;
+
+function requireAsstDataOperationsProvider () {
+	if (hasRequiredAsstDataOperationsProvider) return asstDataOperationsProvider;
+	hasRequiredAsstDataOperationsProvider = 1;
+	Object.defineProperty(asstDataOperationsProvider, "__esModule", { value: true });
+	asstDataOperationsProvider.AsstDataOperationsProvider = void 0;
+	const assistant_data_1 = requireAssistant_data();
+	const utils_1 = requireUtils();
+	const middleware_1 = requireMiddleware();
+	const assistantHostSingleton_1 = requireAssistantHostSingleton();
+	class AsstDataOperationsProvider {
+	    constructor(config, asstName, asstHostUrl, additionalHeaders) {
+	        this.config = config;
+	        this.asstName = asstName;
+	        this.asstHostUrl = (0, utils_1.normalizeUrl)(asstHostUrl);
+	        this.additionalHeaders = additionalHeaders;
+	    }
+	    async provideData() {
+	        if (this.asstDataOperations) {
+	            return this.asstDataOperations;
+	        }
+	        else {
+	            this.asstHostUrl = await assistantHostSingleton_1.AssistantHostSingleton.getHostUrl(this.config, this.asstName);
+	            this.asstDataOperations = this.buildAsstDataOperationsConfig();
+	        }
+	        return this.asstDataOperations;
+	    }
+	    async provideHostUrl() {
+	        if (this.asstHostUrl) {
+	            return this.asstHostUrl;
+	        }
+	        else {
+	            this.asstHostUrl = await assistantHostSingleton_1.AssistantHostSingleton.getHostUrl(this.config, this.asstName);
+	        }
+	        return this.asstHostUrl;
+	    }
+	    buildAsstDataOperationsConfig() {
+	        const { apiKey } = this.config;
+	        const hostUrl = this.asstHostUrl;
+	        const headers = this.additionalHeaders || null;
+	        const apiConfig = {
+	            basePath: hostUrl,
+	            apiKey,
+	            queryParamsStringify: utils_1.queryParamsStringify,
+	            headers: {
+	                'User-Agent': (0, utils_1.buildUserAgent)(this.config),
+	                'X-Pinecone-Api-Version': assistant_data_1.X_PINECONE_API_VERSION,
+	                ...headers,
+	            },
+	            fetchApi: (0, utils_1.getFetch)(this.config),
+	            middleware: middleware_1.middleware,
+	        };
+	        return new assistant_data_1.ManageAssistantsApi(new assistant_data_1.Configuration(apiConfig));
+	    }
+	}
+	asstDataOperationsProvider.AsstDataOperationsProvider = AsstDataOperationsProvider;
+	
+	return asstDataOperationsProvider;
+}
+
+var context = {};
+
+var hasRequiredContext;
+
+function requireContext () {
+	if (hasRequiredContext) return context;
+	hasRequiredContext = 1;
+	Object.defineProperty(context, "__esModule", { value: true });
+	context.context = void 0;
+	const types_1 = requireTypes();
+	const validateObjectProperties_1 = requireValidateObjectProperties();
+	const errors_1 = requireErrors();
+	/**
+	 * Retrieves [the context snippets](https://docs.pinecone.io/guides/assistant/understanding-context-snippets) used
+	 * by an Assistant during the retrieval process.
+	 *
+	 * @example
+	 * ```typescript
+	 * import { Pinecone } from '@pinecone-database/pinecone';
+	 * const pc = new Pinecone();
+	 * const assistantName = 'test1';
+	 * const assistant = pc.Assistant(assistantName);
+	 * const response = await assistant.context({query: "What is the capital of France?"});
+	 * console.log(response);
+	 * // {
+	 * //  snippets: [
+	 * //    {
+	 * //      type: 'text',
+	 * //      content: 'The capital of France is Paris.',
+	 * //      score: 0.9978925,
+	 * //      reference: [Object]
+	 * //    },
+	 * //  ],
+	 * //  usage: { promptTokens: 527, completionTokens: 0, totalTokens: 527 }
+	 * // }
+	 * ```
+	 *
+	 * @param assistantName - The name of the Assistant to retrieve the context snippets from.
+	 * @param api - The Pinecone API object.
+	 * @throws An error if a query is not provided.
+	 * @returns A promise that resolves to a {@link ContextModel} object containing the context snippets.
+	 */
+	const context$1 = (assistantName, apiProvider) => {
+	    return async (options) => {
+	        validateContextOptions(options);
+	        const api = await apiProvider.provideData();
+	        const request = {
+	            assistantName: assistantName,
+	            contextRequest: {
+	                query: options.query,
+	                filter: options.filter,
+	                messages: options.messages,
+	                topK: options.topK,
+	                snippetSize: options.snippetSize,
+	            },
+	        };
+	        return await api.contextAssistant(request);
+	    };
+	};
+	context.context = context$1;
+	const validateContextOptions = (options) => {
+	    if (!options || (!options.query && !options.messages)) {
+	        throw new errors_1.PineconeArgumentError('You must pass an object with required properties (`query`, or `messages`) to retrieve context snippets.');
+	    }
+	    (0, validateObjectProperties_1.ValidateObjectProperties)(options, types_1.ContextOptionsType);
+	};
+	
+	return context;
+}
+
+var hasRequiredAssistant;
+
+function requireAssistant () {
+	if (hasRequiredAssistant) return assistant;
+	hasRequiredAssistant = 1;
+	(function (exports) {
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.Assistant = exports.ChatStream = void 0;
+		const chat_1 = requireChat();
+		const chatCompletion_1 = requireChatCompletion();
+		const chatStream_1 = requireChatStream();
+		const chatCompletionStream_1 = requireChatCompletionStream();
+		const listFiles_1 = requireListFiles();
+		const describeFile_1 = requireDescribeFile();
+		const deleteFile_1 = requireDeleteFile();
+		const uploadFile_1 = requireUploadFile();
+		const asstDataOperationsProvider_1 = requireAsstDataOperationsProvider();
+		const context_1 = requireContext();
+		var chatStream_2 = requireChatStream$1();
+		Object.defineProperty(exports, "ChatStream", { enumerable: true, get: function () { return chatStream_2.ChatStream; } });
+		/**
+		 * The `Assistant` class holds the data plane methods for interacting with
+		 *  [Assistants](https://docs.pinecone.io/guides/assistant/understanding-assistant).
+		 *
+		 *  This class can be instantiated through a {@link Pinecone} object, and is used to interact with a specific assistant.
+		 *
+		 *  @example
+		 *  ```typescript
+		 *  import { Pinecone } from '@pinecone-database/pinecone';
+		 *  const pc = new Pinecone();
+		 *  const assistant = pc.assistant('assistant-name');
+		 *  ```
+		 */
+		class Assistant {
+		    /**
+		     * Creates an instance of the `Assistant` class.
+		     *
+		     * @param assistantName - The name of the assistant.
+		     * @param config - The Pinecone configuration object containing an API key and other configuration parameters
+		     * needed for API calls.
+		     *
+		     * @throws An error if no assistant name is provided.
+		     */
+		    constructor(assistantName, config) {
+		        if (!assistantName) {
+		            throw new Error('No assistant name provided');
+		        }
+		        this.config = config;
+		        const asstDataOperationsProvider = new asstDataOperationsProvider_1.AsstDataOperationsProvider(this.config, assistantName);
+		        this.assistantName = assistantName;
+		        this._chat = (0, chat_1.chat)(this.assistantName, asstDataOperationsProvider);
+		        this._chatStream = (0, chatStream_1.chatStream)(this.assistantName, asstDataOperationsProvider, this.config);
+		        this._chatCompletion = (0, chatCompletion_1.chatCompletion)(this.assistantName, asstDataOperationsProvider);
+		        this._chatCompletionStream = (0, chatCompletionStream_1.chatCompletionStream)(this.assistantName, asstDataOperationsProvider, this.config);
+		        this._listFiles = (0, listFiles_1.listFiles)(this.assistantName, asstDataOperationsProvider);
+		        this._describeFile = (0, describeFile_1.describeFile)(this.assistantName, asstDataOperationsProvider);
+		        this._uploadFile = (0, uploadFile_1.uploadFile)(this.assistantName, asstDataOperationsProvider, this.config);
+		        this._deleteFile = (0, deleteFile_1.deleteFile)(this.assistantName, asstDataOperationsProvider);
+		        this._context = (0, context_1.context)(this.assistantName, asstDataOperationsProvider);
+		    }
+		    // --------- Chat methods ---------
+		    /**
+		     * Sends a message to the assistant and receives a response. Retries the request if the server fails.
+		     *
+		     * @example
+		     * ```typescript
+		     * import { Pinecone } from '@pinecone-database/pinecone';
+		     * const pc = new Pinecone();
+		     * const assistantName = 'test1';
+		     * const assistant = pc.assistant(assistantName);
+		     * const chatResp = await assistant.chat({messages: [{role: 'user', content: "What is the capital of France?"}]});
+		     * // {
+		     * //  id: '000000000000000023e7fb015be9d0ad',
+		     * //  finishReason: 'stop',
+		     * //  message: {
+		     * //    role: 'assistant',
+		     * //    content: 'The capital of France is Paris.'
+		     * //  },
+		     * //  model: 'gpt-4o-2024-05-13',
+		     * //  citations: [ { position: 209, references: [Array] } ],
+		     * //  usage: { promptTokens: 493, completionTokens: 38, totalTokens: 531 }
+		     * // }
+		     * ```
+		     *
+		     * @param options - A {@link ChatOptions} object containing the message and optional parameters to send to the
+		     * assistant.
+		     * @returns A promise that resolves to a {@link ChatModel} object containing the response from the assistant.
+		     */
+		    chat(options) {
+		        return this._chat(options);
+		    }
+		    /**
+		     * Sends a message to the assistant and receives a streamed response as {@link ChatStream<StreamedChatResponse>}. Retries the request if the server fails.
+		     *
+		     * @example
+		     * ```typescript
+		     * import { Pinecone } from '@pinecone-database/pinecone';
+		     * const pc = new Pinecone();
+		     * const assistantName = 'test1';
+		     * const assistant = pc.assistant(assistantName);
+		     * const chatStream = await assistant.chatStream({ messages: [{ role: 'user', content: 'What is the capital of France?'}]});
+		     *
+		     * // stream the response and log each chunk
+		     * for await (const chunk of newStream) {
+		     *   console.log(chunk);
+		     * }
+		     * // each chunk will have a variable shape depending on the type:
+		     * // { type:"message_start", id:"response_id", model:"gpt-4o-2024-05-13", role:"assistant"}
+		     * // { type:"content_chunk", id:"response_id", model:"gpt-4o-2024-05-13", delta:{ content:"The"}}
+		     * // { type:"content_chunk", id:"response_id", model:"gpt-4o-2024-05-13", delta:{ content:" test"}}
+		     * // { type:"message_end", id:"response_id", model:"gpt-4o-2024-05-13", finishReason:"stop",usage:{ promptTokens:371,completionTokens:48,totalTokens:419}}
+		     * ```
+		     *
+		     * @param options - A {@link ChatOptions} object containing the message and optional parameters to send to the
+		     * assistant.
+		     * @returns A promise that resolves to a {@link ChatStream<StreamedChatResponse>}.
+		     */
+		    chatStream(options) {
+		        return this._chatStream(options);
+		    }
+		    /**
+		     * Sends a message to the assistant and receives a response that is compatible with
+		     * [OpenAI's Chat Completion API](https://platform.openai.com/docs/guides/text-generation. Retries the request if the server fails.
+		     *
+		     * @example
+		     * ```typescript
+		     * import { Pinecone } from '@pinecone-database/pinecone';
+		     * const pc = new Pinecone();
+		     * const assistantName = 'test1';
+		     * const assistant = pc.assistant(assistantName);
+		     * const chatCompletion = await assistant.chatCompletion({ messages: [{ role: 'user', content: 'What is the capital of France?' }]});
+		     * console.log(chatCompletion);
+		     * // {
+		     * //  id: "response_id",
+		     * //  choices: [
+		     * //  {
+		     * //    finishReason: "stop",
+		     * //    index: 0,
+		     * //    message: {
+		     * //      role: "assistant",
+		     * //      content: "The data mentioned is described as \"some temporary data\"  [1].\n\nReferences:\n1. [test-chat.txt](https://storage.googleapis.com/knowledge-prod-files/your_file_resource) \n"
+		     * //    }
+		     * //   }
+		     * //  ],
+		     * //  model: "gpt-4o-2024-05-13",
+		     * //  usage: {
+		     * //    promptTokens: 371,
+		     * //    completionTokens: 19,
+		     * //    totalTokens: 390
+		     * //  }
+		     * // }
+		     * ```
+		     *
+		     * @param options - A {@link ChatCompletionOptions} object containing the message and optional parameters to send
+		     * to an assistant.
+		     * @returns A promise that resolves to a {@link ChatCompletionModel} object containing the response from the assistant.
+		     */
+		    chatCompletion(options) {
+		        return this._chatCompletion(options);
+		    }
+		    /**
+		     * Sends a message to the assistant and receives a streamed response as {@link ChatStream<StreamedChatCompletionResponse>}. Response is compatible with
+		     * [OpenAI's Chat Completion API](https://platform.openai.com/docs/guides/text-generation. Retries the request if the server fails.
+		     *
+		     * @example
+		     * ```typescript
+		     * import { Pinecone } from '@pinecone-database/pinecone';
+		     * const pc = new Pinecone();
+		     * const assistantName = 'test1';
+		     * const assistant = pc.assistant(assistantName);
+		     * const chatStream = await assistant.chatCompletionStream({messages: [{role: 'user', content: "What is the capital of France?"}]});
+		     *
+		     * // stream the response and log each chunk
+		     * for await (const chunk of newStream) {
+		     *   if (chunk.choices.length > 0 && chunk.choices[0].delta.content) {
+		     *     process.stdout.write(chunk.choices[0].delta.content);
+		     *   }
+		     * }
+		     * // { id: 'response_id', choices: [{ index: 0, delta: { role: 'assistant' }, finishReason: null }], model: 'gpt-4o-2024-05-13', usage: null }
+		     * // { id: 'response_id', choices: [{ index: 0, delta: { content: 'The' }}, finishReason: null }], model: 'gpt-4o-2024-05-13', usage: null }
+		     * // { id: 'response_id', choices: [{ index: 0, delta: { content: ' test' }}, finishReason: null }], model: 'gpt-4o-2024-05-13', usage: null }
+		     * // { id: 'response_id', choices: [], model: 'gpt-4o-2024-05-13', usage: { promptTokens: 371, completionTokens: 48, totalTokens: 419 }}
+		     * ```
+		     *
+		     * @param options - A {@link ChatCompletionOptions} object containing the message and optional parameters to send
+		     * to an assistant.
+		     * @returns A promise that resolves to a {@link ChatStream<StreamedChatCompletionResponse>}.
+		     */
+		    chatCompletionStream(options) {
+		        return this._chatCompletionStream(options);
+		    }
+		    // --------- File methods ---------
+		    /**
+		     * Lists files (with optional filter) uploaded to an assistant.
+		     *
+		     * @example
+		     * ```typescript
+		     * import { Pinecone } from '@pinecone-database/pinecone';
+		     * const pc = new Pinecone();
+		     * const assistantName = 'test1';
+		     * const assistant = pc.assistant(assistantName);
+		     * const files = await assistant.listFiles({filter: {metadata: {key: 'value'}}});
+		     * console.log(files);
+		     * // {
+		     * //  files: [
+		     * //    {
+		     * //      name: 'temp-file.txt',
+		     * //      id: '1a56ddd0-c6d8-4295-80c0-9bfd6f5cb87b',
+		     * //      metadata: undefined,
+		     * //      createdOn: 2025-01-06T19:14:21.969Z,
+		     * //      updatedOn: 2025-01-06T19:14:36.925Z,
+		     * //      status: 'Available',
+		     * //      percentDone: 1,
+		     * //      signedUrl: undefined,
+		     * //      errorMessage: undefined
+		     * //    }
+		     * //  ]
+		     * // }
+		     * ```
+		     *
+		     * @param options - A {@link ListFilesOptions} object containing optional parameters to filter the list of files.
+		     * @returns A promise that resolves to a {@link AssistantFilesList} object containing a list of files.
+		     */
+		    listFiles(options) {
+		        if (!options) {
+		            options = {};
+		        }
+		        return this._listFiles(options);
+		    }
+		    /**
+		     * Describes a file uploaded to an assistant.
+		     *
+		     * @example
+		     * ```typescript
+		     * import { Pinecone } from '@pinecone-database/pinecone';
+		     * const pc = new Pinecone();
+		     * const assistantName = 'test1';
+		     * const assistant = pc.assistant(assistantName);
+		     * const files = await assistant.listFiles();
+		     * let fileId: string;
+		     * if (files.files) {
+		     *     fileId = files.files[0].id;
+		     * } else {
+		     *     fileId = '';
+		     * }
+		     * const resp = await assistant.describeFile({fileId: fileId})
+		     * console.log(resp);
+		     * // {
+		     * //  name: 'test-file.txt',
+		     * //  id: '1a56ddd0-c6d8-4295-80c0-9bfd6f5cb87b',
+		     * //  metadata: undefined,
+		     * //  createdOn: 2025-01-06T19:14:21.969Z,
+		     * //  updatedOn: 2025-01-06T19:14:36.925Z,
+		     * //  status: 'Available',
+		     * //  percentDone: 1,
+		     * //  signedUrl: undefined,
+		     * //   errorMessage: undefined
+		     * // }
+		     * ```
+		     *
+		     * @param fileId - The ID of the file to describe.
+		     * @param includeUrl - Whether to include the signed URL in the response. Defaults to true.
+		     * @returns A promise that resolves to a {@link AssistantFileModel} object containing the file details.
+		     */
+		    describeFile(fileId, includeUrl = true) {
+		        return this._describeFile(fileId, includeUrl);
+		    }
+		    /**
+		     * Uploads a file to an assistant.
+		     *
+		     * Note: This method does *not* use the generated code from the OpenAPI spec.
+		     *
+		     * @example
+		     * ```typescript
+		     * import { Pinecone } from '@pinecone-database/pinecone';
+		     * const pc = new Pinecone();
+		     * const assistantName = 'test1';
+		     * const assistant = pc.assistant(assistantName);
+		     * await assistant.uploadFile({path: "test-file.txt", metadata: {"test-key": "test-value"}})
+		     * // {
+		     * //  name: 'test-file.txt',
+		     * //  id: '921ad74c-2421-413a-8c86-fca81ceabc5c',
+		     * //  metadata: { 'test-key': 'test-value' },
+		     * //  createdOn: Invalid Date,  // Note: these dates resolve in seconds
+		     * //  updatedOn: Invalid Date,
+		     * //  status: 'Processing',
+		     * //  percentDone: null,
+		     * //  signedUrl: null,
+		     * //  errorMessage: null
+		     * // }
+		     * ```
+		     *
+		     * @param options - A {@link UploadFile} object containing the file path and optional metadata.
+		     * @returns A promise that resolves to a {@link AssistantFileModel} object containing the file details.
+		     */
+		    uploadFile(options) {
+		        return this._uploadFile(options);
+		    }
+		    /**
+		     * Deletes a file uploaded to an assistant by ID.
+		     *
+		     * @example
+		     * ```typescript
+		     * import { Pinecone } from '@pinecone-database/pinecone';
+		     * const pc = new Pinecone();
+		     * const assistantName = 'test1';
+		     * const assistant = pc.assistant(assistantName);
+		     * const files = await assistant.listFiles();
+		     * let fileId: string;
+		     * if (files.files) {
+		     *    fileId = files.files[0].id;
+		     *    await assistant.deleteFile({fileId: fileId});
+		     *  }
+		     * ```
+		     *
+		     * @param options - A {@link DeleteFile} object containing the file ID to delete.
+		     * @returns A promise that resolves to void on success.
+		     */
+		    deleteFile(fileId) {
+		        return this._deleteFile(fileId);
+		    }
+		    /**
+		     * Retrieves [the context snippets](https://docs.pinecone.io/guides/assistant/understanding-context-snippets) used
+		     * by an assistant during the retrieval process.
+		     *
+		     * @example
+		     * ```typescript
+		     * import { Pinecone } from '@pinecone-database/pinecone';
+		     * const pc = new Pinecone();
+		     * const assistantName = 'test1';
+		     * const assistant = pc.assistant(assistantName);
+		     * const response = await assistant.context({query: "What is the capital of France?"});
+		     * console.log(response);
+		     * // {
+		     * //  snippets: [
+		     * //    {
+		     * //      type: 'text',
+		     * //      content: 'The capital of France is Paris.',
+		     * //      score: 0.9978925,
+		     * //      reference: [Object]
+		     * //    },
+		     * //  ],
+		     * //  usage: { promptTokens: 527, completionTokens: 0, totalTokens: 527 }
+		     * // }
+		     * ```
+		     *
+		     * @param options
+		     * @returns A promise that resolves to a {@link Context} object containing the context snippets.
+		     */
+		    context(options) {
+		        return this._context(options);
+		    }
+		}
+		exports.Assistant = Assistant;
+		
+	} (assistant));
+	return assistant;
+}
+
+var hasRequiredPinecone;
+
+function requirePinecone () {
+	if (hasRequiredPinecone) return pinecone;
+	hasRequiredPinecone = 1;
+	Object.defineProperty(pinecone, "__esModule", { value: true });
+	pinecone.Pinecone = void 0;
+	const control_1 = requireControl$1();
+	const control_2 = requireControl();
+	const assistantHostSingleton_1 = requireAssistantHostSingleton();
+	const indexHostSingleton_1 = requireIndexHostSingleton();
+	const errors_1 = requireErrors();
+	const data_1 = requireData();
+	const inference_1 = requireInference();
+	const environment_1 = requireEnvironment();
+	const validateObjectProperties_1 = requireValidateObjectProperties();
+	const types_1 = requireTypes$1();
+	const asstControlOperationsBuilder_1 = requireAsstControlOperationsBuilder();
+	const assistant_1 = requireAssistant();
+	/**
+	 * The `Pinecone` class is the main entrypoint to this sdk. You will use
+	 * instances of it to create and manage indexes as well as perform data
+	 * operations on those indexes after they are created.
+	 *
+	 * ### Initializing the client
+	 *
+	 * There is one piece of configuration required to use the Pinecone client: an API key. This value can be passed using environment variables or in code through a configuration object. Find your API key in the console dashboard at [https://app.pinecone.io](https://app.pinecone.io)
+	 *
+	 * ### Using environment variables
+	 *
+	 * The environment variables used to configure the client are the following:
+	 *
+	 * ```bash
+	 * export PINECONE_API_KEY="your_api_key"
+	 * export PINECONE_CONTROLLER_HOST="your_controller_host"
+	 * ```
+	 *
+	 * When these environment variables are set, the client constructor does not require any additional arguments.
+	 *
+	 * ```typescript
+	 * import { Pinecone } from '@pinecone-database/pinecone';
+	 *
+	 * const pc = new Pinecone();
+	 * ```
+	 *
+	 * ### Using a configuration object
+	 *
+	 * If you prefer to pass configuration in code, the constructor accepts a config object containing the `apiKey` and `environment` values. This
+	 * could be useful if your application needs to interact with multiple projects, each with a different configuration.
+	 *
+	 * ```typescript
+	 * import { Pinecone } from '@pinecone-database/pinecone';
+	 *
+	 * const pc = new Pinecone({
+	 *   apiKey: 'your_api_key',
+	 * });
+	 *
+	 * ```
+	 *
+	 * See {@link PineconeConfiguration} for a full description of available configuration options.
+	 */
+	class Pinecone {
+	    /**
+	     * @example
+	     * ```
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     *
+	     * const pc = new Pinecone({
+	     *  apiKey: 'my-api-key',
+	     * });
+	     * ```
+	     *
+	     * @constructor
+	     * @param options - The configuration options for the Pinecone client: {@link PineconeConfiguration}.
+	     */
+	    constructor(options) {
+	        if (options === undefined) {
+	            options = this._readEnvironmentConfig();
+	        }
+	        if (!options.apiKey) {
+	            throw new errors_1.PineconeConfigurationError('The client configuration must have required property: apiKey.');
+	        }
+	        (0, validateObjectProperties_1.ValidateObjectProperties)(options, types_1.PineconeConfigurationProperties);
+	        this.config = options;
+	        this._checkForBrowser();
+	        const api = (0, control_1.indexOperationsBuilder)(this.config);
+	        const asstControlApi = (0, asstControlOperationsBuilder_1.asstControlOperationsBuilder)(this.config);
+	        this._configureIndex = (0, control_1.configureIndex)(api);
+	        this._createCollection = (0, control_1.createCollection)(api);
+	        this._createIndex = (0, control_1.createIndex)(api);
+	        this._createIndexForModel = (0, control_1.createIndexForModel)(api);
+	        this._describeCollection = (0, control_1.describeCollection)(api);
+	        this._deleteCollection = (0, control_1.deleteCollection)(api);
+	        this._describeIndex = (0, control_1.describeIndex)(api);
+	        this._deleteIndex = (0, control_1.deleteIndex)(api);
+	        this._listCollections = (0, control_1.listCollections)(api);
+	        this._listIndexes = (0, control_1.listIndexes)(api);
+	        this._createAssistant = (0, control_2.createAssistant)(asstControlApi);
+	        this._deleteAssistant = (0, control_2.deleteAssistant)(asstControlApi);
+	        this._updateAssistant = (0, control_2.updateAssistant)(asstControlApi);
+	        this._describeAssistant = (0, control_2.describeAssistant)(asstControlApi);
+	        this._listAssistants = (0, control_2.listAssistants)(asstControlApi);
+	        this._createBackup = (0, control_1.createBackup)(api);
+	        this._createIndexFromBackup = (0, control_1.createIndexFromBackup)(api);
+	        this._describeBackup = (0, control_1.describeBackup)(api);
+	        this._describeRestoreJob = (0, control_1.describeRestoreJob)(api);
+	        this._deleteBackup = (0, control_1.deleteBackup)(api);
+	        this._listBackups = (0, control_1.listBackups)(api);
+	        this._listRestoreJobs = (0, control_1.listRestoreJobs)(api);
+	        this.inference = new inference_1.Inference(this.config);
+	    }
+	    /**
+	     * @internal
+	     * This method is used by {@link Pinecone.constructor} to read configuration from environment variables.
+	     *
+	     * It looks for the following environment variables:
+	     * - `PINECONE_API_KEY`
+	     * - `PINECONE_CONTROLLER_HOST`
+	     *
+	     * @returns A {@link PineconeConfiguration} object populated with values found in environment variables.
+	     */
+	    _readEnvironmentConfig() {
+	        if (typeof process === 'undefined' || !process || !process.env) {
+	            throw new errors_1.PineconeEnvironmentVarsNotSupportedError('Your execution environment does not support reading environment variables from process.env, so a' +
+	                ' configuration object is required when calling new Pinecone().');
+	        }
+	        const environmentConfig = {};
+	        const requiredEnvVarMap = {
+	            apiKey: 'PINECONE_API_KEY',
+	        };
+	        const missingVars = [];
+	        for (const [key, envVar] of Object.entries(requiredEnvVarMap)) {
+	            const value = process.env[envVar] || '';
+	            if (!value) {
+	                missingVars.push(envVar);
+	            }
+	            environmentConfig[key] = value;
+	        }
+	        if (missingVars.length > 0) {
+	            throw new errors_1.PineconeConfigurationError(`Since you called 'new Pinecone()' with no configuration object, we attempted to find client configuration in environment variables but the required environment variables were not set. Missing variables: ${missingVars.join(', ')}.`);
+	        }
+	        const optionalEnvVarMap = {
+	            controllerHostUrl: 'PINECONE_CONTROLLER_HOST',
+	        };
+	        for (const [key, envVar] of Object.entries(optionalEnvVarMap)) {
+	            const value = process.env[envVar];
+	            if (value !== undefined) {
+	                environmentConfig[key] = value;
+	            }
+	        }
+	        return environmentConfig;
+	    }
+	    /**
+	     * Describe a Pinecone index
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     *
+	     * const indexModel = await pc.describeIndex('my-index')
+	     * console.log(indexModel)
+	     * // {
+	     * //     name: 'sample-index-1',
+	     * //     dimension: 3,
+	     * //     metric: 'cosine',
+	     * //     host: 'sample-index-1-1390950.svc.apw5-4e34-81fa.pinecone.io',
+	     * //     spec: {
+	     * //           pod: undefined,
+	     * //           serverless: {
+	     * //               cloud: 'aws',
+	     * //               region: 'us-west-2'
+	     * //           }
+	     * //     },
+	     * //     status: {
+	     * //           ready: true,
+	     * //           state: 'Ready'
+	     * //     }
+	     * // }
+	     * ```
+	     *
+	     * @param indexName - The name of the index to describe.
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns A promise that resolves to {@link IndexModel}.
+	     */
+	    async describeIndex(indexName) {
+	        const indexModel = await this._describeIndex(indexName);
+	        // For any describeIndex calls we want to update the IndexHostSingleton cache.
+	        // This prevents unneeded calls to describeIndex for resolving the host for vector operations.
+	        if (indexModel.host) {
+	            indexHostSingleton_1.IndexHostSingleton._set(this.config, indexName, indexModel.host);
+	        }
+	        return Promise.resolve(indexModel);
+	    }
+	    /**
+	     * List all Pinecone indexes
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     *
+	     * const indexList = await pc.listIndexes()
+	     * console.log(indexList)
+	     * // {
+	     * //     indexes: [
+	     * //       {
+	     * //         name: "sample-index-1",
+	     * //         dimension: 3,
+	     * //         metric: "cosine",
+	     * //         host: "sample-index-1-1234567.svc.apw5-2e18-32fa.pinecone.io",
+	     * //         spec: {
+	     * //           serverless: {
+	     * //             cloud: "aws",
+	     * //             region: "us-west-2"
+	     * //           }
+	     * //         },
+	     * //         status: {
+	     * //           ready: true,
+	     * //           state: "Ready"
+	     * //         }
+	     * //       },
+	     * //       {
+	     * //         name: "sample-index-2",
+	     * //         dimension: 3,
+	     * //         metric: "cosine",
+	     * //         host: "sample-index-2-1234567.svc.apw2-5e76-83fa.pinecone.io",
+	     * //         spec: {
+	     * //           serverless: {
+	     * //             cloud: "aws",
+	     * //             region: "us-west-2"
+	     * //           }
+	     * //         },
+	     * //         status: {
+	     * //           ready: true,
+	     * //           state: "Ready"
+	     * //         }
+	     * //       }
+	     * //     ]
+	     * //   }
+	     * ```
+	     *
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns A promise that resolves to {@link IndexList}.
+	     */
+	    async listIndexes() {
+	        const indexList = await this._listIndexes();
+	        // For any listIndexes calls we want to update the IndexHostSingleton cache.
+	        // This prevents unneeded calls to describeIndex for resolving the host for index operations.
+	        if (indexList.indexes && indexList.indexes.length > 0) {
+	            for (let i = 0; i < indexList.indexes.length; i++) {
+	                const index = indexList.indexes[i];
+	                indexHostSingleton_1.IndexHostSingleton._set(this.config, index.name, index.host);
+	            }
+	        }
+	        return Promise.resolve(indexList);
+	    }
+	    /**
+	     * Creates a new index.
+	     *
+	     * @example
+	     * The minimum required configuration to create an index is the index `name`, `dimension`, and `spec`.
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     *
+	     * const pc = new Pinecone();
+	     *
+	     * await pc.createIndex({ name: 'my-index', dimension: 128, spec: { serverless: { cloud: 'aws', region: 'us-west-2' }}})
+	     * ```
+	     *
+	     * @example
+	     * The `spec` object defines how the index should be deployed. For serverless indexes, you define only the cloud and region where the index should be hosted.
+	     * For pod-based indexes, you define the environment where the index should be hosted, the pod type and size to use, and other index characteristics.
+	     * In a different example, you can create a pod-based index by specifying the `pod` spec object with the `environment`, `pods`, `podType`, and `metric` properties.
+	     * For more information on creating indexes, see [Understanding indexes](https://docs.pinecone.io/guides/indexes/understanding-indexes).
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     *
+	     * await pc.createIndex({
+	     *  name: 'my-index',
+	     *  dimension: 1536,
+	     *  metric: 'cosine',
+	     *  spec: {
+	     *    pod: {
+	     *      environment: 'us-west-2-gcp',
+	     *      pods: 1,
+	     *      podType: 'p1.x1'
+	     *    }
+	     *   },
+	     *  tags: { 'team': 'data-science' }
+	     * })
+	     * ```
+	     *
+	     * @example
+	     * If you would like to create the index only if it does not already exist, you can use the `suppressConflicts` boolean option.
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     *
+	     * await pc.createIndex({
+	     *   name: 'my-index',
+	     *   dimension: 1536,
+	     *   spec: {
+	     *     serverless: {
+	     *       cloud: 'aws',
+	     *       region: 'us-west-2'
+	     *     }
+	     *   },
+	     *   suppressConflicts: true,
+	     *   tags: { 'team': 'data-science' }
+	     * })
+	     * ```
+	     *
+	     * @example
+	     * If you plan to begin upserting immediately after index creation is complete, you should use the `waitUntilReady` option. Otherwise, the index may not be ready to receive data operations when you attempt to upsert.
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     *
+	     * await pc.createIndex({
+	     *  name: 'my-index',
+	     *   spec: {
+	     *     serverless: {
+	     *       cloud: 'aws',
+	     *       region: 'us-west-2'
+	     *     }
+	     *   },
+	     *  waitUntilReady: true,
+	     *  tags: { 'team': 'data-science' }
+	     * });
+	     *
+	     * const records = [
+	     *   // PineconeRecord objects with your embedding values
+	     * ]
+	     * await pc.index('my-index').upsert(records)
+	     * ```
+	     *
+	     * @example
+	     * By default all metadata fields are indexed when records are upserted with metadata, but if you want to improve performance you can specify the specific fields you want to index. This example is showing a few hypothetical metadata fields, but the values you'd use depend on what metadata you plan to store with records in your Pinecone index.
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     *
+	     * await pc.createIndex({
+	     *   name: 'my-index',
+	     *   dimension: 1536,
+	     *   spec: {
+	     *     serverless: {
+	     *       cloud: 'aws',
+	     *       region: 'us-west-2',
+	     *       metadataConfig: { 'indexed' : ['productName', 'productDescription'] }
+	     *     }
+	     *   },
+	     *  tags: { 'team': 'data-science' }
+	     * })
+	     * ```
+	     *
+	     * @param options - The {@link CreateIndexOptions} for creating the index.
+	     * @see [Distance metrics](https://docs.pinecone.io/docs/indexes#distance-metrics)
+	     * @see [Pod types and sizes](https://docs.pinecone.io/docs/indexes#pods-pod-types-and-pod-sizes)
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeBadRequestError} when index creation fails due to invalid parameters being specified or other problem such as project quotas limiting the creation of any additional indexes.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @throws {@link Errors.PineconeConflictError} when attempting to create an index using a name that already exists in your project.
+	     * @returns A promise that resolves to {@link IndexModel} when the request to create the index is completed. Note that the index is not immediately ready to use. You can use the {@link describeIndex} function to check the status of the index.
+	     */
+	    createIndex(options) {
+	        return this._createIndex(options);
+	    }
+	    /**
+	     * Creates a new integrated index which allows working with integrated inference capabilities.
+	     * @see [Upsert and search with integrated inference](https://docs.pinecone.io/guides/inference/integrated-inference)
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     *
+	     * await pc.createIndexForModel({
+	     *   name: 'integrated-index',
+	     *   cloud: 'aws',
+	     *   region: 'us-east-1',
+	     *   embed: {
+	     *     model: 'multilingual-e5-large',
+	     *     fieldMap: { text: 'chunk_text' },
+	     *   },
+	     *   waitUntilReady: true,
+	     * });
+	     * ```
+	     *
+	     * @param options - The {@link CreateIndexForModelOptions} for creating the index.
+	     * @see [Distance metrics](https://docs.pinecone.io/docs/indexes#distance-metrics)
+	     * @see [Pod types and sizes](https://docs.pinecone.io/docs/indexes#pods-pod-types-and-pod-sizes)
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeBadRequestError} when index creation fails due to invalid parameters being specified or other problem such as project quotas limiting the creation of any additional indexes.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @throws {@link Errors.PineconeConflictError} when attempting to create an index using a name that already exists in your project.
+	     * @returns A promise that resolves to {@link IndexModel} when the request to create the index is completed. Note that the index is not immediately ready to use. You can use the {@link describeIndex} function to check the status of the index.
+	     */
+	    createIndexForModel(options) {
+	        return this._createIndexForModel(options);
+	    }
+	    /**
+	     * Deletes an index
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     *
+	     * await pc.deleteIndex('my-index')
+	     * ```
+	     *
+	     * @param indexName - The name of the index to delete.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @returns A promise that resolves when the request to delete the index is completed.
+	     */
+	    async deleteIndex(indexName) {
+	        await this._deleteIndex(indexName);
+	        // When an index is deleted, we need to evict the host from the IndexHostSingleton cache.
+	        indexHostSingleton_1.IndexHostSingleton._delete(this.config, indexName);
+	        return Promise.resolve();
+	    }
+	    /**
+	     * Configure an index
+	     *
+	     * Use this method to update configuration on an existing index. For both pod-based and serverless indexes you can update
+	     * the deletionProtection status of an index and/or change any index tags. For pod-based index you can also
+	     * configure the number of replicas and pod type.
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     *
+	     * await pc.configureIndex('my-index', {
+	     *   deletionProtection: 'enabled',
+	     *   spec:{ pod:{ replicas: 2, podType: 'p1.x2' }},
+	     * });
+	     * ```
+	     *
+	     * @param indexName - The name of the index to configure.
+	     * @param options - The configuration properties you would like to update
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns A promise that resolves to {@link IndexModel} when the request to configure the index is completed.
+	     */
+	    configureIndex(indexName, options) {
+	        return this._configureIndex(indexName, options, this.config.maxRetries);
+	    }
+	    /**
+	     * Create a new collection from an existing index
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     *
+	     * const indexList = await pc.listIndexes()
+	     * const indexName = indexList.indexes[0].name;
+	     * await pc.createCollection({
+	     *  name: 'my-collection',
+	     *  source: indexName
+	     * })
+	     * ```
+	     *
+	     * @param options - The collection configuration.
+	     * @param options.name - The name of the collection. Must be unique within the project and contain alphanumeric and hyphen characters. The name must start and end with alphanumeric characters.
+	     * @param options.source - The name of the index to use as the source for the collection.
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns a promise that resolves to {@link CollectionModel} when the request to create the collection is completed.
+	     */
+	    createCollection(options) {
+	        return this._createCollection(options);
+	    }
+	    /**
+	     * List all collections in a project
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     *
+	     * await pc.listCollections()
+	     * ```
+	     *
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns A promise that resolves to {@link CollectionList}.
+	     */
+	    listCollections() {
+	        return this._listCollections();
+	    }
+	    /**
+	     * Delete a collection by collection name
+	     *
+	     * @example
+	     * ```
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     *
+	     * const collectionList = await pc.listCollections()
+	     * const collectionName = collectionList.collections[0].name;
+	     * await pc.deleteCollection(collectionName)
+	     * ```
+	     *
+	     * @param collectionName - The name of the collection to delete.
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns A promise that resolves when the request to delete the collection is completed.
+	     */
+	    deleteCollection(collectionName) {
+	        return this._deleteCollection(collectionName);
+	    }
+	    /**
+	     * Describe a collection
+	     *
+	     * @example
+	     * ```js
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     *
+	     * await pc.describeCollection('my-collection')
+	     * ```
+	     *
+	     * @param collectionName - The name of the collection to describe.
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns A promise that resolves to a {@link CollectionModel}.
+	     */
+	    describeCollection(collectionName) {
+	        return this._describeCollection(collectionName);
+	    }
+	    /**
+	     * Creates a new Assistant.
+	     *
+	     * @example
+	     * ```typescript
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * await pc.createAssistant({name: 'test1'});
+	     * // {
+	     * //  name: 'test11',
+	     * //  instructions: undefined,
+	     * //  metadata: undefined,
+	     * //  status: 'Initializing',
+	     * //  host: 'https://prod-1-data.ke.pinecone.io',
+	     * //  createdAt: 2025-01-08T22:52:49.652Z,
+	     * //  updatedAt: 2025-01-08T22:52:49.652Z
+	     * // }
+	     * ```
+	     *
+	     * @param options - A {@link CreateAssistantOptions} object containing the `name` of the Assistant to be created.
+	     * Optionally, users can also specify instructions, metadata, and host region. Region must be one of "us" or "eu"
+	     * and determines where the Assistant will be hosted.
+	     * @throws Error if the Assistant API is not initialized.
+	     * @throws Error if an invalid region is provided.
+	     * @returns A Promise that resolves to an {@link Assistant} model.
+	     */
+	    async createAssistant(options) {
+	        const assistant = await this._createAssistant(options);
+	        if (assistant.host) {
+	            assistantHostSingleton_1.AssistantHostSingleton._set(this.config, assistant.name, assistant.host);
+	        }
+	        return Promise.resolve(assistant);
+	    }
+	    /**
+	     * Deletes an Assistant by name.
+	     *
+	     * @example
+	     * ```typescript
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * await pc.deleteAssistant('test1');
+	     * ```
+	     *
+	     * @param assistantName - The name of the Assistant to be deleted.
+	     * @throws Error if the Assistant API is not initialized.
+	     */
+	    async deleteAssistant(assistantName) {
+	        await this._deleteAssistant(assistantName);
+	        assistantHostSingleton_1.AssistantHostSingleton._delete(this.config, assistantName);
+	        return Promise.resolve();
+	    }
+	    /**
+	     * Retrieves information about an Assistant by name.
+	     *
+	     * @example
+	     * ```typescript
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const test = await pc.describeAssistant('test1');
+	     * console.log(test);
+	     * // {
+	     * //  name: 'test1',
+	     * //  instructions: undefined,
+	     * //  metadata: undefined,
+	     * //  status: 'Ready',
+	     * //  host: 'https://prod-1-data.ke.pinecone.io',
+	     * //  createdAt: 2025-01-08T22:24:50.525Z,
+	     * //  updatedAt: 2025-01-08T22:24:52.303Z
+	     * // }
+	     * ```
+	     *
+	     * @param assistantName - The name of the Assistant to retrieve.
+	     * @throws Error if the Assistant API is not initialized.
+	     * @returns A Promise that resolves to an {@link Assistant} model.
+	     */
+	    async describeAssistant(assistantName) {
+	        const assistant = await this._describeAssistant(assistantName);
+	        if (assistant.host) {
+	            assistantHostSingleton_1.AssistantHostSingleton._set(this.config, assistantName, assistant.host);
+	        }
+	        return Promise.resolve(assistant);
+	    }
+	    /**
+	     * Retrieves a list of all Assistants for a given Pinecone API key.
+	     *
+	     * @example
+	     * ```typescript
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const assistants = await pc.listAssistants();
+	     * console.log(assistants);
+	     * // {
+	     * //  assistants: [
+	     * //    {
+	     * //      name: 'test2',
+	     * //      instructions: 'test-instructions',
+	     * //      metadata: [Object],
+	     * //      status: 'Ready',
+	     * //      host: 'https://prod-1-data.ke.pinecone.io',
+	     * //      createdAt: 2025-01-06T19:14:18.633Z,
+	     * //      updatedAt: 2025-01-06T19:14:36.977Z
+	     * //    },
+	     * //  ]
+	     * // }
+	     * ```
+	     *
+	     * @throws Error if the Assistant API is not initialized.
+	     * @returns A Promise that resolves to an object containing an array of {@link Assistant} models.
+	     */
+	    async listAssistants() {
+	        const assistantList = await this._listAssistants();
+	        // For any listAssistants calls we want to update the AssistantHostSingleton cache.
+	        // This prevents unneeded calls to describeAssistant for resolving the host for assistant operations.
+	        if (assistantList.assistants && assistantList.assistants.length > 0) {
+	            for (let i = 0; i < assistantList.assistants.length; i++) {
+	                const assistant = assistantList.assistants[i];
+	                if (assistant.host) {
+	                    assistantHostSingleton_1.AssistantHostSingleton._set(this.config, assistant.name, assistant.host);
+	                }
+	            }
+	        }
+	        return Promise.resolve(assistantList);
+	    }
+	    /**
+	     * Updates an Assistant by name.
+	     *
+	     * @example
+	     * ```typescript
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * await pc.updateAssistant('test1', { instructions: 'some new  instructions!'});
+	     * // {
+	     * //  assistantName: test1,
+	     * //  instructions: 'some new instructions!',
+	     * //  metadata: undefined
+	     * // }
+	     * ```
+	     *
+	     * @param assistantName - The name of the assistant being updated.
+	     * @param options - An {@link UpdateAssistantOptions} object containing the name of the assistant to be updated and
+	     * optional instructions and metadata.
+	     * @throws Error if the Assistant API is not initialized.
+	     * @returns A Promise that resolves to an {@link UpdateAssistant200Response} object.
+	     */
+	    updateAssistant(assistantName, options) {
+	        return this._updateAssistant(assistantName, options);
+	    }
+	    /** @internal */
+	    _checkForBrowser() {
+	        if ((0, environment_1.isBrowser)()) {
+	            console.warn('The Pinecone SDK is intended for server-side use only. Using the SDK within a browser context can expose your API key(s). If you have deployed the SDK to production in a browser, please rotate your API keys.');
+	        }
+	    }
+	    /**
+	     * @returns The configuration object that was passed to the Pinecone constructor.
+	     */
+	    getConfig() {
+	        return this.config;
+	    }
+	    /**
+	     * Creates a backup of an index.
+	     *
+	     * @example
+	     * ```typescript
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const backup = await pc.createBackup({ indexName: 'my-index', name: 'my-index-backup-1', description: 'weekly backup' });
+	     * console.log(backup);
+	     * // {
+	     * //   backupId: '11450b9f-96e5-47e5-9186-03f346b1f385',
+	     * //   sourceIndexName: 'my-index',
+	     * //   sourceIndexId: 'b480770b-600d-4c4e-bf19-799c933ae2bf',
+	     * //   name: 'my-index-backup-1',
+	     * //   description: 'weekly backup',
+	     * //   status: 'Initializing',
+	     * //   cloud: 'aws',
+	     * //   region: 'us-east-1',
+	     * //   dimension: 1024,
+	     * //   metric: 'cosine',
+	     * //   recordCount: 500,
+	     * //   namespaceCount: 4,
+	     * //   sizeBytes: 78294,
+	     * //   tags: {},
+	     * //   createdAt: '2025-05-07T03:11:11.722238160Z'
+	     * // }
+	     * ```
+	     *
+	     * @param options - A {@link CreateBackupOptions} object containing the indexName to backup, and an optional name
+	     * and description for the backup.
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns A Promise that resolves to a {@link BackupModel} object.
+	     */
+	    createBackup(options) {
+	        return this._createBackup(options);
+	    }
+	    /**
+	     * Creates an index from an existing backup.
+	     *
+	     * @example
+	     * ```typescript
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const response = await pc.createIndexFromBackup({ backupId: '11450b9f-96e5-47e5-9186-03f346b1f385', name: 'my-index-restore-1' });
+	     * console.log(response);
+	     * // {
+	     * //   restoreJobId: '4d4c8693-10fd-4204-a57b-1e3e626fca07',
+	     * //   indexId: 'deb7688b-9f21-4c16-8eb7-f0027abd27fe'
+	     * // }
+	     * ```
+	     *
+	     * @param options - A {@link CreateIndexFromBackupOptions} object containing the backupId for the backup to restore
+	     * the index from, and the name of the new index. Optionally, you can provide new tags or deletionProtection values for the index.
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns A Promise that resolves to a {@link CreateIndexFromBackupResponse} object.
+	     */
+	    createIndexFromBackup(options) {
+	        return this._createIndexFromBackup(options);
+	    }
+	    /**
+	     * Describes a backup.
+	     *
+	     * @example
+	     * ```typescript
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const backup = await pc.describeBackup('11450b9f-96e5-47e5-9186-03f346b1f385');
+	     * console.log(backup);
+	     * // {
+	     * //   backupId: '11450b9f-96e5-47e5-9186-03f346b1f385',
+	     * //   sourceIndexName: 'my-index',
+	     * //   sourceIndexId: 'b480770b-600d-4c4e-bf19-799c933ae2bf',
+	     * //   name: 'my-index-backup-1',
+	     * //   description: 'weekly backup',
+	     * //   status: 'Initializing',
+	     * //   cloud: 'aws',
+	     * //   region: 'us-east-1',
+	     * //   dimension: 1024,
+	     * //   metric: 'cosine',
+	     * //   recordCount: 500,
+	     * //   namespaceCount: 4,
+	     * //   sizeBytes: 78294,
+	     * //   tags: {},
+	     * //   createdAt: '2025-05-07T03:11:11.722238160Z'
+	     * // }
+	     * ```
+	     *
+	     * @param options - The backupId of the backup to describe.
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns A Promise that resolves to a {@link BackupModel} object.
+	     */
+	    describeBackup(backupName) {
+	        return this._describeBackup(backupName);
+	    }
+	    /**
+	     * Describes a restore job.
+	     *
+	     * @example
+	     * ```typescript
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const restoreJob = await pc.describeRestoreJob('4d4c8693-10fd-4204-a57b-1e3e626fca07');
+	     * console.log(restoreJob);
+	     * // {
+	     * //   restoreJobId: '4d4c8693-10fd-4204-a57b-1e3e626fca07',
+	     * //   backupId: '11450b9f-96e5-47e5-9186-03f346b1f385',
+	     * //   targetIndexName: 'my-index-restore-1',
+	     * //   targetIndexId: 'deb7688b-9f21-4c16-8eb7-f0027abd27fe',
+	     * //   status: 'Completed',
+	     * //   createdAt: 2025-05-07T03:38:37.107Z,
+	     * //   completedAt: 2025-05-07T03:40:23.687Z,
+	     * //   percentComplete: 100
+	     * // }
+	     * ```
+	     *
+	     * @param options - The restoreJobId of the restore job to describe.
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns A Promise that resolves to a {@link RestoreJobModel} object.
+	     */
+	    describeRestoreJob(restoreJobId) {
+	        return this._describeRestoreJob(restoreJobId);
+	    }
+	    /**
+	     * Deletes a backup.
+	     *
+	     * @example
+	     * ```typescript
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * await pc.deleteBackup('11450b9f-96e5-47e5-9186-03f346b1f385');
+	     * ```
+	     *
+	     * @param options - The backupId of the backup to delete.
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns A Promise that resolves when the request to delete the backup is completed.
+	     */
+	    deleteBackup(backupName) {
+	        return this._deleteBackup(backupName);
+	    }
+	    /**
+	     * Lists backups within a project or a specific index. Pass an indexName to list backups for that index,
+	     * otherwise the operation will return all backups in the project.
+	     *
+	     * @example
+	     * ```typescript
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const backupsList = await pc.listBackups({ indexName: 'my-index', limit: 2 });
+	     * console.log(backupsList);
+	     * // {
+	     * //   data: [
+	     * //     {
+	     * //       backupId: '6a00902c-d118-4ad3-931c-49328c26d558',
+	     * //       sourceIndexName: 'my-index',
+	     * //       sourceIndexId: '0888b4d9-0b7b-447e-a403-ab057ceee4d4',
+	     * //       name: 'my-index-backup-2',
+	     * //       description: undefined,
+	     * //       status: 'Ready',
+	     * //       cloud: 'aws',
+	     * //       region: 'us-east-1',
+	     * //       dimension: 5,
+	     * //       metric: 'cosine',
+	     * //       recordCount: 200,
+	     * //       namespaceCount: 2,
+	     * //       sizeBytes: 67284,
+	     * //       tags: {},
+	     * //       createdAt: '2025-05-07T18:34:13.626650Z'
+	     * //     },
+	     * //     {
+	     * //       backupId: '2b362ea3-b7cf-4950-866f-0dff37ab781e',
+	     * //       sourceIndexName: 'my-index',
+	     * //       sourceIndexId: '0888b4d9-0b7b-447e-a403-ab057ceee4d4',
+	     * //       name: 'my-index-backup-1',
+	     * //       description: undefined,
+	     * //       status: 'Ready',
+	     * //       cloud: 'aws',
+	     * //       region: 'us-east-1',
+	     * //       dimension: 1024,
+	     * //       metric: 'cosine',
+	     * //       recordCount: 500,
+	     * //       namespaceCount: 4,
+	     * //       sizeBytes: 78294,
+	     * //       tags: {},
+	     * //       createdAt: '2025-05-07T18:33:59.888270Z'
+	     * //     },
+	     * //   ],
+	     * //   pagination: undefined
+	     * // }
+	     * ```
+	     *
+	     * @param options - A {@link ListBackupsOptions} object containing the optional indexName, limit, and paginationToken values.
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns A Promise that resolves to a {@link BackupList} object.
+	     */
+	    listBackups(options) {
+	        return this._listBackups(options);
+	    }
+	    /**
+	     * Lists restore jobs within a project.
+	     *
+	     * @example
+	     * ```typescript
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone();
+	     * const restoreJobsList = await pc.listRestoreJobs({ limit: 3 });
+	     * console.log(restoreJobsList);
+	     * // {
+	     * //   data: [
+	     * //     {
+	     * //       restoreJobId: '4d4c8693-10fd-4204-a57b-1e3e626fca07',
+	     * //       backupId: '11450b9f-96e5-47e5-9186-03f346b1f385',
+	     * //       targetIndexName: 'my-index-restore-1',
+	     * //       targetIndexId: 'deb7688b-9f21-4c16-8eb7-f0027abd27fe',
+	     * //       status: 'Completed',
+	     * //       createdAt: 2025-05-07T03:38:37.107Z,
+	     * //       completedAt: 2025-05-07T03:40:23.687Z,
+	     * //       percentComplete: 100
+	     * //     },
+	     * //     {
+	     * //       restoreJobId: 'c60a62e0-63b9-452a-88af-31d89c56c988',
+	     * //       backupId: '11450b9f-96e5-47e5-9186-03f346b1f385',
+	     * //       targetIndexName: 'my-index-restore-2',
+	     * //       targetIndexId: 'f2c9a846-799f-4b19-81a4-f3096b3d6114',
+	     * //       status: 'Completed',
+	     * //       createdAt: 2025-05-07T21:42:38.971Z,
+	     * //       completedAt: 2025-05-07T21:43:11.782Z,
+	     * //       percentComplete: 100
+	     * //     },
+	     * //     {
+	     * //       restoreJobId: '792837b7-8001-47bf-9c11-1859826b9c10',
+	     * //       backupId: '11450b9f-96e5-47e5-9186-03f346b1f385',
+	     * //       targetIndexName: 'my-index-restore-3',
+	     * //       targetIndexId: '620dda62-c999-4dd1-b083-6beb087b31e7',
+	     * //       status: 'Pending',
+	     * //       createdAt: 2025-05-07T21:48:39.580Z,
+	     * //       completedAt: 2025-05-07T21:49:12.084Z,
+	     * //       percentComplete: 45
+	     * //     }
+	     * //   ],
+	     * //   pagination: undefined
+	     * // }
+	     * ```
+	     *
+	     * @param options - A {@link ListBackupsOptions} object containing the optional indexName, limit, and paginationToken values.
+	     * @throws {@link Errors.PineconeArgumentError} when arguments passed to the method fail a runtime validation.
+	     * @throws {@link Errors.PineconeConnectionError} when network problems or an outage of Pinecone's APIs prevent the request from being completed.
+	     * @returns A Promise that resolves to a {@link BackupList} object.
+	     */
+	    listRestoreJobs(options) {
+	        return this._listRestoreJobs(options);
+	    }
+	    /**
+	     * Targets a specific index for performing data operations.
+	     *
+	     * ```typescript
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     * const pc = new Pinecone()
+	     *
+	     * const index = pc.index('index-name')
+	     * ```
+	     *
+	     * #### Targeting an index, with user-defined Metadata types
+	     *
+	     * If you are storing metadata alongside your vector values inside your Pinecone records, you can pass a type parameter to `index()` in order to get proper TypeScript typechecking when upserting and querying data.
+	     *
+	     * ```typescript
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     *
+	     * const pc = new Pinecone();
+	     *
+	     * type MovieMetadata = {
+	     *   title: string,
+	     *   runtime: numbers,
+	     *   genre: 'comedy' | 'horror' | 'drama' | 'action'
+	     * }
+	     *
+	     * // Specify a custom metadata type while targeting the index
+	     * const index = pc.index<MovieMetadata>('test-index');
+	     *
+	     * // Now you get type errors if upserting malformed metadata
+	     * await index.upsert([{
+	     *   id: '1234',
+	     *   values: [
+	     *     .... // embedding values
+	     *   ],
+	     *   metadata: {
+	     *     genre: 'Gone with the Wind',
+	     *     runtime: 238,
+	     *     genre: 'drama',
+	     *
+	     *     // @ts-expect-error because category property not in MovieMetadata
+	     *     category: 'classic'
+	     *   }
+	     * }])
+	     *
+	     * const results = await index.query({
+	     *    vector: [
+	     *     ... // query embedding
+	     *    ],
+	     *    filter: { genre: { '$eq': 'drama' }}
+	     * })
+	     * const movie = results.matches[0];
+	     *
+	     * if (movie.metadata) {
+	     *   // Since we passed the MovieMetadata type parameter above,
+	     *   // we can interact with metadata fields without having to
+	     *   // do any typecasting.
+	     *   const { title, runtime, genre } = movie.metadata;
+	     *   console.log(`The best match in drama was ${title}`)
+	     * }
+	     * ```
+	     *
+	     * @typeParam T - The type of metadata associated with each record.
+	     * @param indexName - The name of the index to target.
+	     * @param indexHostUrl - An optional host url to use for operations against this index. If not provided, the host url will be resolved by calling {@link describeIndex}.
+	     * @param additionalHeaders - An optional object containing additional headers to pass with each index request.
+	     * @typeParam T - The type of the metadata object associated with each record.
+	     * @returns An {@link Index} object that can be used to perform data operations.
+	     */
+	    index(indexName, indexHostUrl, additionalHeaders) {
+	        return new data_1.Index(indexName, this.config, undefined, indexHostUrl, additionalHeaders);
+	    }
+	    /**
+	     * {@inheritDoc index}
+	     */
+	    // Alias method to match the Python SDK capitalization
+	    Index(indexName, indexHostUrl, additionalHeaders) {
+	        return this.index(indexName, indexHostUrl, additionalHeaders);
+	    }
+	    /**
+	     * Targets a specific assistant for performing operations.
+	     *
+	     * Once an assistant is targeted, you can perform operations such as uploading files,
+	     * updating instructions, and chatting.
+	     *
+	     * ```typescript
+	     * import { Pinecone } from '@pinecone-database/pinecone';
+	     *
+	     * const pc = new Pinecone();
+	     * const assistant = pc.Assistant('my-assistant');
+	     *
+	     * // Upload a file to the assistant
+	     * await assistant.uploadFile({
+	     *   path: 'test-file.txt',
+	     *   metadata: { description: 'Sample test file' }
+	     * });
+	     *
+	     * // Retrieve assistant details
+	     * const details = await assistant.describe();
+	     * console.log('Assistant details:', details);
+	     *
+	     * // Update assistant instructions
+	     * await assistant.update({
+	     *   instructions: 'Provide concise responses only.',
+	     * });
+	     *
+	     * const chatResp = await assistant.chat({
+	     *   messages: [{ role: 'user', content: 'What is the capital of France?' }],
+	     * });
+	     * console.log(chatResp);
+	     * // {
+	     * //  id: '000000000000000023e7fb015be9d0ad',
+	     * //  finishReason: 'stop',
+	     * //  message: {
+	     * //    role: 'assistant',
+	     * //    content: 'The capital of France is Paris.'
+	     * //  },
+	     * //  model: 'gpt-4o-2024-05-13',
+	     * //  citations: [ { position: 209, references: [Array] } ],
+	     * //  usage: { promptTokens: 493, completionTokens: 38, totalTokens: 531 }
+	     * // }
+	     * ```
+	     *
+	     * @param assistantName - The name of the assistant to target.
+	     * @returns An {@link Assistant} object that can be used to perform assistant-related operations.
+	     */
+	    assistant(assistantName) {
+	        return new assistant_1.Assistant(assistantName, this.config);
+	    }
+	    /**
+	     * {@inheritDoc assistant}
+	     */
+	    // Alias method
+	    Assistant(assistantName) {
+	        return this.assistant(assistantName);
+	    }
+	}
+	pinecone.Pinecone = Pinecone;
+	
+	return pinecone;
+}
+
+var hasRequiredDist;
+
+function requireDist () {
+	if (hasRequiredDist) return dist;
+	hasRequiredDist = 1;
+	(function (exports) {
+		var __createBinding = (dist && dist.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    var desc = Object.getOwnPropertyDescriptor(m, k);
+		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+		      desc = { enumerable: true, get: function() { return m[k]; } };
+		    }
+		    Object.defineProperty(o, k2, desc);
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __setModuleDefault = (dist && dist.__setModuleDefault) || (Object.create ? (function(o, v) {
+		    Object.defineProperty(o, "default", { enumerable: true, value: v });
+		}) : function(o, v) {
+		    o["default"] = v;
+		});
+		var __importStar = (dist && dist.__importStar) || function (mod) {
+		    if (mod && mod.__esModule) return mod;
+		    var result = {};
+		    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+		    __setModuleDefault(result, mod);
+		    return result;
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.Errors = exports.ChatStream = exports.Assistant = exports.Inference = exports.Index = exports.Pinecone = void 0;
+		// Class, function exports
+		var pinecone_1 = requirePinecone();
+		Object.defineProperty(exports, "Pinecone", { enumerable: true, get: function () { return pinecone_1.Pinecone; } });
+		var data_1 = requireData();
+		Object.defineProperty(exports, "Index", { enumerable: true, get: function () { return data_1.Index; } });
+		var inference_1 = requireInference();
+		Object.defineProperty(exports, "Inference", { enumerable: true, get: function () { return inference_1.Inference; } });
+		var assistant_1 = requireAssistant();
+		Object.defineProperty(exports, "Assistant", { enumerable: true, get: function () { return assistant_1.Assistant; } });
+		Object.defineProperty(exports, "ChatStream", { enumerable: true, get: function () { return assistant_1.ChatStream; } });
+		exports.Errors = __importStar(requireErrors());
+		
+	} (dist));
+	return dist;
+}
+
+var distExports = requireDist();
+
+class PineconeClient {
+    client;
+    INDEX_NAME = "wellness-buddy-index";
+    NAMESPACES = [
+        "mental wellness",
+        "career success",
+        "sleep",
+        "safety",
+        "nutrition",
+    ];
+    constructor() {
+        const apiKey = config$1.get("PINECONE_API_KEY");
+        if (!apiKey) {
+            throw new Error("PINECONE_API_KEY is not set in config");
+        }
+        this.client = new distExports.Pinecone({ apiKey });
+    }
+    async createIndex() {
+        const existing = await this.client.listIndexes();
+        if (existing.indexes?.some((i) => i.name === this.INDEX_NAME)) {
+            return;
+        }
+        await this.client.createIndex({
+            name: this.INDEX_NAME,
+            dimension: 3072,
+            metric: "cosine",
+            spec: {
+                serverless: {
+                    cloud: "aws",
+                    region: "us-east-1",
+                },
+            },
+        });
+    }
+    async upsert(records, namespace = "") {
+        const index = this.client.index(this.INDEX_NAME).namespace(namespace);
+        await index.upsert(records);
+    }
+    async deleteAll() {
+        const index = this.client.index(this.INDEX_NAME);
+        await index.deleteAll();
+    }
+    /**
+     * Query the index for top K similar vectors to the given embedding
+     * @param vector The query vector
+     * @param namespace Optional namespace
+     * @param topK Number of results to return
+     * @returns Array of matches with id, score, and metadata
+     */
+    async query(vector, namespaces = this.NAMESPACES, topK = 5) {
+        const allResults = [];
+        for (const ns of namespaces) {
+            const index = this.client.index(this.INDEX_NAME).namespace(ns);
+            const result = await index.query({
+                vector,
+                topK,
+                includeMetadata: true,
+            });
+            const matches = result.matches?.map((m) => ({
+                id: m.id,
+                score: m.score,
+                metadata: m.metadata,
+                namespace: ns,
+            })) || [];
+            allResults.push(...matches);
+        }
+        allResults.sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
+        return allResults.slice(0, topK);
+    }
+}
+const pineconeClient = new PineconeClient();
+
 class OpenAIClient {
     client;
     MODEL = "gpt-4.1";
+    EMBEDDING_MODEL = "text-embedding-3-large";
     TEMPERATURE = 0.7;
     constructor() {
-        const apiKey = config.get("OPENAI_API_KEY");
+        const apiKey = config$1.get("OPENAI_API_KEY");
         if (!apiKey) {
             throw new Error("OPENAI_API_KEY is not set in config");
         }
         this.client = new OpenAI({ apiKey });
     }
     async chat(message, systemPrompt, history = [], onDelta) {
+        const inputEmbedding = await this.getEmbedding(message);
+        const semanticSearchResults = await pineconeClient.query(inputEmbedding);
+        const promptContext = semanticSearchResults
+            .map((m) => m.metadata?.text ?? "")
+            .join("\n---\n");
         const stream = await this.client.responses.create({
             model: this.MODEL,
             input: [
-                { role: "system", content: systemPrompt },
+                {
+                    role: "system",
+                    content: `${systemPrompt}\n\nRelevant context:\n${promptContext}`,
+                },
                 ...history.map((m) => ({ role: m.role, content: m.content })),
                 { role: "user", content: message },
             ],
             temperature: this.TEMPERATURE,
             stream: true,
         });
-        let fullText = "";
+        let fullResponseText = "";
         for await (const event of stream) {
             if (event.type === "response.output_text.delta") {
                 const chunk = event.delta;
-                fullText += chunk;
+                fullResponseText += chunk;
                 onDelta?.(chunk);
             }
         }
-        return fullText;
+        return fullResponseText;
     }
     async getEmbedding(text) {
         const response = await this.client.embeddings.create({
-            model: "text-embedding-3-large",
+            model: this.EMBEDDING_MODEL,
             input: text,
         });
         return response.data[0].embedding;
+    }
+    async getEmbeddings(texts) {
+        const response = await this.client.embeddings.create({
+            model: this.EMBEDDING_MODEL,
+            input: texts,
+        });
+        return response.data.map((d) => d.embedding);
     }
     async getTitle(firstMessage) {
         const response = await this.client.responses.create({
@@ -70043,7 +90273,6 @@ class ChatService {
         if (!recipient) {
             return;
         }
-        console.log(recipient._id.toString());
         websocketService.sendTo(recipient._id.toString(), {
             type: "answer_video_call",
             data: answer,
@@ -70195,7 +90424,7 @@ class WebsocketService {
         if (this.backendWSS) {
             return;
         }
-        const server = require$$1$4.createServer(app);
+        const server = require$$1$5.createServer(app);
         const backendWSS = new WebSocketServer({ server, path: "/api" });
         backendWSS.on("connection", async (frontendWS, req) => {
             const url = new URL(req.url ?? "", `http://${req.headers.host}`);
@@ -70249,7 +90478,7 @@ class WebsocketService {
             });
         });
         this.backendWSS = backendWSS;
-        const url = `${config.get("NODE_ENV") === "production" ? "wss" : "ws"}://${config.get("HOST")}/api`;
+        const url = `${config$1.get("NODE_ENV") === "production" ? "wss" : "ws"}://${config$1.get("HOST")}/api`;
         wsStartupDebug(`WebSocket server is running at ${url}`);
         return server;
     }
@@ -70585,7 +90814,7 @@ const auth = (role) => (request, response, next) => {
         });
     }
     try {
-        const payload = jwt.verify(accessToken, config.get("SECRET_KEY"));
+        const payload = jwt.verify(accessToken, config$1.get("SECRET_KEY"));
         if (typeof payload !== "string" &&
             payload.role === "user" &&
             role === "admin") ;
@@ -72060,7 +92289,7 @@ or increase socketAcquisitionWarningTimeout=(millis) in the NodeHttpHandler conf
                 agent,
                 auth,
             };
-            const requestFunc = isSSL ? request$1 : request$2;
+            const requestFunc = isSSL ? request$2 : request$3;
             const req = requestFunc(nodeHttpsOptions, (res) => {
                 const httpResponse = new HttpResponse({
                     statusCode: res.statusCode || -1,
@@ -81918,10 +102147,10 @@ const fromEnv = (init) => async () => {
 
 const ENV_IMDS_DISABLED$1 = "AWS_EC2_METADATA_DISABLED";
 const remoteProvider = async (init) => {
-    const { ENV_CMDS_FULL_URI, ENV_CMDS_RELATIVE_URI, fromContainerMetadata, fromInstanceMetadata } = await import('./index-By6d4tvE.js');
+    const { ENV_CMDS_FULL_URI, ENV_CMDS_RELATIVE_URI, fromContainerMetadata, fromInstanceMetadata } = await import('./index-CmsejryS.js');
     if (process.env[ENV_CMDS_RELATIVE_URI] || process.env[ENV_CMDS_FULL_URI]) {
         init.logger?.debug("@aws-sdk/credential-provider-node - remoteProvider::fromHttp/fromContainerMetadata");
-        const { fromHttp } = await import('./index-CnDtrKho.js');
+        const { fromHttp } = await import('./index-DLwQxZoU.js');
         return chain(fromHttp(init), fromContainerMetadata(init));
     }
     if (process.env[ENV_IMDS_DISABLED$1] && process.env[ENV_IMDS_DISABLED$1] !== "false") {
@@ -81966,19 +102195,19 @@ const defaultProvider = (init = {}) => memoize(chain(async () => {
     if (!ssoStartUrl && !ssoAccountId && !ssoRegion && !ssoRoleName && !ssoSession) {
         throw new CredentialsProviderError("Skipping SSO provider in default chain (inputs do not include SSO fields).", { logger: init.logger });
     }
-    const { fromSSO } = await import('./index-BV-0urX2.js');
+    const { fromSSO } = await import('./index-u56ph7l1.js');
     return fromSSO(init)();
 }, async () => {
     init.logger?.debug("@aws-sdk/credential-provider-node - defaultProvider::fromIni");
-    const { fromIni } = await import('./index-Dddr5iml.js');
+    const { fromIni } = await import('./index-D0ePEHMV.js');
     return fromIni(init)();
 }, async () => {
     init.logger?.debug("@aws-sdk/credential-provider-node - defaultProvider::fromProcess");
-    const { fromProcess } = await import('./index-C1c5zh2g.js');
+    const { fromProcess } = await import('./index-Bci27sv3.js');
     return fromProcess(init)();
 }, async () => {
     init.logger?.debug("@aws-sdk/credential-provider-node - defaultProvider::fromTokenFile");
-    const { fromTokenFile } = await import('./index-D9h6D07_.js');
+    const { fromTokenFile } = await import('./index-W1e_24VP.js');
     return fromTokenFile(init)();
 }, async () => {
     init.logger?.debug("@aws-sdk/credential-provider-node - defaultProvider::remoteProvider");
@@ -82767,7 +102996,7 @@ const inferPhysicalRegion = async () => {
     }
     if (!process.env[ENV_IMDS_DISABLED]) {
         try {
-            const { getInstanceMetadataEndpoint, httpRequest } = await import('./index-By6d4tvE.js');
+            const { getInstanceMetadataEndpoint, httpRequest } = await import('./index-CmsejryS.js');
             const endpoint = await getInstanceMetadataEndpoint();
             return (await httpRequest({ ...endpoint, path: IMDS_REGION_PATH })).toString();
         }
@@ -84306,7 +104535,7 @@ function requireDelayed_stream () {
 	if (hasRequiredDelayed_stream) return delayed_stream;
 	hasRequiredDelayed_stream = 1;
 	var Stream = stream$1.Stream;
-	var util = require$$1$2;
+	var util = require$$1$3;
 
 	delayed_stream = DelayedStream;
 	function DelayedStream() {
@@ -84421,7 +104650,7 @@ var hasRequiredCombined_stream;
 function requireCombined_stream () {
 	if (hasRequiredCombined_stream) return combined_stream;
 	hasRequiredCombined_stream = 1;
-	var util = require$$1$2;
+	var util = require$$1$3;
 	var Stream = stream$1.Stream;
 	var DelayedStream = requireDelayed_stream();
 
@@ -85179,10 +105408,10 @@ function requireForm_data () {
 	hasRequiredForm_data = 1;
 
 	var CombinedStream = requireCombined_stream();
-	var util = require$$1$2;
-	var path = require$$1$1;
-	var http = require$$1$4;
-	var https = require$$1$5;
+	var util = require$$1$3;
+	var path = require$$1$2;
+	var http = require$$1$5;
+	var https = require$$1$6;
 	var parseUrl = require$$0$7.parse;
 	var fs = require$$3$1;
 	var Stream = stream$1.Stream;
@@ -87057,8 +107286,8 @@ function requireFollowRedirects () {
 	hasRequiredFollowRedirects = 1;
 	var url = require$$0$7;
 	var URL = url.URL;
-	var http = require$$1$4;
-	var https = require$$1$5;
+	var http = require$$1$5;
+	var https = require$$1$6;
 	var Writable = stream$1.Writable;
 	var assert = require$$4$4;
 	var debug = requireDebug();
@@ -87955,7 +108184,7 @@ const readBlob = async function* (blob) {
 
 const BOUNDARY_ALPHABET = platform.ALPHABET.ALPHA_DIGIT + '-_';
 
-const textEncoder = typeof TextEncoder === 'function' ? new TextEncoder() : new require$$1$2.TextEncoder();
+const textEncoder = typeof TextEncoder === 'function' ? new TextEncoder() : new require$$1$3.TextEncoder();
 
 const CRLF = '\r\n';
 const CRLF_BYTES = textEncoder.encode(CRLF);
@@ -88603,7 +108832,7 @@ var httpAdapter = isHttpAdapterSupported && function httpAdapter(config) {
 
       if (!headers.hasContentLength()) {
         try {
-          const knownLength = await require$$1$2.promisify(data.getLength).call(data);
+          const knownLength = await require$$1$3.promisify(data.getLength).call(data);
           Number.isFinite(knownLength) && knownLength >= 0 && headers.setContentLength(knownLength);
           /*eslint no-empty:0*/
         } catch (e) {
@@ -88731,7 +108960,7 @@ var httpAdapter = isHttpAdapterSupported && function httpAdapter(config) {
     if (config.transport) {
       transport = config.transport;
     } else if (config.maxRedirects === 0) {
-      transport = isHttpsRequest ? require$$1$5 : require$$1$4;
+      transport = isHttpsRequest ? require$$1$6 : require$$1$5;
     } else {
       if (config.maxRedirects) {
         options.maxRedirects = config.maxRedirects;
@@ -90655,18 +110884,18 @@ const getFileType = async (file) => {
 };
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = require$$1$1.dirname(__filename);
+const __dirname = require$$1$2.dirname(__filename);
 const s3Client = new S3Client({
     region: "auto",
-    endpoint: config.get("S3_URL"),
+    endpoint: config$1.get("S3_URL"),
     credentials: {
-        accessKeyId: config.get("S3_ACCESS_KEY_ID"),
-        secretAccessKey: config.get("S3_SECRET_ACCESS_KEY"),
+        accessKeyId: config$1.get("S3_ACCESS_KEY_ID"),
+        secretAccessKey: config$1.get("S3_SECRET_ACCESS_KEY"),
     },
 });
 class S3Service {
     getPublicUrl(s3Filename, folders) {
-        return `${config.get("S3_PUBLIC_URL")}/${folders.join("/")}/${s3Filename}`;
+        return `${config$1.get("S3_PUBLIC_URL")}/${folders.join("/")}/${s3Filename}`;
     }
     async uploadFile(file, s3Filename, folder, description = "") {
         let buffer;
@@ -90687,15 +110916,15 @@ class S3Service {
                 ? `${fileName}.${fileType?.ext}`
                 : fileName;
         }
-        const tempPath = require$$1$1.join(__dirname, "../temp", s3Filename);
+        const tempPath = require$$1$2.join(__dirname, "../temp", s3Filename);
         // create directory for file if it doesnt exist
-        await require$$3$1.promises.mkdir(require$$1$1.dirname(tempPath), { recursive: true });
+        await require$$3$1.promises.mkdir(require$$1$2.dirname(tempPath), { recursive: true });
         // write buffer to file
         await require$$3$1.promises.writeFile(tempPath, buffer);
         // create stream from file path
         const fileStream = Readable$1.from(buffer);
         const params = {
-            Bucket: config.get("S3_BUCKET"),
+            Bucket: config$1.get("S3_BUCKET"),
             Key: [...folder, s3Filename].join("/"),
             Body: fileStream,
             ContentType: fileType?.mime,
@@ -90737,26 +110966,26 @@ class S3Service {
         switch (type) {
             case "GET":
                 command = new GetObjectCommand({
-                    Bucket: config.get("S3_BUCKET"),
+                    Bucket: config$1.get("S3_BUCKET"),
                     Key: folder.join("/"),
                     ResponseContentDisposition: contentDisposition,
                 });
                 break;
             case "PUT":
                 command = new PutObjectCommand({
-                    Bucket: config.get("S3_BUCKET"),
+                    Bucket: config$1.get("S3_BUCKET"),
                     Key: folder.join("/"),
                 });
                 break;
             case "DELETE":
                 command = new DeleteObjectCommand({
-                    Bucket: config.get("S3_BUCKET"),
+                    Bucket: config$1.get("S3_BUCKET"),
                     Key: folder.join("/"),
                 });
                 break;
             default:
                 command = new HeadObjectCommand({
-                    Bucket: config.get("S3_BUCKET"),
+                    Bucket: config$1.get("S3_BUCKET"),
                     Key: folder.join("/"),
                 });
                 break;
@@ -90781,7 +111010,7 @@ class S3Service {
             };
         });
         const params = {
-            Bucket: config.get("S3_BUCKET"),
+            Bucket: config$1.get("S3_BUCKET"),
             Delete: {
                 Objects: objectsToDelete,
                 Quiet: false, // optional
@@ -90925,9 +111154,9 @@ const startup = (app) => {
     middlewares(app);
     routes(app);
     const server = websocket(app);
-    const port = process.env.PORT || config.get("PORT") || 3000;
+    const port = process.env.PORT || config$1.get("PORT") || 3000;
     server?.listen(port, () => {
-        appDebug(`Backend api server is running at ${config.get("BASE_URL")}`);
+        appDebug(`Backend api server is running at ${config$1.get("BASE_URL")}`);
     });
 };
 

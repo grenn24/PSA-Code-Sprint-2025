@@ -1,10 +1,11 @@
-// services/OpenAIClient.ts
 import { OpenAI } from "openai";
 import config from "config";
+import pineconeClient from "./pinecone.js";
 
 export class OpenAIClient {
 	private client: OpenAI;
 	private MODEL = "gpt-4.1";
+	private EMBEDDING_MODEL = "text-embedding-3-large";
 	private TEMPERATURE = 0.7;
 
 	constructor() {
@@ -12,7 +13,6 @@ export class OpenAIClient {
 		if (!apiKey) {
 			throw new Error("OPENAI_API_KEY is not set in config");
 		}
-
 		this.client = new OpenAI({ apiKey });
 	}
 
@@ -22,36 +22,56 @@ export class OpenAIClient {
 		history: { role: "user" | "assistant"; content: string }[] = [],
 		onDelta?: (message: string) => void
 	) {
+		const inputEmbedding = await this.getEmbedding(message);
+		const semanticSearchResults = await pineconeClient.query(
+			inputEmbedding
+		);
+		const promptContext = semanticSearchResults
+			.map((m) => m.metadata?.text ?? "")
+			.join("\n---\n");
 		const stream = await this.client.responses.create({
 			model: this.MODEL,
 			input: [
-				{ role: "system", content: systemPrompt },
+				{
+					role: "system",
+					content: `${systemPrompt}\n\nRelevant context:\n${promptContext}`,
+				},
 				...history.map((m) => ({ role: m.role, content: m.content })),
 				{ role: "user", content: message },
 			],
 			temperature: this.TEMPERATURE,
 			stream: true,
 		});
-		let fullText = "";
+
+		let fullResponseText = "";
 
 		for await (const event of stream) {
 			if (event.type === "response.output_text.delta") {
 				const chunk = event.delta;
-				fullText += chunk;
+				fullResponseText += chunk;
 				onDelta?.(chunk);
 			}
 		}
 
-		return fullText;
+		return fullResponseText;
 	}
 
 	async getEmbedding(text: string) {
 		const response = await this.client.embeddings.create({
-			model: "text-embedding-3-large",
+			model: this.EMBEDDING_MODEL,
 			input: text,
 		});
 
 		return response.data[0].embedding;
+	}
+
+	async getEmbeddings(texts: string[]) {
+		const response = await this.client.embeddings.create({
+			model: this.EMBEDDING_MODEL,
+			input: texts,
+		});
+
+		return response.data.map((d) => d.embedding);
 	}
 
 	async getTitle(firstMessage: string) {

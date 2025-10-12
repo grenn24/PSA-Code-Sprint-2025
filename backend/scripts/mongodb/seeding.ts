@@ -1,7 +1,6 @@
 import db from "../../startup/db.js";
 import { seedUsers } from "./user.js";
 import "dotenv/config";
-import config from "config";
 
 async function seed() {
 	try {

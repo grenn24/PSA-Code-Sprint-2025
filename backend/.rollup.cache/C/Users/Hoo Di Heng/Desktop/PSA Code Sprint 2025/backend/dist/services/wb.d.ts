@@ -8,8 +8,8 @@ declare class WBService {
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } & {
-        title: string;
         user: import("mongoose").Types.ObjectId;
+        title: string;
         messages: import("mongoose").Types.DocumentArray<{
             role: "user" | "assistant";
             content: string;
@@ -27,8 +27,8 @@ declare class WBService {
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } & {
-        title: string;
         user: import("mongoose").Types.ObjectId;
+        title: string;
         messages: import("mongoose").Types.DocumentArray<{
             role: "user" | "assistant";
             content: string;
@@ -75,8 +75,8 @@ declare class WBService {
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } & {
-        title: string;
         user: import("mongoose").Types.ObjectId;
+        title: string;
         messages: import("mongoose").Types.DocumentArray<{
             role: "user" | "assistant";
             content: string;
@@ -94,8 +94,8 @@ declare class WBService {
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } & {
-        title: string;
         user: import("mongoose").Types.ObjectId;
+        title: string;
         messages: import("mongoose").Types.DocumentArray<{
             role: "user" | "assistant";
             content: string;

@@ -11,6 +11,10 @@ PSA Horizon is an integrated employee development platform designed to empower P
 - Track your career path and skill progress
 - View recommended courses and event opportunities
 
+### Events Hub
+- View recommended and trending employee-initiated events
+- Online calls
+
 ### Mentor Matching
 - Intelligent matching suggestions based on interests, skills, and career aspirations
 - Explore potential mentorship connections and send personalised invites
@@ -21,10 +25,6 @@ PSA Horizon is an integrated employee development platform designed to empower P
 - Track historical mood changes from past conversations
 - Engage in short guided activities (e.g. mindfulness)
 - Dashboard showing key mood indicators
-
-### Events Hub
-- View recommended and trending employee-initiated events
-- Online calls
 
 ## Getting Started
 1. Ensure that your machine has the following installed:

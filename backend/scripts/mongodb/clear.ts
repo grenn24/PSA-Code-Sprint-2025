@@ -1,4 +1,5 @@
-import db from "../startup/db.js";
+import "dotenv/config";
+import db from "../../startup/db.js";
 
 async function clear() {
 	try {

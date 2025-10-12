@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 declare class UserService {
     getAllUsers(): Promise<(mongoose.Document<unknown, {}, {
+        role: "user" | "admin";
         name: string;
         createdAt: NativeDate;
         position: string;
         email: string;
-        role: "user" | "admin";
         password: string;
         subordinates: mongoose.Types.ObjectId[];
         experienceLevel: number;
@@ -20,28 +20,28 @@ declare class UserService {
             name?: string | null | undefined;
         }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }> & {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
             position: string;
@@ -81,11 +81,11 @@ declare class UserService {
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
     }> & {
+        role: "user" | "admin";
         name: string;
         createdAt: NativeDate;
         position: string;
         email: string;
-        role: "user" | "admin";
         password: string;
         subordinates: mongoose.Types.ObjectId[];
         experienceLevel: number;
@@ -100,28 +100,28 @@ declare class UserService {
             name?: string | null | undefined;
         }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }> & {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
             position: string;
@@ -166,11 +166,11 @@ declare class UserService {
         __v: number;
     })[]>;
     createUser(userData: any): Promise<mongoose.Document<unknown, {}, {
+        role: "user" | "admin";
         name: string;
         createdAt: NativeDate;
         position: string;
         email: string;
-        role: "user" | "admin";
         password: string;
         subordinates: mongoose.Types.ObjectId[];
         experienceLevel: number;
@@ -185,28 +185,28 @@ declare class UserService {
             name?: string | null | undefined;
         }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }> & {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
             position: string;
@@ -246,11 +246,11 @@ declare class UserService {
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
     }> & {
+        role: "user" | "admin";
         name: string;
         createdAt: NativeDate;
         position: string;
         email: string;
-        role: "user" | "admin";
         password: string;
         subordinates: mongoose.Types.ObjectId[];
         experienceLevel: number;
@@ -265,28 +265,28 @@ declare class UserService {
             name?: string | null | undefined;
         }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }> & {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
             position: string;
@@ -331,11 +331,11 @@ declare class UserService {
         __v: number;
     }>;
     getUserByID(userId: any): Promise<mongoose.Document<unknown, {}, {
+        role: "user" | "admin";
         name: string;
         createdAt: NativeDate;
         position: string;
         email: string;
-        role: "user" | "admin";
         password: string;
         subordinates: mongoose.Types.ObjectId[];
         experienceLevel: number;
@@ -350,28 +350,28 @@ declare class UserService {
             name?: string | null | undefined;
         }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }> & {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
             position: string;
@@ -411,11 +411,11 @@ declare class UserService {
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
     }> & {
+        role: "user" | "admin";
         name: string;
         createdAt: NativeDate;
         position: string;
         email: string;
-        role: "user" | "admin";
         password: string;
         subordinates: mongoose.Types.ObjectId[];
         experienceLevel: number;
@@ -430,28 +430,28 @@ declare class UserService {
             name?: string | null | undefined;
         }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }> & {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
             position: string;
@@ -496,11 +496,11 @@ declare class UserService {
         __v: number;
     }>;
     updateUser(userId: any, userData: any): Promise<(mongoose.Document<unknown, {}, {
+        role: "user" | "admin";
         name: string;
         createdAt: NativeDate;
         position: string;
         email: string;
-        role: "user" | "admin";
         password: string;
         subordinates: mongoose.Types.ObjectId[];
         experienceLevel: number;
@@ -515,28 +515,28 @@ declare class UserService {
             name?: string | null | undefined;
         }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }> & {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
             position: string;
@@ -576,11 +576,11 @@ declare class UserService {
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
     }> & {
+        role: "user" | "admin";
         name: string;
         createdAt: NativeDate;
         position: string;
         email: string;
-        role: "user" | "admin";
         password: string;
         subordinates: mongoose.Types.ObjectId[];
         experienceLevel: number;
@@ -595,28 +595,28 @@ declare class UserService {
             name?: string | null | undefined;
         }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }> & {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
             position: string;
@@ -661,11 +661,11 @@ declare class UserService {
         __v: number;
     }) | null>;
     addNotification(userId: string, message: string): Promise<mongoose.Document<unknown, {}, {
+        role: "user" | "admin";
         name: string;
         createdAt: NativeDate;
         position: string;
         email: string;
-        role: "user" | "admin";
         password: string;
         subordinates: mongoose.Types.ObjectId[];
         experienceLevel: number;
@@ -680,28 +680,28 @@ declare class UserService {
             name?: string | null | undefined;
         }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }> & {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
             position: string;
@@ -741,11 +741,11 @@ declare class UserService {
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
     }> & {
+        role: "user" | "admin";
         name: string;
         createdAt: NativeDate;
         position: string;
         email: string;
-        role: "user" | "admin";
         password: string;
         subordinates: mongoose.Types.ObjectId[];
         experienceLevel: number;
@@ -760,28 +760,28 @@ declare class UserService {
             name?: string | null | undefined;
         }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }> & {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
             position: string;
@@ -827,128 +827,128 @@ declare class UserService {
     }>;
     sendMentorshipRequest(senderID: string, mentorID: string, message?: string): Promise<void>;
     getChats(userID: string): Promise<(mongoose.Document<unknown, {}, {
-        participants: mongoose.Types.ObjectId[];
         messages: mongoose.Types.DocumentArray<{
-            type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
             content: string;
-            sender: mongoose.Types.ObjectId;
+            type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
+            metadata: any;
             createdAt: NativeDate;
             read: boolean;
-            metadata: any;
+            sender: mongoose.Types.ObjectId;
             readAt?: NativeDate | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
             content: string;
-            sender: mongoose.Types.ObjectId;
+            type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
+            metadata: any;
             createdAt: NativeDate;
             read: boolean;
-            metadata: any;
+            sender: mongoose.Types.ObjectId;
             readAt?: NativeDate | null | undefined;
         }> & {
-            type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
             content: string;
-            sender: mongoose.Types.ObjectId;
+            type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
+            metadata: any;
             createdAt: NativeDate;
             read: boolean;
-            metadata: any;
+            sender: mongoose.Types.ObjectId;
             readAt?: NativeDate | null | undefined;
         }>;
         createdAt: NativeDate;
+        participants: mongoose.Types.ObjectId[];
     }> & {
-        participants: mongoose.Types.ObjectId[];
         messages: mongoose.Types.DocumentArray<{
-            type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
             content: string;
-            sender: mongoose.Types.ObjectId;
+            type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
+            metadata: any;
             createdAt: NativeDate;
             read: boolean;
-            metadata: any;
+            sender: mongoose.Types.ObjectId;
             readAt?: NativeDate | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
             content: string;
-            sender: mongoose.Types.ObjectId;
+            type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
+            metadata: any;
             createdAt: NativeDate;
             read: boolean;
-            metadata: any;
+            sender: mongoose.Types.ObjectId;
             readAt?: NativeDate | null | undefined;
         }> & {
-            type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
             content: string;
-            sender: mongoose.Types.ObjectId;
+            type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
+            metadata: any;
             createdAt: NativeDate;
             read: boolean;
-            metadata: any;
+            sender: mongoose.Types.ObjectId;
             readAt?: NativeDate | null | undefined;
         }>;
         createdAt: NativeDate;
+        participants: mongoose.Types.ObjectId[];
     } & {
         _id: mongoose.Types.ObjectId;
     } & {
         __v: number;
     })[]>;
     getNotifications(userID: string): Promise<mongoose.Types.DocumentArray<{
+        message: string;
         createdAt: NativeDate;
         read: boolean;
-        message: string;
     }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+        message: string;
         createdAt: NativeDate;
         read: boolean;
-        message: string;
     }> & {
+        message: string;
         createdAt: NativeDate;
         read: boolean;
-        message: string;
     }>>;
     getWBConversations(userID: string): Promise<(mongoose.Document<unknown, {}, {
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } & {
-        messages: mongoose.Types.DocumentArray<{
-            content: string;
-            role: "user" | "assistant";
-            timestamp: NativeDate;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            content: string;
-            role: "user" | "assistant";
-            timestamp: NativeDate;
-        }> & {
-            content: string;
-            role: "user" | "assistant";
-            timestamp: NativeDate;
-        }>;
         user: mongoose.Types.ObjectId;
         title: string;
+        messages: mongoose.Types.DocumentArray<{
+            role: "user" | "assistant";
+            content: string;
+            timestamp: NativeDate;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            role: "user" | "assistant";
+            content: string;
+            timestamp: NativeDate;
+        }> & {
+            role: "user" | "assistant";
+            content: string;
+            timestamp: NativeDate;
+        }>;
     }> & {
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } & {
-        messages: mongoose.Types.DocumentArray<{
-            content: string;
-            role: "user" | "assistant";
-            timestamp: NativeDate;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            content: string;
-            role: "user" | "assistant";
-            timestamp: NativeDate;
-        }> & {
-            content: string;
-            role: "user" | "assistant";
-            timestamp: NativeDate;
-        }>;
         user: mongoose.Types.ObjectId;
         title: string;
+        messages: mongoose.Types.DocumentArray<{
+            role: "user" | "assistant";
+            content: string;
+            timestamp: NativeDate;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            role: "user" | "assistant";
+            content: string;
+            timestamp: NativeDate;
+        }> & {
+            role: "user" | "assistant";
+            content: string;
+            timestamp: NativeDate;
+        }>;
     } & {
         _id: mongoose.Types.ObjectId;
     } & {
         __v: number;
     })[]>;
     getTopMatchedMentors(userId: string, limit?: number, page?: number): Promise<(mongoose.Document<unknown, {}, {
+        role: "user" | "admin";
         name: string;
         createdAt: NativeDate;
         position: string;
         email: string;
-        role: "user" | "admin";
         password: string;
         subordinates: mongoose.Types.ObjectId[];
         experienceLevel: number;
@@ -963,28 +963,28 @@ declare class UserService {
             name?: string | null | undefined;
         }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }> & {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
             position: string;
@@ -1024,11 +1024,11 @@ declare class UserService {
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
     }> & {
+        role: "user" | "admin";
         name: string;
         createdAt: NativeDate;
         position: string;
         email: string;
-        role: "user" | "admin";
         password: string;
         subordinates: mongoose.Types.ObjectId[];
         experienceLevel: number;
@@ -1043,28 +1043,28 @@ declare class UserService {
             name?: string | null | undefined;
         }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
-            sender?: mongoose.Types.ObjectId | null | undefined;
             message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }> & {
+            message: string;
             createdAt: NativeDate;
             read: boolean;
-            message: string;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
             position: string;

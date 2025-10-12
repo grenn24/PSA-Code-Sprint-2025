@@ -4,6 +4,7 @@ declare const WBConversation: import("mongoose").Model<{
     updatedAt: NativeDate;
 } & {
     user: import("mongoose").Types.ObjectId;
+    title: string;
     messages: import("mongoose").Types.DocumentArray<{
         role: "user" | "assistant";
         content: string;
@@ -17,12 +18,12 @@ declare const WBConversation: import("mongoose").Model<{
         content: string;
         timestamp: NativeDate;
     }>;
-    title: string;
 }, {}, {}, {}, import("mongoose").Document<unknown, {}, {
     createdAt: NativeDate;
     updatedAt: NativeDate;
 } & {
     user: import("mongoose").Types.ObjectId;
+    title: string;
     messages: import("mongoose").Types.DocumentArray<{
         role: "user" | "assistant";
         content: string;
@@ -36,12 +37,12 @@ declare const WBConversation: import("mongoose").Model<{
         content: string;
         timestamp: NativeDate;
     }>;
-    title: string;
 }> & {
     createdAt: NativeDate;
     updatedAt: NativeDate;
 } & {
     user: import("mongoose").Types.ObjectId;
+    title: string;
     messages: import("mongoose").Types.DocumentArray<{
         role: "user" | "assistant";
         content: string;
@@ -55,7 +56,6 @@ declare const WBConversation: import("mongoose").Model<{
         content: string;
         timestamp: NativeDate;
     }>;
-    title: string;
 } & {
     _id: import("mongoose").Types.ObjectId;
 } & {
@@ -67,6 +67,7 @@ declare const WBConversation: import("mongoose").Model<{
     updatedAt: NativeDate;
 } & {
     user: import("mongoose").Types.ObjectId;
+    title: string;
     messages: import("mongoose").Types.DocumentArray<{
         role: "user" | "assistant";
         content: string;
@@ -80,12 +81,12 @@ declare const WBConversation: import("mongoose").Model<{
         content: string;
         timestamp: NativeDate;
     }>;
-    title: string;
 }, import("mongoose").Document<unknown, {}, import("mongoose").FlatRecord<{
     createdAt: NativeDate;
     updatedAt: NativeDate;
 } & {
     user: import("mongoose").Types.ObjectId;
+    title: string;
     messages: import("mongoose").Types.DocumentArray<{
         role: "user" | "assistant";
         content: string;
@@ -99,12 +100,12 @@ declare const WBConversation: import("mongoose").Model<{
         content: string;
         timestamp: NativeDate;
     }>;
-    title: string;
 }>> & import("mongoose").FlatRecord<{
     createdAt: NativeDate;
     updatedAt: NativeDate;
 } & {
     user: import("mongoose").Types.ObjectId;
+    title: string;
     messages: import("mongoose").Types.DocumentArray<{
         role: "user" | "assistant";
         content: string;
@@ -118,7 +119,6 @@ declare const WBConversation: import("mongoose").Model<{
         content: string;
         timestamp: NativeDate;
     }>;
-    title: string;
 }> & {
     _id: import("mongoose").Types.ObjectId;
 } & {
