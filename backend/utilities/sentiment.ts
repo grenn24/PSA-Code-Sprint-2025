@@ -5,22 +5,30 @@ const hf = new InferenceClient(config.get("HF_API_KEY"));
 
 export async function getSentimentLevel(text: string) {
 	const result = await hf.textClassification({
-		model: "nlptown/bert-base-multilingual-uncased-sentiment",
+		model: "lxyuan/distilbert-base-multilingual-cased-sentiments-student",
 		inputs: text,
 		provider: "hf-inference",
 	});
+	const positiveScore =
+		result.find((r) => r.label.toLowerCase() === "positive")?.score ?? 0;
+	const negativeScore =
+		result.find((r) => r.label.toLowerCase() === "negative")?.score ?? 0;
+	const neutralScore =
+		result.find((r) => r.label.toLowerCase() === "neutral")?.score ?? 0;
+	const negativeMin = 1,
+		neutralMin = 4,
+		positiveMin = 7;
+	const negativeMax = 4,
+		neutralMax = 7,
+		positiveMax = 10;
+	const level =
+		negativeScore *
+			(negativeMin + (negativeMax - negativeMin) * negativeScore) +
+		neutralScore * (neutralMin + (neutralMax - neutralMin) * neutralScore) +
+		positiveScore *
+			(positiveMin + (positiveMax - positiveMin) * positiveScore);
+	const totalScore = negativeScore + neutralScore + positiveScore;
+	const numericLevel = level / totalScore;
 
-	const sorted = result.sort((a, b) => {
-		const aNum = parseInt(a.label);
-		const bNum = parseInt(b.label);
-		return aNum - bNum;
-	});
-
-	let score = 0;
-	for (let i = 0; i < sorted.length; i++) {
-		const star = parseInt(sorted[i].label);
-		score += sorted[i].score * star;
-	}
-
-	return Number(((score / 5) * 10).toFixed(2));
+	return Number(numericLevel.toFixed(2));
 }

@@ -103593,25 +103593,26 @@ const loadTemplate = (language, client, templateName) => {
 loadTemplate("python", "huggingface_hub", "importInferenceClient");
 loadTemplate("python", "requests", "importRequests");
 
-// Initialize with your Hugging Face API key
 const hf = new InferenceClient(config$1.get("HF_API_KEY"));
 async function getSentimentLevel(text) {
     const result = await hf.textClassification({
-        model: "nlptown/bert-base-multilingual-uncased-sentiment",
+        model: "lxyuan/distilbert-base-multilingual-cased-sentiments-student",
         inputs: text,
         provider: "hf-inference",
     });
-    const sorted = result.sort((a, b) => {
-        const aNum = parseInt(a.label);
-        const bNum = parseInt(b.label);
-        return aNum - bNum;
-    });
-    let score = 0;
-    for (let i = 0; i < sorted.length; i++) {
-        const star = parseInt(sorted[i].label);
-        score += sorted[i].score * star;
-    }
-    return Number(((score / 5) * 10).toFixed(2));
+    const positiveScore = result.find((r) => r.label.toLowerCase() === "positive")?.score ?? 0;
+    const negativeScore = result.find((r) => r.label.toLowerCase() === "negative")?.score ?? 0;
+    const neutralScore = result.find((r) => r.label.toLowerCase() === "neutral")?.score ?? 0;
+    const negativeMin = 1, neutralMin = 4, positiveMin = 7;
+    const negativeMax = 4, neutralMax = 7, positiveMax = 10;
+    const level = negativeScore *
+        (negativeMin + (negativeMax - negativeMin) * negativeScore) +
+        neutralScore * (neutralMin + (neutralMax - neutralMin) * neutralScore) +
+        positiveScore *
+            (positiveMin + (positiveMax - positiveMin) * positiveScore);
+    const totalScore = negativeScore + neutralScore + positiveScore;
+    const numericLevel = level / totalScore;
+    return Number(numericLevel.toFixed(2));
 }
 
 class WBService {
