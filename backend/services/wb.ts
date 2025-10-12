@@ -5,6 +5,8 @@ import openai from "../utilities/openai.js";
 import { WBMessage } from "@common/types/wb.js";
 import User from "../models/user.js";
 import dayjs from "dayjs";
+import { getSentimentLevel } from "../utilities/sentiment.js";
+import userService from "./user.js";
 
 class WBService {
 	private DEFAULT_SYSTEM_PROMPT = `
@@ -50,7 +52,8 @@ class WBService {
 			content: string;
 			timestamp: Date;
 		},
-		onDelta: (chunk: string) => void
+		onDelta: (chunk: string) => void,
+		userID: string
 	) {
 		const conversation = await WBConversation.findById(
 			conversationId
@@ -63,14 +66,18 @@ class WBService {
 				HttpStatusCode.NotFound
 			);
 		}
+		const sentiment = await getSentimentLevel(data.content);
+		userService.updateTodayMood(userID, sentiment);
 		const history = conversation.messages;
 		conversation.messages.push({
 			role: "user",
 			...data,
 		});
+
 		const response = await openai.chat(
 			data.content,
 			this.DEFAULT_SYSTEM_PROMPT,
+			sentiment,
 			history,
 			onDelta
 		);
@@ -91,11 +98,15 @@ class WBService {
 		},
 		history: WBMessage[] = [],
 		onDelta: (chunk: string) => void,
+		userID: string,
 		systemPrompt?: string
 	) {
+		const sentiment = await getSentimentLevel(data.content);
+		userService.updateTodayMood(userID, sentiment);
 		const response = await openai.chat(
 			data.content,
 			systemPrompt ?? this.DEFAULT_SYSTEM_PROMPT,
+			sentiment,
 			history,
 			onDelta
 		);
@@ -145,6 +156,7 @@ class WBService {
 		const response = await openai.chat(
 			userMessage,
 			this.DEFAULT_SYSTEM_PROMPT,
+			undefined,
 			data?.content
 				? [
 						{ role: "assistant", content: initialUserMessage },
@@ -178,6 +190,7 @@ class WBService {
 		const response = await openai.chat(
 			userMessage,
 			this.DEFAULT_SYSTEM_PROMPT,
+			undefined,
 			[],
 			onDelta
 		);
@@ -191,7 +204,7 @@ class WBService {
 		},
 		onDelta: (chunk: string) => void
 	) {
-	const userMessage = `
+		const userMessage = `
 		You are a thoughtful and impartial assistant. The user has shared their current mood or feelings. 
 		Your task is to suggest a **single, relevant follow-up question** that encourages the user to reflect further on their mood or experience.
 
@@ -210,6 +223,7 @@ class WBService {
 		const response = await openai.chat(
 			userMessage,
 			this.DEFAULT_SYSTEM_PROMPT,
+			undefined,
 			[],
 			onDelta
 		);
@@ -279,6 +293,7 @@ class WBService {
 		const response = await openai.chat(
 			prompt,
 			this.DEFAULT_SYSTEM_PROMPT,
+			undefined,
 			[],
 			undefined
 		);

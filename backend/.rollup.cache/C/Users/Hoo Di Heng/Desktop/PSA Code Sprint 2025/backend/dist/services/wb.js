@@ -4,6 +4,8 @@ import WBConversation from "../models/wb.js";
 import openai from "../utilities/openai.js";
 import User from "../models/user.js";
 import dayjs from "dayjs";
+import { getSentimentLevel } from "../utilities/sentiment.js";
+import userService from "./user.js";
 class WBService {
     DEFAULT_SYSTEM_PROMPT = `
 		You are "Wellness Buddy", an empathetic, professional wellness assistant embedded in the PSA Horizon website. 
@@ -41,17 +43,19 @@ class WBService {
 
 		Do not reveal internal reasoning. Keep user experience focused, safe, and action-oriented.
 	`;
-    async postMessage(conversationId, data, onDelta) {
+    async postMessage(conversationId, data, onDelta, userID) {
         const conversation = await WBConversation.findById(conversationId).exec();
         if (!conversation) {
             throw new HttpError("Conversation not found", "NOT_FOUND", HttpStatusCode.NotFound);
         }
+        const sentiment = await getSentimentLevel(data.content);
+        userService.updateTodayMood(userID, sentiment);
         const history = conversation.messages;
         conversation.messages.push({
             role: "user",
             ...data,
         });
-        const response = await openai.chat(data.content, this.DEFAULT_SYSTEM_PROMPT, history, onDelta);
+        const response = await openai.chat(data.content, this.DEFAULT_SYSTEM_PROMPT, sentiment, history, onDelta);
         conversation.messages.push({
             role: "assistant",
             content: response,
@@ -60,8 +64,10 @@ class WBService {
         await conversation.save();
         return conversation;
     }
-    async postMessageStateless(data, history = [], onDelta, systemPrompt) {
-        const response = await openai.chat(data.content, systemPrompt ?? this.DEFAULT_SYSTEM_PROMPT, history, onDelta);
+    async postMessageStateless(data, history = [], onDelta, userID, systemPrompt) {
+        const sentiment = await getSentimentLevel(data.content);
+        userService.updateTodayMood(userID, sentiment);
+        const response = await openai.chat(data.content, systemPrompt ?? this.DEFAULT_SYSTEM_PROMPT, sentiment, history, onDelta);
         return response;
     }
     async trackMoodChanges(userID, data = undefined, history = [], onDelta) {
@@ -88,7 +94,7 @@ class WBService {
 			${serialisedMoods}
 			`;
         const userMessage = data?.content ?? initialUserMessage;
-        const response = await openai.chat(userMessage, this.DEFAULT_SYSTEM_PROMPT, data?.content
+        const response = await openai.chat(userMessage, this.DEFAULT_SYSTEM_PROMPT, undefined, data?.content
             ? [
                 { role: "assistant", content: initialUserMessage },
                 ...history,
@@ -108,7 +114,7 @@ class WBService {
 
 			Question:
 			${data.content}`;
-        const response = await openai.chat(userMessage, this.DEFAULT_SYSTEM_PROMPT, [], onDelta);
+        const response = await openai.chat(userMessage, this.DEFAULT_SYSTEM_PROMPT, undefined, [], onDelta);
         return response;
     }
     async dailyCheckIn(data, onDelta) {
@@ -127,7 +133,7 @@ class WBService {
 
 		Please respond **only with the follow-up question**, nothing else.
 		`;
-        const response = await openai.chat(userMessage, this.DEFAULT_SYSTEM_PROMPT, [], onDelta);
+        const response = await openai.chat(userMessage, this.DEFAULT_SYSTEM_PROMPT, undefined, [], onDelta);
         return response;
     }
     async getUsefulTips(userID) {
@@ -168,7 +174,7 @@ class WBService {
 
 			Return only a JSON array of 15 tip objects.
 			`;
-        const response = await openai.chat(prompt, this.DEFAULT_SYSTEM_PROMPT, [], undefined);
+        const response = await openai.chat(prompt, this.DEFAULT_SYSTEM_PROMPT, undefined, [], undefined);
         let jsonString = response
             .trim()
             .replace(/^```json\s*/, "")

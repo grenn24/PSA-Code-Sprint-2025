@@ -244,8 +244,6 @@ const MainLayout = () => {
 				</button>
 			</div>
 
-			{/* Mobile bottom navigation */}
-
 			{/* Main content */}
 			<MentorMatchContext value={{ chats, setChats }}>
 				<VideoCallContext
@@ -258,12 +256,12 @@ const MainLayout = () => {
 						setTargetUserID,
 					}}
 				>
-					<div className="flex flex-col flex-1 h-full overflow-hidden">
+					<div className="flex flex-col h-screen w-screen overflow-hidden">
 						<Header />
 						<main className="flex-1 overflow-y-auto">
 							<Outlet />
 						</main>
-						<div className="bottom-0 left-0 w-full bg-white border-t border-gray-200 flex justify-around py-2 md:hidden z-50">
+						<div className="w-full bg-white border-t border-gray-200 flex justify-around py-2 md:hidden z-50">
 							{routes.map((r, idx) => {
 								const isActive = location.pathname === r.path;
 								return (

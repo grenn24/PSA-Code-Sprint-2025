@@ -49,7 +49,7 @@ export class PineconeClient {
      * @param topK Number of results to return
      * @returns Array of matches with id, score, and metadata
      */
-    async query(vector, namespaces = this.NAMESPACES, topK = 5) {
+    async query(vector, namespaces = this.NAMESPACES, topK = 10) {
         const allResults = [];
         for (const ns of namespaces) {
             const index = this.client.index(this.INDEX_NAME).namespace(ns);

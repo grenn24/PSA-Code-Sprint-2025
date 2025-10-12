@@ -65,7 +65,7 @@ export class PineconeClient {
 	async query(
 		vector: number[],
 		namespaces: string[] = this.NAMESPACES,
-		topK: number = 5
+		topK: number = 10
 	) {
 		const allResults: {
 			id: string;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import {
 	LineChart,
 	Line,
@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from "redux/store";
 import userService from "services/user";
 import { setUser } from "redux/slices/user";
 import WBConversationWindow from "./WBConversationWindow";
-import { User } from "@common/types/user";
+import { Mood, User } from "@common/types/user";
 import { WBMessage } from "@common/types/wb";
 
 const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -79,15 +79,15 @@ const MoodActiveDot = ({ cx, cy, payload }: any) =>
 		/>
 	) : null;
 
-interface DayCell {
-	date: dayjs.Dayjs;
-	mood?: User["moods"][number];
-}
-
 interface Props {
 	messages: WBMessage[];
 	setMessages: React.Dispatch<React.SetStateAction<WBMessage[]>>;
 	loadingWBReply: boolean;
+}
+
+interface DayCell {
+	level?: number;
+	date: Dayjs;
 }
 
 const MoodChanges = ({ messages, loadingWBReply }: Props) => {
@@ -113,30 +113,37 @@ const MoodChanges = ({ messages, loadingWBReply }: Props) => {
 		{ length: dayjs().diff(startDate, "day") + 1 },
 		(_, i) => {
 			const day = startDate.add(i, "day");
-			const mood = user.moods.find((m) =>
+
+			const moodsForDay = user.moods.filter((m) =>
 				day.isSame(dayjs(m.date), "day")
 			);
-			return { date: day, mood };
+
+			const averageMood =
+				moodsForDay.length > 0
+					? moodsForDay.reduce((sum, m) => sum + m.level, 0) /
+					  moodsForDay.length
+					: undefined;
+
+			return { date: day, level: averageMood };
 		}
 	);
 
 	const weeks: DayCell[][] = [];
-	for (let i = 0; i < allDays.length; i += 7)
+	for (let i = 0; i < allDays.length; i += 7) {
 		weeks.push(allDays.slice(i, i + 7));
+	}
 
 	const monthLabels: Record<number, string> = {};
 	weeks.forEach((week, i) => {
 		const month = week[0].date.format("MMM");
 		if (!Object.values(monthLabels).includes(month)) monthLabels[i] = month;
 	});
-
 	return (
 		<>
 			<h2 className="text-3xl font-semibold text-gray-700 w-full mb-12 min-h-[36px]">
 				Mood Changes
 			</h2>
 
-			{/* Mood Over Time Line Chart */}
 			<div className="bg-white/70 backdrop-blur-md shadow-lg rounded-2xl p-4 flex flex-col gap-4 w-full max-w-250 mb-8">
 				<h3 className="text-xl font-medium text-gray-800">
 					Mood Over Time
@@ -192,7 +199,6 @@ const MoodChanges = ({ messages, loadingWBReply }: Props) => {
 				</ResponsiveContainer>
 			</div>
 
-			{/* Mood Heatmap */}
 			<div className="bg-white/70 backdrop-blur-md shadow-lg rounded-2xl p-4 flex flex-col gap-4 w-full max-w-250 overflow-x-auto mb-16">
 				<h3 className="text-xl font-medium text-gray-800">
 					Mood Heatmap
@@ -233,10 +239,9 @@ const MoodChanges = ({ messages, loadingWBReply }: Props) => {
 											key={cell.date.unix()}
 											className="w-4 h-4 rounded-sm cursor-pointer transition-transform hover:scale-125"
 											style={{
-												backgroundColor: cell.mood
-													? getMoodInfo(
-															cell.mood.level
-													  ).colour
+												backgroundColor: cell.level
+													? getMoodInfo(cell.level)
+															.colour
 													: "#e5e7eb",
 											}}
 											onMouseEnter={(e) => {
@@ -269,7 +274,7 @@ const MoodChanges = ({ messages, loadingWBReply }: Props) => {
 					className="fixed p-2 rounded-lg shadow-md backdrop-blur-md pointer-events-none z-10"
 					style={{
 						backgroundColor: `${
-							getMoodInfo(hoveredCell.mood?.level).colour
+							getMoodInfo(hoveredCell.level).colour
 						}99`,
 						color: "#000",
 						left: tooltipPos.x,
@@ -278,10 +283,10 @@ const MoodChanges = ({ messages, loadingWBReply }: Props) => {
 					}}
 				>
 					<p className="font-semibold text-white text-sm">
-						{dayjs(hoveredCell.mood?.date).format("dddd, MMM D")}
+						{dayjs(hoveredCell.date).format("dddd, MMM D")}
 					</p>
 					<p className="text-white text-xs">
-						{getMoodInfo(hoveredCell.mood?.level).text}
+						{getMoodInfo(hoveredCell.level).text}
 					</p>
 				</div>
 			)}

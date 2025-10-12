@@ -13,7 +13,7 @@ export class OpenAIClient {
         }
         this.client = new OpenAI({ apiKey });
     }
-    async chat(message, systemPrompt, history = [], onDelta) {
+    async chat(message, systemPrompt, sentimentLevel, history = [], onDelta) {
         const inputEmbedding = await this.getEmbedding(message);
         const semanticSearchResults = await pineconeClient.query(inputEmbedding);
         const promptContext = semanticSearchResults
@@ -24,10 +24,15 @@ export class OpenAIClient {
             input: [
                 {
                     role: "system",
-                    content: `${systemPrompt}\n\nRelevant context:\n${promptContext}`,
+                    content: `${systemPrompt}`,
                 },
                 ...history.map((m) => ({ role: m.role, content: m.content })),
-                { role: "user", content: message },
+                {
+                    role: "user",
+                    content: `Relevant Context: ${promptContext}\n\n
+						${sentimentLevel ? `User Sentiment Level: ${sentimentLevel}/10` : ""}
+						User Message:${message}`,
+                },
             ],
             temperature: this.TEMPERATURE,
             stream: true,

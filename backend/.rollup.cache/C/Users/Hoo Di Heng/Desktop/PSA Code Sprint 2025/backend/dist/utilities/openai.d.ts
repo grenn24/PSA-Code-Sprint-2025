@@ -4,7 +4,7 @@ export declare class OpenAIClient {
     private EMBEDDING_MODEL;
     private TEMPERATURE;
     constructor();
-    chat(message: string, systemPrompt: string, history?: {
+    chat(message: string, systemPrompt: string, sentimentLevel?: number, history?: {
         role: "user" | "assistant";
         content: string;
     }[], onDelta?: (message: string) => void): Promise<string>;

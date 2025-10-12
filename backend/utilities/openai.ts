@@ -1,6 +1,7 @@
 import { OpenAI } from "openai";
 import config from "config";
 import pineconeClient from "./pinecone.js";
+import { getSentimentLevel } from "./sentiment.js";
 
 export class OpenAIClient {
 	private client: OpenAI;
@@ -19,6 +20,7 @@ export class OpenAIClient {
 	async chat(
 		message: string,
 		systemPrompt: string,
+		sentimentLevel?: number,
 		history: { role: "user" | "assistant"; content: string }[] = [],
 		onDelta?: (message: string) => void
 	) {
@@ -34,10 +36,15 @@ export class OpenAIClient {
 			input: [
 				{
 					role: "system",
-					content: `${systemPrompt}\n\nRelevant context:\n${promptContext}`,
+					content: `${systemPrompt}`,
 				},
 				...history.map((m) => ({ role: m.role, content: m.content })),
-				{ role: "user", content: message },
+				{
+					role: "user",
+					content: `Relevant Context: ${promptContext}\n\n
+						${sentimentLevel ? `User Sentiment Level: ${sentimentLevel}/10` : ""}
+						User Message:${message}`,
+				},
 			],
 			temperature: this.TEMPERATURE,
 			stream: true,

@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
 	FaHeart,
@@ -10,15 +10,13 @@ import {
 	FaQuoteLeft,
 	FaChevronRight,
 } from "react-icons/fa";
-import { IoArrowBack, IoArrowUp } from "react-icons/io5";
+import { IoArrowBack } from "react-icons/io5";
 import { WBConversation, WBMessage } from "@common/types/wb";
 import { useAppSelector } from "redux/store";
 import userService from "services/user";
 import wbService from "services/wb";
 import dayjs from "dayjs";
-import ReactMarkdown from "react-markdown";
 import websocketService from "utilities/websocket";
-import CountdownButton from "components/CountdownButton";
 import MoodChanges from "components/wellnessBuddy/MoodChanges";
 import WBConversationWindow from "components/wellnessBuddy/WBConversationWindow";
 import WBInput from "components/wellnessBuddy/WBInput";
@@ -161,15 +159,19 @@ const WellnessBuddy = () => {
 		selectedConversationID: string,
 		input: string
 	) => {
-		if (!selectedConversationID || !input.trim()) return;
+		if (!selectedConversationID || !input.trim() || !user?._id) return;
 		setInput("");
 		setLoadingWBReply(true);
 		setLoadingWBEndReply(true);
 
-		wbService.postMessage(selectedConversationID, {
-			content: input,
-			timestamp: new Date(),
-		});
+		wbService.postMessage(
+			selectedConversationID,
+			{
+				content: input,
+				timestamp: new Date(),
+			},
+			user?._id
+		);
 
 		setConversations((prev) =>
 			prev.map((convo) =>
@@ -311,15 +313,12 @@ const WellnessBuddy = () => {
 	const handleGetUsefulTips = async (userID: string, input?: string) => {
 		setInput("");
 		setLoadingWBReply(true);
-		if (input && !loadingWBReply && !!usefulTips?.[usefulTipIndex]) {
-			const systemPrompt = `You are "Wellness Buddy" — a warm, encouraging digital assistant for PSA employees.
-				The user has just seen a "Tip of the Moment" suggestion: ${usefulTips?.[usefulTipIndex]?.text}. 
-				Now, they may ask follow-up questions, reflections, or request for clarification.
-				Your role:
-				- Respond conversationally and empathetically, like a supportive colleague. 
-				- Encourage healthy habits, focus, and balance at work.
-				- If the user asks for advice, tailor your response to the workplace context (e.g., port operations, shift work, teamwork, or mental wellness).
-				- Keep your tone light, friendly, and human — you can use emojis sparingly.`;
+		if (
+			input &&
+			!loadingWBReply &&
+			!!usefulTips?.[usefulTipIndex] &&
+			user?._id
+		) {
 			setStatelessMessages((prev) => [
 				...prev,
 				{ role: "user", content: input, timestamp: new Date() },
@@ -328,7 +327,7 @@ const WellnessBuddy = () => {
 			wbService.postMessageStateless(
 				{ content: input, timestamp: new Date() },
 				statelessMessages,
-				systemPrompt
+				user?._id
 			);
 
 			const listener = (message) => {
@@ -397,6 +396,7 @@ const WellnessBuddy = () => {
 	};
 
 	const handleUnbiasedOpinionResponse = async (input: string) => {
+		if (!user?._id) return;
 		setInput("");
 		setLoadingWBReply(true);
 
@@ -407,7 +407,8 @@ const WellnessBuddy = () => {
 
 		wbService.postMessageStateless(
 			{ content: input, timestamp: new Date() },
-			statelessMessages
+			statelessMessages,
+			user?._id
 		);
 
 		const listener = (message) => {
@@ -461,6 +462,7 @@ const WellnessBuddy = () => {
 	};
 
 	const handleDailyCheckInResponse = async (input: string) => {
+		if (!user?._id) return;
 		setInput("");
 		setLoadingWBReply(true);
 
@@ -471,7 +473,8 @@ const WellnessBuddy = () => {
 
 		wbService.postMessageStateless(
 			{ content: input, timestamp: new Date() },
-			statelessMessages
+			statelessMessages,
+			user?._id
 		);
 
 		const listener = (message) => {

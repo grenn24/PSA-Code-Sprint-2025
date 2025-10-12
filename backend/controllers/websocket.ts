@@ -16,7 +16,8 @@ class WebsocketController {
 		const response = await wbService.postMessage(
 			message.conversationID,
 			message.data,
-			onDelta
+			onDelta,
+			message.userID
 		);
 		websocketService.sendToWS(websocket, {
 			type: "wb_stream_end",
@@ -41,6 +42,7 @@ class WebsocketController {
 			message.data,
 			message.history,
 			onDelta,
+			message.userID,
 			message.systemPrompt
 		);
 		websocketService.sendToWS(websocket, {

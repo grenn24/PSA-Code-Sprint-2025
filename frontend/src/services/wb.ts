@@ -18,7 +18,8 @@ class WBService {
 		data: {
 			content: string;
 			timestamp: Date;
-		}
+		},
+		userID: string
 	) {
 		new Promise((resolve, reject) => {
 			const listener: Listener = (message) => {
@@ -33,6 +34,7 @@ class WBService {
 				conversationID,
 				timestamp: new Date().toISOString(),
 				data,
+				userID,
 			});
 		});
 	}
@@ -40,6 +42,7 @@ class WBService {
 	async postMessageStateless(
 		data: { content: string; timestamp: Date },
 		history: WBMessage[] = [],
+		userID: string,
 		systemPrompt?: string
 	) {
 		new Promise((resolve, reject) => {
@@ -55,6 +58,7 @@ class WBService {
 				timestamp: new Date().toISOString(),
 				data,
 				history,
+				userID,
 				systemPrompt,
 			});
 		});

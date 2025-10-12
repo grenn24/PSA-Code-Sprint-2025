@@ -6,6 +6,7 @@ import websocketService from "../utilities/websocket.js";
 import mongoose from "mongoose";
 import Chat from "../models/chat.js";
 import WBConversation from "../models/wb.js";
+import dayjs from "dayjs";
 
 class UserService {
 	// Get all users
@@ -182,8 +183,10 @@ class UserService {
 	}
 
 	async getWBConversations(userID: string) {
-		const conversations = await WBConversation.find({user: userID}).exec();
-		return conversations
+		const conversations = await WBConversation.find({
+			user: userID,
+		}).exec();
+		return conversations;
 	}
 
 	async getTopMatchedMentors(
@@ -289,6 +292,26 @@ class UserService {
 
 	async deleteAllUsers() {
 		return await User.deleteMany({}).exec();
+	}
+
+	async updateTodayMood(
+		userId: string,
+		level: number = 0.5,
+		notes: string[] = []
+	) {
+		const todayStart = dayjs().startOf("day");
+		const user = await User.findById(userId);
+		if (!user)
+			throw new HttpError(
+				"User not found",
+				"NOT_FOUND",
+				HttpStatusCode.NotFound
+			);
+
+		user.moods.push({ date: todayStart, level, notes: [] });
+
+		await user.save();
+		return user.moods;
 	}
 }
 

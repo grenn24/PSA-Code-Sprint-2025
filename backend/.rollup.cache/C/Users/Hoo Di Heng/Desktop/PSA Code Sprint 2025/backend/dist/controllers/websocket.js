@@ -9,7 +9,7 @@ class WebsocketController {
             timestamp: new Date().toISOString(),
             conversationID: message.conversationID,
         });
-        const response = await wbService.postMessage(message.conversationID, message.data, onDelta);
+        const response = await wbService.postMessage(message.conversationID, message.data, onDelta, message.userID);
         websocketService.sendToWS(websocket, {
             type: "wb_stream_end",
             data: response,
@@ -24,7 +24,7 @@ class WebsocketController {
             timestamp: new Date().toISOString(),
             conversationID: message.conversationID,
         });
-        const response = await wbService.postMessageStateless(message.data, message.history, onDelta, message.systemPrompt);
+        const response = await wbService.postMessageStateless(message.data, message.history, onDelta, message.userID, message.systemPrompt);
         websocketService.sendToWS(websocket, {
             type: "wb_stream_end",
             data: response,
