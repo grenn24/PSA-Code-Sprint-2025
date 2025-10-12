@@ -201,34 +201,43 @@ class UserService {
 				"NOT_FOUND",
 				HttpStatusCode.NotFound
 			);
-
-		const mentors = await User.find({
-			_id: {
-				$ne: userId,
-				$nin: (mentee as any).mentors?.map(
-					(mentor) => new mongoose.Types.ObjectId(mentor._id)
-				),
-			},
-			experienceLevel: { $gte: mentee.experienceLevel },
-			mentorshipRequests: {
-				$not: {
-					$elemMatch: { sender: new mongoose.Types.ObjectId(userId) },
+		const excludedMentorIds = (mentee as any).mentors.map(
+			(m) => new mongoose.Types.ObjectId(m._id)
+		);
+		const candidates = await User.aggregate([
+			{
+				$match: {
+					_id: {
+						$ne: new mongoose.Types.ObjectId(userId),
+						$nin: excludedMentorIds,
+					},
+					experienceLevel: { $gte: mentee.experienceLevel },
+					"mentorshipRequests.sender": {
+						$ne: new mongoose.Types.ObjectId(userId),
+					},
 				},
 			},
-		})
-			.populate("supervisor")
-			.populate("subordinates")
-			.populate("mentors")
-			.populate("mentees")
-			.populate("mentorshipRequests.sender")
-			.exec();
+			{
+				$project: {
+					skills: 1,
+					experienceLevel: 1,
+					careerPath: 1,
+					name: 1,
+					experience_diff: {
+						$subtract: ["$experienceLevel", mentee.experienceLevel],
+					},
+					avatar: 1,
+				},
+			},
+			{ $limit: 200 },
+		]);
 
 		const w1 = 0.4;
 		const w2 = 0.2;
 		const w3 = 0.3;
 
-		const scoredMentors = mentors.map((mentor) => {
-			const skill_alignment = this.calculateSkillAlignment(
+		const scoredMentors = candidates.map((mentor) => {
+			const skill_alignment = this.countOverlappingSkills(
 				mentee.skills,
 				mentor.skills
 			);
@@ -259,20 +268,12 @@ class UserService {
 			.map((m) => m.mentor);
 	}
 
-	// Helper: Skill Alignment (cosine similarity–like)
-	private calculateSkillAlignment(menteeSkills: any[], mentorSkills: any[]) {
-		if (!menteeSkills.length || !mentorSkills.length) return 0;
+	private countOverlappingSkills(mentorSkills: any[], menteeSkills: any[]) {
+		const overlap = mentorSkills.filter((s) =>
+			menteeSkills.includes(s.name.toLowerCase())
+		).length;
 
-		let overlap = 0;
-		for (const ms of menteeSkills) {
-			const match = mentorSkills.find(
-				(s) => s.name.toLowerCase() === ms.name.toLowerCase()
-			);
-			if (match) overlap += Math.min(match.level, ms.level);
-		}
-
-		const total = mentorSkills.reduce((sum, s) => sum + s.level, 0);
-		return total ? overlap / total : 0;
+		return overlap;
 	}
 
 	private calculateCareerPathSimilarity(

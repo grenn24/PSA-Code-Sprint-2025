@@ -103658,7 +103658,6 @@ class WBService {
             throw new HttpError("Conversation not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
         }
         const sentiment = await getSentimentLevel(data.content);
-        console.log(sentiment);
         userService.updateTodayMood(userID, sentiment);
         const history = conversation.messages;
         conversation.messages.push({
@@ -104408,29 +104407,39 @@ class UserService {
         const mentee = await User.findById(userId).populate("mentors").exec();
         if (!mentee)
             throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
-        const mentors = await User.find({
-            _id: {
-                $ne: userId,
-                $nin: mentee.mentors?.map((mentor) => new mongoose.Types.ObjectId(mentor._id)),
-            },
-            experienceLevel: { $gte: mentee.experienceLevel },
-            mentorshipRequests: {
-                $not: {
-                    $elemMatch: { sender: new mongoose.Types.ObjectId(userId) },
+        const excludedMentorIds = mentee.mentors.map((m) => new mongoose.Types.ObjectId(m._id));
+        const candidates = await User.aggregate([
+            {
+                $match: {
+                    _id: {
+                        $ne: new mongoose.Types.ObjectId(userId),
+                        $nin: excludedMentorIds,
+                    },
+                    experienceLevel: { $gte: mentee.experienceLevel },
+                    "mentorshipRequests.sender": {
+                        $ne: new mongoose.Types.ObjectId(userId),
+                    },
                 },
             },
-        })
-            .populate("supervisor")
-            .populate("subordinates")
-            .populate("mentors")
-            .populate("mentees")
-            .populate("mentorshipRequests.sender")
-            .exec();
+            {
+                $project: {
+                    skills: 1,
+                    experienceLevel: 1,
+                    careerPath: 1,
+                    name: 1,
+                    experience_diff: {
+                        $subtract: ["$experienceLevel", mentee.experienceLevel],
+                    },
+                    avatar: 1,
+                },
+            },
+            { $limit: 200 },
+        ]);
         const w1 = 0.4;
         const w2 = 0.2;
         const w3 = 0.3;
-        const scoredMentors = mentors.map((mentor) => {
-            const skill_alignment = this.calculateSkillAlignment(mentee.skills, mentor.skills);
+        const scoredMentors = candidates.map((mentor) => {
+            const skill_alignment = this.countOverlappingSkills(mentee.skills, mentor.skills);
             const experience_diff = mentor.experienceLevel - mentee.experienceLevel;
             const career_path_similarity = this.calculateCareerPathSimilarity(mentee.careerPath, mentor.careerPath);
             const score = w1 * skill_alignment +
@@ -104446,18 +104455,9 @@ class UserService {
             .slice(page * (limit || scoredMentors.length), (limit || scoredMentors.length) * (page + 1))
             .map((m) => m.mentor);
     }
-    // Helper: Skill Alignment (cosine similarity–like)
-    calculateSkillAlignment(menteeSkills, mentorSkills) {
-        if (!menteeSkills.length || !mentorSkills.length)
-            return 0;
-        let overlap = 0;
-        for (const ms of menteeSkills) {
-            const match = mentorSkills.find((s) => s.name.toLowerCase() === ms.name.toLowerCase());
-            if (match)
-                overlap += Math.min(match.level, ms.level);
-        }
-        const total = mentorSkills.reduce((sum, s) => sum + s.level, 0);
-        return total ? overlap / total : 0;
+    countOverlappingSkills(mentorSkills, menteeSkills) {
+        const overlap = mentorSkills.filter((s) => menteeSkills.includes(s.name.toLowerCase())).length;
+        return overlap;
     }
     calculateCareerPathSimilarity(menteePath, mentorPath) {
         const menteePositions = new Set(menteePath.map((p) => p.position));
