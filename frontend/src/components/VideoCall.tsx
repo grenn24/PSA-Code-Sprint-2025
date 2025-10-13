@@ -11,7 +11,7 @@ import {
 	Activity,
 	Heart,
 } from "lucide-react";
-import {motion} from "framer-motion"
+import { motion } from "framer-motion";
 
 interface VideoCallProps {
 	localStream: MediaStream | null;
@@ -143,11 +143,9 @@ const VideoCall: React.FC<VideoCallProps> = ({
 
 	return (
 		<div
-			className={`fixed ${
-				minimized
-					? "w-[320px] h-[180px] rounded-xl overflow-hidden shadow-2xl cursor-move"
-					: "inset-0 flex justify-center items-center bg-black/90"
-			} transition-all duration-500 ease-in-out`}
+			className={`fixed inset-0 transition-all duration-500 ease-in-out ${
+				minimized ? "w-[320px] h-[180px] rounded-xl cursor-move" : ""
+			}`}
 			style={
 				minimized
 					? { left: position.x, bottom: position.y, zIndex: 9999 }
@@ -155,46 +153,54 @@ const VideoCall: React.FC<VideoCallProps> = ({
 			}
 			onMouseDown={handleMouseDown}
 		>
+			{/* Mindfulness background */}
+			{mindfulness && (
+				<div className="absolute inset-0 z-0 bg-gradient-to-br from-purple-700 via-purple-900 to-indigo-900 transition-colors duration-500" />
+			)}
+
+			{/* Remote video */}
 			<motion.video
 				ref={remoteVideoRef}
 				autoPlay
 				playsInline
-				className={`object-cover ${minimized ? "rounded-xl" : ""}`}
+				className="object-cover z-10"
 				style={{ position: mindfulness ? "absolute" : "relative" }}
 				animate={
 					mindfulness
 						? {
-								width: 192, // 48 * 4px = 192px
+								width: 192,
 								height: 192,
 								borderRadius: "50%",
 								top: "30%",
 								left: "25%",
-								boxShadow: "0 0 40px rgba(255,255,255,0.3)",
 								rotate: [0, 5, -5, 0],
-								y: [0, -15, 15, 0], // gentle float
+								y: [0, -15, 15, 0],
+								zIndex: 20,
 						  }
-						: {}
+						: {
+								width: "100%",
+								height: "100%",
+								borderRadius: 0,
+								top: 0,
+								left: 0,
+						  }
 				}
 				transition={{
 					duration: 4,
-					repeat: Infinity,
+					repeat: mindfulness ? Infinity : 0,
 					repeatType: "mirror",
 					ease: "easeInOut",
 				}}
 			/>
 
-			{/* Local video overlay */}
+			{/* Local video */}
 			{!minimized && (
 				<motion.video
 					ref={localVideoRef}
 					autoPlay
 					muted
 					playsInline
-					className={`absolute ${
-						!mindfulness
-							? "bottom-6 right-6 w-64 h-48 rounded-xl border-2 border-white/30 shadow-lg object-cover"
-							: ""
-					}`}
+					className="absolute z-10"
 					animate={
 						mindfulness
 							? {
@@ -203,121 +209,32 @@ const VideoCall: React.FC<VideoCallProps> = ({
 									borderRadius: "50%",
 									top: "30%",
 									right: "25%",
-									boxShadow: "0 0 40px rgba(255,255,255,0.3)",
 									rotate: [0, -5, 5, 0],
 									y: [0, 15, -15, 0],
+									zIndex: 20,
 							  }
-							: {}
+							: {
+									width: 256,
+									height: 192,
+									borderRadius: 12,
+									bottom: 24,
+									right: 24,
+							  }
 					}
 					transition={{
 						duration: 4,
-						repeat: Infinity,
+						repeat: mindfulness ? Infinity : 0,
 						repeatType: "mirror",
 						ease: "easeInOut",
 					}}
 				/>
 			)}
 
-			{/* Controls overlay */}
-			{!minimized ? (
-				<div className="absolute bottom-8 w-full flex justify-center gap-4 flex-wrap">
-					{/* CORE BUTTONS */}
-					{CORE_BUTTONS.map((btn, i) => (
-						<div key={i} className="relative group">
-							<button
-								onClick={btn.onClick}
-								className={`p-2 sm:p-3 md:p-4 rounded-full transition text-white ${
-									btn.danger
-										? "bg-red-600 hover:bg-red-500"
-										: btn.on !== undefined
-										? btn.on
-											? "bg-indigo-600 hover:bg-indigo-500"
-											: "bg-indigo-600/50 hover:bg-indigo-500/70 backdrop-blur-sm"
-										: "bg-indigo-600/50 hover:bg-indigo-500/70 backdrop-blur-sm"
-								}`}
-							>
-								{btn.on !== undefined
-									? btn.on
-										? btn.onIcon
-										: btn.offIcon
-									: btn.icon}
-							</button>
-							{/* Tooltip */}
-							<div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-black/80 text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-								{btn.tooltip}
-							</div>
-						</div>
-					))}
-
-					{/* Divider */}
-					<div className="w-px bg-white/30 mx-2"></div>
-
-					{/* EXTRA FEATURES */}
-					{EXTRA_BUTTONS.map((btn, i) => (
-						<div key={i} className="relative group">
-							<button
-								onClick={btn.onClick}
-								className={`p-2 sm:p-3 md:p-4 rounded-full transition text-white ${
-									btn.on !== undefined && btn.on
-										? "bg-indigo-600 hover:bg-indigo-500"
-										: "bg-indigo-600/50 hover:bg-indigo-500/70 backdrop-blur-sm"
-								}`}
-							>
-								{btn.icon}
-							</button>
-							<div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-black/80 text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-								{btn.tooltip}
-							</div>
-						</div>
-					))}
-				</div>
-			) : (
-				// MINIMIZED CONTROLS ON HOVER
-				<div className="absolute inset-0 flex justify-center items-center opacity-0 hover:opacity-100 transition-opacity bg-black/30">
-					<div className="flex space-x-2">
-						<button
-							onClick={toggleMinimize}
-							className="p-2 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white transition"
-						>
-							<Maximize2 size={20} />
-						</button>
-						<button
-							onClick={onEndCall}
-							className="p-2 rounded-full bg-red-600 hover:bg-red-500 text-white transition"
-						>
-							<PhoneOff size={20} />
-						</button>
-						<button
-							onClick={toggleMic}
-							className={`p-2 rounded-full transition text-white ${
-								micOn
-									? "bg-indigo-600 hover:bg-indigo-500"
-									: "bg-red-600 hover:bg-red-500"
-							}`}
-						>
-							{micOn ? <Mic size={20} /> : <MicOff size={20} />}
-						</button>
-						<button
-							onClick={toggleCamera}
-							className={`p-2 rounded-full transition text-white ${
-								cameraOn
-									? "bg-indigo-600 hover:bg-indigo-500"
-									: "bg-red-600 hover:bg-red-500"
-							}`}
-						>
-							{cameraOn ? (
-								<Camera size={20} />
-							) : (
-								<CameraOff size={20} />
-							)}
-						</button>
-					</div>
-				</div>
-			)}
+			{/* Mindfulness overlay text & button */}
 			{mindfulness && (
-				<div className="absolute inset-0 flex flex-col justify-center items-center bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 text-white transition-opacity duration-700">
+				<div className="absolute inset-0 z-30 flex flex-col justify-center items-center text-white pointer-events-none">
 					<motion.div
-						className="text-center text-2xl font-light tracking-wide"
+						className="text-center text-2xl font-light tracking-wide pointer-events-auto"
 						initial={{ opacity: 0, y: -20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 1 }}
@@ -327,10 +244,9 @@ const VideoCall: React.FC<VideoCallProps> = ({
 							Feel the present moment
 						</p>
 					</motion.div>
-
 					<button
 						onClick={() => setMindfulness(false)}
-						className="mt-12 px-6 py-3 bg-white/20 hover:bg-white/30 rounded-full backdrop-blur-lg text-white font-medium transition"
+						className="mt-12 px-6 py-3 bg-white/20 hover:bg-white/30 rounded-full backdrop-blur-lg text-white font-medium pointer-events-auto transition"
 					>
 						End Mindfulness
 					</button>
