@@ -21,6 +21,10 @@ function websocketRouter(rawMessage) {
         case "answer_video_call":
         case "establish_connection":
         case "end_video_call":
+        case "on_video_call_mindfulness":
+        case "off_video_call_mindfulness":
+        case "start_video_call_mindfulness":
+        case "pause_video_call_mindfulness":
             websocketController.handleVideoCall(this, message);
             break;
     }

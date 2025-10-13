@@ -104156,6 +104156,34 @@ class WebsocketController {
                 timestamp: new Date().toISOString(),
             });
         }
+        if (message.type === "on_video_call_mindfulness") {
+            websocketService.sendTo(message.targetUserID, {
+                type: "on_video_call_mindfulness",
+                targetUserID: message.targetUserID,
+                timestamp: new Date().toISOString(),
+            });
+        }
+        if (message.type === "off_video_call_mindfulness") {
+            websocketService.sendTo(message.targetUserID, {
+                type: "off_video_call_mindfulness",
+                targetUserID: message.targetUserID,
+                timestamp: new Date().toISOString(),
+            });
+        }
+        if (message.type === "start_video_call_mindfulness") {
+            websocketService.sendTo(message.targetUserID, {
+                type: "start_video_call_mindfulness",
+                targetUserID: message.targetUserID,
+                timestamp: new Date().toISOString(),
+            });
+        }
+        if (message.type === "pause_video_call_mindfulness") {
+            websocketService.sendTo(message.targetUserID, {
+                type: "pause_video_call_mindfulness",
+                targetUserID: message.targetUserID,
+                timestamp: new Date().toISOString(),
+            });
+        }
     }
 }
 const websocketController = new WebsocketController();
@@ -104182,6 +104210,10 @@ function websocketRouter(rawMessage) {
         case "answer_video_call":
         case "establish_connection":
         case "end_video_call":
+        case "on_video_call_mindfulness":
+        case "off_video_call_mindfulness":
+        case "start_video_call_mindfulness":
+        case "pause_video_call_mindfulness":
             websocketController.handleVideoCall(this, message);
             break;
     }
