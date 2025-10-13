@@ -762,7 +762,7 @@ const WellnessBuddy = () => {
 							{(selectedConversation ||
 								isCreatingConversation) && (
 								<>
-									<h2 className="text-3xl font-semibold text-gray-700 w-full mb-12 min-h-[36px]">
+									<h2 className="text-3xl font-semibold text-gray-700 w-full mb-12 min-h-[36px] font-inter">
 										{selectedConversation?.title}
 									</h2>
 									<div
@@ -771,7 +771,7 @@ const WellnessBuddy = () => {
 									>
 										{isCreatingConversation && (
 											<div className="flex justify-end">
-												<div className="max-w-[75%] bg-blue-400/60 text-lg px-3 py-2 rounded-2xl rounded-br-none shadow-xs">
+												<div className="max-w-[75%] bg-blue-400/60 text-lg px-3 py-2 rounded-2xl rounded-br-none shadow-xs font-inter">
 													{tmpInput}
 												</div>
 											</div>
