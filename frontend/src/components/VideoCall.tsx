@@ -171,7 +171,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 				ref={remoteVideoRef}
 				autoPlay
 				playsInline
-				className="absolute object-cover"
+				className="absolute"
 				initial={false}
 				animate={
 					mindfulness
@@ -179,10 +179,11 @@ const VideoCall: React.FC<VideoCallProps> = ({
 								width: 230,
 								height: 230,
 								borderRadius: "50%",
-								top: "50%", // top 50%
-								left: "10%", // left side
+								top: "50%",
+								left: "10%",
+								translateY: "-50%",
 								rotate: [0, 5, -5, 0],
-								y: [-15, 15, -15, 0], // floating effect
+								y: [0, -15, 15, 0],
 								zIndex: 20,
 						  }
 						: {
@@ -194,20 +195,17 @@ const VideoCall: React.FC<VideoCallProps> = ({
 						  }
 				}
 				transition={{
-					duration: 4,
-					repeat: mindfulness ? Infinity : 0,
-					repeatType: "mirror",
+					duration: 1,
 					ease: "easeInOut",
 				}}
 			/>
-
 			{/* Local video */}
 			<motion.video
 				ref={localVideoRef}
 				autoPlay
 				muted
 				playsInline
-				className="absolute object-cover"
+				className="absolute"
 				initial={false}
 				animate={
 					mindfulness
@@ -217,8 +215,9 @@ const VideoCall: React.FC<VideoCallProps> = ({
 								borderRadius: "50%",
 								top: "50%",
 								right: "10%",
-								rotate: [0, -5, 5, 0],
-								y: [15, -15, 15, 0], // floating effect
+								translateY: "-50%",
+								rotate: [0, 5, -5, 0],
+								y: [0, -15, 15, 0],
 								zIndex: 20,
 						  }
 						: {
@@ -230,13 +229,10 @@ const VideoCall: React.FC<VideoCallProps> = ({
 						  }
 				}
 				transition={{
-					duration: 4,
-					repeat: mindfulness ? Infinity : 0,
-					repeatType: "mirror",
+					duration: 1,
 					ease: "easeInOut",
 				}}
 			/>
-
 			{/* Controls overlay */}
 			{!minimized ? (
 				<div className="absolute bottom-0 left-0 right-0 p-2 md:p-8 flex justify-around md:justify-start gap-2 md:gap-4 flex-wrap z-2">
