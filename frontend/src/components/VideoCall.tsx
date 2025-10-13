@@ -198,7 +198,6 @@ const VideoCall: React.FC<VideoCallProps> = ({
 			/>
 
 			{/* Local video */}
-
 			<motion.video
 				ref={localVideoRef}
 				autoPlay
@@ -212,16 +211,16 @@ const VideoCall: React.FC<VideoCallProps> = ({
 								width: 300,
 								height: 300,
 								borderRadius: "50%",
-								top: window.innerHeight / 2 + 150, // bottom offset: center plus half height
-								right: window.innerWidth * 0.1, // 10% from right
+								top: window.innerHeight / 2 + 150,
+								left: window.innerWidth * 0.9,
 								zIndex: 20,
 						  }
 						: {
 								width: 256,
 								height: 192,
 								borderRadius: 12,
-								bottom: 24,
-								right: 24,
+								top: window.innerHeight - 24,
+								right: window.innerWidth - 24,
 						  }
 				}
 				transition={{
