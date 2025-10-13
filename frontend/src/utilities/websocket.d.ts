@@ -13,6 +13,7 @@ declare class WebsocketService {
     addListeners(listeners: Listener[]): void;
     removeListener(listener: Listener): void;
     removeListeners(listeners: Listener[]): void;
+    removeAllListeners(): void;
 }
 declare const websocketService: WebsocketService;
 export default websocketService;

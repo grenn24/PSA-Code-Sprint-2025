@@ -179,10 +179,9 @@ const VideoCall: React.FC<VideoCallProps> = ({
 								width: 300,
 								height: 300,
 								borderRadius: "50%",
-								top: "50%",
-								left: "10%",
+								top: window.innerHeight / 2 - 150, // center minus half height
+								left: window.innerWidth * 0.1, // 10% from left
 								zIndex: 20,
-								y: -150,
 						  }
 						: {
 								width: "100%",
@@ -197,7 +196,9 @@ const VideoCall: React.FC<VideoCallProps> = ({
 					ease: "easeInOut",
 				}}
 			/>
+
 			{/* Local video */}
+
 			<motion.video
 				ref={localVideoRef}
 				autoPlay
@@ -211,9 +212,8 @@ const VideoCall: React.FC<VideoCallProps> = ({
 								width: 300,
 								height: 300,
 								borderRadius: "50%",
-								bottom: "50%",
-								right: "10%",
-								y: 150,
+								top: window.innerHeight / 2 + 150, // bottom offset: center plus half height
+								right: window.innerWidth * 0.1, // 10% from right
 								zIndex: 20,
 						  }
 						: {

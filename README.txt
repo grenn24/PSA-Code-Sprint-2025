@@ -1,5 +1,6 @@
 # PSA Horizon
 **Project for PSA Code Sprint 2025**
+Prototype:  
 Staging Website: https://psa-code-sprint-2025.vercel.app  
 API Endpoint: https://psa-code-sprint-2025.onrender.com/api
 
@@ -26,14 +27,15 @@ PSA Horizon is an integrated employee development platform designed to empower P
 - Engage in short guided activities (e.g. mindfulness)
 - Dashboard showing key mood indicators
 
-## Getting Started
+## Local Setup
 1. Ensure that your machine has the following installed:
    - node.js
    - npm
-   - git
+   - serve
 2. Download the latest executable *Codes_Gren.zip* from the [releases]("https://github.com/grenn24/PSA-Code-Sprint-2025") page
 3. Ensure that ports **3000** and **5173** are available
-4. In the root folder, run ./start-all.bat (Windows) or ./start-all.sh (Linux)
+4. Open command prompt in the root folder
+5. Run start.bat (Windows) or ./start.sh (Linux)
 
 ## Directory Structure
 root/  
