@@ -103658,6 +103658,7 @@ class WBService {
             throw new HttpError("Conversation not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
         }
         const sentiment = await getSentimentLevel(data.content);
+        console.log("user sentiment", sentiment);
         userService.updateTodayMood(userID, sentiment);
         const history = conversation.messages;
         conversation.messages.push({

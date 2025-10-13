@@ -33,7 +33,7 @@ const auth =
 				response.locals.user = payload;
 			}
 
-			return next(); // ✅ ensure you return here
+			return next();
 		} catch (err) {
 			// Invalid access token
 			return response.status(401).json({
