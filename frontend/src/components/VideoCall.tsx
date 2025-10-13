@@ -165,7 +165,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 				ref={remoteVideoRef}
 				autoPlay
 				playsInline
-				className="object-cover z-10"
+				className="object-cover"
 				style={{ position: mindfulness ? "absolute" : "relative" }}
 				animate={
 					mindfulness
@@ -202,7 +202,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 					autoPlay
 					muted
 					playsInline
-					className="absolute z-10"
+					className="absolute"
 					animate={
 						mindfulness
 							? {
@@ -234,7 +234,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 
 			{/* Controls overlay */}
 			{!minimized ? (
-				<div className="absolute bottom-8 w-full flex justify-center gap-2 md:gap-4 flex-wrap">
+				<div className="absolute bottom-8 w-full flex justify-center gap-2 md:gap-4 flex-wrap z-2">
 					{/* CORE BUTTONS */}
 					{CORE_BUTTONS.map((btn, i) => (
 						<div key={i} className="relative group">
