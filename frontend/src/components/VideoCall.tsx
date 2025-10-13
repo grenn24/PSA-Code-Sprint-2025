@@ -25,7 +25,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 }) => {
 	const localVideoRef = useRef<HTMLVideoElement>(null);
 	const remoteVideoRef = useRef<HTMLVideoElement>(null);
-
+	const [mindfulness, setMindfulness] = useState(false);
 	const [micOn, setMicOn] = useState(true);
 	const [cameraOn, setCameraOn] = useState(true);
 	const [minimized, setMinimized] = useState(false);
@@ -152,11 +152,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 						},
 						{
 							onClick: toggleMinimize,
-							icon: minimized ? (
-								<Maximize2 size={24} />
-							) : (
-								<Minimize2 size={24} />
-							),
+							icon: <Maximize2 size={24} />,
 							tooltip: minimized
 								? "Maximize Call"
 								: "Minimize Call",
@@ -211,10 +207,10 @@ const VideoCall: React.FC<VideoCallProps> = ({
 							tooltip: "Analyze Mood",
 						},
 						{
-							onClick: () =>
-								alert("Opening mindfulness exercises..."),
+							onClick: () => setMindfulness((prev) => !prev),
 							icon: <Heart size={24} />,
 							tooltip: "Mindfulness",
+							on: mindfulness,
 						},
 					].map((btn, i) => (
 						<div key={i} className="relative group">
@@ -275,6 +271,42 @@ const VideoCall: React.FC<VideoCallProps> = ({
 							)}
 						</button>
 					</div>
+				</div>
+			)}
+			{mindfulness && (
+				<div className="absolute inset-0 flex flex-col justify-center items-center bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 text-white transition-opacity duration-700">
+					{/* Animated bubbles */}
+					<div className="relative flex justify-center items-center gap-24">
+						<video
+							ref={localVideoRef}
+							autoPlay
+							muted
+							playsInline
+							className="w-48 h-48 rounded-full object-cover shadow-2xl border-4 border-white/20 animate-float-slow"
+							style={{ animationDelay: "0s" }}
+						/>
+						<div className="absolute text-center text-2xl font-light tracking-wide animate-fade-in">
+							✨ Take a deep breath together ✨
+							<p className="text-sm mt-2 opacity-70">
+								Feel the present moment
+							</p>
+						</div>
+						<video
+							ref={remoteVideoRef}
+							autoPlay
+							playsInline
+							className="w-48 h-48 rounded-full object-cover shadow-2xl border-4 border-white/20 animate-float-slow"
+							style={{ animationDelay: "2s" }}
+						/>
+					</div>
+
+					{/* End mindfulness button */}
+					<button
+						onClick={() => setMindfulness(false)}
+						className="mt-12 px-6 py-3 bg-white/20 hover:bg-white/30 rounded-full backdrop-blur-lg text-white font-medium transition"
+					>
+						End Mindfulness
+					</button>
 				</div>
 			)}
 		</div>
