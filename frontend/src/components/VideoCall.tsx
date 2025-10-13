@@ -182,6 +182,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 								top: "50%",
 								left: "10%",
 								zIndex: 20,
+								y: -150,
 						  }
 						: {
 								width: "100%",
@@ -212,7 +213,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 								borderRadius: "50%",
 								bottom: "50%",
 								right: "10%",
-								translateY: "50%",
+								y: 150,
 								zIndex: 20,
 						  }
 						: {
