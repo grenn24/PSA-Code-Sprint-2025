@@ -21,6 +21,7 @@ const WBDashboard: React.FC<WBDashboardProps> = ({ activities }) => {
 	const todayMoods =
 		user?.moods.filter((mood) => dayjs(mood.date).isSame(dayjs(), "day")) ||
 		[];
+	console.log(todayMoods);
 	const moodInfo =
 		todayMoods?.length === 0
 			? getMoodInfo(undefined)
