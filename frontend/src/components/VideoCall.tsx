@@ -181,8 +181,6 @@ const VideoCall: React.FC<VideoCallProps> = ({
 								borderRadius: "50%",
 								top: "50%",
 								left: "10%",
-								y: [0, -15, 15, 0],
-								rotate: [0, 5, -5, 0],
 								zIndex: 20,
 						  }
 						: {
@@ -196,10 +194,6 @@ const VideoCall: React.FC<VideoCallProps> = ({
 				transition={{
 					duration: 1,
 					ease: "easeInOut",
-					...(mindfulness && {
-						repeat: Infinity,
-						repeatType: "loop",
-					}),
 				}}
 			/>
 			{/* Local video */}
@@ -219,8 +213,6 @@ const VideoCall: React.FC<VideoCallProps> = ({
 								bottom: "50%",
 								right: "10%",
 								translateY: "50%",
-								rotate: [0, 5, -5, 0],
-								y: [0, -15, 15, 0],
 								zIndex: 20,
 						  }
 						: {
@@ -234,10 +226,6 @@ const VideoCall: React.FC<VideoCallProps> = ({
 				transition={{
 					duration: 1,
 					ease: "easeInOut",
-					...(mindfulness && {
-						repeat: Infinity,
-						repeatType: "loop",
-					}),
 				}}
 			/>
 			{/* Controls overlay */}
