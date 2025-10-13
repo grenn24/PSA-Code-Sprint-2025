@@ -298,6 +298,17 @@ const VideoCall: React.FC<VideoCallProps> = ({
 		startPhase(1, MINDFULNESS_PHASES[1].duration / 1000, 1);
 	};
 
+	const stopSession = () => {
+		setIsPlaying(false);
+		stopSpeech();
+		setPhaseIndex(0);
+		setCurrentRep(1);
+		setRepetitions(1);
+		setTimeout(() => pauseAudio(audioRef.current), 500);
+		setMindfulness(false)
+		if (intervalRef.current) clearInterval(intervalRef.current);
+	};
+
 	return (
 		<div
 			className={`fixed ${
@@ -307,8 +318,8 @@ const VideoCall: React.FC<VideoCallProps> = ({
 			} transition-all duration-500 ease-in-out`}
 			style={
 				minimized
-					? { left: position.x, bottom: position.y, zIndex: 9999 }
-					: { zIndex: 9999 }
+					? { left: position.x, bottom: position.y, zIndex: 100 }
+					: { zIndex: 100 }
 			}
 			onMouseDown={handleMouseDown}
 		>
@@ -474,7 +485,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 				</div>
 			)}
 			{mindfulness && (
-				<div className="absolute inset-0 z-30 flex flex-col justify-center items-center text-white pointer-events-none">
+				<div className="absolute inset-0 z-101 flex flex-col justify-center items-center text-white pointer-events-none">
 					{/* Dynamic glowing background */}
 					<motion.div
 						animate={{
