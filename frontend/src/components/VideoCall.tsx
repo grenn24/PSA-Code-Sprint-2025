@@ -211,7 +211,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 								width: 300,
 								height: 300,
 								borderRadius: "50%",
-								top: window.innerHeight / 2 + 150,
+								top: window.innerHeight / 2 - 150,
 								left: window.innerWidth * 0.9,
 								zIndex: 20,
 						  }
@@ -219,8 +219,8 @@ const VideoCall: React.FC<VideoCallProps> = ({
 								width: 256,
 								height: 192,
 								borderRadius: 12,
-								top: window.innerHeight - 24,
-								left: window.innerWidth - 24,
+								top: window.innerHeight - 24 - 192,
+								left: window.innerWidth - 24 - 256,
 						  }
 				}
 				transition={{
