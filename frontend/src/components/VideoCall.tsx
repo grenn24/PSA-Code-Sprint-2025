@@ -176,8 +176,8 @@ const VideoCall: React.FC<VideoCallProps> = ({
 				animate={
 					mindfulness
 						? {
-								width: 300,
-								height: 300,
+								width: 400,
+								height: 400,
 								borderRadius: "50%",
 								top: window.innerHeight / 2 - 150, // center minus half height
 								left: window.innerWidth * 0.1, // 10% from left
@@ -208,11 +208,11 @@ const VideoCall: React.FC<VideoCallProps> = ({
 				animate={
 					mindfulness
 						? {
-								width: 300,
-								height: 300,
-								borderRadius: "50%",
+								width: 400,
+								height: 400,
+								borderRadius: 100,
 								top: window.innerHeight / 2 - 150,
-								left: window.innerWidth * 0.9,
+								left: window.innerWidth * 0.9 - 400,
 								zIndex: 20,
 						  }
 						: {
