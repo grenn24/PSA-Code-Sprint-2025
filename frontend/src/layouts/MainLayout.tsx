@@ -371,7 +371,7 @@ const MainLayout = () => {
 					</motion.div>
 				)}
 			</AnimatePresence>
-			{true && (
+			{localStream && remoteStream && (
 				<VideoCall
 					localStream={localStream}
 					remoteStream={remoteStream}
