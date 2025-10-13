@@ -25,6 +25,7 @@ function websocketRouter(rawMessage) {
         case "off_video_call_mindfulness":
         case "start_video_call_mindfulness":
         case "pause_video_call_mindfulness":
+        case "resume_video_call_mindfulness":
             websocketController.handleVideoCall(this, message);
             break;
     }

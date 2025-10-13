@@ -203,6 +203,12 @@ const VideoCall: React.FC<VideoCallProps> = ({
 		if (intervalRef.current) clearInterval(intervalRef.current);
 	};
 
+	const resumeSession = () => {
+		setIsPlaying(true);
+		startPhase(phaseIndex, timeLeft, currentRep);
+		playAudio(audioRef.current);
+	};
+
 	useEffect(() => {
 		window.addEventListener("mousemove", handleMouseMove);
 		window.addEventListener("mouseup", handleMouseUp);
@@ -220,6 +226,9 @@ const VideoCall: React.FC<VideoCallProps> = ({
 			}
 			if (message.type === "pause_video_call_mindfulness") {
 				pauseSession();
+			}
+			if (message.type === "resume_video_call_mindfulness") {
+				resumeSession();
 			}
 		};
 		websocketService.addListener(listener);
@@ -751,13 +760,11 @@ const VideoCall: React.FC<VideoCallProps> = ({
 								) : (
 									<button
 										onClick={() => {
-											setIsPlaying(true);
-											startPhase(
-												phaseIndex,
-												timeLeft,
-												currentRep
+											if (!targetUser?._id) return;
+											resumeSession();
+											chatService.resumeVideoCallMindfulnessSession(
+												targetUser?._id
 											);
-											playAudio(audioRef.current);
 										}}
 										className="flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-teal-400 to-teal-500 text-white font-semibold shadow-lg hover:from-teal-500 hover:to-teal-600 active:scale-95 transition-all duration-200"
 									>

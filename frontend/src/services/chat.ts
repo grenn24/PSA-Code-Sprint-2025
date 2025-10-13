@@ -314,6 +314,14 @@ class ChatService {
 			timestamp: new Date().toISOString(),
 		});
 	}
+
+	async resumeVideoCallMindfulnessSession(targetUserID: string) {
+		websocketService.send({
+			type: "resume_video_call_mindfulness",
+			targetUserID,
+			timestamp: new Date().toISOString(),
+		});
+	}
 }
 
 const chatService = new ChatService();

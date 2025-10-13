@@ -181,6 +181,14 @@ class WebsocketController {
 				timestamp: new Date().toISOString(),
 			});
 		}
+
+		if (message.type === "resume_video_call_mindfulness") {
+			websocketService.sendTo(message.targetUserID, {
+				type: "resume_video_call_mindfulness",
+				targetUserID: message.targetUserID,
+				timestamp: new Date().toISOString(),
+			});
+		}
 	}
 }
 
