@@ -256,7 +256,7 @@ const MainLayout = () => {
 						setTargetUserID,
 					}}
 				>
-					<div className="flex flex-col h-screen w-screen overflow-hidden">
+					<div className="flex flex-col h-dvh w-screen overflow-hidden">
 						<Header />
 						<main className="flex-1 overflow-y-auto">
 							<Outlet />
