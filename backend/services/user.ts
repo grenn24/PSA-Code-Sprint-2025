@@ -297,7 +297,7 @@ class UserService {
 
 	async updateTodayMood(
 		userId: string,
-		level: number = 0.5,
+		level: number,
 		notes: string[] = []
 	) {
 		const todayStart = dayjs().startOf("day");
@@ -309,9 +309,10 @@ class UserService {
 				HttpStatusCode.NotFound
 			);
 
-		user.moods.push({ date: todayStart, level, notes: [] });
+		user.moods.push({ date: todayStart, level, notes });
 
 		await user.save();
+		console.log("updated user", user);
 		return user.moods;
 	}
 }

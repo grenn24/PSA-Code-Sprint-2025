@@ -104510,13 +104510,14 @@ class UserService {
     async deleteAllUsers() {
         return await User.deleteMany({}).exec();
     }
-    async updateTodayMood(userId, level = 0.5, notes = []) {
+    async updateTodayMood(userId, level, notes = []) {
         const todayStart = dayjs().startOf("day");
         const user = await User.findById(userId);
         if (!user)
             throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
-        user.moods.push({ date: todayStart, level, notes: [] });
+        user.moods.push({ date: todayStart, level, notes });
         await user.save();
+        console.log("updated user", user);
         return user.moods;
     }
 }
@@ -104647,7 +104648,7 @@ const auth = (role) => (request, response, next) => {
         if (typeof payload !== "string") {
             response.locals.user = payload;
         }
-        return next(); // ✅ ensure you return here
+        return next();
     }
     catch (err) {
         // Invalid access token

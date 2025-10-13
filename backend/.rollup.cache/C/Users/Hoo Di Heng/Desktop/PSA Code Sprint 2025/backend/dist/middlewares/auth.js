@@ -24,7 +24,7 @@ const auth = (role) => (request, response, next) => {
         if (typeof payload !== "string") {
             response.locals.user = payload;
         }
-        return next(); // ✅ ensure you return here
+        return next();
     }
     catch (err) {
         // Invalid access token

@@ -188,13 +188,14 @@ class UserService {
     async deleteAllUsers() {
         return await User.deleteMany({}).exec();
     }
-    async updateTodayMood(userId, level = 0.5, notes = []) {
+    async updateTodayMood(userId, level, notes = []) {
         const todayStart = dayjs().startOf("day");
         const user = await User.findById(userId);
         if (!user)
             throw new HttpError("User not found", "NOT_FOUND", HttpStatusCode.NotFound);
-        user.moods.push({ date: todayStart, level, notes: [] });
+        user.moods.push({ date: todayStart, level, notes });
         await user.save();
+        console.log("updated user", user);
         return user.moods;
     }
 }
