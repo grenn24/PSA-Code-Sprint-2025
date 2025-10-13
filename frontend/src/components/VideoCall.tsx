@@ -305,7 +305,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 		setCurrentRep(1);
 		setRepetitions(1);
 		setTimeout(() => pauseAudio(audioRef.current), 500);
-		setMindfulness(false)
+		setMindfulness(false);
 		if (intervalRef.current) clearInterval(intervalRef.current);
 	};
 
@@ -336,8 +336,8 @@ const VideoCall: React.FC<VideoCallProps> = ({
 								width: 400,
 								height: 400,
 								borderRadius: "50%",
-								top: window.innerHeight / 2 - 150, // center minus half height
-								left: window.innerWidth * 0.1, // 10% from left
+								top: window.innerHeight / 2 - 400,
+								left: window.innerWidth * 0.1 - 400,
 								zIndex: 20,
 						  }
 						: {
@@ -368,7 +368,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 								width: 400,
 								height: 400,
 								borderRadius: 100,
-								top: window.innerHeight / 2 - 150,
+								top: window.innerHeight / 2 - 400,
 								left: window.innerWidth * 0.9 - 400,
 								zIndex: 20,
 						  }
