@@ -11,6 +11,7 @@ import {
 	Activity,
 	Heart,
 } from "lucide-react";
+import {motion} from "framer-motion"
 
 interface VideoCallProps {
 	localStream: MediaStream | null;
@@ -92,6 +93,54 @@ const VideoCall: React.FC<VideoCallProps> = ({
 		};
 	});
 
+	const CORE_BUTTONS = [
+		{
+			onClick: toggleMic,
+			on: micOn,
+			onIcon: <Mic size={24} />,
+			offIcon: <MicOff size={24} />,
+			tooltip: micOn ? "Mute Microphone" : "Unmute Microphone",
+		},
+		{
+			onClick: toggleCamera,
+			on: cameraOn,
+			onIcon: <Camera size={24} />,
+			offIcon: <CameraOff size={24} />,
+			tooltip: cameraOn ? "Turn off Camera" : "Turn on Camera",
+		},
+		{
+			onClick: toggleMinimize,
+			icon: <Maximize2 size={24} />,
+			tooltip: minimized ? "Maximize Call" : "Minimize Call",
+		},
+		{
+			onClick: onEndCall,
+			icon: <PhoneOff size={24} />,
+			tooltip: "End Call",
+			danger: true,
+		},
+	];
+
+	const EXTRA_BUTTONS = [
+		{
+			onClick: toggleCaptions,
+			on: captionsOn,
+			icon: <Subtitles size={24} />,
+			tooltip: "Live Captions",
+		},
+		{
+			onClick: () => alert("Analyzing mood..."),
+			icon: <Activity size={24} />,
+			tooltip: "Analyze Mood",
+		},
+		{
+			onClick: () => setMindfulness((prev) => !prev),
+			icon: <Heart size={24} />,
+			tooltip: "Mindfulness",
+			on: mindfulness,
+		},
+	];
+
 	return (
 		<div
 			className={`fixed ${
@@ -106,24 +155,66 @@ const VideoCall: React.FC<VideoCallProps> = ({
 			}
 			onMouseDown={handleMouseDown}
 		>
-			{/* Remote video */}
-			<video
+			<motion.video
 				ref={remoteVideoRef}
 				autoPlay
 				playsInline
-				className={`object-cover w-full h-full ${
-					minimized ? "rounded-xl" : ""
-				}`}
+				className={`object-cover ${minimized ? "rounded-xl" : ""}`}
+				style={{ position: mindfulness ? "absolute" : "relative" }}
+				animate={
+					mindfulness
+						? {
+								width: 192, // 48 * 4px = 192px
+								height: 192,
+								borderRadius: "50%",
+								top: "30%",
+								left: "25%",
+								boxShadow: "0 0 40px rgba(255,255,255,0.3)",
+								rotate: [0, 5, -5, 0],
+								y: [0, -15, 15, 0], // gentle float
+						  }
+						: {}
+				}
+				transition={{
+					duration: 4,
+					repeat: Infinity,
+					repeatType: "mirror",
+					ease: "easeInOut",
+				}}
 			/>
 
 			{/* Local video overlay */}
 			{!minimized && (
-				<video
+				<motion.video
 					ref={localVideoRef}
 					autoPlay
 					muted
 					playsInline
-					className="absolute bottom-6 right-6 w-64 h-48 rounded-xl bg-black border-2 border-white/30 shadow-lg object-cover"
+					className={`absolute ${
+						!mindfulness
+							? "bottom-6 right-6 w-64 h-48 rounded-xl border-2 border-white/30 shadow-lg object-cover"
+							: ""
+					}`}
+					animate={
+						mindfulness
+							? {
+									width: 192,
+									height: 192,
+									borderRadius: "50%",
+									top: "30%",
+									right: "25%",
+									boxShadow: "0 0 40px rgba(255,255,255,0.3)",
+									rotate: [0, -5, 5, 0],
+									y: [0, 15, -15, 0],
+							  }
+							: {}
+					}
+					transition={{
+						duration: 4,
+						repeat: Infinity,
+						repeatType: "mirror",
+						ease: "easeInOut",
+					}}
 				/>
 			)}
 
@@ -131,43 +222,11 @@ const VideoCall: React.FC<VideoCallProps> = ({
 			{!minimized ? (
 				<div className="absolute bottom-8 w-full flex justify-center gap-4 flex-wrap">
 					{/* CORE BUTTONS */}
-					{[
-						{
-							onClick: toggleMic,
-							on: micOn,
-							onIcon: <Mic size={24} />,
-							offIcon: <MicOff size={24} />,
-							tooltip: micOn
-								? "Mute Microphone"
-								: "Unmute Microphone",
-						},
-						{
-							onClick: toggleCamera,
-							on: cameraOn,
-							onIcon: <Camera size={24} />,
-							offIcon: <CameraOff size={24} />,
-							tooltip: cameraOn
-								? "Turn off Camera"
-								: "Turn on Camera",
-						},
-						{
-							onClick: toggleMinimize,
-							icon: <Maximize2 size={24} />,
-							tooltip: minimized
-								? "Maximize Call"
-								: "Minimize Call",
-						},
-						{
-							onClick: onEndCall,
-							icon: <PhoneOff size={24} />,
-							tooltip: "End Call",
-							danger: true,
-						},
-					].map((btn, i) => (
+					{CORE_BUTTONS.map((btn, i) => (
 						<div key={i} className="relative group">
 							<button
 								onClick={btn.onClick}
-								className={`p-4 rounded-full transition text-white ${
+								className={`p-2 sm:p-3 md:p-4 rounded-full transition text-white ${
 									btn.danger
 										? "bg-red-600 hover:bg-red-500"
 										: btn.on !== undefined
@@ -194,29 +253,11 @@ const VideoCall: React.FC<VideoCallProps> = ({
 					<div className="w-px bg-white/30 mx-2"></div>
 
 					{/* EXTRA FEATURES */}
-					{[
-						{
-							onClick: toggleCaptions,
-							on: captionsOn,
-							icon: <Subtitles size={24} />,
-							tooltip: "Live Captions",
-						},
-						{
-							onClick: () => alert("Analyzing mood..."),
-							icon: <Activity size={24} />,
-							tooltip: "Analyze Mood",
-						},
-						{
-							onClick: () => setMindfulness((prev) => !prev),
-							icon: <Heart size={24} />,
-							tooltip: "Mindfulness",
-							on: mindfulness,
-						},
-					].map((btn, i) => (
+					{EXTRA_BUTTONS.map((btn, i) => (
 						<div key={i} className="relative group">
 							<button
 								onClick={btn.onClick}
-								className={`p-4 rounded-full transition text-white ${
+								className={`p-2 sm:p-3 md:p-4 rounded-full transition text-white ${
 									btn.on !== undefined && btn.on
 										? "bg-indigo-600 hover:bg-indigo-500"
 										: "bg-indigo-600/50 hover:bg-indigo-500/70 backdrop-blur-sm"
@@ -275,32 +316,18 @@ const VideoCall: React.FC<VideoCallProps> = ({
 			)}
 			{mindfulness && (
 				<div className="absolute inset-0 flex flex-col justify-center items-center bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 text-white transition-opacity duration-700">
-					{/* Animated bubbles */}
-					<div className="relative flex justify-center items-center gap-24">
-						<video
-							ref={localVideoRef}
-							autoPlay
-							muted
-							playsInline
-							className="w-48 h-48 rounded-full object-cover shadow-2xl border-4 border-white/20 animate-float-slow"
-							style={{ animationDelay: "0s" }}
-						/>
-						<div className="absolute text-center text-2xl font-light tracking-wide animate-fade-in">
-							✨ Take a deep breath together ✨
-							<p className="text-sm mt-2 opacity-70">
-								Feel the present moment
-							</p>
-						</div>
-						<video
-							ref={remoteVideoRef}
-							autoPlay
-							playsInline
-							className="w-48 h-48 rounded-full object-cover shadow-2xl border-4 border-white/20 animate-float-slow"
-							style={{ animationDelay: "2s" }}
-						/>
-					</div>
+					<motion.div
+						className="text-center text-2xl font-light tracking-wide"
+						initial={{ opacity: 0, y: -20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 1 }}
+					>
+						✨ Take a deep breath together ✨
+						<p className="text-sm mt-2 opacity-70">
+							Feel the present moment
+						</p>
+					</motion.div>
 
-					{/* End mindfulness button */}
 					<button
 						onClick={() => setMindfulness(false)}
 						className="mt-12 px-6 py-3 bg-white/20 hover:bg-white/30 rounded-full backdrop-blur-lg text-white font-medium transition"
