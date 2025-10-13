@@ -179,8 +179,9 @@ const VideoCall: React.FC<VideoCallProps> = ({
 								width: 192,
 								height: 192,
 								borderRadius: "50%",
-								top: "30%",
+								top: "50%",
 								left: "10%",
+								translateY: "-50%",
 								rotate: [0, 5, -5, 0],
 								y: [0, -15, 15, 0],
 								zIndex: 20,
@@ -194,9 +195,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 						  }
 				}
 				transition={{
-					duration: 4,
-					repeat: mindfulness ? Infinity : 0,
-					repeatType: "mirror",
+					duration: 1,
 					ease: "easeInOut",
 				}}
 			/>
@@ -209,17 +208,18 @@ const VideoCall: React.FC<VideoCallProps> = ({
 					muted
 					playsInline
 					className="absolute"
-					initial={false} // prevents animation on mount
+					initial={false}
 					animate={
 						mindfulness
 							? {
 									width: 192,
 									height: 192,
 									borderRadius: "50%",
-									top: "30%",
+									top: "50%",
 									right: "10%",
-									rotate: [0, -5, 5, 0],
-									y: [0, 15, -15, 0],
+									translateY: "-50%",
+									rotate: [0, 5, -5, 0],
+									y: [0, -15, 15, 0],
 									zIndex: 20,
 							  }
 							: {
@@ -231,9 +231,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 							  }
 					}
 					transition={{
-						duration: 4,
-						repeat: mindfulness ? Infinity : 0,
-						repeatType: "mirror",
+						duration: 1,
 						ease: "easeInOut",
 					}}
 				/>
