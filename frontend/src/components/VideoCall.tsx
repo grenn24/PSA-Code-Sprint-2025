@@ -387,7 +387,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 			/>
 			{/* Controls overlay */}
 			{!minimized ? (
-				<div className="absolute bottom-0 left-0 right-0 p-2 md:p-8 flex justify-around md:justify-start gap-2 md:gap-4 flex-wrap">
+				<div className="absolute bottom-0 left-0 right-0 p-2 md:p-8 flex justify-around md:justify-start gap-2 md:gap-4 flex-wrap z-101">
 					{/* CORE BUTTONS */}
 					{CORE_BUTTONS.map((btn, i) => (
 						<div key={i} className="relative group">
