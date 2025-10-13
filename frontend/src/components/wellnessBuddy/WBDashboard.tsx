@@ -1,4 +1,7 @@
+import dayjs from "dayjs";
 import React from "react";
+import { useAppSelector } from "redux/store";
+import { getMoodInfo } from "./MoodChanges";
 
 interface Activity {
 	name: string;
@@ -17,6 +20,17 @@ const WBDashboard: React.FC<WBDashboardProps> = ({
 	streak,
 	activities,
 }) => {
+	const { user } = useAppSelector((state) => state.user);
+	const todayMoods =
+		user?.moods.filter((mood) => dayjs(mood.date).isSame(dayjs(), "day")) ||
+		[];
+	const moodInfo =
+		todayMoods?.length === 0
+			? getMoodInfo(undefined)
+			: getMoodInfo(
+					todayMoods?.reduce((a, b) => a + b.level, 0) /
+						todayMoods?.length
+			  );
 	const completedCount = activities.filter((a) => a.completed).length;
 	const totalCount = activities.length;
 	const completionPercent = Math.round((completedCount / totalCount) * 100);
@@ -29,14 +43,12 @@ const WBDashboard: React.FC<WBDashboardProps> = ({
       flex flex-col md:flex-row gap-8 max-w-6xl"
 		>
 			{/* Left Column: Mood & Streak */}
-			<div className="flex-1 flex flex-col justify-between">
+			<div className="flex-1 flex flex-col justify-between font-inter">
 				<div className="mb-6">
 					<h2 className="text-2xl font-bold mb-2">Mood Today</h2>
-					<div className="text-3xl text-yellow-300">{mood}</div>
-				</div>
-				<div className="flex items-center gap-3 text-2xl font-semibold mt-auto">
-					<span className="text-red-400 animate-pulse">🔥</span>
-					{streak} day{streak > 1 ? "s" : ""} streak
+					<div className={`text-3xl text-${moodInfo.colour}-300`}>
+						{moodInfo.text}
+					</div>
 				</div>
 			</div>
 

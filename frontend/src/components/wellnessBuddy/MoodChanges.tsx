@@ -14,17 +14,16 @@ import { useAppDispatch, useAppSelector } from "redux/store";
 import userService from "services/user";
 import { setUser } from "redux/slices/user";
 import WBConversationWindow from "./WBConversationWindow";
-import { Mood, User } from "@common/types/user";
 import { WBMessage } from "@common/types/wb";
 
 const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const GRADIENT_ID = "mood-gradient";
 
-const getMoodInfo = (level: number | undefined) => {
+export const getMoodInfo = (level: number | undefined) => {
 	if (!level) {
 		return {
 			colour: "#9ca3af",
-			text: "No Data",
+			text: "Unknown",
 		};
 	}
 	return level >= 8
