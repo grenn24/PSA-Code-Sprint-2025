@@ -149,6 +149,38 @@ class WebsocketController {
 				timestamp: new Date().toISOString(),
 			});
 		}
+
+		if (message.type === "on_video_call_mindfulness") {
+			websocketService.sendTo(message.targetUserID, {
+				type: "on_video_call_mindfulness",
+				targetUserID: message.targetUserID,
+				timestamp: new Date().toISOString(),
+			});
+		}
+
+		if (message.type === "off_video_call_mindfulness") {
+			websocketService.sendTo(message.targetUserID, {
+				type: "off_video_call_mindfulness",
+				targetUserID: message.targetUserID,
+				timestamp: new Date().toISOString(),
+			});
+		}
+
+		if (message.type === "start_video_call_mindfulness") {
+			websocketService.sendTo(message.targetUserID, {
+				type: "start_video_call_mindfulness",
+				targetUserID: message.targetUserID,
+				timestamp: new Date().toISOString(),
+			});
+		}
+
+		if (message.type === "pause_video_call_mindfulness") {
+			websocketService.sendTo(message.targetUserID, {
+				type: "pause_video_call_mindfulness",
+				targetUserID: message.targetUserID,
+				timestamp: new Date().toISOString(),
+			});
+		}
 	}
 }
 

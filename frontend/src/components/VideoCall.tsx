@@ -286,11 +286,14 @@ const VideoCall: React.FC<VideoCallProps> = ({
 		{
 			onClick: () =>
 				setMindfulness((prev) => {
+					if (!targetUser?._id) return !prev;
 					if (prev) {
 						stopSession();
+						chatService.offVideoCallMindfulnessSession(
+							targetUser?._id
+						);
 						return false;
 					} else {
-						if (!targetUser?._id) return true;
 						chatService.onVideoCallMindfulnessSession(
 							targetUser?._id
 						);
