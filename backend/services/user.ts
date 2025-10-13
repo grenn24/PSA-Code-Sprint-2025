@@ -7,6 +7,11 @@ import mongoose from "mongoose";
 import Chat from "../models/chat.js";
 import WBConversation from "../models/wb.js";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc.js";
+import timezone from "dayjs/plugin/timezone.js";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 class UserService {
 	// Get all users
@@ -295,12 +300,8 @@ class UserService {
 		return await User.deleteMany({}).exec();
 	}
 
-	async updateTodayMood(
-		userId: string,
-		level: number,
-		notes: string[] = []
-	) {
-		const todayStart = dayjs().startOf("day");
+	async updateTodayMood(userId: string, level: number, notes: string[] = []) {
+		const todayStart = dayjs().tz("Asia/Singapore").startOf("day");
 		const user = await User.findById(userId);
 		if (!user)
 			throw new HttpError(
