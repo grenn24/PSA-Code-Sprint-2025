@@ -171,19 +171,18 @@ const VideoCall: React.FC<VideoCallProps> = ({
 				ref={remoteVideoRef}
 				autoPlay
 				playsInline
-				className="absolute"
+				className="absolute object-cover"
 				initial={false}
 				animate={
 					mindfulness
 						? {
-								width: 192,
-								height: 192,
+								width: 230,
+								height: 230,
 								borderRadius: "50%",
-								top: "50%",
-								left: "10%",
-								translateY: "-50%",
+								top: "50%", // top 50%
+								left: "10%", // left side
 								rotate: [0, 5, -5, 0],
-								y: [0, -15, 15, 0],
+								y: [-15, 15, -15, 0], // floating effect
 								zIndex: 20,
 						  }
 						: {
@@ -195,47 +194,48 @@ const VideoCall: React.FC<VideoCallProps> = ({
 						  }
 				}
 				transition={{
-					duration: 1,
+					duration: 4,
+					repeat: mindfulness ? Infinity : 0,
+					repeatType: "mirror",
 					ease: "easeInOut",
 				}}
 			/>
 
 			{/* Local video */}
-			{!minimized && (
-				<motion.video
-					ref={localVideoRef}
-					autoPlay
-					muted
-					playsInline
-					className="absolute"
-					initial={false}
-					animate={
-						mindfulness
-							? {
-									width: 192,
-									height: 192,
-									borderRadius: "50%",
-									top: "50%",
-									right: "10%",
-									translateY: "-50%",
-									rotate: [0, 5, -5, 0],
-									y: [0, -15, 15, 0],
-									zIndex: 20,
-							  }
-							: {
-									width: "256px",
-									height: "192px",
-									borderRadius: 12,
-									bottom: 24,
-									right: 24,
-							  }
-					}
-					transition={{
-						duration: 1,
-						ease: "easeInOut",
-					}}
-				/>
-			)}
+			<motion.video
+				ref={localVideoRef}
+				autoPlay
+				muted
+				playsInline
+				className="absolute object-cover"
+				initial={false}
+				animate={
+					mindfulness
+						? {
+								width: 230,
+								height: 230,
+								borderRadius: "50%",
+								top: "50%",
+								right: "10%",
+								rotate: [0, -5, 5, 0],
+								y: [15, -15, 15, 0], // floating effect
+								zIndex: 20,
+						  }
+						: {
+								width: "256px",
+								height: "192px",
+								borderRadius: 12,
+								bottom: 24,
+								right: 24,
+						  }
+				}
+				transition={{
+					duration: 4,
+					repeat: mindfulness ? Infinity : 0,
+					repeatType: "mirror",
+					ease: "easeInOut",
+				}}
+			/>
 
 			{/* Controls overlay */}
 			{!minimized ? (
