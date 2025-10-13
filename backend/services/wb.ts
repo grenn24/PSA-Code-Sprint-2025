@@ -68,7 +68,7 @@ class WBService {
 		}
 		const sentiment = await getSentimentLevel(data.content);
 		console.log("user sentiment", sentiment);
-		userService.updateTodayMood(userID, sentiment);
+		console.log(await userService.updateTodayMood(userID, sentiment));
 		const history = conversation.messages;
 		conversation.messages.push({
 			role: "user",

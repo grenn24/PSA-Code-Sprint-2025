@@ -195,8 +195,7 @@ class UserService {
             throw new HttpError("User not found", "NOT_FOUND", HttpStatusCode.NotFound);
         user.moods.push({ date: todayStart, level, notes });
         await user.save();
-        console.log("updated user", user);
-        return user.moods;
+        return user.moods[user.moods.length - 1];
     }
 }
 const userService = new UserService();

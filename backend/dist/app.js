@@ -103659,7 +103659,7 @@ class WBService {
         }
         const sentiment = await getSentimentLevel(data.content);
         console.log("user sentiment", sentiment);
-        userService.updateTodayMood(userID, sentiment);
+        console.log(await userService.updateTodayMood(userID, sentiment));
         const history = conversation.messages;
         conversation.messages.push({
             role: "user",
@@ -104517,8 +104517,7 @@ class UserService {
             throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
         user.moods.push({ date: todayStart, level, notes });
         await user.save();
-        console.log("updated user", user);
-        return user.moods;
+        return user.moods[user.moods.length - 1];
     }
 }
 const userService = new UserService();
