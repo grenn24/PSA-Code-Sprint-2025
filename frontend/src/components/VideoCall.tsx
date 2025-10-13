@@ -485,250 +485,270 @@ const VideoCall: React.FC<VideoCallProps> = ({
 				</div>
 			)}
 			{mindfulness && (
-				<div className="absolute inset-0 flex flex-col justify-center items-center text-white">
-					{/* Dynamic glowing background */}
+				<AnimatePresence>
 					<motion.div
-						animate={{
-							scale: [1, 1.05, 1],
-							opacity: [0.2, 0.6, 0.2],
-						}}
-						transition={{
-							duration: 8,
-							repeat: Infinity,
-							ease: "easeInOut",
-						}}
-						className={`absolute w-[500px] h-[500px] rounded-full blur-3xl bg-gradient-to-r ${currentPhase.gradientMiddle} opacity-40`}
-					/>
-					<div className="relative w-72 h-72 flex items-center justify-center">
-						{/* Timer Ring */}
-						<svg
-							className="absolute w-64 h-64 -rotate-90"
-							viewBox="0 0 100 100"
-						>
-							<circle
-								cx="50"
-								cy="50"
-								r="45"
-								stroke="rgba(0,0,0,0.1)"
-								strokeWidth="5"
-								fill="none"
-							/>
-							<motion.circle
-								cx="50"
-								cy="50"
-								r="45"
-								stroke="url(#grad)"
-								strokeWidth="5"
-								fill="none"
-								strokeLinecap="round"
-								animate={{ strokeDashoffset: 0 }}
-								initial={{ strokeDashoffset: 283 }}
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 1 }}
+						className="absolute inset-0 flex flex-col justify-center items-center text-white"
+					>
+						{/* Dynamic glowing background */}
+						<motion.div
+							animate={{
+								scale: [1, 1.05, 1],
+								opacity: [0.2, 0.6, 0.2],
+							}}
+							transition={{
+								duration: 8,
+								repeat: Infinity,
+								ease: "easeInOut",
+							}}
+							className={`absolute w-[500px] h-[500px] rounded-full blur-3xl bg-gradient-to-r ${currentPhase.gradientMiddle} opacity-40`}
+						/>
+						<div className="relative w-72 h-72 flex items-center justify-center">
+							{/* Timer Ring */}
+							<svg
+								className="absolute w-64 h-64 -rotate-90"
+								viewBox="0 0 100 100"
+							>
+								<circle
+									cx="50"
+									cy="50"
+									r="45"
+									stroke="rgba(0,0,0,0.1)"
+									strokeWidth="5"
+									fill="none"
+								/>
+								<motion.circle
+									cx="50"
+									cy="50"
+									r="45"
+									stroke="url(#grad)"
+									strokeWidth="5"
+									fill="none"
+									strokeLinecap="round"
+									animate={{ strokeDashoffset: 0 }}
+									initial={{ strokeDashoffset: 283 }}
+									transition={{
+										duration: currentPhase.duration / 1000,
+										ease: "easeInOut",
+									}}
+									style={{ strokeDasharray: 283 }}
+								/>
+								<defs>
+									<linearGradient
+										id="grad"
+										x1="0"
+										y1="0"
+										x2="1"
+										y2="1"
+									>
+										<stop
+											offset="0%"
+											stopColor={
+												currentPhase.gradientStart
+											}
+										/>
+										<stop
+											offset="100%"
+											stopColor={currentPhase.gradientEnd}
+										/>
+									</linearGradient>
+								</defs>
+							</svg>
+
+							{/* Core Orb */}
+							<motion.div
+								animate={{
+									scale:
+										currentPhase.name === "Inhale"
+											? 1.5
+											: currentPhase.name === "Exhale"
+											? 1
+											: 1.25,
+									borderRadius: [
+										"50% 50% 50% 50%",
+										"48% 52% 51% 49%",
+										"50% 50% 50% 50%",
+									],
+									boxShadow: [
+										"0 0 40px rgba(56,189,248,0.5)",
+										"0 0 60px rgba(45,212,191,0.7)",
+										"0 0 40px rgba(56,189,248,0.5)",
+									],
+								}}
 								transition={{
 									duration: currentPhase.duration / 1000,
 									ease: "easeInOut",
 								}}
-								style={{ strokeDasharray: 283 }}
-							/>
-							<defs>
-								<linearGradient
-									id="grad"
-									x1="0"
-									y1="0"
-									x2="1"
-									y2="1"
-								>
-									<stop
-										offset="0%"
-										stopColor={currentPhase.gradientStart}
-									/>
-									<stop
-										offset="100%"
-										stopColor={currentPhase.gradientEnd}
-									/>
-								</linearGradient>
-							</defs>
-						</svg>
-
-						{/* Core Orb */}
-						<motion.div
-							animate={{
-								scale:
-									currentPhase.name === "Inhale"
-										? 1.5
-										: currentPhase.name === "Exhale"
-										? 1
-										: 1.25,
-								borderRadius: [
-									"50% 50% 50% 50%",
-									"48% 52% 51% 49%",
-									"50% 50% 50% 50%",
-								],
-								boxShadow: [
-									"0 0 40px rgba(56,189,248,0.5)",
-									"0 0 60px rgba(45,212,191,0.7)",
-									"0 0 40px rgba(56,189,248,0.5)",
-								],
-							}}
-							transition={{
-								duration: currentPhase.duration / 1000,
-								ease: "easeInOut",
-							}}
-							className="absolute w-56 h-56 flex items-center justify-center rounded-full"
-							style={{
-								background: `linear-gradient(135deg, ${currentPhase.gradientStart}, ${currentPhase.gradientEnd})`,
-								transition: `background ${
-									currentPhase.duration / 1000
-								}s ease-in-out`,
-							}}
-						>
-							{/* Inner fluid pulse */}
-							<motion.div
-								animate={{
-									scale: [1, 1.1, 1],
-									opacity: [0.6, 1, 0.6],
-									borderRadius: [
-										"50% 50% 50% 50%",
-										"52% 48% 49% 51%",
-										"50% 50% 50% 50%",
-									],
+								className="absolute w-56 h-56 flex items-center justify-center rounded-full"
+								style={{
+									background: `linear-gradient(135deg, ${currentPhase.gradientStart}, ${currentPhase.gradientEnd})`,
+									transition: `background ${
+										currentPhase.duration / 1000
+									}s ease-in-out`,
 								}}
-								transition={{
-									duration: 3,
-									repeat: Infinity,
-									ease: "easeInOut",
-								}}
-								className="w-40 h-40 bg-white/40 blur-lg"
-							/>
+							>
+								{/* Inner fluid pulse */}
+								<motion.div
+									animate={{
+										scale: [1, 1.1, 1],
+										opacity: [0.6, 1, 0.6],
+										borderRadius: [
+											"50% 50% 50% 50%",
+											"52% 48% 49% 51%",
+											"50% 50% 50% 50%",
+										],
+									}}
+									transition={{
+										duration: 3,
+										repeat: Infinity,
+										ease: "easeInOut",
+									}}
+									className="w-40 h-40 bg-white/40 blur-lg"
+								/>
 
-							{/* Phase Name in the center */}
+								{/* Phase Name in the center */}
+								<AnimatePresence mode="wait">
+									<motion.div
+										key={phaseIndex + "-name"}
+										initial={{ opacity: 0, scale: 0.8 }}
+										animate={{ opacity: 1, scale: 1 }}
+										exit={{ opacity: 0, scale: 0.8 }}
+										transition={{ duration: 0.4 }}
+										className="absolute text-center text-3xl font-semibold text-gray-700"
+									>
+										{currentPhase.name}
+									</motion.div>
+								</AnimatePresence>
+							</motion.div>
+						</div>
+						{/* Time left */}
+						{isPlaying && !!timeLeft && (
 							<AnimatePresence mode="wait">
 								<motion.div
-									key={phaseIndex + "-name"}
-									initial={{ opacity: 0, scale: 0.8 }}
-									animate={{ opacity: 1, scale: 1 }}
-									exit={{ opacity: 0, scale: 0.8 }}
+									key={phaseIndex + "-time"}
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 1 }}
+									exit={{ opacity: 0 }}
 									transition={{ duration: 0.4 }}
-									className="absolute text-center text-3xl font-semibold text-gray-700"
+									className="text-gray-700 font-medium text-xl mt-14"
 								>
-									{currentPhase.name}
+									{timeLeft}s
 								</motion.div>
 							</AnimatePresence>
-						</motion.div>
-					</div>
-					{/* Time left */}
-					{isPlaying && !!timeLeft && (
+						)}
 						<AnimatePresence mode="wait">
-							<motion.div
-								key={phaseIndex + "-time"}
+							<motion.p
+								key={phaseIndex + "-caption"}
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								exit={{ opacity: 0 }}
 								transition={{ duration: 0.4 }}
-								className="text-gray-700 font-medium text-xl mt-14"
+								className="text-xl text-gray-600 font-semibold px-4 text-center mt-6"
 							>
-								{timeLeft}s
-							</motion.div>
+								{currentPhase.caption}
+							</motion.p>
 						</AnimatePresence>
-					)}
-					<AnimatePresence mode="wait">
-						<motion.p
-							key={phaseIndex + "-caption"}
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
-							exit={{ opacity: 0 }}
-							transition={{ duration: 0.4 }}
-							className="text-xl text-gray-600 font-semibold px-4 text-center mt-6"
-						>
-							{currentPhase.caption}
-						</motion.p>
-					</AnimatePresence>
-					{/* Controls */}
-					<div className="flex flex-col items-center gap-4 mt-14 z-10">
-						{/* Repetitions Selector */}
-						<div className="flex items-center gap-2">
-							<label className="text-gray-700 font-medium">
-								Repetitions:
-							</label>
-							<input
-								type="number"
-								min={1}
-								max={10}
-								value={repetitions}
-								onChange={(e) =>
-									setRepetitions(Number(e.target.value))
-								}
-								className="w-16 text-center border border-gray-300 rounded-full px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teal-400 transition"
-							/>
-							{isPlaying && repetitions > 1 && (
-								<span className="text-sm text-gray-500">
-									({currentRep}/{repetitions})
-								</span>
-							)}
-						</div>
+						{/* Controls */}
+						<div className="flex flex-col items-center gap-4 mt-14 z-10">
+							{/* Repetitions Selector */}
+							<div className="flex items-center gap-2">
+								<label className="text-gray-700 font-medium">
+									Repetitions:
+								</label>
+								<input
+									type="number"
+									min={1}
+									max={10}
+									value={repetitions}
+									onChange={(e) =>
+										setRepetitions(Number(e.target.value))
+									}
+									className="w-16 text-center border border-gray-300 rounded-full px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teal-400 transition"
+								/>
+								{isPlaying && repetitions > 1 && (
+									<span className="text-sm text-gray-500">
+										({currentRep}/{repetitions})
+									</span>
+								)}
+							</div>
 
-						{/* Play / Pause / Reset Buttons */}
-						<div className="flex justify-center gap-4">
-							{phaseIndex === 0 ? (
-								<button
-									onClick={startSession}
-									className="flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-teal-400 to-teal-500 text-white font-semibold shadow-lg hover:from-teal-500 hover:to-teal-600 active:scale-95 transition-all duration-200"
-								>
-									<IoPlay className="text-lg" /> Start
-								</button>
-							) : isPlaying ? (
+							{/* Play / Pause / Reset Buttons */}
+							<div className="flex justify-center gap-4">
+								{phaseIndex === 0 ? (
+									<button
+										onClick={startSession}
+										className="flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-teal-400 to-teal-500 text-white font-semibold shadow-lg hover:from-teal-500 hover:to-teal-600 active:scale-95 transition-all duration-200"
+									>
+										<IoPlay className="text-lg" /> Start
+									</button>
+								) : isPlaying ? (
+									<button
+										onClick={() => {
+											setIsPlaying(false);
+											stopSpeech();
+											setTimeout(
+												() =>
+													pauseAudio(
+														audioRef.current
+													),
+												500
+											);
+											if (intervalRef.current)
+												clearInterval(
+													intervalRef.current
+												);
+										}}
+										className="flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-teal-400 to-teal-500 text-white font-semibold shadow-lg hover:from-teal-500 hover:to-teal-600 active:scale-95 transition-all duration-200"
+									>
+										<IoPause className="text-lg" /> Pause
+									</button>
+								) : (
+									<button
+										onClick={() => {
+											setIsPlaying(true);
+											startPhase(
+												phaseIndex,
+												timeLeft,
+												currentRep
+											);
+											playAudio(audioRef.current);
+										}}
+										className="flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-teal-400 to-teal-500 text-white font-semibold shadow-lg hover:from-teal-500 hover:to-teal-600 active:scale-95 transition-all duration-200"
+									>
+										<IoPlay className="text-lg" /> Resume
+									</button>
+								)}
 								<button
 									onClick={() => {
+										setPhaseIndex(0);
 										setIsPlaying(false);
+										setCurrentRep(1);
 										stopSpeech();
 										setTimeout(
-											() => pauseAudio(audioRef.current),
-											500
+											() =>
+												fadeOutAudio(audioRef.current),
+											1000
 										);
 										if (intervalRef.current)
 											clearInterval(intervalRef.current);
 									}}
-									className="flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-teal-400 to-teal-500 text-white font-semibold shadow-lg hover:from-teal-500 hover:to-teal-600 active:scale-95 transition-all duration-200"
+									className="flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-blue-400 to-blue-500 text-white font-semibold shadow-lg hover:from-blue-500 hover:to-blue-600 active:scale-95 transition-all duration-200"
 								>
-									<IoPause className="text-lg" /> Pause
+									<IoRefresh className="text-lg" /> Reset
 								</button>
-							) : (
-								<button
-									onClick={() => {
-										setIsPlaying(true);
-										startPhase(
-											phaseIndex,
-											timeLeft,
-											currentRep
-										);
-										playAudio(audioRef.current);
-									}}
-									className="flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-teal-400 to-teal-500 text-white font-semibold shadow-lg hover:from-teal-500 hover:to-teal-600 active:scale-95 transition-all duration-200"
-								>
-									<IoPlay className="text-lg" /> Resume
-								</button>
-							)}
-							<button
-								onClick={() => {
-									setPhaseIndex(0);
-									setIsPlaying(false);
-									setCurrentRep(1);
-									stopSpeech();
-									setTimeout(
-										() => fadeOutAudio(audioRef.current),
-										1000
-									);
-									if (intervalRef.current)
-										clearInterval(intervalRef.current);
-								}}
-								className="flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-blue-400 to-blue-500 text-white font-semibold shadow-lg hover:from-blue-500 hover:to-blue-600 active:scale-95 transition-all duration-200"
-							>
-								<IoRefresh className="text-lg" /> Reset
-							</button>
+							</div>
 						</div>
-					</div>
 
-					<audio ref={audioRef} loop src="/audio/mindfulness.mp3" />
-				</div>
+						<audio
+							ref={audioRef}
+							loop
+							src="/audio/mindfulness.mp3"
+						/>
+					</motion.div>
+				</AnimatePresence>
 			)}
 		</div>
 	);
