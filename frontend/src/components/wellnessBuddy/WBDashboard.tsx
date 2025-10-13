@@ -1,7 +1,9 @@
 import dayjs from "dayjs";
-import React from "react";
-import { useAppSelector } from "redux/store";
+import React, { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "redux/store";
 import { getMoodInfo } from "./MoodChanges";
+import userService from "services/user";
+import { setUser } from "redux/slices/user";
 
 interface Activity {
 	name: string;
@@ -10,16 +12,11 @@ interface Activity {
 }
 
 interface WBDashboardProps {
-	mood: string;
-	streak: number;
 	activities: Activity[];
 }
 
-const WBDashboard: React.FC<WBDashboardProps> = ({
-	mood,
-	streak,
-	activities,
-}) => {
+const WBDashboard: React.FC<WBDashboardProps> = ({ activities }) => {
+	const dispatch = useAppDispatch();
 	const { user } = useAppSelector((state) => state.user);
 	const todayMoods =
 		user?.moods.filter((mood) => dayjs(mood.date).isSame(dayjs(), "day")) ||
@@ -35,12 +32,18 @@ const WBDashboard: React.FC<WBDashboardProps> = ({
 	const totalCount = activities.length;
 	const completionPercent = Math.round((completedCount / totalCount) * 100);
 
+	useEffect(() => {
+		if (!user?._id) return;
+		userService
+			.getUserByID(user?._id)
+			.then((user) => dispatch(setUser(user)));
+	}, []);
+
 	return (
 		<div
-			className="p-8 mx-auto 
-      bg-white/60 backdrop-blur-lg border border-white/20
-      rounded-3xl shadow-md text-black font-sans 
-      flex flex-col md:flex-row gap-8 max-w-6xl"
+			className="p-8 mx-auto bg-white/60 backdrop-blur-lg border border-white/20
+				rounded-3xl shadow-md text-black font-sans 
+				flex flex-col md:flex-row gap-8 max-w-6xl"
 		>
 			{/* Left Column: Mood & Streak */}
 			<div className="flex-1 flex flex-col justify-between font-inter">

@@ -620,8 +620,6 @@ const WellnessBuddy = () => {
 							className="flex flex-col gap-10"
 						>
 							<WBDashboard
-								mood="Happy"
-								streak={5}
 								activities={[
 									{
 										name: "Morning Meditation",
