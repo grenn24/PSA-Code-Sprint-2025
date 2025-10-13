@@ -11,7 +11,7 @@ interface Prop {
 	type: "mentor" | "mentee";
 }
 const ChatHeader = ({ setChatID, recipient, type, chatID }: Prop) => {
-	const { setTargetUserID } = useVideoCallContext();
+	const { setTargetUser } = useVideoCallContext();
 	return (
 		<div className="bg-white w-full flex items-center gap-3 p-2 border-b border-gray-200">
 			<button
@@ -51,7 +51,7 @@ const ChatHeader = ({ setChatID, recipient, type, chatID }: Prop) => {
 				<button
 					onClick={() => {
 						if (!recipient?._id) return;
-						setTargetUserID(recipient._id);
+						setTargetUser(recipient);
 						chatService.offerVideoCall(recipient._id, chatID);
 					}}
 					className="p-2 rounded-full hover:bg-gray-100 transition"

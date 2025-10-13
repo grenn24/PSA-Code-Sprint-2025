@@ -22,11 +22,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { IoPause, IoPlay, IoRefresh } from "react-icons/io5";
 import { stopSpeech, textToSpeech } from "utilities/tts";
 import { fadeOutAudio, pauseAudio, playAudio } from "utilities/audio";
+import { WebsocketMessage } from "@common/types/http";
+import websocketService from "utilities/websocket";
+import { User } from "@common/types/user";
+import chatService from "services/chat";
 
 interface VideoCallProps {
 	localStream: MediaStream | null;
 	remoteStream: MediaStream | null;
 	onEndCall: () => void;
+	targetUser: User | null;
 }
 
 const MINDFULNESS_PHASES = [
@@ -107,6 +112,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 	localStream,
 	remoteStream,
 	onEndCall,
+	targetUser,
 }) => {
 	const localVideoRef = useRef<HTMLVideoElement>(null);
 	const remoteVideoRef = useRef<HTMLVideoElement>(null);
@@ -178,14 +184,51 @@ const VideoCall: React.FC<VideoCallProps> = ({
 
 	const handleMouseUp = () => setDragging(false);
 
+	const startSession = () => {
+		setIsPlaying(true);
+
+		if (audioRef.current) {
+			audioRef.current.currentTime = 1.5;
+			audioRef.current.volume = 0.8;
+			playAudio(audioRef.current);
+		}
+
+		startPhase(1, MINDFULNESS_PHASES[1].duration / 1000, 1);
+	};
+
+	const pauseSession = () => {
+		setIsPlaying(false);
+		stopSpeech();
+		setTimeout(() => pauseAudio(audioRef.current), 500);
+		if (intervalRef.current) clearInterval(intervalRef.current);
+	};
+
 	useEffect(() => {
 		window.addEventListener("mousemove", handleMouseMove);
 		window.addEventListener("mouseup", handleMouseUp);
+
+		const listener = (message: WebsocketMessage) => {
+			if (message.type === "on_video_call_mindfulness") {
+				setMindfulness(true);
+			}
+			if (message.type === "off_video_call_mindfulness") {
+				stopSession();
+				setMindfulness(false);
+			}
+			if (message.type === "start_video_call_mindfulness") {
+				startSession();
+			}
+			if (message.type === "pause_video_call_mindfulness") {
+				pauseSession();
+			}
+		};
+		websocketService.addListener(listener);
 		return () => {
 			window.removeEventListener("mousemove", handleMouseMove);
 			window.removeEventListener("mouseup", handleMouseUp);
+			websocketService.removeListener(listener);
 		};
-	});
+	}, []);
 
 	const CORE_BUTTONS = [
 		{
@@ -217,6 +260,16 @@ const VideoCall: React.FC<VideoCallProps> = ({
 		},
 	];
 
+	const stopSession = () => {
+		setIsPlaying(false);
+		stopSpeech();
+		setPhaseIndex(0);
+		setCurrentRep(1);
+		setRepetitions(1);
+		setTimeout(() => pauseAudio(audioRef.current), 500);
+		if (intervalRef.current) clearInterval(intervalRef.current);
+	};
+
 	const EXTRA_BUTTONS = [
 		{
 			onClick: toggleCaptions,
@@ -231,7 +284,19 @@ const VideoCall: React.FC<VideoCallProps> = ({
 			tooltip: "Analyze Mood",
 		},
 		{
-			onClick: () => setMindfulness((prev) => !prev),
+			onClick: () =>
+				setMindfulness((prev) => {
+					if (prev) {
+						stopSession();
+						return false;
+					} else {
+						if (!targetUser?._id) return true;
+						chatService.onVideoCallMindfulnessSession(
+							targetUser?._id
+						);
+						return true;
+					}
+				}),
 			onIcon: <MdFavorite size={24} />,
 			offIcon: <MdFavoriteBorder size={24} />,
 			tooltip: "Mindfulness",
@@ -284,29 +349,6 @@ const VideoCall: React.FC<VideoCallProps> = ({
 				}
 			}
 		}, 1000);
-	};
-
-	const startSession = () => {
-		setIsPlaying(true);
-
-		if (audioRef.current) {
-			audioRef.current.currentTime = 1.5;
-			audioRef.current.volume = 0.8;
-			playAudio(audioRef.current);
-		}
-
-		startPhase(1, MINDFULNESS_PHASES[1].duration / 1000, 1);
-	};
-
-	const stopSession = () => {
-		setIsPlaying(false);
-		stopSpeech();
-		setPhaseIndex(0);
-		setCurrentRep(1);
-		setRepetitions(1);
-		setTimeout(() => pauseAudio(audioRef.current), 500);
-		setMindfulness(false);
-		if (intervalRef.current) clearInterval(intervalRef.current);
 	};
 
 	return (
@@ -679,7 +721,13 @@ const VideoCall: React.FC<VideoCallProps> = ({
 							<div className="flex justify-center gap-4">
 								{phaseIndex === 0 ? (
 									<button
-										onClick={startSession}
+										onClick={() => {
+											if (!targetUser?._id) return;
+											startSession();
+											chatService.startVideoCallMindfulnessSession(
+												targetUser?._id
+											);
+										}}
 										className="flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-teal-400 to-teal-500 text-white font-semibold shadow-lg hover:from-teal-500 hover:to-teal-600 active:scale-95 transition-all duration-200"
 									>
 										<IoPlay className="text-lg" /> Start
@@ -687,19 +735,11 @@ const VideoCall: React.FC<VideoCallProps> = ({
 								) : isPlaying ? (
 									<button
 										onClick={() => {
-											setIsPlaying(false);
-											stopSpeech();
-											setTimeout(
-												() =>
-													pauseAudio(
-														audioRef.current
-													),
-												500
+											if (!targetUser?._id) return;
+											pauseSession();
+											chatService.pauseVideoCallMindfulnessSession(
+												targetUser?._id
 											);
-											if (intervalRef.current)
-												clearInterval(
-													intervalRef.current
-												);
 										}}
 										className="flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-teal-400 to-teal-500 text-white font-semibold shadow-lg hover:from-teal-500 hover:to-teal-600 active:scale-95 transition-all duration-200"
 									>

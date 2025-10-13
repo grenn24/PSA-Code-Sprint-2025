@@ -1,26 +1,22 @@
-import {
-	createContext,
-	Dispatch,
-	SetStateAction,
-	useContext,
-} from "react";
+import { User } from "@common/types/user";
+import { createContext, Dispatch, SetStateAction, useContext } from "react";
 
 interface VideoCallContextProps {
 	localStream: MediaStream | null;
 	remoteStream: MediaStream | null;
-	targetUserID: string | null;
+	targetUser: User | null;
 	setLocalStream: Dispatch<SetStateAction<MediaStream | null>>;
 	setRemoteStream: Dispatch<SetStateAction<MediaStream | null>>;
-	setTargetUserID: Dispatch<SetStateAction<string | null>>;
+	setTargetUser: Dispatch<SetStateAction<User | null>>;
 }
 
 export const VideoCallContext = createContext<VideoCallContextProps>({
 	localStream: null,
 	remoteStream: null,
-	targetUserID: null,
+	targetUser: null,
 	setLocalStream: () => {},
 	setRemoteStream: () => {},
-	setTargetUserID: () => {},
+	setTargetUser: () => {},
 });
 
 export const useVideoCallContext = () => useContext(VideoCallContext);

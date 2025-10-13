@@ -282,6 +282,38 @@ class ChatService {
 			this.onRemoteStream?.(null);
 		}
 	}
+
+	async onVideoCallMindfulnessSession(targetUserID: string) {
+		websocketService.send({
+			type: "on_video_call_mindfulness",
+			targetUserID,
+			timestamp: new Date().toISOString(),
+		});
+	}
+
+	async offVideoCallMindfulnessSession(targetUserID: string) {
+		websocketService.send({
+			type: "off_video_call_mindfulness",
+			targetUserID,
+			timestamp: new Date().toISOString(),
+		});
+	}
+
+	async startVideoCallMindfulnessSession(targetUserID: string) {
+		websocketService.send({
+			type: "start_video_call_mindfulness",
+			targetUserID,
+			timestamp: new Date().toISOString(),
+		});
+	}
+
+	async pauseVideoCallMindfulnessSession(targetUserID: string) {
+		websocketService.send({
+			type: "pause_video_call_mindfulness",
+			targetUserID,
+			timestamp: new Date().toISOString(),
+		});
+	}
 }
 
 const chatService = new ChatService();

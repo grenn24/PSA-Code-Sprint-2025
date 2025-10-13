@@ -74,7 +74,7 @@ const MainLayout = () => {
 	const [chats, setChats] = useState<Chat[]>([]);
 	const [localStream, setLocalStream] = useState<MediaStream | null>(null);
 	const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
-	const [targetUserID, setTargetUserID] = useState<string | null>(null);
+	const [targetUser, setTargetUser] = useState<User | null>(null);
 
 	const [videoCallOffer, setVideoCallOffer] = useState<{
 		offer: RTCSessionDescriptionInit;
@@ -269,8 +269,8 @@ const MainLayout = () => {
 						remoteStream,
 						setLocalStream,
 						setRemoteStream,
-						targetUserID,
-						setTargetUserID,
+						targetUser,
+						setTargetUser,
 					}}
 				>
 					<div className="flex flex-col h-dvh w-screen overflow-hidden">
@@ -343,9 +343,7 @@ const MainLayout = () => {
 											videoCallOffer.chat._id,
 											videoCallOffer.offer
 										);
-										setTargetUserID(
-											videoCallOfferSource?._id
-										);
+										setTargetUser(videoCallOfferSource);
 										setVideoCallOffer(null);
 									}}
 								>
@@ -373,12 +371,13 @@ const MainLayout = () => {
 			</AnimatePresence>
 			{localStream && remoteStream && (
 				<VideoCall
+				targetUser={targetUser}
 					localStream={localStream}
 					remoteStream={remoteStream}
 					onEndCall={() => {
-						if (!targetUserID) return;
-						chatService.endVideoCall(targetUserID);
-						setTargetUserID(null);
+						if (!targetUser?._id) return;
+						chatService.endVideoCall(targetUser?._id);
+						setTargetUser(null);
 					}}
 				/>
 			)}
