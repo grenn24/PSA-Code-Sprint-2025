@@ -12,7 +12,7 @@ const WBConversationWindow = ({messages, loadingWBReply}:Prop) => {
 			{messages?.map((msg, i) => (
 				<div key={i}>
 					{msg.role === "assistant" ? (
-						<div className="w-full text-lg font-normal text-gray-800">
+						<div className="w-full text-lg font-normal text-gray-800 font-inter">
 							<ReactMarkdown
 								components={{
 									a: ({ node, ...props }) => (
@@ -30,7 +30,7 @@ const WBConversationWindow = ({messages, loadingWBReply}:Prop) => {
 						</div>
 					) : (
 						<div className="flex justify-end">
-							<div className="max-w-[75%] bg-blue-400/60 text-lg px-3 py-2 rounded-2xl rounded-br-none shadow-xs">
+							<div className="max-w-[75%] bg-blue-400/60 text-lg px-3 py-2 rounded-2xl rounded-br-none shadow-xs font-inter">
 								{msg.content}
 							</div>
 						</div>
