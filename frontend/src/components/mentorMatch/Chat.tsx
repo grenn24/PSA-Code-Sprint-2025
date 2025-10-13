@@ -89,7 +89,7 @@ const Chats = () => {
 				<div className="w-full sm:w-1/3 border-r border-gray-200 flex flex-col">
 					{/* Header */}
 					<div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
-						<h2 className="text-xl font-bold text-gray-800">
+						<h2 className="text-2xl font-bold text-gray-800 font-inter">
 							Chats ({chats.length})
 						</h2>
 						<div className="flex items-center gap-2">

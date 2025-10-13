@@ -106,7 +106,7 @@ const TopMatches = () => {
 
 	return (
 		<div className="flex flex-col">
-			<h2 className="text-lg font-semibold text-indigo-700 mb-[24px]">
+			<h2 className="text-2xl font-semibold text-indigo-700 mb-[24px] font-inter">
 				Suggested Mentors
 			</h2>
 			<div className="w-full flex flex-col items-center">

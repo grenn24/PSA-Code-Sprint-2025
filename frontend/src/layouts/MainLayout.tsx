@@ -1,16 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { createElement, useEffect, useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import {
-	HomeIcon,
-	BriefcaseIcon,
-	UsersIcon,
-	CalendarIcon,
-	ChatBubbleLeftRightIcon,
+	HomeIcon as HomeOutline,
+	BriefcaseIcon as BriefcaseOutline,
+	UsersIcon as UsersOutline,
+	CalendarIcon as CalendarOutline,
+	ChatBubbleLeftRightIcon as ChatOutline,
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	PhoneIcon,
 	XMarkIcon,
 } from "@heroicons/react/24/outline";
+
+import {
+	HomeIcon as HomeSolid,
+	BriefcaseIcon as BriefcaseSolid,
+	UsersIcon as UsersSolid,
+	CalendarIcon as CalendarSolid,
+	ChatBubbleLeftRightIcon as ChatSolid,
+} from "@heroicons/react/24/solid";
 import Header from "../components/Header";
 import { useAppSelector } from "../redux/store";
 import { MentorMatchContext } from "context/MentorMatchContext";
@@ -25,26 +33,35 @@ import VideoCall from "components/VideoCall";
 import { VideoCallContext } from "context/VideoCallContext";
 
 const routes = [
-	{ path: "/", label: "Homepage", icon: <HomeIcon className="w-6 h-6" /> },
+	{
+		path: "/",
+		label: "Homepage",
+		outline: HomeOutline,
+		filled: HomeSolid,
+	},
 	{
 		path: "/career",
 		label: "Career Roadmap",
-		icon: <BriefcaseIcon className="w-6 h-6" />,
+		outline: BriefcaseOutline,
+		filled: BriefcaseSolid,
 	},
 	{
 		path: "/mentor",
 		label: "Mentor Match",
-		icon: <UsersIcon className="w-6 h-6" />,
+		outline: UsersOutline,
+		filled: UsersSolid,
 	},
 	{
 		path: "/events-hub",
 		label: "Events Hub",
-		icon: <CalendarIcon className="w-6 h-6" />,
+		outline: CalendarOutline,
+		filled: CalendarSolid,
 	},
 	{
 		path: "/wellness-buddy",
 		label: "WellnessBuddy",
-		icon: <ChatBubbleLeftRightIcon className="w-6 h-6" />,
+		outline: ChatOutline,
+		filled: ChatSolid,
 	},
 ];
 
@@ -182,6 +199,7 @@ const MainLayout = () => {
 	return (
 		<div className="flex flex-col md:flex-row h-screen w-screen bg-gray-50">
 			{/* Sidebar (hidden on mobile) */}
+
 			<div
 				className={`${
 					open ? "min-w-64" : "w-20"
@@ -194,25 +212,24 @@ const MainLayout = () => {
 				<nav className="flex-1 p-2 space-y-1 relative">
 					{routes.map((r, idx) => {
 						const isActive = location.pathname === r.path;
+						const Icon = isActive ? r.filled : r.outline;
 						return (
 							<div key={idx} className="relative group">
 								<button
 									onClick={() => navigate(r.path)}
-									className={`flex items-center w-full px-3 py-2 rounded-lg transition ${
+									className={`flex items-center w-full px-3 py-2 rounded-xl gap-2 transition font-medium ${
 										open
 											? "justify-start"
 											: "justify-center"
 									} ${
 										isActive
-											? "bg-blue-100 text-blue-700"
-											: "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+											? "bg-indigo-100 text-indigo-700"
+											: "text-gray-700 hover:bg-gray-100 hover:font-semibold"
 									}`}
 								>
-									<div className="flex-shrink-0">
-										{r.icon}
-									</div>
+									<Icon className="w-8 h-8" />
 									<span
-										className={`font-medium whitespace-nowrap transition-all duration-200 ${
+										className={`font-inter whitespace-nowrap transition-all text-lg duration-200 ${
 											open
 												? "ml-3 opacity-100 w-auto"
 												: "opacity-0 w-0 absolute pointer-events-none"
@@ -261,21 +278,25 @@ const MainLayout = () => {
 						<main className="flex-1 overflow-y-auto">
 							<Outlet />
 						</main>
-						<div className="w-full bg-white border-t border-gray-200 flex justify-around py-2 md:hidden z-50">
+						<div className="w-full bg-white border-t border-gray-200 flex justify-around py-1 md:hidden z-50">
 							{routes.map((r, idx) => {
 								const isActive = location.pathname === r.path;
+								const Icon = isActive ? r.filled : r.outline;
+
 								return (
 									<button
 										key={idx}
 										onClick={() => navigate(r.path)}
-										className={`flex flex-col items-center text-xs ${
+										className={`flex flex-col items-center text-xs px-3 py-2 rounded-xl transition ${
 											isActive
-												? "text-blue-600"
-												: "text-gray-600"
+												? "bg-indigo-50 text-indigo-600"
+												: "text-gray-600 hover:text-indigo-500"
 										}`}
 									>
-										{r.icon}
-										<span>{r.label}</span>
+										<Icon className="w-6 h-6" />
+										<span className="text-[11px] font-medium leading-3">
+											{r.label}
+										</span>
 									</button>
 								);
 							})}
@@ -350,7 +371,7 @@ const MainLayout = () => {
 					</motion.div>
 				)}
 			</AnimatePresence>
-			{localStream && remoteStream && (
+			{true && (
 				<VideoCall
 					localStream={localStream}
 					remoteStream={remoteStream}

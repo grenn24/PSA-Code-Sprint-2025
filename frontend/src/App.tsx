@@ -13,15 +13,12 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { useWebsocket } from "utilities/hooks";
 import WellnessBuddy from "pages/WellnessBuddy";
 import Events from "pages/Events";
+
 const App = () => {
-	/*
-	const { globalTheme } = useAppSelector((state) => ({
-		globalTheme: state.theme.theme,
-	}));
-	*/
 	dayjs.extend(duration);
 	dayjs.extend(relativeTime);
 	useWebsocket();
+
 	return (
 		<BrowserRouter>
 			<title>PSA Horizon</title>

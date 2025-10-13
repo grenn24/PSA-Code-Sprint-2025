@@ -6,11 +6,18 @@ import {
 	CameraOff,
 	PhoneOff,
 	Maximize2,
-	Minimize2,
-	Subtitles,
 	Activity,
-	Heart,
+	Minimize,
+	Minimize2,
 } from "lucide-react";
+import {
+	MdMic,
+	MdMicOff,
+	MdFavorite,
+	MdFavoriteBorder,
+	MdOutlineSubtitles,
+	MdOutlineSubtitlesOff,
+} from "react-icons/md";
 import { motion } from "framer-motion";
 
 interface VideoCallProps {
@@ -97,8 +104,8 @@ const VideoCall: React.FC<VideoCallProps> = ({
 		{
 			onClick: toggleMic,
 			on: micOn,
-			onIcon: <Mic size={24} />,
-			offIcon: <MicOff size={24} />,
+			onIcon: <MdMic size={24} />,
+			offIcon: <MdMicOff size={24} />,
 			tooltip: micOn ? "Mute Microphone" : "Unmute Microphone",
 		},
 		{
@@ -110,7 +117,9 @@ const VideoCall: React.FC<VideoCallProps> = ({
 		},
 		{
 			onClick: toggleMinimize,
-			icon: <Maximize2 size={24} />,
+			on: Minimize,
+			offIcon: <Maximize2 size={24} />,
+			onIcon: <Minimize2 size={24} />,
 			tooltip: minimized ? "Maximize Call" : "Minimize Call",
 		},
 		{
@@ -125,7 +134,8 @@ const VideoCall: React.FC<VideoCallProps> = ({
 		{
 			onClick: toggleCaptions,
 			on: captionsOn,
-			icon: <Subtitles size={24} />,
+			onIcon: <MdOutlineSubtitles size={24} />,
+			offIcon: <MdOutlineSubtitlesOff size={24} />,
 			tooltip: "Live Captions",
 		},
 		{
@@ -135,7 +145,8 @@ const VideoCall: React.FC<VideoCallProps> = ({
 		},
 		{
 			onClick: () => setMindfulness((prev) => !prev),
-			icon: <Heart size={24} />,
+			onIcon: <MdFavorite size={24} />,
+			offIcon: <MdFavoriteBorder size={24} />,
 			tooltip: "Mindfulness",
 			on: mindfulness,
 		},
@@ -146,7 +157,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 			className={`fixed ${
 				minimized
 					? "w-[320px] h-[180px] rounded-xl overflow-hidden shadow-2xl cursor-move"
-					: "inset-0 flex justify-center items-center bg-black/90"
+					: "inset-0 flex justify-center items-center bg-black"
 			} transition-all duration-500 ease-in-out`}
 			style={
 				minimized
@@ -155,18 +166,13 @@ const VideoCall: React.FC<VideoCallProps> = ({
 			}
 			onMouseDown={handleMouseDown}
 		>
-			{/* Mindfulness background */}
-			{mindfulness && (
-				<div className="absolute inset-0 z-0 bg-gradient-to-br from-purple-700 via-purple-900 to-indigo-900 transition-colors duration-500" />
-			)}
-
 			{/* Remote video */}
 			<motion.video
 				ref={remoteVideoRef}
 				autoPlay
 				playsInline
-				className="object-cover"
-				style={{ position: mindfulness ? "absolute" : "relative" }}
+				className="absolute"
+				initial={false}
 				animate={
 					mindfulness
 						? {
@@ -174,7 +180,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 								height: 192,
 								borderRadius: "50%",
 								top: "30%",
-								left: "25%",
+								left: "10%",
 								rotate: [0, 5, -5, 0],
 								y: [0, -15, 15, 0],
 								zIndex: 20,
@@ -203,6 +209,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 					muted
 					playsInline
 					className="absolute"
+					initial={false} // prevents animation on mount
 					animate={
 						mindfulness
 							? {
@@ -210,14 +217,14 @@ const VideoCall: React.FC<VideoCallProps> = ({
 									height: 192,
 									borderRadius: "50%",
 									top: "30%",
-									right: "25%",
+									right: "10%",
 									rotate: [0, -5, 5, 0],
 									y: [0, 15, -15, 0],
 									zIndex: 20,
 							  }
 							: {
-									width: 256,
-									height: 192,
+									width: "256px",
+									height: "192px",
 									borderRadius: 12,
 									bottom: 24,
 									right: 24,
@@ -234,7 +241,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 
 			{/* Controls overlay */}
 			{!minimized ? (
-				<div className="absolute bottom-8 w-full flex justify-center gap-2 md:gap-4 flex-wrap z-2">
+				<div className="absolute bottom-0 left-0 right-0 p-2 md:p-8 flex justify-around md:justify-start gap-2 md:gap-4 flex-wrap z-2">
 					{/* CORE BUTTONS */}
 					{CORE_BUTTONS.map((btn, i) => (
 						<div key={i} className="relative group">
@@ -277,7 +284,11 @@ const VideoCall: React.FC<VideoCallProps> = ({
 										: "bg-indigo-600/50 hover:bg-indigo-500/70 backdrop-blur-sm"
 								}`}
 							>
-								{btn.icon}
+								{btn.on !== undefined
+									? btn.on
+										? btn.onIcon
+										: btn.offIcon
+									: btn.icon}
 							</button>
 							<div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-black/80 text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
 								{btn.tooltip}
@@ -286,7 +297,6 @@ const VideoCall: React.FC<VideoCallProps> = ({
 					))}
 				</div>
 			) : (
-				// MINIMIZED CONTROLS ON HOVER
 				<div className="absolute inset-0 flex justify-center items-center opacity-0 hover:opacity-100 transition-opacity bg-black/30">
 					<div className="flex space-x-2">
 						<button

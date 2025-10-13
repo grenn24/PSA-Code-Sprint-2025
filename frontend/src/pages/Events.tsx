@@ -89,8 +89,8 @@ const Events: React.FC = () => {
 	return (
 		<div className="p-8 bg-gradient-to-b from-indigo-50 to-white min-h-screen">
 			<div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
-				<h1 className="text-4xl font-extrabold text-gray-900">
-					Discover Events
+				<h1 className="text-4xl font-bold text-gray-900 font-inter">
+					Events Hub
 				</h1>
 				<div className="flex gap-2 flex-wrap items-center">
 					<input

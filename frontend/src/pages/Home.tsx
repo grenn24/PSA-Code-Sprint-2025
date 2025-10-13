@@ -53,11 +53,11 @@ const Home = () => {
 	}, []);
 
 	return (
-		<div className="min-h-dvh bg-gray-50 p-8 space-y-10 font-roboto">
+		<div className="min-h-dvh bg-gray-100 p-8 space-y-10 font-roboto">
 			{/* Header */}
-			<div className="flex justify-between items-center">
+			<div className="flex justify-between items-cente font-interr">
 				<div>
-					<h1 className="text-3xl font-bold text-gray-900 font-inter">
+					<h1 className="text-3xl font-semibold text-gray-900">
 						Welcome Back, {user?.name}!
 					</h1>
 					<p className="text-gray-600 text-xl">{user?.position}</p>

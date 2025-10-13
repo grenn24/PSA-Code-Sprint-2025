@@ -47,7 +47,7 @@ const PendingInvites = () => {
 			exit={{ opacity: 0, y: -15 }}
 			className="space-y-6"
 		>
-			<h2 className="text-lg font-semibold text-indigo-700">
+			<h2 className="font-semibold text-indigo-700 font-inter text-2xl">
 				Pending Mentorship Requests
 			</h2>
 			{mentorshipRequests.length === 0 && (

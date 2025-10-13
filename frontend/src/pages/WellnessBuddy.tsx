@@ -614,7 +614,6 @@ const WellnessBuddy = () => {
 					!selectedFeature ? (
 						<motion.div
 							key="welcome"
-							initial={{ opacity: 0, y: -20 }}
 							animate={{ opacity: 1, y: 0 }}
 							exit={{ opacity: 0, y: -20 }}
 							transition={{ duration: 0.4, ease: "easeInOut" }}
@@ -646,7 +645,7 @@ const WellnessBuddy = () => {
 									},
 								]}
 							/>
-							<h1 className="text-4xl font-semibold text-gray-800">
+							<h1 className="text-4xl font-semibold text-gray-800 font-inter">
 								How are you feeling today, {user?.name}?
 							</h1>
 							<div className="flex gap-4 overflow-x-auto scrollbar-hide">

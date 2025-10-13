@@ -52,7 +52,7 @@ const WBInput = ({
 						}
 					}}
 					placeholder="Type your thoughts"
-					className="flex-1 bg-transparent text-gray-800 placeholder-gray-500 focus:outline-none resize-none h-full my-auto"
+					className="flex-1 bg-transparent text-gray-800 placeholder-gray-500 focus:outline-none resize-none h-full my-auto font-inter"
 				/>
 				<AnimatePresence>
 					{(input.trim() || countdownCounter !== null) && (
