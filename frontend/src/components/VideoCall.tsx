@@ -336,8 +336,8 @@ const VideoCall: React.FC<VideoCallProps> = ({
 								width: 400,
 								height: 400,
 								borderRadius: "50%",
-								top: window.innerHeight / 2 - 400,
-								left: window.innerWidth * 0.1 - 400,
+								top: window.innerHeight / 2 - 200,
+								left: window.innerWidth * 0.1,
 								zIndex: 20,
 						  }
 						: {
@@ -368,7 +368,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 								width: 400,
 								height: 400,
 								borderRadius: 100,
-								top: window.innerHeight / 2 - 400,
+								top: window.innerHeight / 2 - 200,
 								left: window.innerWidth * 0.9 - 400,
 								zIndex: 20,
 						  }
@@ -387,7 +387,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 			/>
 			{/* Controls overlay */}
 			{!minimized ? (
-				<div className="absolute bottom-0 left-0 right-0 p-2 md:p-8 flex justify-around md:justify-start gap-2 md:gap-4 flex-wrap z-102">
+				<div className="absolute bottom-0 left-0 right-0 p-2 md:p-8 flex justify-around md:justify-start gap-2 md:gap-4 flex-wrap">
 					{/* CORE BUTTONS */}
 					{CORE_BUTTONS.map((btn, i) => (
 						<div key={i} className="relative group">
@@ -485,7 +485,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 				</div>
 			)}
 			{mindfulness && (
-				<div className="absolute inset-0 z-101 flex flex-col justify-center items-center text-white pointer-events-none">
+				<div className="absolute inset-0 flex flex-col justify-center items-center text-white">
 					{/* Dynamic glowing background */}
 					<motion.div
 						animate={{
