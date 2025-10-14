@@ -13,6 +13,8 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { useWebsocket } from "utilities/hooks";
 import WellnessBuddy from "pages/WellnessBuddy";
 import Events from "pages/Events";
+import NewEvent from "pages/NewEvent";
+import EventDetails from "pages/EventDetails";
 
 const App = () => {
 	dayjs.extend(duration);
@@ -28,7 +30,15 @@ const App = () => {
 					<Route index element={<Home />}></Route>
 					<Route path="/mentor" element={<MentorMatch />} />
 					<Route path="/wellness-buddy" element={<WellnessBuddy />} />
-					<Route path="/events-hub" element={<Events />} />
+					<Route path="/events-hub">
+						<Route index element={<Events />} />
+						<Route path="/events-hub/new" element={<NewEvent />} />
+						<Route
+							path="/events-hub/:id"
+							element={<EventDetails />}
+						/>
+					</Route>
+
 					{/*Missed routes*/}
 					<Route path="*" element={<NotFound />} />
 				</Route>

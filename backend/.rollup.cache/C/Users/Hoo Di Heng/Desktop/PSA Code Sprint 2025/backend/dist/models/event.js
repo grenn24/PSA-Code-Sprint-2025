@@ -17,7 +17,7 @@ const eventSchema = new Schema({
         type: Date,
         required: true,
     },
-    category: {
+    categories: {
         type: [String],
         default: [],
     },
@@ -39,6 +39,26 @@ const eventSchema = new Schema({
         },
     ],
     coverImage: s3FileSchema,
+    comments: {
+        type: [
+            {
+                author: {
+                    type: Schema.Types.ObjectId,
+                    ref: "User",
+                    required: true,
+                },
+                content: {
+                    type: String,
+                    required: true,
+                },
+                createdAt: {
+                    type: Date,
+                    default: Date.now,
+                },
+            },
+        ],
+        default: [],
+    },
 });
 const Event = model("Event", eventSchema);
 export default Event;

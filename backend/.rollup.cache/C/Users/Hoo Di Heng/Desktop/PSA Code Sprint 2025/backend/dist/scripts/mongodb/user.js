@@ -62,8 +62,8 @@ function generateNotifications() {
         read: Math.random() > 0.5,
     }));
 }
-const generateUsers = () => {
-    const users = Array.from({ length: 500 }).map(() => ({
+const generateUsers = (length) => {
+    const users = Array.from({ length }).map(() => ({
         name: faker.person.fullName(),
         email: faker.internet.email(),
         avatar: faker.image.avatar(),
@@ -138,7 +138,7 @@ const generateUsers = () => {
 };
 export async function seedUsers() {
     try {
-        await User.insertMany(generateUsers());
+        await User.insertMany(generateUsers(500));
         console.log("Users seeded successfully");
     }
     catch (err) {

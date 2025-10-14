@@ -126869,6 +126869,165 @@ wbRouter.use(auth("user"));
 wbRouter.post("/", wbController.catchErrors(wbController.createConversation.bind(wbController)));
 wbRouter.post("/useful-tips", wbController.catchErrors(wbController.getUsefulTips.bind(wbController)));
 
+const s3FileSchema = new mongoose.Schema({
+    s3Filename: {
+        type: String,
+        required: true,
+    },
+    filename: {
+        type: String,
+        default: "",
+    },
+    url: String,
+    folder: [String],
+    mimeType: String,
+    description: {
+        type: String,
+        default: "",
+    },
+});
+s3FileSchema.post("findOne", async function (s3File) {
+    if (s3File) {
+        s3File.url = s3Service.getPublicUrl(s3File.s3Filename, s3File.folder);
+    }
+});
+s3FileSchema.post("find", async function (s3Files) {
+    if (s3Files && s3Files.length) {
+        s3Files.forEach((doc) => {
+            doc.url = s3Service.getPublicUrl(doc.s3Filename, doc.folder);
+        });
+    }
+});
+
+const eventSchema = new Schema$1({
+    title: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: true,
+    },
+    startDate: {
+        type: Date,
+        required: true,
+    },
+    endDate: {
+        type: Date,
+        required: true,
+    },
+    categories: {
+        type: [String],
+        default: [],
+    },
+    mode: {
+        type: String,
+        enum: ["online", "offline"],
+        required: true,
+    },
+    location: String,
+    creator: {
+        type: Schema$1.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+    participants: [
+        {
+            type: Schema$1.Types.ObjectId,
+            ref: "User",
+        },
+    ],
+    coverImage: s3FileSchema,
+    comments: {
+        type: [
+            {
+                author: {
+                    type: Schema$1.Types.ObjectId,
+                    ref: "User",
+                    required: true,
+                },
+                content: {
+                    type: String,
+                    required: true,
+                },
+                createdAt: {
+                    type: Date,
+                    default: Date.now,
+                },
+            },
+        ],
+        default: [],
+    },
+});
+const Event = model("Event", eventSchema);
+
+class EventService {
+    async getAllEvents(condition) {
+        return await Event.find(condition).exec();
+    }
+    async getEventByID(eventID) {
+        const event = await Event.findById(eventID)
+            .populate("creator participants")
+            .exec();
+        if (!event) {
+            throw new HttpError("Event not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        }
+        return event;
+    }
+    async createEvent(event) {
+        const newEvent = new Event(event);
+        return await newEvent.save();
+    }
+}
+const eventService = new EventService();
+
+class EventController {
+    async getAllEvents(request, response) {
+        const events = await eventService.getAllEvents(request.query);
+        response.status(200).send(events);
+    }
+    async getEventByID(request, response) {
+        const event = await eventService.getEventByID(response.locals._id);
+        response.status(200).send(event);
+    }
+    async createEvent(request, response) {
+        const event = await eventService.createEvent(request.body);
+        response.status(200).send(event);
+    }
+    catchErrors(handler) {
+        return async (request, response, next) => {
+            try {
+                await handler(request, response);
+            }
+            catch (err) {
+                // Custom response errors
+                if (err instanceof HttpError) {
+                    // Custom response error
+                    response.status(err.errorCode).send(err);
+                    return;
+                }
+                else if (err instanceof mongoose.Error.DocumentNotFoundError ||
+                    err instanceof mongoose.Error.ValidationError) {
+                    response.status(400).send({ message: err.message });
+                    return;
+                }
+                else {
+                    // Internal Server Errors
+                    next(err);
+                }
+            }
+        };
+    }
+}
+const eventController = new EventController();
+
+const eventRouter = express.Router();
+eventRouter.use(auth("user"));
+// Define the route handlers
+eventRouter.get("", eventController.catchErrors(eventController.getAllEvents.bind(eventController)));
+eventRouter.get("/:ID", getID(), eventController.catchErrors(eventController.getEventByID.bind(eventController)));
+eventRouter.post("", eventController.catchErrors(eventController.createEvent.bind(eventController)));
+
 const routes = (app) => {
     const apiRouter = express.Router();
     app.use("/api", apiRouter);
@@ -126880,6 +127039,7 @@ const routes = (app) => {
     apiRouter.use("/chat", chatRouter);
     apiRouter.use("/s3", s3Router);
     apiRouter.use("/wb", wbRouter);
+    apiRouter.use("/event", eventRouter);
     // Log errors
     apiRouter.use(error);
     // Handle missed api routes

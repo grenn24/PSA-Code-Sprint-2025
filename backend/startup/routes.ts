@@ -6,6 +6,7 @@ import userRouter from "../routes/user.js";
 import chatRouter from "../routes/chat.js";
 import s3Router from "../routes/s3.js";
 import wbRouter from "../routes/wb.js";
+import eventRouter from "../routes/event.js";
 
 const routes = (app: Express) => {
 	const apiRouter = express.Router();
@@ -24,6 +25,8 @@ const routes = (app: Express) => {
 	apiRouter.use("/s3", s3Router);
 
 	apiRouter.use("/wb", wbRouter);
+
+	apiRouter.use("/event", eventRouter);
 
 	// Log errors
 	apiRouter.use(error);

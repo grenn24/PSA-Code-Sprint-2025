@@ -58,7 +58,6 @@ function generateMoodData(start: Date, skipProbability = 0.3) {
 			data.push({
 				date: new Date(d),
 				level: Math.floor(Math.random() * 10) + 1,
-				
 			});
 		}
 	}
@@ -75,8 +74,8 @@ function generateNotifications() {
 	}));
 }
 
-const generateUsers = () => {
-	const users = Array.from({ length: 500 }).map(() => ({
+const generateUsers = (length: number) => {
+	const users = Array.from({ length }).map(() => ({
 		name: faker.person.fullName(),
 		email: faker.internet.email(),
 		avatar: faker.image.avatar(),
@@ -154,7 +153,7 @@ const generateUsers = () => {
 
 export async function seedUsers() {
 	try {
-		await User.insertMany(generateUsers());
+		await User.insertMany(generateUsers(500));
 		console.log("Users seeded successfully");
 	} catch (err) {
 		console.error("Error inserting users:", err);
