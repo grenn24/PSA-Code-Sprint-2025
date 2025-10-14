@@ -6,6 +6,10 @@ import User from "../models/user.js";
 import dayjs from "dayjs";
 import { getSentimentLevel } from "../utilities/sentiment.js";
 import userService from "./user.js";
+import utc from "dayjs/plugin/utc.js";
+import timezone from "dayjs/plugin/timezone.js";
+dayjs.extend(utc);
+dayjs.extend(timezone);
 class WBService {
     DEFAULT_SYSTEM_PROMPT = `
 		You are "Wellness Buddy", an empathetic, professional wellness assistant embedded in the PSA Horizon website. 
@@ -49,8 +53,7 @@ class WBService {
             throw new HttpError("Conversation not found", "NOT_FOUND", HttpStatusCode.NotFound);
         }
         const sentiment = await getSentimentLevel(data.content);
-        console.log("user sentiment", sentiment);
-        console.log(await userService.updateTodayMood(userID, sentiment));
+        await userService.updateTodayMood(userID, sentiment);
         const history = conversation.messages;
         conversation.messages.push({
             role: "user",
@@ -162,7 +165,8 @@ class WBService {
 			`;
         const prompt = `
 			You are a wellness assistant for PSA employees. 
-			Based on the user's profile and current time ${dayjs().format("HH:mm")}, provide **10 friendly, practical, and relatable "Tip of the Moment"s"** that the user can apply in their daily work routine to improve wellness, focus, or mental health.
+			Based on the user's profile and current time ${dayjs().tz("Asia/Singapore").format("HH:mm")}, provide **10 friendly, practical, and
+			relatable "Tip of the Moment"s"** that the user can apply in their daily work routine to improve wellness, focus, or mental health.
 
 			- Each tip must be in JSON format: { "text": "...", "category": "...", "image": "..." }.
 			- Category should be one of: "Physical", "Mental", "Focus", "Hydration", or "Ergonomics".

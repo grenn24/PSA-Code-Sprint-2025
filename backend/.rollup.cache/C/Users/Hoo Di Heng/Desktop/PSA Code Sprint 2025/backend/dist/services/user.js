@@ -99,6 +99,14 @@ class UserService {
         await mentor.save();
         await this.addNotification(mentorID, `${sender.name} sent you a mentorship request\n${message}`);
     }
+    async addActivity(userID, activity) {
+        const user = await User.findById(userID);
+        if (!user) {
+            throw new HttpError("User not found", "NOT_FOUND", HttpStatusCode.NotFound);
+        }
+        user.activities.push(activity);
+        return await user.save();
+    }
     async getChats(userID) {
         const user = await User.findById(userID);
         if (!user) {

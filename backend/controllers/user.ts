@@ -47,6 +47,16 @@ class UserController {
 			);
 	}
 
+	async addActivity(request: Request, response: Response) {
+		const userID = response.locals._id;
+		response.status(200).send(
+			await userService.addActivity(
+				userID,
+				request.body
+			)
+		);
+	}
+
 	async deleteAllUsers(request: Request, response: Response) {
 		response.status(200).send(await userService.deleteAllUsers());
 	}
@@ -56,7 +66,7 @@ class UserController {
 		const limit = request.query.limit
 			? Number(request.query.limit)
 			: undefined;
-			const page = request.query.page
+		const page = request.query.page
 			? Number(request.query.page)
 			: undefined;
 		response
@@ -71,9 +81,7 @@ class UserController {
 
 	async getWBConversations(request: Request, response: Response) {
 		const userID = response.locals._id;
-		response
-			.status(200)
-			.send(await userService.getWBConversations(userID));
+		response.status(200).send(await userService.getWBConversations(userID));
 	}
 
 	catchErrors(handler) {

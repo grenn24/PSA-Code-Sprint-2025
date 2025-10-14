@@ -1,7 +1,6 @@
 import { OpenAI } from "openai";
 import config from "config";
 import pineconeClient from "./pinecone.js";
-import { getSentimentLevel } from "./sentiment.js";
 
 export class OpenAIClient {
 	private client: OpenAI;

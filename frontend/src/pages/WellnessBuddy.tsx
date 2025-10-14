@@ -505,6 +505,11 @@ const WellnessBuddy = () => {
 			}
 
 			if (message.type === "wb_stream_end") {
+				if (!user?._id) return;
+				userService.addActivity(user?._id, {
+					type: "dailyCheckIn",
+					date: new Date(),
+				});
 				websocketService.removeListener(listener);
 				setStatelessMessages((prev) =>
 					prev.map((hist, index) => {
@@ -617,35 +622,12 @@ const WellnessBuddy = () => {
 							animate={{ opacity: 1, y: 0 }}
 							exit={{ opacity: 0, y: -20 }}
 							transition={{ duration: 0.4, ease: "easeInOut" }}
-							className="flex flex-col gap-10"
+							className="flex flex-col gap-11"
 						>
-							<WBDashboard
-								activities={[
-									{
-										name: "Morning Meditation",
-										duration: "5 min",
-										completed: true,
-									},
-									{
-										name: "Hydration Reminder",
-										duration: "8 glasses",
-										completed: true,
-									},
-									{
-										name: "Evening Walk",
-										duration: "20 min",
-										completed: false,
-									},
-									{
-										name: "Sleep Log",
-										duration: "hours",
-										completed: false,
-									},
-								]}
-							/>
 							<h1 className="text-4xl font-semibold text-gray-800 font-inter">
 								How are you feeling today, {user?.name}?
 							</h1>
+							<WBDashboard />
 							<div className="flex gap-4 overflow-x-auto scrollbar-hide">
 								{EXPLORE.map((item, i) => (
 									<div

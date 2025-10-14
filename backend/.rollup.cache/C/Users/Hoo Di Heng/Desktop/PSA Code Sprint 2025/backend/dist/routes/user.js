@@ -13,6 +13,7 @@ userRouter.get("/:ID/chats", getID(), userController.catchErrors(userController.
 userRouter.post("", userController.catchErrors(userController.createUser.bind(userController)));
 userRouter.post("/:ID/notifications", getID(), userController.catchErrors(userController.addNotification.bind(userController)));
 userRouter.post("/:ID/mentor-requests", getID(), userController.catchErrors(userController.sendMentorshipRequest.bind(userController)));
+userRouter.post("/:ID/activities", getID(), userController.catchErrors(userController.addActivity.bind(userController)));
 userRouter.put("/:ID", getID(), userController.catchErrors(userController.updateUser.bind(userController)));
 userRouter.delete("", userController.catchErrors(userController.deleteAllUsers.bind(userController)));
 export default userRouter;

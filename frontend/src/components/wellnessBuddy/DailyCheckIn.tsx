@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { IoSend } from "react-icons/io5";
+import React from "react";
+import { motion } from "framer-motion";
 import { WBMessage } from "@common/types/wb";
 import wbService from "services/wb";
 import websocketService from "utilities/websocket";
@@ -49,7 +48,7 @@ const DailyCheckIn = ({
 	const handleMoodSelect = (moodvalue: string) => {
 		const mood = MOODS.find((m) => m.value === moodvalue);
 		if (!mood) return;
-        setLoadingWBReply(true);
+		setLoadingWBReply(true);
 		setMessages((prevMessages) => [
 			...prevMessages,
 			{

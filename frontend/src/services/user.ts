@@ -12,15 +12,13 @@ class UserService {
 	}
 
 	async getConversations(userId: string) {
-		const response = await this.apiClient.get<WBConversation[]>(`/${userId}/wb`);
+		const response = await this.apiClient.get<WBConversation[]>(
+			`/${userId}/wb`
+		);
 		return response.data;
 	}
 
-	async getTopMatchedMentors(
-		userId,
-		limit?: number,
-		page: number = 0
-	) {
+	async getTopMatchedMentors(userId, limit?: number, page: number = 0) {
 		const response = await this.apiClient.get<User[]>(
 			`/${userId}/top-matches`,
 			{
@@ -52,6 +50,10 @@ class UserService {
 	async getChats(userID: string) {
 		const response = await this.apiClient.get<Chat[]>(`/${userID}/chats`);
 		return response.data;
+	}
+
+	async addActivity(userID: string, activity: User["activities"][number]) {
+		await this.apiClient.post(`/${userID}/activities`, activity);
 	}
 }
 

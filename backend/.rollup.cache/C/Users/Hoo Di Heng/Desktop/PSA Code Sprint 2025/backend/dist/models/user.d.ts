@@ -76,6 +76,16 @@ declare const User: import("mongoose").Model<{
         level: number;
         notes: string[];
     }>;
+    activities: import("mongoose").Types.DocumentArray<{
+        date: NativeDate;
+        type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        date: NativeDate;
+        type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
+    }> & {
+        date: NativeDate;
+        type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
+    }>;
     bio?: string | null | undefined;
     supervisor?: import("mongoose").Types.ObjectId | null | undefined;
     avatar?: string | null | undefined;
@@ -156,6 +166,16 @@ declare const User: import("mongoose").Model<{
         level: number;
         notes: string[];
     }>;
+    activities: import("mongoose").Types.DocumentArray<{
+        date: NativeDate;
+        type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        date: NativeDate;
+        type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
+    }> & {
+        date: NativeDate;
+        type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
+    }>;
     bio?: string | null | undefined;
     supervisor?: import("mongoose").Types.ObjectId | null | undefined;
     avatar?: string | null | undefined;
@@ -235,6 +255,16 @@ declare const User: import("mongoose").Model<{
         date: NativeDate;
         level: number;
         notes: string[];
+    }>;
+    activities: import("mongoose").Types.DocumentArray<{
+        date: NativeDate;
+        type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        date: NativeDate;
+        type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
+    }> & {
+        date: NativeDate;
+        type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
     }>;
     bio?: string | null | undefined;
     supervisor?: import("mongoose").Types.ObjectId | null | undefined;
@@ -320,6 +350,16 @@ declare const User: import("mongoose").Model<{
         level: number;
         notes: string[];
     }>;
+    activities: import("mongoose").Types.DocumentArray<{
+        date: NativeDate;
+        type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        date: NativeDate;
+        type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
+    }> & {
+        date: NativeDate;
+        type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
+    }>;
     bio?: string | null | undefined;
     supervisor?: import("mongoose").Types.ObjectId | null | undefined;
     avatar?: string | null | undefined;
@@ -400,6 +440,16 @@ declare const User: import("mongoose").Model<{
         level: number;
         notes: string[];
     }>;
+    activities: import("mongoose").Types.DocumentArray<{
+        date: NativeDate;
+        type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        date: NativeDate;
+        type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
+    }> & {
+        date: NativeDate;
+        type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
+    }>;
     bio?: string | null | undefined;
     supervisor?: import("mongoose").Types.ObjectId | null | undefined;
     avatar?: string | null | undefined;
@@ -479,6 +529,16 @@ declare const User: import("mongoose").Model<{
         date: NativeDate;
         level: number;
         notes: string[];
+    }>;
+    activities: import("mongoose").Types.DocumentArray<{
+        date: NativeDate;
+        type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        date: NativeDate;
+        type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
+    }> & {
+        date: NativeDate;
+        type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
     }>;
     bio?: string | null | undefined;
     supervisor?: import("mongoose").Types.ObjectId | null | undefined;

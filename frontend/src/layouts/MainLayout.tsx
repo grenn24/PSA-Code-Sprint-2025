@@ -172,6 +172,19 @@ const MainLayout = () => {
 			chatService.addICECandidate(message.data);
 		};
 
+		const handleEndVideoCall = async (message: WebsocketMessage) => {
+			if (message.type !== "end_video_call") return;
+			if (
+				user?._id &&
+				user?.mentors.find((mentee) => mentee._id === targetUser?._id)
+			) {
+				await userService.addActivity(user?._id, {
+					type: "mentorMessage",
+					date: new Date(),
+				});
+			}
+		};
+
 		websocketService.addListeners([
 			handleNewChatMessage,
 			handleSelectedRecipientStatusUpdate,
@@ -179,10 +192,10 @@ const MainLayout = () => {
 			handleChatMessageUpdate,
 			handleVideoCallOffer,
 			handleICECandidate,
+			handleEndVideoCall,
 		]);
 
 		chatService.onLocalStream = setLocalStream;
-
 		chatService.onRemoteStream = setRemoteStream;
 		return () => {
 			websocketService.removeListeners([
@@ -192,6 +205,7 @@ const MainLayout = () => {
 				handleChatMessageUpdate,
 				handleVideoCallOffer,
 				handleICECandidate,
+				handleEndVideoCall,
 			]);
 		};
 	}, []);
@@ -199,7 +213,6 @@ const MainLayout = () => {
 	return (
 		<div className="flex flex-col md:flex-row h-screen w-screen bg-gray-50">
 			{/* Sidebar (hidden on mobile) */}
-
 			<div
 				className={`${
 					open ? "min-w-64" : "w-20"
@@ -371,13 +384,24 @@ const MainLayout = () => {
 			</AnimatePresence>
 			{localStream && remoteStream && (
 				<VideoCall
-				targetUser={targetUser}
+					targetUser={targetUser}
 					localStream={localStream}
 					remoteStream={remoteStream}
 					onEndCall={() => {
 						if (!targetUser?._id) return;
 						chatService.endVideoCall(targetUser?._id);
 						setTargetUser(null);
+						if (
+							user?._id &&
+							user?.mentors.find(
+								(mentee) => mentee._id === targetUser?._id
+							)
+						) {
+							userService.addActivity(user?._id, {
+								type: "mentorVideoCall",
+								date: new Date(),
+							});
+						}
 					}}
 				/>
 			)}

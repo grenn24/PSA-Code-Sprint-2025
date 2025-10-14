@@ -52737,6 +52737,22 @@ const moodSchema = new Schema$1({
     date: { type: Date, required: true },
     notes: { type: [String], default: [] },
 });
+const activitySchema = new Schema$1({
+    type: {
+        type: String,
+        enum: [
+            "dailyCheckIn",
+            "mindfulness",
+            "mentorMessage",
+            "mentorVideoCall",
+        ],
+        required: true,
+    },
+    date: {
+        type: Date,
+        required: true,
+    },
+});
 const userSchema = new Schema$1({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true, lowercase: true },
@@ -52817,6 +52833,10 @@ const userSchema = new Schema$1({
     isOnline: { type: Boolean, default: false },
     moods: {
         type: [moodSchema],
+        default: [],
+    },
+    activities: {
+        type: [activitySchema],
         default: [],
     },
 });
@@ -103615,6 +103635,44 @@ async function getSentimentLevel(text) {
     return Number(numericLevel.toFixed(2));
 }
 
+var utc$2 = {exports: {}};
+
+var utc$1 = utc$2.exports;
+
+var hasRequiredUtc;
+
+function requireUtc () {
+	if (hasRequiredUtc) return utc$2.exports;
+	hasRequiredUtc = 1;
+	(function (module, exports) {
+		!function(t,i){module.exports=i();}(utc$1,(function(){var t="minute",i=/[+-]\d\d(?::?\d\d)?/g,e=/([+-]|\d\d)/g;return function(s,f,n){var u=f.prototype;n.utc=function(t){var i={date:t,utc:true,args:arguments};return new f(i)},u.utc=function(i){var e=n(this.toDate(),{locale:this.$L,utc:true});return i?e.add(this.utcOffset(),t):e},u.local=function(){return n(this.toDate(),{locale:this.$L,utc:false})};var r=u.parse;u.parse=function(t){t.utc&&(this.$u=true),this.$utils().u(t.$offset)||(this.$offset=t.$offset),r.call(this,t);};var o=u.init;u.init=function(){if(this.$u){var t=this.$d;this.$y=t.getUTCFullYear(),this.$M=t.getUTCMonth(),this.$D=t.getUTCDate(),this.$W=t.getUTCDay(),this.$H=t.getUTCHours(),this.$m=t.getUTCMinutes(),this.$s=t.getUTCSeconds(),this.$ms=t.getUTCMilliseconds();}else o.call(this);};var a=u.utcOffset;u.utcOffset=function(s,f){var n=this.$utils().u;if(n(s))return this.$u?0:n(this.$offset)?a.call(this):this.$offset;if("string"==typeof s&&(s=function(t){ void 0===t&&(t="");var s=t.match(i);if(!s)return null;var f=(""+s[0]).match(e)||["-",0,0],n=f[0],u=60*+f[1]+ +f[2];return 0===u?0:"+"===n?u:-u}(s),null===s))return this;var u=Math.abs(s)<=16?60*s:s;if(0===u)return this.utc(f);var r=this.clone();if(f)return r.$offset=u,r.$u=false,r;var o=this.$u?this.toDate().getTimezoneOffset():-1*this.utcOffset();return (r=this.local().add(u+o,t)).$offset=u,r.$x.$localOffset=o,r};var h=u.format;u.format=function(t){var i=t||(this.$u?"YYYY-MM-DDTHH:mm:ss[Z]":"");return h.call(this,i)},u.valueOf=function(){var t=this.$utils().u(this.$offset)?0:this.$offset+(this.$x.$localOffset||this.$d.getTimezoneOffset());return this.$d.valueOf()-6e4*t},u.isUTC=function(){return !!this.$u},u.toISOString=function(){return this.toDate().toISOString()},u.toString=function(){return this.toDate().toUTCString()};var l=u.toDate;u.toDate=function(t){return "s"===t&&this.$offset?n(this.format("YYYY-MM-DD HH:mm:ss:SSS")).toDate():l.call(this)};var c=u.diff;u.diff=function(t,i,e){if(t&&this.$u===t.$u)return c.call(this,t,i,e);var s=this.local(),f=n(t).local();return c.call(s,f,i,e)};}})); 
+	} (utc$2));
+	return utc$2.exports;
+}
+
+var utcExports = requireUtc();
+var utc = /*@__PURE__*/getDefaultExportFromCjs(utcExports);
+
+var timezone$2 = {exports: {}};
+
+var timezone$1 = timezone$2.exports;
+
+var hasRequiredTimezone;
+
+function requireTimezone () {
+	if (hasRequiredTimezone) return timezone$2.exports;
+	hasRequiredTimezone = 1;
+	(function (module, exports) {
+		!function(t,e){module.exports=e();}(timezone$1,(function(){var t={year:0,month:1,day:2,hour:3,minute:4,second:5},e={};return function(n,i,o){var r,a=function(t,n,i){ void 0===i&&(i={});var o=new Date(t),r=function(t,n){ void 0===n&&(n={});var i=n.timeZoneName||"short",o=t+"|"+i,r=e[o];return r||(r=new Intl.DateTimeFormat("en-US",{hour12:false,timeZone:t,year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",timeZoneName:i}),e[o]=r),r}(n,i);return r.formatToParts(o)},u=function(e,n){for(var i=a(e,n),r=[],u=0;u<i.length;u+=1){var f=i[u],s=f.type,m=f.value,c=t[s];c>=0&&(r[c]=parseInt(m,10));}var d=r[3],l=24===d?0:d,h=r[0]+"-"+r[1]+"-"+r[2]+" "+l+":"+r[4]+":"+r[5]+":000",v=+e;return (o.utc(h).valueOf()-(v-=v%1e3))/6e4},f=i.prototype;f.tz=function(t,e){ void 0===t&&(t=r);var n,i=this.utcOffset(),a=this.toDate(),u=a.toLocaleString("en-US",{timeZone:t}),f=Math.round((a-new Date(u))/1e3/60),s=15*-Math.round(a.getTimezoneOffset()/15)-f;if(!Number(s))n=this.utcOffset(0,e);else if(n=o(u,{locale:this.$L}).$set("millisecond",this.$ms).utcOffset(s,true),e){var m=n.utcOffset();n=n.add(i-m,"minute");}return n.$x.$timezone=t,n},f.offsetName=function(t){var e=this.$x.$timezone||o.tz.guess(),n=a(this.valueOf(),e,{timeZoneName:t}).find((function(t){return "timezonename"===t.type.toLowerCase()}));return n&&n.value};var s=f.startOf;f.startOf=function(t,e){if(!this.$x||!this.$x.$timezone)return s.call(this,t,e);var n=o(this.format("YYYY-MM-DD HH:mm:ss:SSS"),{locale:this.$L});return s.call(n,t,e).tz(this.$x.$timezone,true)},o.tz=function(t,e,n){var i=n&&e,a=n||e||r,f=u(+o(),a);if("string"!=typeof t)return o(t).tz(a);var s=function(t,e,n){var i=t-60*e*1e3,o=u(i,n);if(e===o)return [i,e];var r=u(i-=60*(o-e)*1e3,n);return o===r?[i,o]:[t-60*Math.min(o,r)*1e3,Math.max(o,r)]}(o.utc(t,i).valueOf(),f,a),m=s[0],c=s[1],d=o(m).utcOffset(c);return d.$x.$timezone=a,d},o.tz.guess=function(){return Intl.DateTimeFormat().resolvedOptions().timeZone},o.tz.setDefault=function(t){r=t;};}})); 
+	} (timezone$2));
+	return timezone$2.exports;
+}
+
+var timezoneExports = requireTimezone();
+var timezone = /*@__PURE__*/getDefaultExportFromCjs(timezoneExports);
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 class WBService {
     DEFAULT_SYSTEM_PROMPT = `
 		You are "Wellness Buddy", an empathetic, professional wellness assistant embedded in the PSA Horizon website. 
@@ -103658,8 +103716,7 @@ class WBService {
             throw new HttpError("Conversation not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
         }
         const sentiment = await getSentimentLevel(data.content);
-        console.log("user sentiment", sentiment);
-        console.log(await userService.updateTodayMood(userID, sentiment));
+        await userService.updateTodayMood(userID, sentiment);
         const history = conversation.messages;
         conversation.messages.push({
             role: "user",
@@ -103771,7 +103828,8 @@ class WBService {
 			`;
         const prompt = `
 			You are a wellness assistant for PSA employees. 
-			Based on the user's profile and current time ${dayjs().format("HH:mm")}, provide **10 friendly, practical, and relatable "Tip of the Moment"s"** that the user can apply in their daily work routine to improve wellness, focus, or mental health.
+			Based on the user's profile and current time ${dayjs().tz("Asia/Singapore").format("HH:mm")}, provide **10 friendly, practical, and
+			relatable "Tip of the Moment"s"** that the user can apply in their daily work routine to improve wellness, focus, or mental health.
 
 			- Each tip must be in JSON format: { "text": "...", "category": "...", "image": "..." }.
 			- Category should be one of: "Physical", "Mental", "Focus", "Hydration", or "Ergonomics".
@@ -104329,42 +104387,6 @@ class WebsocketService {
 }
 const websocketService = new WebsocketService();
 
-var utc$2 = {exports: {}};
-
-var utc$1 = utc$2.exports;
-
-var hasRequiredUtc;
-
-function requireUtc () {
-	if (hasRequiredUtc) return utc$2.exports;
-	hasRequiredUtc = 1;
-	(function (module, exports) {
-		!function(t,i){module.exports=i();}(utc$1,(function(){var t="minute",i=/[+-]\d\d(?::?\d\d)?/g,e=/([+-]|\d\d)/g;return function(s,f,n){var u=f.prototype;n.utc=function(t){var i={date:t,utc:true,args:arguments};return new f(i)},u.utc=function(i){var e=n(this.toDate(),{locale:this.$L,utc:true});return i?e.add(this.utcOffset(),t):e},u.local=function(){return n(this.toDate(),{locale:this.$L,utc:false})};var r=u.parse;u.parse=function(t){t.utc&&(this.$u=true),this.$utils().u(t.$offset)||(this.$offset=t.$offset),r.call(this,t);};var o=u.init;u.init=function(){if(this.$u){var t=this.$d;this.$y=t.getUTCFullYear(),this.$M=t.getUTCMonth(),this.$D=t.getUTCDate(),this.$W=t.getUTCDay(),this.$H=t.getUTCHours(),this.$m=t.getUTCMinutes(),this.$s=t.getUTCSeconds(),this.$ms=t.getUTCMilliseconds();}else o.call(this);};var a=u.utcOffset;u.utcOffset=function(s,f){var n=this.$utils().u;if(n(s))return this.$u?0:n(this.$offset)?a.call(this):this.$offset;if("string"==typeof s&&(s=function(t){ void 0===t&&(t="");var s=t.match(i);if(!s)return null;var f=(""+s[0]).match(e)||["-",0,0],n=f[0],u=60*+f[1]+ +f[2];return 0===u?0:"+"===n?u:-u}(s),null===s))return this;var u=Math.abs(s)<=16?60*s:s;if(0===u)return this.utc(f);var r=this.clone();if(f)return r.$offset=u,r.$u=false,r;var o=this.$u?this.toDate().getTimezoneOffset():-1*this.utcOffset();return (r=this.local().add(u+o,t)).$offset=u,r.$x.$localOffset=o,r};var h=u.format;u.format=function(t){var i=t||(this.$u?"YYYY-MM-DDTHH:mm:ss[Z]":"");return h.call(this,i)},u.valueOf=function(){var t=this.$utils().u(this.$offset)?0:this.$offset+(this.$x.$localOffset||this.$d.getTimezoneOffset());return this.$d.valueOf()-6e4*t},u.isUTC=function(){return !!this.$u},u.toISOString=function(){return this.toDate().toISOString()},u.toString=function(){return this.toDate().toUTCString()};var l=u.toDate;u.toDate=function(t){return "s"===t&&this.$offset?n(this.format("YYYY-MM-DD HH:mm:ss:SSS")).toDate():l.call(this)};var c=u.diff;u.diff=function(t,i,e){if(t&&this.$u===t.$u)return c.call(this,t,i,e);var s=this.local(),f=n(t).local();return c.call(s,f,i,e)};}})); 
-	} (utc$2));
-	return utc$2.exports;
-}
-
-var utcExports = requireUtc();
-var utc = /*@__PURE__*/getDefaultExportFromCjs(utcExports);
-
-var timezone$2 = {exports: {}};
-
-var timezone$1 = timezone$2.exports;
-
-var hasRequiredTimezone;
-
-function requireTimezone () {
-	if (hasRequiredTimezone) return timezone$2.exports;
-	hasRequiredTimezone = 1;
-	(function (module, exports) {
-		!function(t,e){module.exports=e();}(timezone$1,(function(){var t={year:0,month:1,day:2,hour:3,minute:4,second:5},e={};return function(n,i,o){var r,a=function(t,n,i){ void 0===i&&(i={});var o=new Date(t),r=function(t,n){ void 0===n&&(n={});var i=n.timeZoneName||"short",o=t+"|"+i,r=e[o];return r||(r=new Intl.DateTimeFormat("en-US",{hour12:false,timeZone:t,year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",timeZoneName:i}),e[o]=r),r}(n,i);return r.formatToParts(o)},u=function(e,n){for(var i=a(e,n),r=[],u=0;u<i.length;u+=1){var f=i[u],s=f.type,m=f.value,c=t[s];c>=0&&(r[c]=parseInt(m,10));}var d=r[3],l=24===d?0:d,h=r[0]+"-"+r[1]+"-"+r[2]+" "+l+":"+r[4]+":"+r[5]+":000",v=+e;return (o.utc(h).valueOf()-(v-=v%1e3))/6e4},f=i.prototype;f.tz=function(t,e){ void 0===t&&(t=r);var n,i=this.utcOffset(),a=this.toDate(),u=a.toLocaleString("en-US",{timeZone:t}),f=Math.round((a-new Date(u))/1e3/60),s=15*-Math.round(a.getTimezoneOffset()/15)-f;if(!Number(s))n=this.utcOffset(0,e);else if(n=o(u,{locale:this.$L}).$set("millisecond",this.$ms).utcOffset(s,true),e){var m=n.utcOffset();n=n.add(i-m,"minute");}return n.$x.$timezone=t,n},f.offsetName=function(t){var e=this.$x.$timezone||o.tz.guess(),n=a(this.valueOf(),e,{timeZoneName:t}).find((function(t){return "timezonename"===t.type.toLowerCase()}));return n&&n.value};var s=f.startOf;f.startOf=function(t,e){if(!this.$x||!this.$x.$timezone)return s.call(this,t,e);var n=o(this.format("YYYY-MM-DD HH:mm:ss:SSS"),{locale:this.$L});return s.call(n,t,e).tz(this.$x.$timezone,true)},o.tz=function(t,e,n){var i=n&&e,a=n||e||r,f=u(+o(),a);if("string"!=typeof t)return o(t).tz(a);var s=function(t,e,n){var i=t-60*e*1e3,o=u(i,n);if(e===o)return [i,e];var r=u(i-=60*(o-e)*1e3,n);return o===r?[i,o]:[t-60*Math.min(o,r)*1e3,Math.max(o,r)]}(o.utc(t,i).valueOf(),f,a),m=s[0],c=s[1],d=o(m).utcOffset(c);return d.$x.$timezone=a,d},o.tz.guess=function(){return Intl.DateTimeFormat().resolvedOptions().timeZone},o.tz.setDefault=function(t){r=t;};}})); 
-	} (timezone$2));
-	return timezone$2.exports;
-}
-
-var timezoneExports = requireTimezone();
-var timezone = /*@__PURE__*/getDefaultExportFromCjs(timezoneExports);
-
 dayjs.extend(utc);
 dayjs.extend(timezone);
 class UserService {
@@ -104454,6 +104476,14 @@ class UserService {
         });
         await mentor.save();
         await this.addNotification(mentorID, `${sender.name} sent you a mentorship request\n${message}`);
+    }
+    async addActivity(userID, activity) {
+        const user = await User.findById(userID);
+        if (!user) {
+            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        }
+        user.activities.push(activity);
+        return await user.save();
     }
     async getChats(userID) {
         const user = await User.findById(userID);
@@ -104590,6 +104620,10 @@ class UserController {
             .status(200)
             .send(await userService.sendMentorshipRequest(userID, mentorID, request.body.message));
     }
+    async addActivity(request, response) {
+        const userID = response.locals._id;
+        response.status(200).send(await userService.addActivity(userID, request.body));
+    }
     async deleteAllUsers(request, response) {
         response.status(200).send(await userService.deleteAllUsers());
     }
@@ -104611,9 +104645,7 @@ class UserController {
     }
     async getWBConversations(request, response) {
         const userID = response.locals._id;
-        response
-            .status(200)
-            .send(await userService.getWBConversations(userID));
+        response.status(200).send(await userService.getWBConversations(userID));
     }
     catchErrors(handler) {
         return async (request, response, next) => {
@@ -104707,6 +104739,7 @@ userRouter.get("/:ID/chats", getID(), userController.catchErrors(userController.
 userRouter.post("", userController.catchErrors(userController.createUser.bind(userController)));
 userRouter.post("/:ID/notifications", getID(), userController.catchErrors(userController.addNotification.bind(userController)));
 userRouter.post("/:ID/mentor-requests", getID(), userController.catchErrors(userController.sendMentorshipRequest.bind(userController)));
+userRouter.post("/:ID/activities", getID(), userController.catchErrors(userController.addActivity.bind(userController)));
 userRouter.put("/:ID", getID(), userController.catchErrors(userController.updateUser.bind(userController)));
 userRouter.delete("", userController.catchErrors(userController.deleteAllUsers.bind(userController)));
 

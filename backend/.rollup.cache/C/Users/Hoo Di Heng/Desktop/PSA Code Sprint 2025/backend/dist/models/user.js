@@ -4,6 +4,22 @@ const moodSchema = new Schema({
     date: { type: Date, required: true },
     notes: { type: [String], default: [] },
 });
+const activitySchema = new Schema({
+    type: {
+        type: String,
+        enum: [
+            "dailyCheckIn",
+            "mindfulness",
+            "mentorMessage",
+            "mentorVideoCall",
+        ],
+        required: true,
+    },
+    date: {
+        type: Date,
+        required: true,
+    },
+});
 const userSchema = new Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true, lowercase: true },
@@ -84,6 +100,10 @@ const userSchema = new Schema({
     isOnline: { type: Boolean, default: false },
     moods: {
         type: [moodSchema],
+        default: [],
+    },
+    activities: {
+        type: [activitySchema],
         default: [],
     },
 });

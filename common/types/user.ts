@@ -4,6 +4,11 @@ export interface Mood {
 	notes: string[];
 }
 
+export interface Activity {
+	type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
+	date: Date;
+}
+
 export interface User {
 	_id?: string;
 	name: string;
@@ -40,4 +45,5 @@ export interface User {
 	lastSeen?: Date;
 	isOnline: boolean;
 	moods: Mood[];
+	activities: Activity[];
 }

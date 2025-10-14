@@ -5,6 +5,7 @@ import ChatHeader from "./ChatHeader";
 import MessageBubble from "./MessageBubble";
 import { Chat, Message } from "@common/types/chat";
 import chatService from "services/chat";
+import userService from "services/user";
 
 interface Prop {
 	setSelectedChatID: React.Dispatch<React.SetStateAction<string | null>>;
@@ -13,7 +14,12 @@ interface Prop {
 	setChats: React.Dispatch<React.SetStateAction<Chat[]>>;
 }
 
-const ChatWindow = ({ setSelectedChatID,selectedChatID, chats, setChats }: Prop) => {
+const ChatWindow = ({
+	setSelectedChatID,
+	selectedChatID,
+	chats,
+	setChats,
+}: Prop) => {
 	const { user } = useAppSelector((state) => state.user);
 	const [messageInput, setMessageInput] = React.useState("");
 	const expandedChatRef = React.useRef<HTMLDivElement>(null);
@@ -40,8 +46,12 @@ const ChatWindow = ({ setSelectedChatID,selectedChatID, chats, setChats }: Prop)
 		type: Message["type"] = "text",
 		metadata: Record<string, any> = {}
 	) => {
-		if (!user?._id || !selectedChatID || (type === "text" && !content.trim())) return;
-
+		if (
+			!user?._id ||
+			!selectedChatID ||
+			(type === "text" && !content.trim())
+		)
+			return;
 		const message = await chatService.postMessage(selectedChatID, {
 			sender: user._id,
 			content,
@@ -58,6 +68,12 @@ const ChatWindow = ({ setSelectedChatID,selectedChatID, chats, setChats }: Prop)
 			)
 		);
 		setMessageInput("");
+		if (user?.mentors.find((mentee) => mentee._id === recipient?._id)) {
+			await userService.addActivity(user?._id, {
+				type: "mentorMessage",
+				date: new Date(),
+			});
+		}
 	};
 
 	const updateMessage = async (
@@ -111,7 +127,6 @@ const ChatWindow = ({ setSelectedChatID,selectedChatID, chats, setChats }: Prop)
 		>
 			{selectedChatID && recipient ? (
 				<>
-					
 					<ChatHeader
 						recipient={recipient}
 						type={

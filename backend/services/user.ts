@@ -156,6 +156,19 @@ class UserService {
 		);
 	}
 
+	async addActivity(userID: string, activity) {
+		const user = await User.findById(userID);
+		if (!user) {
+			throw new HttpError(
+				"User not found",
+				"NOT_FOUND",
+				HttpStatusCode.NotFound
+			);
+		}
+		user.activities.push(activity);
+		return await user.save();
+	}
+
 	async getChats(userID: string) {
 		const user = await User.findById(userID);
 		if (!user) {

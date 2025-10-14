@@ -61,6 +61,14 @@ userRouter.post(
 	)
 );
 
+userRouter.post(
+	"/:ID/activities",
+	getID(),
+	userController.catchErrors(
+		userController.addActivity.bind(userController)
+	)
+);
+
 userRouter.put(
 	"/:ID",
 	getID(),

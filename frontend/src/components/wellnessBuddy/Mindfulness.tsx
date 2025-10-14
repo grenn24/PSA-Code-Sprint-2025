@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { IoPlay, IoPause, IoRefresh } from "react-icons/io5";
 import { stopSpeech, textToSpeech } from "utilities/tts";
 import { fadeOutAudio, pauseAudio, playAudio } from "utilities/audio";
+import userService from "services/user";
+import { useAppSelector } from "redux/store";
 
 const phases = [
 	{
@@ -79,6 +81,7 @@ const phases = [
 ];
 
 const Mindfulness = () => {
+	const { user } = useAppSelector((state) => state.user);
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [phaseIndex, setPhaseIndex] = useState(0);
 	const [timeLeft, setTimeLeft] = useState(0);
@@ -108,7 +111,6 @@ const Mindfulness = () => {
 
 			if (remainingTimeRef.current <= 0) {
 				if (intervalRef.current) clearInterval(intervalRef.current);
-
 				if (
 					index === phases.length - 2 &&
 					currentRepRef.current < repetitions
@@ -132,6 +134,11 @@ const Mindfulness = () => {
 					setIsPlaying(false);
 					setPhaseIndex(phases.length - 1);
 					setTimeout(() => fadeOutAudio(audioRef.current), 1000);
+					if (!user?._id) return;
+					userService.addActivity(user?._id, {
+						type: "mindfulness",
+						date: new Date(),
+					});
 					return;
 				}
 			}
@@ -143,7 +150,7 @@ const Mindfulness = () => {
 
 		if (audioRef.current) {
 			audioRef.current.currentTime = 1.5;
-			audioRef.current.volume = 0.80;
+			audioRef.current.volume = 0.8;
 			playAudio(audioRef.current);
 		}
 

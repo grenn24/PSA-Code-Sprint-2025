@@ -31,6 +31,10 @@ class UserController {
             .status(200)
             .send(await userService.sendMentorshipRequest(userID, mentorID, request.body.message));
     }
+    async addActivity(request, response) {
+        const userID = response.locals._id;
+        response.status(200).send(await userService.addActivity(userID, request.body));
+    }
     async deleteAllUsers(request, response) {
         response.status(200).send(await userService.deleteAllUsers());
     }
@@ -52,9 +56,7 @@ class UserController {
     }
     async getWBConversations(request, response) {
         const userID = response.locals._id;
-        response
-            .status(200)
-            .send(await userService.getWBConversations(userID));
+        response.status(200).send(await userService.getWBConversations(userID));
     }
     catchErrors(handler) {
         return async (request, response, next) => {

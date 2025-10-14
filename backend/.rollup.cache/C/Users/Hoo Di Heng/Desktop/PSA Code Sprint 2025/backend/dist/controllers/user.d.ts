@@ -6,6 +6,7 @@ declare class UserController {
     updateUser(request: Request, response: Response): Promise<void>;
     addNotification(request: Request, response: Response): Promise<void>;
     sendMentorshipRequest(request: Request, response: Response): Promise<void>;
+    addActivity(request: Request, response: Response): Promise<void>;
     deleteAllUsers(request: Request, response: Response): Promise<void>;
     getTopMatchedMentors(request: Request, response: Response): Promise<void>;
     getChats(request: Request, response: Response): Promise<void>;
