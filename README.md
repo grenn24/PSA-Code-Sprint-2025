@@ -40,7 +40,7 @@ PSA Horizon is an integrated employee development platform designed to empower P
 ## Data Management
 ## MongoDB
 - The application uses MongoDB as its primary database to store structured data such as user info and wellness buddy conversations.
-- Relevant scripts are located in the /scripts/mongodb directory.
+- Relevant scripts are located in the **/scripts/mongodb** directory.
 - Delete all collections, documents, indexes in the database:
 ```
 npm run db:clear
@@ -52,8 +52,8 @@ npm run db:seed
 
 ### Vector Embedding
 - The application utilises a vector database (Pinecone) to store embeddings generated from document data for boosting answer accuracy
-- Each namespace within Pinecone corresponds directly to a subdirectory under the /data folder
-- Add new data (in PDF) into a new or existing sub-directory within the /data folder
+- Each namespace within Pinecone corresponds directly to a subdirectory under the **/data** folder
+- Add new data (in PDF) into a new or existing sub-directory within the **/data** folder
 - Clear all existing records in the Pinecone index:
 ```
 npm run vdb:clear
