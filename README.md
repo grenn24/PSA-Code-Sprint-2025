@@ -37,6 +37,21 @@ PSA Horizon is an integrated employee development platform designed to empower P
 4. Open command prompt in the root folder
 5. Run start.bat (Windows) or ./start.sh (Linux)
 
+## Data Management
+
+### Vector Embedding
+- The application utilises a vector database (Pinecone) to store embeddings generated from document data for boosting answer accuracy
+- Each namespace within Pinecone corresponds directly to a subdirectory under the /data folder
+- Add new data (in PDF) into a new or existing sub-directory within the /data folder
+- Clear all existing records in the Pinecone index:
+```json
+npm run vdb:clear
+```
+- Re-seed the index with latest embeddings:
+```json
+npm run vdb:seed
+```
+
 ## Directory Structure
 root/  
 ├── backend/  
