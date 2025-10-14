@@ -20,6 +20,16 @@ class EventService {
 		const response = await this.apiClient.post("/", event);
 		return response.data;
 	}
+
+	async joinEvent(userID: string, eventID: string) {
+		const response = await this.apiClient.post(`/${eventID}/join`,{});
+		return response.data;
+	}
+
+	async leaveEvent(userID: string, eventID: string) {
+		const response = await this.apiClient.post(`/${eventID}/leave`, {});
+		return response.data;
+	}
 }
 
 const eventService = new EventService();

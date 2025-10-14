@@ -8,5 +8,7 @@ eventRouter.use(auth("user"));
 eventRouter.get("", eventController.catchErrors(eventController.getAllEvents.bind(eventController)));
 eventRouter.get("/:ID", getID(), eventController.catchErrors(eventController.getEventByID.bind(eventController)));
 eventRouter.post("", eventController.catchErrors(eventController.createEvent.bind(eventController)));
+eventRouter.post("/:ID/join", getID(), eventController.catchErrors(eventController.joinEvent.bind(eventController)));
+eventRouter.post("/:ID/leave", getID(), eventController.catchErrors(eventController.leaveEvent.bind(eventController)));
 export default eventRouter;
 //# sourceMappingURL=event.js.map

@@ -29,4 +29,16 @@ eventRouter.post(
 	)
 );
 
+eventRouter.post(
+	"/:ID/join",
+	getID(),
+	eventController.catchErrors(eventController.joinEvent.bind(eventController))
+);
+
+eventRouter.post(
+	"/:ID/leave",
+	getID(),
+	eventController.catchErrors(eventController.leaveEvent.bind(eventController))
+);
+
 export default eventRouter;

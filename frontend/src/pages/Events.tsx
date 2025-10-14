@@ -12,9 +12,7 @@ dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);
 
 const now = dayjs();
-const endOfWeek = dayjs().endOf("week");
 const Events: React.FC = () => {
-	const { user } = useAppSelector((state) => state.user);
 	const navigate = useNavigate();
 	const [events, setEvents] = useState<Event[]>([]);
 	const [searchTerm, setSearchTerm] = useState("");
@@ -131,6 +129,7 @@ const Events: React.FC = () => {
 						key={section.title}
 						title={section.title}
 						events={section.events}
+						setEvents={setEvents}
 					/>
 				))
 			) : (
@@ -140,7 +139,19 @@ const Events: React.FC = () => {
 					</h2>
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 						{filteredEvents.map((event) => (
-							<EventCard key={event._id} event={event} />
+							<EventCard
+								key={event._id}
+								event={event}
+								setEvent={(newEvent) =>
+									setEvents((oldEvents) =>
+										oldEvents.map((e) =>
+											e._id === newEvent._id
+												? newEvent
+												: e
+										)
+									)
+								}
+							/>
 						))}
 					</div>
 				</div>
@@ -149,10 +160,11 @@ const Events: React.FC = () => {
 	);
 };
 
-const Section: React.FC<{ title: string; events: Event[] }> = ({
-	title,
-	events,
-}) => {
+const Section: React.FC<{
+	title: string;
+	events: Event[];
+	setEvents: React.Dispatch<React.SetStateAction<Event[]>>;
+}> = ({ title, events, setEvents }) => {
 	return (
 		<div className="mb-15 relative">
 			<h2 className="text-2xl font-semibold mb-2 text-gray-800">
@@ -160,13 +172,27 @@ const Section: React.FC<{ title: string; events: Event[] }> = ({
 			</h2>
 			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 				{events.map((event) => (
-					<EventCard key={event._id} event={event} />
+					<EventCard
+						key={event._id}
+						event={event}
+						setEvent={(newEvent) =>
+							setEvents((oldEvents) =>
+								oldEvents.map((e) =>
+									e._id === newEvent._id ? newEvent : e
+								)
+							)
+						}
+					/>
 				))}
 			</div>
 		</div>
 	);
 };
-const EventCard: React.FC<{ event: Event }> = ({ event }) => {
+const EventCard: React.FC<{
+	event: Event;
+	setEvent: (event: Event) => void;
+}> = ({ event, setEvent }) => {
+	const { user } = useAppSelector((state) => state.user);
 	const navigate = useNavigate();
 	const [hovered, setHovered] = useState(false);
 
@@ -178,11 +204,27 @@ const EventCard: React.FC<{ event: Event }> = ({ event }) => {
 		hour: "2-digit",
 		minute: "2-digit",
 	});
+	if (!user?._id) {
+		return null;
+	}
+
+	const isJoined = event.participants.includes(user._id);
+	const handleToggleJoin = async (e) => {
+		e.stopPropagation();
+		if (!user?._id || !event?._id) return;
+		let newEvent;
+		if (isJoined) {
+			newEvent = await eventService.leaveEvent(user._id, event._id);
+		} else {
+			newEvent = await eventService.joinEvent(user._id, event._id);
+		}
+		setEvent(newEvent);
+	};
 
 	return (
 		<div
 			onClick={() => navigate(`/events-hub/${event._id}`)}
-			className="relative z-10 overflow-visible"
+			className="relative z-10 overflow-visible cursor-pointer"
 			onMouseEnter={() => setHovered(true)}
 			onMouseLeave={() => setHovered(false)}
 		>
@@ -239,8 +281,11 @@ const EventCard: React.FC<{ event: Event }> = ({ event }) => {
 						<p className="text-sm mb-2">
 							Categories: {event.categories.join(", ")}
 						</p>
-						<button className="w-full bg-indigo-600 text-white py-1.5 rounded-full text-sm hover:bg-indigo-500 transition">
-							Join
+						<button
+							onClick={handleToggleJoin}
+							className="w-full bg-indigo-600 text-white py-1.5 rounded-full text-sm hover:bg-indigo-500 transition"
+						>
+							{isJoined ? "Joined" : "Join Event"}
 						</button>
 					</div>
 				</motion.div>

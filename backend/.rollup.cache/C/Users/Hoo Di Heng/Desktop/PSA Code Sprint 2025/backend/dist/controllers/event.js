@@ -14,6 +14,18 @@ class EventController {
         const event = await eventService.createEvent(request.body);
         response.status(200).send(event);
     }
+    async joinEvent(request, response) {
+        const eventID = response.locals._id;
+        const user = response.locals.user;
+        const event = await eventService.joinEvent(user.id, eventID);
+        response.status(200).send(event);
+    }
+    async leaveEvent(request, response) {
+        const eventID = response.locals._id;
+        const user = response.locals.user;
+        const event = await eventService.leaveEvent(user.id, eventID);
+        response.status(200).send(event);
+    }
     catchErrors(handler) {
         return async (request, response, next) => {
             try {

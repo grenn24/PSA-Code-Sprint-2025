@@ -1,15 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import dayjs from "dayjs";
-import { Calendar, MapPin, Users, Video, MessageSquare } from "lucide-react";
+import {
+	Calendar,
+	MapPin,
+	Users,
+	Video,
+	MessageSquare,
+	LogOut,
+	UserPlus,
+} from "lucide-react";
 import { useParams } from "react-router-dom";
 import { Event } from "@common/types/event";
 import eventService from "services/event";
+import { useAppSelector } from "redux/store";
 
 const EventDetails = () => {
+	const { user } = useAppSelector((state) => state.user);
 	const params = useParams();
 	const [event, setEvent] = useState<Event | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
+	const [newComment, setNewComment] = useState("");
+	const [isAddingComment, setIsAddingComment] = useState(false);
+	const [isJoining, setIsJoining] = useState(false);
+	const handleAddComment = () => {};
 
 	useEffect(() => {
 		if (!params.id) return;
@@ -55,6 +69,23 @@ const EventDetails = () => {
 		);
 	}
 
+	if (!user?._id) {
+		return null;
+	}
+	const isJoined = event?.participants.includes(user._id);
+	const handleToggleJoin = async () => {
+		if (!user?._id || !event?._id) return;
+		setIsJoining(true);
+		let newEvent;
+		if (isJoined) {
+			newEvent = await eventService.leaveEvent(user._id, event._id);
+		} else {
+			newEvent = await eventService.joinEvent(user._id, event._id);
+		}
+		setEvent(newEvent);
+		setIsJoining(false);
+	};
+
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white text-gray-900">
 			{/* Cover Image */}
@@ -71,6 +102,33 @@ const EventDetails = () => {
 						Hosted by {event.creator?.name}
 					</p>
 				</div>
+				{/* Floating Join/Leave Button */}
+				<motion.button
+					whileTap={{ scale: 0.97 }}
+					onClick={handleToggleJoin}
+					disabled={isJoining}
+					className={`absolute bottom-6 right-6 flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-white shadow-lg transition 
+						${
+							isJoined
+								? "bg-red-500/80 hover:bg-red-600"
+								: "bg-indigo-600/80 hover:bg-indigo-700"
+						} 
+						${isJoining ? "opacity-70 cursor-wait" : ""}`}
+				>
+					{isJoining ? (
+						<span>Loading...</span>
+					) : isJoined ? (
+						<>
+							<LogOut size={18} />
+							Leave Event
+						</>
+					) : (
+						<>
+							<UserPlus size={18} />
+							Join Event
+						</>
+					)}
+				</motion.button>
 			</div>
 
 			{/* Main Content */}
@@ -139,6 +197,33 @@ const EventDetails = () => {
 						Comments ({event.comments.length})
 					</h2>
 
+					{/* Add Comment Box */}
+					{isJoined && (
+						<div className="bg-white rounded-xl p-4 shadow-sm mb-6 border border-gray-100">
+							<textarea
+								value={newComment}
+								onChange={(e) => setNewComment(e.target.value)}
+								placeholder="Share your thoughts..."
+								className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none"
+								rows={3}
+							/>
+							<div className="flex justify-end mt-2">
+								<button
+									onClick={handleAddComment}
+									disabled={
+										isAddingComment || !newComment.trim()
+									}
+									className="px-2 py-1 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition disabled:opacity-50"
+								>
+									{isAddingComment
+										? "Posting..."
+										: "Post Comment"}
+								</button>
+							</div>
+						</div>
+					)}
+
+					{/* Existing Comments */}
 					<div className="space-y-4 max-h-[400px] overflow-y-auto pr-2">
 						{event.comments.length === 0 ? (
 							<p className="text-gray-500 italic">

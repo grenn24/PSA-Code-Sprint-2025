@@ -33,6 +33,18 @@ async function generateEvents(n) {
                 .toDate();
             const creator = faker.helpers.arrayElement(users);
             const participants = faker.helpers.arrayElements(users, faker.number.int({ min: 0, max: users.length }));
+            const numComments = faker.number.int({ min: 0, max: 5 });
+            const comments = Array.from({ length: numComments }).map(() => {
+                const author = faker.helpers.arrayElement(users);
+                return {
+                    author: author._id,
+                    content: faker.lorem.sentence({ min: 5, max: 15 }),
+                    createdAt: faker.date.between({
+                        from: dayjs(start).subtract(3, "day").toDate(),
+                        to: dayjs(end).add(1, "day").toDate(),
+                    }),
+                };
+            });
             events.push({
                 title: faker.lorem.sentence(3),
                 description: faker.lorem.paragraph(),
@@ -43,7 +55,7 @@ async function generateEvents(n) {
                 location: faker.location.city(),
                 creator: creator._id.toString(),
                 participants: participants.map((u) => u._id.toString()),
-                comments: [],
+                comments,
             });
         }
         return events;
