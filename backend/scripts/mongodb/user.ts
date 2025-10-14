@@ -53,8 +53,16 @@ function generateMoodData(start: Date, skipProbability = 0.3) {
 	const data: { level: number; date: Date }[] = [];
 	const today = new Date();
 
+	// get the start of the current week (Sunday)
+	const startOfCurrentWeek = new Date(today);
+	startOfCurrentWeek.setHours(0, 0, 0, 0);
+	startOfCurrentWeek.setDate(today.getDate() - today.getDay()); // Sunday
+
 	for (let d = new Date(start); d <= today; d.setDate(d.getDate() + 1)) {
-		if (Math.random() > skipProbability) {
+		const isCurrentWeek = d >= startOfCurrentWeek;
+		const include = isCurrentWeek || Math.random() > skipProbability;
+
+		if (include) {
 			data.push({
 				date: new Date(d),
 				level: Math.floor(Math.random() * 10) + 1,
