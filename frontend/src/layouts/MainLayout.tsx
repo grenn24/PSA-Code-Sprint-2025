@@ -229,8 +229,11 @@ const MainLayout = () => {
 						return (
 							<div key={idx} className="relative group">
 								<button
-									onClick={() => navigate(r.path)}
-									className={`flex items-center w-full px-3 py-2 rounded-xl gap-2 transition font-medium ${
+									onClick={() => {
+										navigate(r.path)
+										setOpen(false);
+									}}
+									className={`flex items-center w-full px-3 py-2 rounded-xl gap-2 transition font-medium overflow-hidden ${
 										open
 											? "justify-start"
 											: "justify-center"
