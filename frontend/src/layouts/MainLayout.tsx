@@ -213,10 +213,10 @@ const MainLayout = () => {
 	return (
 		<div className="flex flex-col md:flex-row h-screen w-screen bg-gray-50">
 			{/* Sidebar (hidden on mobile) */}
-			<div
-				className={`${
-					open ? "min-w-64" : "w-20"
-				} hidden md:flex bg-white shadow-lg transition-all duration-300 flex-col border-r border-gray-200 pb-2`}
+			<motion.div
+				animate={{ width: open ? 256 : 80 }} // 64 * 4 = 256px, 20 * 4 = 80px
+				transition={{ type: "spring", stiffness: 200, damping: 25 }}
+				className="hidden md:flex bg-white shadow-lg flex-col border-r border-gray-200 pb-2 overflow-hidden"
 			>
 				<div className="flex justify-center p-4">
 					<img src="/images/psa-logo.png" alt="PSA" className="h-6" />
@@ -230,10 +230,10 @@ const MainLayout = () => {
 							<div key={idx} className="relative group">
 								<button
 									onClick={() => {
-										navigate(r.path)
+										navigate(r.path);
 										setOpen(false);
 									}}
-									className={`flex items-center w-full px-3 py-2 rounded-xl gap-2 transition font-medium overflow-hidden ${
+									className={`flex items-center w-full px-3 py-2 rounded-xl gap-2 font-medium overflow-hidden transition-colors duration-200 ${
 										open
 											? "justify-start"
 											: "justify-center"
@@ -244,17 +244,35 @@ const MainLayout = () => {
 									}`}
 								>
 									<Icon className="w-8 h-8" />
-									<span
-										className={`font-inter whitespace-nowrap transition-all text-lg duration-200 ${
-											open
-												? "ml-3 opacity-100 w-auto"
-												: "opacity-0 w-0 absolute pointer-events-none"
-										}`}
-									>
-										{r.label}
-									</span>
+
+									{/* Smooth label transition */}
+									<AnimatePresence>
+										{open && (
+											<motion.span
+												initial={{
+													opacity: 0,
+													width: 0,
+												}}
+												animate={{
+													opacity: 1,
+													width: "auto",
+													marginLeft: 12,
+												}}
+												exit={{
+													opacity: 0,
+													width: 0,
+													marginLeft: 0,
+												}}
+												transition={{ duration: 0.25 }}
+												className="font-inter text-lg whitespace-nowrap"
+											>
+												{r.label}
+											</motion.span>
+										)}
+									</AnimatePresence>
 								</button>
 
+								{/* Tooltip when closed */}
 								{!open && (
 									<div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-3 py-1 rounded-md bg-gray-800 text-white text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
 										{r.label}
@@ -275,7 +293,7 @@ const MainLayout = () => {
 						<ArrowRightIcon className="w-6 h-6 text-gray-600" />
 					)}
 				</button>
-			</div>
+			</motion.div>
 
 			{/* Main content */}
 			<MentorMatchContext value={{ chats, setChats }}>
