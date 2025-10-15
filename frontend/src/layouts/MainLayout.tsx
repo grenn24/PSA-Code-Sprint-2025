@@ -212,7 +212,6 @@ const MainLayout = () => {
 
 	return (
 		<div className="flex flex-col md:flex-row h-screen w-screen bg-gray-50">
-			{/* Sidebar (hidden on mobile) */}
 			<motion.div
 				animate={{ width: open ? 300 : 80 }}
 				transition={{ type: "spring", stiffness: 200, damping: 25 }}
@@ -221,7 +220,6 @@ const MainLayout = () => {
 				<div className="flex justify-center p-4">
 					<img src="/images/psa-logo.png" alt="PSA" className="h-6" />
 				</div>
-
 				<nav className="flex-1 p-2 space-y-1 relative">
 					{routes.map((r, idx) => {
 						const isActive = location.pathname === r.path;
@@ -243,9 +241,8 @@ const MainLayout = () => {
 											: "text-gray-700 hover:bg-gray-100 hover:font-semibold"
 									}`}
 								>
-									<Icon className="min-w-8 min-h-8" />
+									<Icon className="w-8 h-8" />
 
-									{/* Smooth label transition */}
 									<AnimatePresence>
 										{open && (
 											<motion.span
@@ -270,7 +267,6 @@ const MainLayout = () => {
 									</AnimatePresence>
 								</button>
 
-								{/* Tooltip when closed */}
 								{!open && (
 									<div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-3 py-1 rounded-md bg-gray-800 text-white text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
 										{r.label}
@@ -293,7 +289,6 @@ const MainLayout = () => {
 				</button>
 			</motion.div>
 
-			{/* Main content */}
 			<MentorMatchContext value={{ chats, setChats }}>
 				<VideoCallContext
 					value={{
