@@ -15,6 +15,7 @@ import WellnessBuddy from "pages/WellnessBuddy";
 import Events from "pages/Events";
 import NewEvent from "pages/NewEvent";
 import EventDetails from "pages/EventDetails";
+import SignUp from "pages/SignUp";
 
 const App = () => {
 	dayjs.extend(duration);
@@ -26,6 +27,7 @@ const App = () => {
 			<title>PSA Horizon</title>
 			<Routes>
 				<Route path="/log-in" element={<LogIn />} />
+				<Route path="/sign-up" element={<SignUp />} />
 				<Route element={<MainLayout />}>
 					<Route index element={<Home />}></Route>
 					<Route path="/mentor" element={<MentorMatch />} />

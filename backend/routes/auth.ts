@@ -10,6 +10,11 @@ authRouter.post(
 );
 
 authRouter.post(
+	"/sign-up",
+	authController.catchErrors(authController.signup.bind(authController))
+);
+
+authRouter.post(
 	"/log-out",
 	authController.catchErrors(authController.logout.bind(authController))
 );

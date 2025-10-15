@@ -72,14 +72,19 @@ class ChatService {
                 break;
         }
         await userService.addNotification(recipientID, notificationMsg);
-        websocketService.sendTo(recipientID, {
-            type: "NEW_CHAT_MESSAGE",
-            data: {
-                chatID: chat._id,
-                message: newMessage,
-            },
-            timestamp: new Date().toISOString(),
-        });
+        try {
+            websocketService.sendTo(recipientID, {
+                type: "NEW_CHAT_MESSAGE",
+                data: {
+                    chatID: chat._id,
+                    message: newMessage,
+                },
+                timestamp: new Date().toISOString(),
+            });
+        }
+        catch (error) {
+            console.error(error);
+        }
         return newMessage;
     }
     async updateMessage(updaterID, messageID, chatID, { content, type, metadata, }) {

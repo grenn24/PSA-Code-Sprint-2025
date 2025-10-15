@@ -1,23 +1,28 @@
 import User from "../../models/user.js";
 import Chat from "../../models/chat.js";
 
-async function generateChats() {
+export async function generateChats(email: string, limit = 3) {
 	try {
-		const gren = await User.findOne({ email: "gren@gmail.com" });
-		const user = await User.findOne({ email: { $ne: "gren@gmail.com" } });
-		if (!gren || !user) {
+		const mentee = await User.findOne({ email });
+		const mentors = await User.find({ email: { $ne: email } }).limit(limit);
+		if (!mentee || mentors.length === 0) {
 			console.error("No users found in DB. Create some users first.");
 			return;
 		}
-		const chat = { participants: [gren._id, user._id] };
-		return [chat];
+		const chats: any = [];
+		for (const mentor of mentors) {
+			const chat = { participants: [mentee._id, mentor._id] };
+
+			chats.push(chat);
+		}
+		return chats;
 	} catch (err) {
 		console.error(err);
 	}
 }
 export async function seedChats() {
 	try {
-		await Chat.insertMany(await generateChats());
+		await Chat.insertMany(await generateChats("gren@gmail.com"));
 		console.log("Chats seeded successfully");
 	} catch (err) {
 		console.error("Error inserting chats:", err);

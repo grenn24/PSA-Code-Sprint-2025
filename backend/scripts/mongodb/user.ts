@@ -1,6 +1,8 @@
 import { faker } from "@faker-js/faker";
 import User from "../../models/user.js";
 import dayjs from "dayjs";
+import { generateChats } from "./chat.js";
+import Chat from "../../models/chat.js";
 
 const skillsPool = [
 	"Data Analytics",
@@ -56,7 +58,7 @@ function generateMoodData(start: Date, skipProbability = 0.3) {
 	// get the start of the current week (Sunday)
 	const startOfCurrentWeek = new Date(today);
 	startOfCurrentWeek.setHours(0, 0, 0, 0);
-	startOfCurrentWeek.setDate(today.getDate() - today.getDay()); // Sunday
+	startOfCurrentWeek.setDate(today.getDate() - today.getDay());
 
 	for (let d = new Date(start); d <= today; d.setDate(d.getDate() + 1)) {
 		const isCurrentWeek = d >= startOfCurrentWeek;
@@ -82,10 +84,13 @@ function generateNotifications() {
 	}));
 }
 
-const generateUsers = (length: number) => {
-	const users = Array.from({ length }).map(() => ({
+export const generateUser = async () => {
+	const email = faker.internet.email();
+	const chats = generateChats(email);
+	await Chat.insertMany(chats);
+	return {
 		name: faker.person.fullName(),
-		email: faker.internet.email(),
+		email,
 		avatar: faker.image.avatar(),
 		bio: faker.person.bio(),
 		position: faker.person.jobTitle(),
@@ -99,69 +104,104 @@ const generateUsers = (length: number) => {
 		notifications: generateNotifications(),
 		careerPath: generateCareerPath(),
 		moods: generateMoodData(dayjs().subtract(12, "month").toDate()),
-	}));
-	users.push({
-		name: "Di Heng",
-		email: "gren@gmail.com",
-		position: "Software Engineer",
-		role: "user",
-		bio: faker.person.bio(),
-		password:
-			"$2b$10$TS8eBH1GUf7F3haX1WnX9uqVCzYW9f4ig5abjp4fEMUVkdrqrh91a",
-		subordinates: [],
-		experienceLevel: 2,
-		mentorshipRequests: [],
-		avatar: "https://avatars.githubusercontent.com/u/126308058?v=4",
-		skills: [
-			{
-				name: "Software Engineer",
-				level: 60,
-			},
-			{
-				name: "AI Engineer",
-				level: 50,
-			},
-		],
-		notifications: [
-			{
-				message: "Welcome to PSA Horizon!",
-				read: false,
-			},
-		],
-		careerPath: [
-			{
-				position: "Junior Software Engineer",
-				progress: 100,
-				startedAt: "2023-01-01T00:00:00.000Z",
-				endedAt: "2023-12-31T00:00:00.000Z",
-				skillsRequired: ["Data Analysis", "Excel", "Basic Logistics"],
-				_id: "68e0fa5fb8980e66e106acae",
-			},
-			{
-				position: "Software Engineer",
-				progress: 65,
-				startedAt: "2024-01-01T00:00:00.000Z",
-				skillsRequired: [
-					"Advanced Data Analysis",
-					"Process Optimization",
-				],
-				_id: "68e0fa5fb8980e66e106acaf",
-			},
-			{
-				position: "Senior Software Engineer",
-				progress: 0,
-				skillsRequired: ["Leadership", "Supply Chain Management"],
-				_id: "68e0fa5fb8980e66e106acb0",
-			},
-		],
-		moods: generateMoodData(dayjs().subtract(12, "month").toDate()),
-	});
+	};
+};
+
+export const generateUsers = async (
+	length: number,
+	includeDefaultUser = true
+) => {
+	const users = await Promise.all(
+		Array.from({ length }).map(async () => {
+			const email = faker.internet.email();
+			return {
+				name: faker.person.fullName(),
+				email,
+				avatar: faker.image.avatar(),
+				bio: faker.person.bio(),
+				position: faker.person.jobTitle(),
+				role: "user",
+				password:
+					"$2b$10$TS8eBH1GUf7F3haX1WnX9uqVCzYW9f4ig5abjp4fEMUVkdrqrh91a",
+				subordinates: [],
+				experienceLevel: getRandomInt(0, 25),
+				mentorshipRequests: [],
+				skills: generateRandomSkills(),
+				notifications: generateNotifications(),
+				careerPath: generateCareerPath(),
+				moods: generateMoodData(dayjs().subtract(12, "month").toDate()),
+			};
+		})
+	);
+	if (includeDefaultUser) {
+		users.push({
+			name: "Di Heng",
+			email: "gren@gmail.com",
+			position: "Software Engineer",
+			role: "user",
+			bio: faker.person.bio(),
+			password:
+				"$2b$10$TS8eBH1GUf7F3haX1WnX9uqVCzYW9f4ig5abjp4fEMUVkdrqrh91a",
+			subordinates: [],
+			experienceLevel: 2,
+			mentorshipRequests: [],
+			avatar: "https://avatars.githubusercontent.com/u/126308058?v=4",
+			skills: [
+				{
+					name: "Software Engineer",
+					level: 60,
+				},
+				{
+					name: "AI Engineer",
+					level: 50,
+				},
+			],
+			notifications: [
+				{
+					message: "Welcome to PSA Horizon!",
+					read: false,
+				},
+			],
+			careerPath: [
+				{
+					position: "Junior Software Engineer",
+					progress: 100,
+					startedAt: "2023-01-01T00:00:00.000Z",
+					endedAt: "2023-12-31T00:00:00.000Z",
+					skillsRequired: [
+						"Data Analysis",
+						"Excel",
+						"Basic Logistics",
+					],
+					_id: "68e0fa5fb8980e66e106acae",
+				},
+				{
+					position: "Software Engineer",
+					progress: 65,
+					startedAt: "2024-01-01T00:00:00.000Z",
+					skillsRequired: [
+						"Advanced Data Analysis",
+						"Process Optimization",
+					],
+					_id: "68e0fa5fb8980e66e106acaf",
+				},
+				{
+					position: "Senior Software Engineer",
+					progress: 0,
+					skillsRequired: ["Leadership", "Supply Chain Management"],
+					_id: "68e0fa5fb8980e66e106acb0",
+				},
+			],
+			moods: generateMoodData(dayjs().subtract(12, "month").toDate()),
+		});
+	}
 	return users;
 };
 
 export async function seedUsers() {
 	try {
-		await User.insertMany(generateUsers(500));
+		const users = await generateUsers(500);
+		await User.insertMany(users);
 		console.log("Users seeded successfully");
 	} catch (err) {
 		console.error("Error inserting users:", err);

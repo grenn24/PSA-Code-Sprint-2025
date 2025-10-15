@@ -12,11 +12,29 @@ class AuthController {
 				httpOnly: true,
 				secure: process.env.NODE_ENV === "production",
 				sameSite: "strict",
-				maxAge: 1000 * 60 * 60 * 24, // 1 day
+				maxAge: 1000 * 60 * 60 * 24,
 			})
 			.status(200)
 			.send({
-				token, user
+				token,
+				user,
+			});
+	}
+
+	async signup(request, response) {
+		const { email, password } = request.body;
+		const { token, user } = await authService.signup(email, password);
+		response
+			.cookie("authToken", token, {
+				httpOnly: true,
+				secure: process.env.NODE_ENV === "production",
+				sameSite: "strict",
+				maxAge: 1000 * 60 * 60 * 24,
+			})
+			.status(200)
+			.send({
+				token,
+				user,
 			});
 	}
 

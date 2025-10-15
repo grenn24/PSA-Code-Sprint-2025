@@ -3,10 +3,10 @@ import User from "../models/user.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import config from "config";
+import { generateUser } from "../scripts/mongodb/user.js";
 
 class AuthService {
 	async login(email: string, password: string) {
-		// 1. Find user by email
 		const user = await User.findOne({ email: email.toLowerCase() })
 			.populate("supervisor")
 			.populate("subordinates")
@@ -22,7 +22,6 @@ class AuthService {
 			);
 		}
 
-		// 2. Compare password
 		const isMatch = await bcrypt.compare(password, user.password);
 		if (!isMatch) {
 			throw new HttpError(
@@ -32,7 +31,6 @@ class AuthService {
 			);
 		}
 
-		// 3. Create JWT payload
 		const payload = {
 			id: user._id,
 			name: user.name,
@@ -41,12 +39,50 @@ class AuthService {
 			position: user.position,
 		};
 
-		// 4. Sign JWT token (expires in 1 day)
 		const token = jwt.sign(payload, config.get<string>("SECRET_KEY"), {
 			expiresIn: "1d",
 		});
 
-		// 5. Return token + user info (optional)
+		return { token, user };
+	}
+
+	async signup(email: string, password: string) {
+		const existingUser = await User.findOne({
+			email: email.toLowerCase(),
+		}).exec();
+		if (existingUser) {
+			throw new HttpError(
+				`Email is already used by an existing user`,
+				"DUPLICATE_EMAIL",
+				400
+			);
+		}
+
+		const newUser = new User(await generateUser());
+		newUser.email = email.toLowerCase();
+		const salt = await bcrypt.genSalt(10);
+		newUser.password = await bcrypt.hash(password, salt);
+		await newUser.save();
+		const user = await User.findOne({ email: email.toLowerCase() })
+			.populate("supervisor")
+			.populate("subordinates")
+			.populate("mentors")
+			.populate("mentees")
+			.populate("mentorshipRequests.sender")
+			.exec();
+
+		const payload = {
+			id: newUser._id,
+			name: newUser.name,
+			email: newUser.email,
+			role: newUser.role,
+			position: newUser.position,
+		};
+
+		const token = jwt.sign(payload, config.get<string>("SECRET_KEY"), {
+			expiresIn: "1d",
+		});
+
 		return { token, user };
 	}
 

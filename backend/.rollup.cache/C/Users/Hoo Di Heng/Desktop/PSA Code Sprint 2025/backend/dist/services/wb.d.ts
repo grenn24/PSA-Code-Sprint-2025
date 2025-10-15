@@ -9,7 +9,6 @@ declare class WBService {
         updatedAt: NativeDate;
     } & {
         user: import("mongoose").Types.ObjectId;
-        title: string;
         messages: import("mongoose").Types.DocumentArray<{
             role: "user" | "assistant";
             content: string;
@@ -23,12 +22,12 @@ declare class WBService {
             content: string;
             timestamp: NativeDate;
         }>;
+        title: string;
     }> & {
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } & {
         user: import("mongoose").Types.ObjectId;
-        title: string;
         messages: import("mongoose").Types.DocumentArray<{
             role: "user" | "assistant";
             content: string;
@@ -42,6 +41,7 @@ declare class WBService {
             content: string;
             timestamp: NativeDate;
         }>;
+        title: string;
     } & {
         _id: import("mongoose").Types.ObjectId;
     } & {
@@ -76,7 +76,6 @@ declare class WBService {
         updatedAt: NativeDate;
     } & {
         user: import("mongoose").Types.ObjectId;
-        title: string;
         messages: import("mongoose").Types.DocumentArray<{
             role: "user" | "assistant";
             content: string;
@@ -90,12 +89,12 @@ declare class WBService {
             content: string;
             timestamp: NativeDate;
         }>;
+        title: string;
     }> & {
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } & {
         user: import("mongoose").Types.ObjectId;
-        title: string;
         messages: import("mongoose").Types.DocumentArray<{
             role: "user" | "assistant";
             content: string;
@@ -109,6 +108,7 @@ declare class WBService {
             content: string;
             timestamp: NativeDate;
         }>;
+        title: string;
     } & {
         _id: import("mongoose").Types.ObjectId;
     } & {
