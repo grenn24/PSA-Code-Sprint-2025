@@ -546,14 +546,14 @@ const VideoCall: React.FC<VideoCallProps> = ({
 			)}
 			{/* Target user overlay */}
 			{targetUser && (
-				<div className="absolute top-4 left-4 z-50 flex items-center gap-2 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-full text-white">
-					<span className="font-semibold">{targetUser.name}</span>
+				<div className="absolute top-4 left-4 z-50 flex items-center gap-4 bg-black/50 backdrop-blur-sm px-3 py-2 rounded-full text-white font-inter">
+					<span className="font-semibold text-lg">{targetUser.name}</span>
 					{user.mentors?.some((m) => m._id === targetUser._id) ? (
-						<span className="text-xs bg-green-500 px-2 py-0.5 rounded-full">
+						<span className="text-md bg-green-500 px-2 py-0.5 rounded-full">
 							Mentor
 						</span>
 					) : user.mentees?.some((m) => m._id === targetUser._id) ? (
-						<span className="text-xs bg-blue-500 px-2 py-0.5 rounded-full">
+						<span className="text-md bg-blue-500 px-2 py-0.5 rounded-full">
 							Mentee
 						</span>
 					) : null}
