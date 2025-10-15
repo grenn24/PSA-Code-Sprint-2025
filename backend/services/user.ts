@@ -55,7 +55,6 @@ class UserService {
 			experienceLevel,
 		});
 
-		// Save to DB
 		return await user.save();
 	}
 
@@ -93,7 +92,6 @@ class UserService {
 	}
 
 	async addNotification(userId: string, message: string) {
-		// Add to DB
 		const user = await User.findByIdAndUpdate(
 			userId,
 			{

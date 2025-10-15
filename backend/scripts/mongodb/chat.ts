@@ -11,8 +11,9 @@ export async function generateChats(email: string, limit = 3) {
 		}
 		const chats: any = [];
 		for (const mentor of mentors) {
+			mentor.mentees = [...mentor.mentees, mentee._id];
+			await mentor.save();
 			const chat = { participants: [mentee._id, mentor._id] };
-
 			chats.push(chat);
 		}
 		return chats;
