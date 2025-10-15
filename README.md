@@ -1,6 +1,5 @@
 # PSA Horizon
 **Project for PSA Code Sprint 2025**
-Prototype:  
 Staging Website: https://psa-code-sprint-2025.vercel.app  
 API Endpoint: https://psa-code-sprint-2025.onrender.com/api
 
@@ -27,16 +26,15 @@ PSA Horizon is an integrated employee development platform designed to empower P
 - Engage in short guided activities (e.g. mindfulness)
 - Dashboard showing key mood indicators
 
-
 ## User Guide
-- Default account:  
+- Log in to default account:  
   Email: gren@gmail.com  
   Password: password123
 - Or, create a new account at /sign-up
-### Remotely
+### Remote
 Visit the staging site at:  
 https://psa-code-sprint-2025.vercel.app
-### Locally
+### Local
 1. Ensure that your machine has the following installed:
    - node.js
    - npm
