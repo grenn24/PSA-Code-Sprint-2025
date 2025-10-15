@@ -1,5 +1,5 @@
 # PSA Horizon
-**Project for PSA Code Sprint 2025**  
+**A PSA Code Sprint 2025 project**  
 Staging Website: https://psa-code-sprint-2025.vercel.app  
 API Endpoint: https://psa-code-sprint-2025.onrender.com/api
 
