@@ -241,8 +241,7 @@ const MainLayout = () => {
 											: "text-gray-700 hover:bg-gray-100 hover:font-semibold"
 									}`}
 								>
-									<Icon className="w-8 h-8" />
-
+									<Icon className="w-8 h-8 min-w-8 min-h-8" />
 									<AnimatePresence>
 										{open && (
 											<motion.span
