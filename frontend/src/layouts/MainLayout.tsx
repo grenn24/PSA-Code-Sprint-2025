@@ -215,7 +215,7 @@ const MainLayout = () => {
 			<motion.div
 				animate={{ width: open ? 300 : 80 }}
 				transition={{ type: "spring", stiffness: 200, damping: 25 }}
-				className="hidden md:flex bg-white shadow-lg flex-col border-r border-gray-200 pb-2 overflow-hidden"
+				className="hidden md:flex bg-white shadow-lg flex-col border-r border-gray-200 pb-2"
 			>
 				<div className="flex justify-center p-4">
 					<img src="/images/psa-logo.png" alt="PSA" className="h-6" />
@@ -267,9 +267,9 @@ const MainLayout = () => {
 								</button>
 
 								{!open && (
-									<div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-3 py-1 rounded-md bg-gray-800 text-white text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity z-50">
+									<span className="absolute z-100 left-17 top-1/2 -translate-y-1/2 bg-gray-700 text-white text-xs font-semibold rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity">
 										{r.label}
-									</div>
+									</span>
 								)}
 							</div>
 						);
