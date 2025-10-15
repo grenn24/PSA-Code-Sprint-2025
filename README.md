@@ -27,7 +27,16 @@ PSA Horizon is an integrated employee development platform designed to empower P
 - Engage in short guided activities (e.g. mindfulness)
 - Dashboard showing key mood indicators
 
-## Local Setup
+
+## User Guide
+- Default account:  
+  Email: gren@gmail.com
+  Password: password123
+- Or, create a new account at /sign-up
+### Remotely
+Visit the staging site at:  
+https://psa-code-sprint-2025.vercel.app
+### Locally
 1. Ensure that your machine has the following installed:
    - node.js
    - npm
@@ -35,10 +44,12 @@ PSA Horizon is an integrated employee development platform designed to empower P
 2. Download the latest executable *Codes_Gren.zip* from the [releases]("https://github.com/grenn24/PSA-Code-Sprint-2025") page
 3. Ensure that ports **3000** and **5173** are available
 4. Open command prompt in the root folder
-5. Run start.bat (Windows) or ./start.sh (Linux)
+5. Running the startup script:  
+   - Windows: start.bat
+   - Linux/MacOS: ./start.sh
 
 ## Data Management
-## MongoDB
+### MongoDB
 - The application uses MongoDB as its primary database to store structured data such as user info and wellness buddy conversations.
 - Relevant scripts are located in the **/scripts/mongodb** directory.
 - Delete all collections, documents, indexes in the database:
@@ -62,14 +73,6 @@ npm run vdb:clear
 ```
 npm run vdb:seed
 ```
-
-## Directory Structure
-root/  
-├── backend/  
-├── common/  
-├── frontend/  
-├── package.json  
-└── README.md
 
 ## Tech Stack
 | Layer | Technology |
