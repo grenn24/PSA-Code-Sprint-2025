@@ -30,7 +30,7 @@ PSA Horizon is an integrated employee development platform designed to empower P
 
 ## User Guide
 - Default account:  
-  Email: gren@gmail.com
+  Email: gren@gmail.com  
   Password: password123
 - Or, create a new account at /sign-up
 ### Remotely
