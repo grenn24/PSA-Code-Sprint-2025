@@ -231,7 +231,7 @@ const MainLayout = () => {
 										navigate(r.path);
 										setOpen(false);
 									}}
-									className={`flex items-center w-full px-3 py-2 rounded-xl gap-6 font-medium overflow-hidden transition-colors duration-200 ${
+									className={`flex items-center w-full px-3 py-2 rounded-xl gap-6 font-medium transition-colors duration-200 ${
 										open
 											? "justify-start"
 											: "justify-center"
