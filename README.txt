@@ -1,9 +1,10 @@
 # PSA Horizon
+
+## Overview
 **A PSA Code Sprint 2025 project**  
 Staging Website: https://psa-code-sprint-2025.vercel.app  
 API Endpoint: https://psa-code-sprint-2025.onrender.com/api
 
-## Overview
 PSA Horizon is an integrated employee development platform designed to empower PSA staff through mentorship, career growth, and well-being support.
 
 ## Core Features
