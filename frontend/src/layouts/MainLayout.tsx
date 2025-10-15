@@ -233,7 +233,7 @@ const MainLayout = () => {
 										navigate(r.path);
 										setOpen(false);
 									}}
-									className={`flex items-center w-full px-3 py-2 rounded-xl gap-2 font-medium overflow-hidden transition-colors duration-200 ${
+									className={`flex items-center w-full px-3 py-2 rounded-xl gap-6 font-medium overflow-hidden transition-colors duration-200 ${
 										open
 											? "justify-start"
 											: "justify-center"
@@ -243,7 +243,7 @@ const MainLayout = () => {
 											: "text-gray-700 hover:bg-gray-100 hover:font-semibold"
 									}`}
 								>
-									<Icon className="w-8 h-8" />
+									<Icon className="min-w-8 min-h-8" />
 
 									{/* Smooth label transition */}
 									<AnimatePresence>
@@ -256,12 +256,10 @@ const MainLayout = () => {
 												animate={{
 													opacity: 1,
 													width: "auto",
-													marginLeft: 12,
 												}}
 												exit={{
 													opacity: 0,
 													width: 0,
-													marginLeft: 0,
 												}}
 												transition={{ duration: 0.25 }}
 												className="font-inter text-lg whitespace-nowrap"
