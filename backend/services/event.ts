@@ -9,7 +9,7 @@ class EventService {
 	}
 	async getEventByID(eventID: string) {
 		const event = await Event.findById(eventID)
-			.populate("creator participants")
+			.populate("creator participants comments.author")
 			.exec();
 		if (!event) {
 			throw new HttpError(
@@ -22,12 +22,24 @@ class EventService {
 	}
 	async createEvent(event) {
 		const newEvent = new Event(event);
-		return await newEvent.save();
+		await newEvent.save();
+		return await this.getEventByID(newEvent._id.toString());
+	}
+	async updateEvent(eventID: string, event) {
+		const updatedEvent = await Event.findByIdAndUpdate(eventID, event, {
+			new: true,
+		});
+		if (!updatedEvent) {
+			throw new HttpError(
+				"Event not found",
+				"NOT_FOUND",
+				HttpStatusCode.NotFound
+			);
+		}
+		return await this.getEventByID(eventID);
 	}
 	async joinEvent(userID: string, eventID: string) {
-		const event = await Event.findById(eventID)
-			.populate("creator participants")
-			.exec();
+		const event = await Event.findById(eventID).exec();
 		if (!event) {
 			throw new HttpError(
 				"Event not found",
@@ -35,14 +47,16 @@ class EventService {
 				HttpStatusCode.NotFound
 			);
 		}
-		event.participants.push(new mongoose.Types.ObjectId(userID));
-		return await event.save();
+		event.participants = [
+			...event.participants,
+			new mongoose.Types.ObjectId(userID),
+		];
+		await event.save();
+		return await this.getEventByID(eventID);
 	}
 
 	async leaveEvent(userID: string, eventID: string) {
-		const event = await Event.findById(eventID)
-			.populate("creator participants")
-			.exec();
+		const event = await Event.findById(eventID).exec();
 		if (!event) {
 			throw new HttpError(
 				"Event not found",
@@ -50,10 +64,11 @@ class EventService {
 				HttpStatusCode.NotFound
 			);
 		}
-		event.participants.filter(
+		event.participants = event.participants.filter(
 			(participant) => participant.toString() !== userID
 		);
-		return await event.save();
+		await event.save();
+		return await this.getEventByID(eventID);
 	}
 }
 

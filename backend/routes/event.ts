@@ -29,6 +29,14 @@ eventRouter.post(
 	)
 );
 
+eventRouter.put(
+	"/:ID",
+	getID(),
+	eventController.catchErrors(
+		eventController.updateEvent.bind(eventController)
+	)
+);
+
 eventRouter.post(
 	"/:ID/join",
 	getID(),

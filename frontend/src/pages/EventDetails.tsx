@@ -14,6 +14,7 @@ import { useParams } from "react-router-dom";
 import { Event } from "@common/types/event";
 import eventService from "services/event";
 import { useAppSelector } from "redux/store";
+import { User } from "@common/types/user";
 
 const EventDetails = () => {
 	const { user } = useAppSelector((state) => state.user);
@@ -23,7 +24,21 @@ const EventDetails = () => {
 	const [newComment, setNewComment] = useState("");
 	const [isAddingComment, setIsAddingComment] = useState(false);
 	const [isJoining, setIsJoining] = useState(false);
-	const handleAddComment = () => {};
+	const handleAddComment = async (content: string) => {
+		if (!user?._id || !event?._id) return;
+		setIsAddingComment(true);
+		const newComment = {
+			author: user?._id,
+			content,
+			createdAt: new Date(),
+		};
+		const newEvent = await eventService.updateEvent(event?._id, {
+			comments: [...event.comments, newComment],
+		});
+		setIsAddingComment(false);
+		setEvent(newEvent);
+		setNewComment("");
+	};
 
 	useEffect(() => {
 		if (!params.id) return;
@@ -34,7 +49,6 @@ const EventDetails = () => {
 		});
 	}, [params.id]);
 
-	// 🎨 Loading shimmer component
 	const LoadingSkeleton = () => (
 		<div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white animate-pulse">
 			<div className="w-full h-72 bg-gray-200 rounded-b-3xl" />
@@ -72,7 +86,10 @@ const EventDetails = () => {
 	if (!user?._id) {
 		return null;
 	}
-	const isJoined = event?.participants.includes(user._id);
+	const isJoined = !!event?.participants.find((participant) => {
+		return (participant as User)._id === user._id;
+	});
+
 	const handleToggleJoin = async () => {
 		if (!user?._id || !event?._id) return;
 		setIsJoining(true);
@@ -209,7 +226,7 @@ const EventDetails = () => {
 							/>
 							<div className="flex justify-end mt-2">
 								<button
-									onClick={handleAddComment}
+									onClick={() => handleAddComment(newComment)}
 									disabled={
 										isAddingComment || !newComment.trim()
 									}
@@ -230,26 +247,32 @@ const EventDetails = () => {
 								No comments yet.
 							</p>
 						) : (
-							event.comments.map((c, idx) => (
-								<div
-									key={idx}
-									className="bg-white/70 backdrop-blur-sm rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition"
-								>
-									<div className="flex justify-between items-center">
-										<p className="font-semibold text-gray-800">
-											{c.author?.name || "Anonymous"}
+							event.comments
+								.sort(
+									(a, b) =>
+										dayjs(b.createdAt).unix() -
+										dayjs(a.createdAt).unix()
+								)
+								.map((c, idx) => (
+									<div
+										key={idx}
+										className="bg-white/70 backdrop-blur-sm rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition"
+									>
+										<div className="flex justify-between items-center">
+											<p className="font-semibold text-gray-800">
+												{c.author?.name}
+											</p>
+											<span className="text-xs text-gray-500">
+												{dayjs(c.createdAt).format(
+													"DD MMM, h:mm A"
+												)}
+											</span>
+										</div>
+										<p className="mt-1 text-gray-700">
+											{c.content}
 										</p>
-										<span className="text-xs text-gray-500">
-											{dayjs(c.createdAt).format(
-												"DD MMM, h:mm A"
-											)}
-										</span>
 									</div>
-									<p className="mt-1 text-gray-700">
-										{c.content}
-									</p>
-								</div>
-							))
+								))
 						)}
 					</div>
 				</section>

@@ -127139,7 +127139,7 @@ class EventService {
     }
     async getEventByID(eventID) {
         const event = await Event.findById(eventID)
-            .populate("creator participants")
+            .populate("creator participants comments.author")
             .exec();
         if (!event) {
             throw new HttpError("Event not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
@@ -127148,27 +127148,38 @@ class EventService {
     }
     async createEvent(event) {
         const newEvent = new Event(event);
-        return await newEvent.save();
+        await newEvent.save();
+        return await this.getEventByID(newEvent._id.toString());
+    }
+    async updateEvent(eventID, event) {
+        const updatedEvent = await Event.findByIdAndUpdate(eventID, event, {
+            new: true,
+        });
+        if (!updatedEvent) {
+            throw new HttpError("Event not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        }
+        return await this.getEventByID(eventID);
     }
     async joinEvent(userID, eventID) {
-        const event = await Event.findById(eventID)
-            .populate("creator participants")
-            .exec();
+        const event = await Event.findById(eventID).exec();
         if (!event) {
             throw new HttpError("Event not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
         }
-        event.participants.push(new mongoose.Types.ObjectId(userID));
-        return await event.save();
+        event.participants = [
+            ...event.participants,
+            new mongoose.Types.ObjectId(userID),
+        ];
+        await event.save();
+        return await this.getEventByID(eventID);
     }
     async leaveEvent(userID, eventID) {
-        const event = await Event.findById(eventID)
-            .populate("creator participants")
-            .exec();
+        const event = await Event.findById(eventID).exec();
         if (!event) {
             throw new HttpError("Event not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
         }
-        event.participants.filter((participant) => participant.toString() !== userID);
-        return await event.save();
+        event.participants = event.participants.filter((participant) => participant.toString() !== userID);
+        await event.save();
+        return await this.getEventByID(eventID);
     }
 }
 const eventService = new EventService();
@@ -127184,6 +127195,11 @@ class EventController {
     }
     async createEvent(request, response) {
         const event = await eventService.createEvent(request.body);
+        response.status(200).send(event);
+    }
+    async updateEvent(request, response) {
+        const eventID = response.locals._id;
+        const event = await eventService.updateEvent(eventID, request.body);
         response.status(200).send(event);
     }
     async joinEvent(request, response) {
@@ -127231,6 +127247,7 @@ eventRouter.use(auth("user"));
 eventRouter.get("", eventController.catchErrors(eventController.getAllEvents.bind(eventController)));
 eventRouter.get("/:ID", getID(), eventController.catchErrors(eventController.getEventByID.bind(eventController)));
 eventRouter.post("", eventController.catchErrors(eventController.createEvent.bind(eventController)));
+eventRouter.put("/:ID", getID(), eventController.catchErrors(eventController.updateEvent.bind(eventController)));
 eventRouter.post("/:ID/join", getID(), eventController.catchErrors(eventController.joinEvent.bind(eventController)));
 eventRouter.post("/:ID/leave", getID(), eventController.catchErrors(eventController.leaveEvent.bind(eventController)));
 

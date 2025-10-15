@@ -7,6 +7,7 @@ import { Event } from "@common/types/event";
 import dayjs from "dayjs";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+import { User } from "@common/types/user";
 
 dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);
@@ -208,7 +209,9 @@ const EventCard: React.FC<{
 		return null;
 	}
 
-	const isJoined = event.participants.includes(user._id);
+	const isJoined = !!event.participants.find(
+		(participant) => (participant as string) === user._id
+	);
 	const handleToggleJoin = async (e) => {
 		e.stopPropagation();
 		if (!user?._id || !event?._id) return;

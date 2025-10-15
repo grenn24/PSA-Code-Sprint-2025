@@ -21,6 +21,11 @@ class EventService {
 		return response.data;
 	}
 
+	async updateEvent(eventID: string, event) {
+		const response = await this.apiClient.put<any, Event>(`/${eventID}`, event);
+		return response.data;
+	}
+
 	async joinEvent(userID: string, eventID: string) {
 		const response = await this.apiClient.post(`/${eventID}/join`,{});
 		return response.data;

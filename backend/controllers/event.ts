@@ -16,6 +16,11 @@ class EventController {
 		const event = await eventService.createEvent(request.body);
 		response.status(200).send(event);
 	}
+	async updateEvent(request: Request, response: Response) {
+		const eventID = response.locals._id;
+		const event = await eventService.updateEvent(eventID, request.body);
+		response.status(200).send(event);
+	}
 	async joinEvent(request: Request, response: Response) {
 		const eventID = response.locals._id;
 		const user = response.locals.user;

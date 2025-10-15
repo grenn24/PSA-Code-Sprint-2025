@@ -83,6 +83,8 @@ root/
 ### Frontend
 | Page | Route | Description |
 | :----------- | :------------ | :------------ |
+| Log In | /log-in | Sign in to account |
+| Sign Up | /sign-up | Create new account |
 | Home (Career Dashboard) | / | Career path progress, recommended courses and notifications |
 | Mentor Matching | /mentor | Chat, explore and connect with mentors |
 | Wellness Buddy | /wellness-buddy | AI-powered emotional support chatbot |
@@ -91,7 +93,8 @@ root/
 ### Backend
 | Method | Route | Description | Authentication |
 | :----------- | :------------ | :------------ | :------------ |
-| POST | /api/auth/log-in | User Login | No |
+| POST | /api/auth/log-in | User Log In | No |
+| POST | /api/auth/sign-up | User Sign Up | No |
 | GET | /api/user | Get all users | Yes |
 | GET | /api/user/:id | Get a specific user by id | Yes |
 | GET | /api/user/:id/top-matches | Get top mentor matches for a user | Yes |

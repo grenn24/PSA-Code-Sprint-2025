@@ -11,12 +11,12 @@ export interface Event {
 	mode: "online" | "offline";
 	location?: string;
 	creator: User;
-	participants: string[];
+	participants: User[] | string[];
 	coverImage?: S3File;
 	comments: {
 		_id?: string;
 		content: string;
 		author: User;
-		createdAt?: Date;
+		createdAt: Date;
 	}[];
 }
