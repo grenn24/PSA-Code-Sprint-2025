@@ -26,6 +26,7 @@ import { WebsocketMessage } from "@common/types/http";
 import websocketService from "utilities/websocket";
 import { User } from "@common/types/user";
 import chatService from "services/chat";
+import { useAppSelector } from "redux/store";
 
 interface VideoCallProps {
 	localStream: MediaStream | null;
@@ -114,6 +115,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 	onEndCall,
 	targetUser,
 }) => {
+	const { user } = useAppSelector((state) => state.user);
 	const localVideoRef = useRef<HTMLVideoElement>(null);
 	const remoteVideoRef = useRef<HTMLVideoElement>(null);
 	const [mindfulness, setMindfulness] = useState(false);
@@ -363,6 +365,10 @@ const VideoCall: React.FC<VideoCallProps> = ({
 		}, 1000);
 	};
 
+	if (!user) {
+		return null;
+	}
+
 	return (
 		<div
 			className={`fixed ${
@@ -536,6 +542,21 @@ const VideoCall: React.FC<VideoCallProps> = ({
 							)}
 						</button>
 					</div>
+				</div>
+			)}
+			{/* Target user overlay */}
+			{targetUser && (
+				<div className="absolute top-4 left-4 z-50 flex items-center gap-2 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-full text-white">
+					<span className="font-semibold">{targetUser.name}</span>
+					{user.mentors?.some((m) => m._id === targetUser._id) ? (
+						<span className="text-xs bg-green-500 px-2 py-0.5 rounded-full">
+							Mentor
+						</span>
+					) : user.mentees?.some((m) => m._id === targetUser._id) ? (
+						<span className="text-xs bg-blue-500 px-2 py-0.5 rounded-full">
+							Mentee
+						</span>
+					) : null}
 				</div>
 			)}
 			{mindfulness && (

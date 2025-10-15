@@ -25,7 +25,7 @@ PSA Horizon is an integrated employee development platform designed to empower P
 - Offer practical and personalised advice to personal wellbeing
 - Track historical mood changes from past conversations
 - Engage in short guided activities (e.g. mindfulness)
-- Dashboard showing key mood indicators
+- Dashboard showing key mood indicators and daily goals
 
 ## User Guide
 - Log in to default account:  
