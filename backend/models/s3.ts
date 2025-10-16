@@ -1,5 +1,3 @@
-import { HttpError } from "@common/types/http.js";
-
 import mongoose from "mongoose";
 import s3Service from "../utilities/s3.js";
 
