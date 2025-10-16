@@ -12,6 +12,14 @@ class ChatService {
 	private pendingCandidates: RTCIceCandidateInit[] = [];
 	onLocalStream?: (stream: MediaStream | null) => void;
 	onRemoteStream?: (stream: MediaStream | null) => void;
+	private ICE_SERVERS = [
+		{ urls: "stun:stun.l.google.com:19302" },
+		{
+			urls: "turn:global.relay.metered.ca:80",
+			username: "openai",
+			credential: "openai123",
+		},
+	];
 
 	async createChat(participantIDs: string[]) {
 		const response = await this.apiClient.post<any, Chat>("", {
@@ -94,7 +102,9 @@ class ChatService {
 			this.onLocalStream?.(localStream);
 		}
 
-		this.peerConnection = new RTCPeerConnection();
+		this.peerConnection = new RTCPeerConnection({
+			iceServers: this.ICE_SERVERS,
+		});
 
 		this.localStream.getTracks().forEach((track) => {
 			if (!this.peerConnection) return;
@@ -198,7 +208,9 @@ class ChatService {
 			this.onLocalStream?.(localStream);
 		}
 
-		this.peerConnection = new RTCPeerConnection();
+		this.peerConnection = new RTCPeerConnection({
+			iceServers: this.ICE_SERVERS,
+		});
 
 		this.localStream.getTracks().forEach((track) => {
 			if (!this.peerConnection) return;

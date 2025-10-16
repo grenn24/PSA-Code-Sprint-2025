@@ -42,7 +42,7 @@ const MessageBubble = ({ isSender, message, updateMessage }: Prop) => {
 			case "file":
 				return (
 					<BubbleWrapper isSender={isSender} message={message}>
-						<div className="flex flex-col gap-2 p-3 rounded-lg max-w-xs bg-gray-50/40">
+						<div className="flex flex-col gap-3 p-3 rounded-lg max-w-xs bg-white/40 mt-2">
 							{/* Top row: icon + filename */}
 							<div className="flex items-center gap-3">
 								<PaperClipIcon className="w-6 h-6 text-indigo-600 flex-shrink-0" />
@@ -65,23 +65,29 @@ const MessageBubble = ({ isSender, message, updateMessage }: Prop) => {
 							</div>
 
 							{/* Buttons */}
-							<div className="flex gap-2 mt-2">
+							<div className="flex gap-1">
 								<a
 									href={message.metadata?.url}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="flex-1 text-center bg-indigo-600 text-white p-2 rounded hover:bg-indigo-700 transition"
+									className="flex-1 text-center bg-indigo-600 text-white px-2 py-1 rounded hover:bg-indigo-700 transition"
 								>
 									Open
 								</a>
 								<a
 									href={message.metadata?.url}
 									download={message.metadata?.filename}
-									className="flex-1 text-center bg-gray-200 text-gray-800 p-2 rounded hover:bg-gray-300 transition text-nowrap"
+									className="flex-1 text-center bg-gray-200 text-gray-800 px-2 py-1 rounded hover:bg-gray-300 transition text-nowrap"
 								>
 									Save As
 								</a>
 							</div>
+							<div className="w-full border-t border-black/20 my-0" />
+							{message.content && (
+								<p className="text-gray-700 whitespace-pre-line break-words">
+									{message.content}
+								</p>
+							)}
 						</div>
 					</BubbleWrapper>
 				);

@@ -213,6 +213,7 @@ const MainLayout = () => {
 	return (
 		<div className="flex flex-col md:flex-row h-screen w-screen bg-gray-50">
 			<motion.div
+				initial={{ width: 300 }}
 				animate={{ width: open ? 300 : 80 }}
 				transition={{ type: "spring", stiffness: 200, damping: 25 }}
 				className="hidden md:flex bg-white shadow-lg flex-col border-r border-gray-200 pb-2"
@@ -245,10 +246,7 @@ const MainLayout = () => {
 									<AnimatePresence>
 										{open && (
 											<motion.span
-												initial={{
-													opacity: 0,
-													width: 0,
-												}}
+												initial={false}
 												animate={{
 													opacity: 1,
 													width: "auto",
