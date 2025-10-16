@@ -1,23 +1,14 @@
 import mongoose from "mongoose";
 declare class UserService {
     getAllUsers(): Promise<(mongoose.Document<unknown, {}, {
+        name: string;
         email: string;
+        position: string;
         role: "user" | "admin";
         password: string;
-        name: string;
-        position: string;
         subordinates: mongoose.Types.ObjectId[];
+        createdAt: NativeDate;
         experienceLevel: number;
-        mentorshipRequests: mongoose.Types.DocumentArray<{
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }> & {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }>;
         skills: mongoose.Types.DocumentArray<{
             level: number;
             name?: string | null | undefined;
@@ -28,6 +19,17 @@ declare class UserService {
             level: number;
             name?: string | null | undefined;
         }>;
+        mentorshipRequests: mongoose.Types.DocumentArray<{
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }> & {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }>;
+        mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
             createdAt: NativeDate;
             message: string;
@@ -60,6 +62,8 @@ declare class UserService {
             startedAt?: NativeDate | null | undefined;
             endedAt?: NativeDate | null | undefined;
         }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -73,10 +77,6 @@ declare class UserService {
             level: number;
             notes: string[];
         }>;
-        createdAt: NativeDate;
-        mentees: mongoose.Types.ObjectId[];
-        lastSeen: NativeDate;
-        isOnline: boolean;
         activities: mongoose.Types.DocumentArray<{
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
@@ -87,27 +87,18 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
-        avatar?: string | null | undefined;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
+        avatar?: string | null | undefined;
     }> & {
+        name: string;
         email: string;
+        position: string;
         role: "user" | "admin";
         password: string;
-        name: string;
-        position: string;
         subordinates: mongoose.Types.ObjectId[];
+        createdAt: NativeDate;
         experienceLevel: number;
-        mentorshipRequests: mongoose.Types.DocumentArray<{
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }> & {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }>;
         skills: mongoose.Types.DocumentArray<{
             level: number;
             name?: string | null | undefined;
@@ -118,6 +109,17 @@ declare class UserService {
             level: number;
             name?: string | null | undefined;
         }>;
+        mentorshipRequests: mongoose.Types.DocumentArray<{
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }> & {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }>;
+        mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
             createdAt: NativeDate;
             message: string;
@@ -150,6 +152,8 @@ declare class UserService {
             startedAt?: NativeDate | null | undefined;
             endedAt?: NativeDate | null | undefined;
         }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -163,10 +167,6 @@ declare class UserService {
             level: number;
             notes: string[];
         }>;
-        createdAt: NativeDate;
-        mentees: mongoose.Types.ObjectId[];
-        lastSeen: NativeDate;
-        isOnline: boolean;
         activities: mongoose.Types.DocumentArray<{
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
@@ -177,32 +177,23 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
-        avatar?: string | null | undefined;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
+        avatar?: string | null | undefined;
     } & {
         _id: mongoose.Types.ObjectId;
     } & {
         __v: number;
     })[]>;
     createUser(userData: any): Promise<mongoose.Document<unknown, {}, {
+        name: string;
         email: string;
+        position: string;
         role: "user" | "admin";
         password: string;
-        name: string;
-        position: string;
         subordinates: mongoose.Types.ObjectId[];
+        createdAt: NativeDate;
         experienceLevel: number;
-        mentorshipRequests: mongoose.Types.DocumentArray<{
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }> & {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }>;
         skills: mongoose.Types.DocumentArray<{
             level: number;
             name?: string | null | undefined;
@@ -213,6 +204,17 @@ declare class UserService {
             level: number;
             name?: string | null | undefined;
         }>;
+        mentorshipRequests: mongoose.Types.DocumentArray<{
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }> & {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }>;
+        mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
             createdAt: NativeDate;
             message: string;
@@ -245,6 +247,8 @@ declare class UserService {
             startedAt?: NativeDate | null | undefined;
             endedAt?: NativeDate | null | undefined;
         }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -258,10 +262,6 @@ declare class UserService {
             level: number;
             notes: string[];
         }>;
-        createdAt: NativeDate;
-        mentees: mongoose.Types.ObjectId[];
-        lastSeen: NativeDate;
-        isOnline: boolean;
         activities: mongoose.Types.DocumentArray<{
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
@@ -272,27 +272,18 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
-        avatar?: string | null | undefined;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
+        avatar?: string | null | undefined;
     }> & {
+        name: string;
         email: string;
+        position: string;
         role: "user" | "admin";
         password: string;
-        name: string;
-        position: string;
         subordinates: mongoose.Types.ObjectId[];
+        createdAt: NativeDate;
         experienceLevel: number;
-        mentorshipRequests: mongoose.Types.DocumentArray<{
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }> & {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }>;
         skills: mongoose.Types.DocumentArray<{
             level: number;
             name?: string | null | undefined;
@@ -303,6 +294,17 @@ declare class UserService {
             level: number;
             name?: string | null | undefined;
         }>;
+        mentorshipRequests: mongoose.Types.DocumentArray<{
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }> & {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }>;
+        mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
             createdAt: NativeDate;
             message: string;
@@ -335,6 +337,8 @@ declare class UserService {
             startedAt?: NativeDate | null | undefined;
             endedAt?: NativeDate | null | undefined;
         }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -348,10 +352,6 @@ declare class UserService {
             level: number;
             notes: string[];
         }>;
-        createdAt: NativeDate;
-        mentees: mongoose.Types.ObjectId[];
-        lastSeen: NativeDate;
-        isOnline: boolean;
         activities: mongoose.Types.DocumentArray<{
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
@@ -362,32 +362,23 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
-        avatar?: string | null | undefined;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
+        avatar?: string | null | undefined;
     } & {
         _id: mongoose.Types.ObjectId;
     } & {
         __v: number;
     }>;
     getUserByID(userId: any): Promise<mongoose.Document<unknown, {}, {
+        name: string;
         email: string;
+        position: string;
         role: "user" | "admin";
         password: string;
-        name: string;
-        position: string;
         subordinates: mongoose.Types.ObjectId[];
+        createdAt: NativeDate;
         experienceLevel: number;
-        mentorshipRequests: mongoose.Types.DocumentArray<{
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }> & {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }>;
         skills: mongoose.Types.DocumentArray<{
             level: number;
             name?: string | null | undefined;
@@ -398,6 +389,17 @@ declare class UserService {
             level: number;
             name?: string | null | undefined;
         }>;
+        mentorshipRequests: mongoose.Types.DocumentArray<{
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }> & {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }>;
+        mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
             createdAt: NativeDate;
             message: string;
@@ -430,6 +432,8 @@ declare class UserService {
             startedAt?: NativeDate | null | undefined;
             endedAt?: NativeDate | null | undefined;
         }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -443,10 +447,6 @@ declare class UserService {
             level: number;
             notes: string[];
         }>;
-        createdAt: NativeDate;
-        mentees: mongoose.Types.ObjectId[];
-        lastSeen: NativeDate;
-        isOnline: boolean;
         activities: mongoose.Types.DocumentArray<{
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
@@ -457,27 +457,18 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
-        avatar?: string | null | undefined;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
+        avatar?: string | null | undefined;
     }> & {
+        name: string;
         email: string;
+        position: string;
         role: "user" | "admin";
         password: string;
-        name: string;
-        position: string;
         subordinates: mongoose.Types.ObjectId[];
+        createdAt: NativeDate;
         experienceLevel: number;
-        mentorshipRequests: mongoose.Types.DocumentArray<{
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }> & {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }>;
         skills: mongoose.Types.DocumentArray<{
             level: number;
             name?: string | null | undefined;
@@ -488,6 +479,17 @@ declare class UserService {
             level: number;
             name?: string | null | undefined;
         }>;
+        mentorshipRequests: mongoose.Types.DocumentArray<{
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }> & {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }>;
+        mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
             createdAt: NativeDate;
             message: string;
@@ -520,6 +522,8 @@ declare class UserService {
             startedAt?: NativeDate | null | undefined;
             endedAt?: NativeDate | null | undefined;
         }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -533,10 +537,6 @@ declare class UserService {
             level: number;
             notes: string[];
         }>;
-        createdAt: NativeDate;
-        mentees: mongoose.Types.ObjectId[];
-        lastSeen: NativeDate;
-        isOnline: boolean;
         activities: mongoose.Types.DocumentArray<{
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
@@ -547,32 +547,23 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
-        avatar?: string | null | undefined;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
+        avatar?: string | null | undefined;
     } & {
         _id: mongoose.Types.ObjectId;
     } & {
         __v: number;
     }>;
     updateUser(userId: any, userData: any): Promise<(mongoose.Document<unknown, {}, {
+        name: string;
         email: string;
+        position: string;
         role: "user" | "admin";
         password: string;
-        name: string;
-        position: string;
         subordinates: mongoose.Types.ObjectId[];
+        createdAt: NativeDate;
         experienceLevel: number;
-        mentorshipRequests: mongoose.Types.DocumentArray<{
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }> & {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }>;
         skills: mongoose.Types.DocumentArray<{
             level: number;
             name?: string | null | undefined;
@@ -583,6 +574,17 @@ declare class UserService {
             level: number;
             name?: string | null | undefined;
         }>;
+        mentorshipRequests: mongoose.Types.DocumentArray<{
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }> & {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }>;
+        mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
             createdAt: NativeDate;
             message: string;
@@ -615,6 +617,8 @@ declare class UserService {
             startedAt?: NativeDate | null | undefined;
             endedAt?: NativeDate | null | undefined;
         }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -628,10 +632,6 @@ declare class UserService {
             level: number;
             notes: string[];
         }>;
-        createdAt: NativeDate;
-        mentees: mongoose.Types.ObjectId[];
-        lastSeen: NativeDate;
-        isOnline: boolean;
         activities: mongoose.Types.DocumentArray<{
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
@@ -642,27 +642,18 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
-        avatar?: string | null | undefined;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
+        avatar?: string | null | undefined;
     }> & {
+        name: string;
         email: string;
+        position: string;
         role: "user" | "admin";
         password: string;
-        name: string;
-        position: string;
         subordinates: mongoose.Types.ObjectId[];
+        createdAt: NativeDate;
         experienceLevel: number;
-        mentorshipRequests: mongoose.Types.DocumentArray<{
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }> & {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }>;
         skills: mongoose.Types.DocumentArray<{
             level: number;
             name?: string | null | undefined;
@@ -673,6 +664,17 @@ declare class UserService {
             level: number;
             name?: string | null | undefined;
         }>;
+        mentorshipRequests: mongoose.Types.DocumentArray<{
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }> & {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }>;
+        mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
             createdAt: NativeDate;
             message: string;
@@ -705,6 +707,8 @@ declare class UserService {
             startedAt?: NativeDate | null | undefined;
             endedAt?: NativeDate | null | undefined;
         }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -718,10 +722,6 @@ declare class UserService {
             level: number;
             notes: string[];
         }>;
-        createdAt: NativeDate;
-        mentees: mongoose.Types.ObjectId[];
-        lastSeen: NativeDate;
-        isOnline: boolean;
         activities: mongoose.Types.DocumentArray<{
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
@@ -732,32 +732,23 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
-        avatar?: string | null | undefined;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
+        avatar?: string | null | undefined;
     } & {
         _id: mongoose.Types.ObjectId;
     } & {
         __v: number;
     }) | null>;
     addNotification(userId: string, message: string): Promise<mongoose.Document<unknown, {}, {
+        name: string;
         email: string;
+        position: string;
         role: "user" | "admin";
         password: string;
-        name: string;
-        position: string;
         subordinates: mongoose.Types.ObjectId[];
+        createdAt: NativeDate;
         experienceLevel: number;
-        mentorshipRequests: mongoose.Types.DocumentArray<{
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }> & {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }>;
         skills: mongoose.Types.DocumentArray<{
             level: number;
             name?: string | null | undefined;
@@ -768,6 +759,17 @@ declare class UserService {
             level: number;
             name?: string | null | undefined;
         }>;
+        mentorshipRequests: mongoose.Types.DocumentArray<{
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }> & {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }>;
+        mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
             createdAt: NativeDate;
             message: string;
@@ -800,6 +802,8 @@ declare class UserService {
             startedAt?: NativeDate | null | undefined;
             endedAt?: NativeDate | null | undefined;
         }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -813,10 +817,6 @@ declare class UserService {
             level: number;
             notes: string[];
         }>;
-        createdAt: NativeDate;
-        mentees: mongoose.Types.ObjectId[];
-        lastSeen: NativeDate;
-        isOnline: boolean;
         activities: mongoose.Types.DocumentArray<{
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
@@ -827,27 +827,18 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
-        avatar?: string | null | undefined;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
+        avatar?: string | null | undefined;
     }> & {
+        name: string;
         email: string;
+        position: string;
         role: "user" | "admin";
         password: string;
-        name: string;
-        position: string;
         subordinates: mongoose.Types.ObjectId[];
+        createdAt: NativeDate;
         experienceLevel: number;
-        mentorshipRequests: mongoose.Types.DocumentArray<{
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }> & {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }>;
         skills: mongoose.Types.DocumentArray<{
             level: number;
             name?: string | null | undefined;
@@ -858,6 +849,17 @@ declare class UserService {
             level: number;
             name?: string | null | undefined;
         }>;
+        mentorshipRequests: mongoose.Types.DocumentArray<{
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }> & {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }>;
+        mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
             createdAt: NativeDate;
             message: string;
@@ -890,6 +892,8 @@ declare class UserService {
             startedAt?: NativeDate | null | undefined;
             endedAt?: NativeDate | null | undefined;
         }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -903,10 +907,6 @@ declare class UserService {
             level: number;
             notes: string[];
         }>;
-        createdAt: NativeDate;
-        mentees: mongoose.Types.ObjectId[];
-        lastSeen: NativeDate;
-        isOnline: boolean;
         activities: mongoose.Types.DocumentArray<{
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
@@ -917,9 +917,9 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
-        avatar?: string | null | undefined;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
+        avatar?: string | null | undefined;
     } & {
         _id: mongoose.Types.ObjectId;
     } & {
@@ -927,23 +927,14 @@ declare class UserService {
     }>;
     sendMentorshipRequest(senderID: string, mentorID: string, message?: string): Promise<void>;
     addActivity(userID: string, activity: any): Promise<mongoose.Document<unknown, {}, {
+        name: string;
         email: string;
+        position: string;
         role: "user" | "admin";
         password: string;
-        name: string;
-        position: string;
         subordinates: mongoose.Types.ObjectId[];
+        createdAt: NativeDate;
         experienceLevel: number;
-        mentorshipRequests: mongoose.Types.DocumentArray<{
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }> & {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }>;
         skills: mongoose.Types.DocumentArray<{
             level: number;
             name?: string | null | undefined;
@@ -954,6 +945,17 @@ declare class UserService {
             level: number;
             name?: string | null | undefined;
         }>;
+        mentorshipRequests: mongoose.Types.DocumentArray<{
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }> & {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }>;
+        mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
             createdAt: NativeDate;
             message: string;
@@ -986,6 +988,8 @@ declare class UserService {
             startedAt?: NativeDate | null | undefined;
             endedAt?: NativeDate | null | undefined;
         }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -999,10 +1003,6 @@ declare class UserService {
             level: number;
             notes: string[];
         }>;
-        createdAt: NativeDate;
-        mentees: mongoose.Types.ObjectId[];
-        lastSeen: NativeDate;
-        isOnline: boolean;
         activities: mongoose.Types.DocumentArray<{
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
@@ -1013,27 +1013,18 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
-        avatar?: string | null | undefined;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
+        avatar?: string | null | undefined;
     }> & {
+        name: string;
         email: string;
+        position: string;
         role: "user" | "admin";
         password: string;
-        name: string;
-        position: string;
         subordinates: mongoose.Types.ObjectId[];
+        createdAt: NativeDate;
         experienceLevel: number;
-        mentorshipRequests: mongoose.Types.DocumentArray<{
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }> & {
-            message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
-        }>;
         skills: mongoose.Types.DocumentArray<{
             level: number;
             name?: string | null | undefined;
@@ -1044,6 +1035,17 @@ declare class UserService {
             level: number;
             name?: string | null | undefined;
         }>;
+        mentorshipRequests: mongoose.Types.DocumentArray<{
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }> & {
+            message?: string | null | undefined;
+            sender?: mongoose.Types.ObjectId | null | undefined;
+        }>;
+        mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
             createdAt: NativeDate;
             message: string;
@@ -1076,6 +1078,8 @@ declare class UserService {
             startedAt?: NativeDate | null | undefined;
             endedAt?: NativeDate | null | undefined;
         }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -1089,10 +1093,6 @@ declare class UserService {
             level: number;
             notes: string[];
         }>;
-        createdAt: NativeDate;
-        mentees: mongoose.Types.ObjectId[];
-        lastSeen: NativeDate;
-        isOnline: boolean;
         activities: mongoose.Types.DocumentArray<{
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
@@ -1103,9 +1103,9 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
-        avatar?: string | null | undefined;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
+        avatar?: string | null | undefined;
     } & {
         _id: mongoose.Types.ObjectId;
     } & {

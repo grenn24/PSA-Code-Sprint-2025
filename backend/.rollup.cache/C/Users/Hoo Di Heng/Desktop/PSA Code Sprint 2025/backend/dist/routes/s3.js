@@ -5,5 +5,6 @@ s3Router.post("/upload-url", s3Controller.catchErrors(s3Controller.getUploadURL.
 s3Router.post("/download-url", s3Controller.catchErrors(s3Controller.getDownloadURL.bind(s3Controller)));
 s3Router.post("/remove-url", s3Controller.catchErrors(s3Controller.getRemoveURL.bind(s3Controller)));
 s3Router.post("/public-url", s3Controller.catchErrors(s3Controller.getPublicURL.bind(s3Controller)));
+s3Router.post("/turn-credentials", s3Controller.catchErrors(s3Controller.getTURNCredentials.bind(s3Controller)));
 export default s3Router;
 //# sourceMappingURL=s3.js.map

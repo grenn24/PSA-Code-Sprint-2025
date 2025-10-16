@@ -26,6 +26,9 @@ class S3Controller {
             url: s3Service.getPublicUrl(s3Filename, folders),
         });
     }
+    async getTURNCredentials(request, response) {
+        response.status(200).send(await s3Service.getTURNCredentials());
+    }
     catchErrors(handler) {
         return async (request, response, next) => {
             try {

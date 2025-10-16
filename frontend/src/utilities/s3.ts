@@ -137,6 +137,17 @@ class S3Service {
 		});
 		return data.url;
 	}
+
+	async getTURNCredentials() {
+		const { data } = await this.apiClient.post<
+			object,
+			{
+				username: string;
+				credential: string;
+			}
+		>(`/turn-credentials`, {});
+		return data;
+	}
 }
 
 const s3Service = new S3Service();

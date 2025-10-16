@@ -4,6 +4,7 @@ declare class S3Controller {
     getDownloadURL(request: Request, response: Response): Promise<void>;
     getRemoveURL(request: Request, response: Response): Promise<void>;
     getPublicURL(request: Request, response: Response): Promise<void>;
+    getTURNCredentials(request: Request, response: Response): Promise<void>;
     catchErrors(handler: any): (request: Request, response: Response, next: NextFunction) => Promise<void>;
 }
 declare const s3Controller: S3Controller;

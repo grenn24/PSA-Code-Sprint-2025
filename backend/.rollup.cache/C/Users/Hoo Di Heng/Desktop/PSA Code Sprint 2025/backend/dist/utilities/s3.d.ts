@@ -9,6 +9,11 @@ declare class S3Service {
     generatePresignedUrl(s3Filename: string, folder: string[], type: "GET" | "PUT" | "DELETE" | "METADATA", contentDisposition?: "inline" | "attachment" | string, expiresIn?: number): Promise<string>;
     removeFile(s3File: S3File): Promise<axios.AxiosResponse<any, any, {}>>;
     removeFiles(s3Files: S3File[]): Promise<import("@aws-sdk/client-s3").DeleteObjectsCommandOutput | undefined>;
+    getTURNCredentials(): Promise<{
+        username: any;
+        credential: any;
+        urls: any;
+    }>;
 }
 declare const s3Service: S3Service;
 export default s3Service;

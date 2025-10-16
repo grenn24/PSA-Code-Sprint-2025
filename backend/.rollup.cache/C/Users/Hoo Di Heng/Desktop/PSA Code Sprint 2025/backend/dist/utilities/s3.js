@@ -8,6 +8,7 @@ import axios from "axios";
 import config from "config";
 import { v4 as uuidv4 } from "uuid";
 import { getFileType } from "./file.js";
+import { HttpError } from "../middlewares/error.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const s3Client = new S3Client({
@@ -143,6 +144,30 @@ class S3Service {
         };
         const response = await s3Client.send(new DeleteObjectsCommand(params));
         return response;
+    }
+    async getTURNCredentials() {
+        try {
+            const turnToken = config.get("TURN_TOKEN");
+            const turnTokenID = config.get("TURN_TOKEN_ID");
+            const url = `https://rtc.live.cloudflare.com/v1/turn/keys/${turnTokenID}/credentials/generate-ice-servers`;
+            const response = await axios.post(url, { ttl: 86400 }, {
+                headers: {
+                    Authorization: `Bearer ${turnToken}`,
+                    "Content-Type": "application/json",
+                },
+            });
+            const iceServer = response.data?.iceServers?.[0];
+            if (!iceServer)
+                throw new Error("No ICE servers returned");
+            return {
+                username: iceServer.username,
+                credential: iceServer.credential,
+                urls: iceServer.urls, // optional, in case you want the URL too
+            };
+        }
+        catch (err) {
+            throw new HttpError(err.message, "INTERNAL_SERVER_ERROR", 500);
+        }
     }
 }
 const s3Service = new S3Service();

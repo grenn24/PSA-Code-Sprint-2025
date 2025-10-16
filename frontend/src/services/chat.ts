@@ -2,6 +2,7 @@ import websocketService from "utilities/websocket";
 import createApiClient from "../utilities/apiClient";
 import { Chat, Message } from "@common/types/chat";
 import { WebsocketMessage } from "@common/types/http";
+import s3Service from "utilities/s3";
 
 class ChatService {
 	apiClient = createApiClient("/chat");
@@ -12,12 +13,20 @@ class ChatService {
 	private pendingCandidates: RTCIceCandidateInit[] = [];
 	onLocalStream?: (stream: MediaStream | null) => void;
 	onRemoteStream?: (stream: MediaStream | null) => void;
-	private ICE_SERVERS = [
+	private ICE_SERVERS = (turnCredentials: {
+		username: string;
+		credential: string;
+	}) => [
 		{ urls: "stun:stun.l.google.com:19302" },
 		{
-			urls: "relay1.expressturn.com:3480",
-			username: "000000002075987040",
-			credential: "m3WwNRY9KMpcLFfqWd1KexbRSIc=",
+			urls: [
+				"stun:stun.cloudflare.com:3478",
+				"turn:turn.cloudflare.com:3478?transport=udp",
+				"turn:turn.cloudflare.com:3478?transport=tcp",
+				"turns:turn.cloudflare.com:5349?transport=tcp",
+			],
+			username: turnCredentials.username,
+			credential: turnCredentials.credential,
 		},
 	];
 
@@ -101,9 +110,9 @@ class ChatService {
 			this.localStream = localStream;
 			this.onLocalStream?.(localStream);
 		}
-
+		const turnCredentials = await s3Service.getTURNCredentials();
 		this.peerConnection = new RTCPeerConnection({
-			iceServers: this.ICE_SERVERS,
+			iceServers: this.ICE_SERVERS(turnCredentials),
 		});
 
 		this.localStream.getTracks().forEach((track) => {
@@ -208,8 +217,9 @@ class ChatService {
 			this.onLocalStream?.(localStream);
 		}
 
+		const turnCredentials = await s3Service.getTURNCredentials();
 		this.peerConnection = new RTCPeerConnection({
-			iceServers: this.ICE_SERVERS,
+			iceServers: this.ICE_SERVERS(turnCredentials),
 		});
 
 		this.localStream.getTracks().forEach((track) => {

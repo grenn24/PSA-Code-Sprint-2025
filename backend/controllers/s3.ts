@@ -51,6 +51,10 @@ class S3Controller {
 		});
 	}
 
+	async getTURNCredentials(request: Request, response: Response) {
+		response.status(200).send(await s3Service.getTURNCredentials());
+	}
+
 	catchErrors(handler) {
 		return async (
 			request: Request,

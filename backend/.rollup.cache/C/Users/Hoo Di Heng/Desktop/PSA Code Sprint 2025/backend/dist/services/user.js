@@ -38,7 +38,6 @@ class UserService {
             avatar,
             experienceLevel,
         });
-        // Save to DB
         return await user.save();
     }
     async getUserByID(userId) {
@@ -65,7 +64,6 @@ class UserService {
         return updatedUser;
     }
     async addNotification(userId, message) {
-        // Add to DB
         const user = await User.findByIdAndUpdate(userId, {
             $push: {
                 notifications: {

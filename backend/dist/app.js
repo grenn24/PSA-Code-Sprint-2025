@@ -57511,6 +57511,8 @@ async function generateChats(email, limit = 3) {
         }
         const chats = [];
         for (const mentor of mentors) {
+            mentor.mentees = [...mentor.mentees, mentee._id];
+            await mentor.save();
             const chat = { participants: [mentee._id, mentor._id] };
             chats.push(chat);
         }
@@ -104588,7 +104590,6 @@ class UserService {
             avatar,
             experienceLevel,
         });
-        // Save to DB
         return await user.save();
     }
     async getUserByID(userId) {
@@ -104615,7 +104616,6 @@ class UserService {
         return updatedUser;
     }
     async addNotification(userId, message) {
-        // Add to DB
         const user = await User.findByIdAndUpdate(userId, {
             $push: {
                 notifications: {
@@ -126937,6 +126937,30 @@ class S3Service {
         const response = await s3Client.send(new DeleteObjectsCommand(params));
         return response;
     }
+    async getTURNCredentials() {
+        try {
+            const turnToken = config$1.get("TURN_TOKEN");
+            const turnTokenID = config$1.get("TURN_TOKEN_ID");
+            const url = `https://rtc.live.cloudflare.com/v1/turn/keys/${turnTokenID}/credentials/generate-ice-servers`;
+            const response = await axios.post(url, { ttl: 86400 }, {
+                headers: {
+                    Authorization: `Bearer ${turnToken}`,
+                    "Content-Type": "application/json",
+                },
+            });
+            const iceServer = response.data?.iceServers?.[0];
+            if (!iceServer)
+                throw new Error("No ICE servers returned");
+            return {
+                username: iceServer.username,
+                credential: iceServer.credential,
+                urls: iceServer.urls, // optional, in case you want the URL too
+            };
+        }
+        catch (err) {
+            throw new HttpError(err.message, "INTERNAL_SERVER_ERROR", 500);
+        }
+    }
 }
 const s3Service = new S3Service();
 
@@ -126964,6 +126988,9 @@ class S3Controller {
         response.status(200).send({
             url: s3Service.getPublicUrl(s3Filename, folders),
         });
+    }
+    async getTURNCredentials(request, response) {
+        response.status(200).send(await s3Service.getTURNCredentials());
     }
     catchErrors(handler) {
         return async (request, response, next) => {
@@ -126997,6 +127024,7 @@ s3Router.post("/upload-url", s3Controller.catchErrors(s3Controller.getUploadURL.
 s3Router.post("/download-url", s3Controller.catchErrors(s3Controller.getDownloadURL.bind(s3Controller)));
 s3Router.post("/remove-url", s3Controller.catchErrors(s3Controller.getRemoveURL.bind(s3Controller)));
 s3Router.post("/public-url", s3Controller.catchErrors(s3Controller.getPublicURL.bind(s3Controller)));
+s3Router.post("/turn-credentials", s3Controller.catchErrors(s3Controller.getTURNCredentials.bind(s3Controller)));
 
 class WBController {
     async createConversation(request, response) {
