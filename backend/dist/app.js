@@ -126948,13 +126948,13 @@ class S3Service {
                     "Content-Type": "application/json",
                 },
             });
-            const iceServer = response.data?.iceServers?.[0];
+            const iceServer = response.data?.iceServers?.[(response.data?.iceServers?.length ?? 0) - 1];
             if (!iceServer)
                 throw new Error("No ICE servers returned");
             return {
                 username: iceServer.username,
                 credential: iceServer.credential,
-                urls: iceServer.urls, // optional, in case you want the URL too
+                urls: iceServer.urls,
             };
         }
         catch (err) {
