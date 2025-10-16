@@ -15,9 +15,9 @@ class ChatService {
 	private ICE_SERVERS = [
 		{ urls: "stun:stun.l.google.com:19302" },
 		{
-			urls: "turn:global.relay.metered.ca:80",
-			username: "openai",
-			credential: "openai123",
+			urls: "relay1.expressturn.com:3480",
+			username: "000000002075987040",
+			credential: "m3WwNRY9KMpcLFfqWd1KexbRSIc=",
 		},
 	];
 
