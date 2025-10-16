@@ -78,7 +78,7 @@ npm run vdb:seed
 | :----------- | :------------ |
 | Frontend | React (Vite), Tailwind CSS, WebRTC |
 | Backend | Express.js, Node.js, WebSocket |
-| Data | Mongoose, Cloudflare R2, Redis |
+| Data | Mongoose, Cloudflare R2, Redis, Cloudflare TURN |
 | Deployment | Vercel (frontend), Render (backend), MongoDB Atlas (db) |
 
 ## Routes
