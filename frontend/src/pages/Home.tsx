@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
 	PieChart,
 	Pie,
@@ -25,11 +25,17 @@ import {
 import {
 	arrayMove,
 	SortableContext,
-	verticalListSortingStrategy,
 	useSortable,
 	rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import Masonry from "react-masonry-css";
+
+const breakpointColumnsObj = {
+	default: 3,
+	1024: 2,
+	640: 1,
+};
 
 const suggestedCourses = [
 	"Advanced Data Analytics",
@@ -65,7 +71,6 @@ const SortableCard = ({ id, children }) => {
 		transform: CSS.Transform.toString(transform),
 		transition,
 		cursor: "grab",
-		height: "100%", 
 	};
 	return (
 		<div
@@ -208,7 +213,7 @@ const Home = () => {
 																key={idx}
 																className={`text-sm px-3 py-1 rounded-full border border-${color}-300 text-${color}-700 bg-white hover:bg-${color}-50 transition`}
 															>
-																{skill}
+																{skill.name}
 															</span>
 														)
 													)}
@@ -454,10 +459,12 @@ const Home = () => {
 			{/* Header */}
 			<div className="flex justify-between items-center font-inter">
 				<div>
-					<h1 className="text-3xl font-semibold text-gray-900">
-						Welcome Back, {user?.name}
+					<h1 className="text-4xl font-bold text-gray-900">
+						Welcome Back, {user?.name}!
 					</h1>
-					<p className="text-gray-600 text-xl">{user?.position}</p>
+					<p className="text-2xl text-gray-600 font-roboto">
+						{user?.position}
+					</p>
 				</div>
 			</div>
 
@@ -468,7 +475,11 @@ const Home = () => {
 				onDragEnd={handleDragEnd}
 			>
 				<SortableContext items={cards} strategy={rectSortingStrategy}>
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+					<Masonry
+						breakpointCols={breakpointColumnsObj}
+						className="flex gap-6"
+						columnClassName="flex flex-col gap-6"
+					>
 						{cards.map((cardName) => (
 							<SortableCard key={cardName} id={cardName}>
 								<Card title={cardName}>
@@ -476,7 +487,7 @@ const Home = () => {
 								</Card>
 							</SortableCard>
 						))}
-					</div>
+					</Masonry>
 				</SortableContext>
 			</DndContext>
 		</div>

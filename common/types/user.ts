@@ -19,7 +19,7 @@ export interface Skill {
 export interface Position {
 	name: string;
 	focusAreas: string[];
-	skills: string[];
+	skills: Skill[];
 	startDate: Date;
 	endDate: Date | null;
 }
@@ -80,8 +80,8 @@ export interface User {
 
 	skills: Skill[];
 	mentorshipRequests: MentorshipRequest[];
-	mentors?: User[];
-	mentees?: User[];
+	mentors: User[];
+	mentees: User[];
 
 	notifications: Notification[];
 	careerPath: Position[];

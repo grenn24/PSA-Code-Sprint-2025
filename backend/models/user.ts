@@ -33,7 +33,7 @@ const skillSchema = new Schema({
 const positionSchema = new Schema({
 	name: { type: String, required: true },
 	focusAreas: { type: [String], default: [] },
-	skills: { type: [String], default: [] },
+	skills: { type: [skillSchema], default: [] },
 	startDate: { type: Date, required: true },
 	endDate: { type: Date, default: null },
 });
@@ -159,6 +159,10 @@ const userSchema = new Schema(
 		},
 		projects: {
 			type: [projectSchema],
+			default: [],
+		},
+		aspirations: {
+			type:[positionSchema],
 			default: [],
 		},
 		lastSeen: { type: Date, default: null },

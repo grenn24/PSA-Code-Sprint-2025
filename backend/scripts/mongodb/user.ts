@@ -119,7 +119,7 @@ function generateRandomSkills() {
 
 	return shuffledSkills.slice(0, getRandomInt(1, 3)).map((skill, index) => ({
 		name: skill,
-		level: getRandomInt(40, 80),
+		level: getRandomInt(40, 90),
 		functionArea: shuffledFocus[index],
 		specialisation: shuffledSpecialisations[index],
 	}));
@@ -145,7 +145,7 @@ function generateCareerPath() {
 		path.push({
 			name: faker.person.jobTitle(),
 			focusAreas,
-			skills: generateRandomSkills().map((s) => s.name),
+			skills: generateRandomSkills(),
 			startDate,
 			endDate,
 		});
@@ -291,14 +291,14 @@ export const generateDefaultUser = () => {
 			{
 				name: "Junior Software Engineer",
 				focusAreas: ["Software Engineering"],
-				skills: ["UI/UX Design", "Backend APIs"],
+				skills: generateRandomSkills(),
 				startDate: new Date("2023-01-01"),
 				endDate: new Date("2023-12-31"),
 			},
 			{
 				name: "Senior Software Engineer",
 				focusAreas: ["Software Engineering"],
-				skills: ["Full Stack Development", "Microservices"],
+				skills: generateRandomSkills(),
 				startDate: new Date("2024-01-01"),
 				endDate: null,
 			},
@@ -414,7 +414,7 @@ export const generateUsersFromJSON = async (
 				careerPath: (emp.positions_history ?? []).map((p: any) => ({
 					name: p.role_title,
 					focusAreas: p.focus_areas ?? [],
-					skills: p.key_skills_used ?? [],
+					skills: generateRandomSkills(),
 					startDate: new Date(p.period.start),
 					endDate: p.period.end ? new Date(p.period.end) : null,
 				})),
