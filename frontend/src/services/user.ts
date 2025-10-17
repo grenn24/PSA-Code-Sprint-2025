@@ -63,6 +63,13 @@ class UserService {
 		);
 		return response.data;
 	}
+
+	async getPotentialPositions(userID: string) {
+		const response = await this.apiClient.get(
+			`/${userID}/potential-positions`
+		);
+		return response.data;
+	}
 }
 
 const userService = new UserService();

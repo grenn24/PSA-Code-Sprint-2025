@@ -9,8 +9,14 @@ import WBConversation from "../models/wb.js";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc.js";
 import timezone from "dayjs/plugin/timezone.js";
-import { Position, Skill } from "@common/types/user.js";
+import {
+	Position as PositionType,
+	Skill,
+	User as UserType,
+} from "@common/types/user.js";
+
 import { Course } from "../models/course.js";
+import { Position } from "../models/position.js";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -249,6 +255,9 @@ class UserService {
 					careerPath: 1,
 					name: 1,
 					avatar: 1,
+					position: 1,
+					department: 1,
+					unit: 1,
 					// compute mentor experience in years
 					experience_diff: {
 						$divide: [
@@ -299,10 +308,7 @@ class UserService {
 	}
 
 	// Skills overlap
-	private countOverlappingSkills(
-		menteeSkills,
-		mentorSkills
-	) {
+	private countOverlappingSkills(menteeSkills, mentorSkills) {
 		const menteeSkillNames = new Set(
 			menteeSkills.map((s) => s.name.toLowerCase())
 		);
@@ -348,6 +354,41 @@ class UserService {
 
 	async getRecommendedCourses(userID: string) {
 		const user = await User.findById(userID).exec();
+		if (!user)
+			throw new HttpError(
+				"User not found",
+				"NOT_FOUND",
+				HttpStatusCode.NotFound
+			);
+
+		// Get current position
+		const currentUserPosition = await this.getCurrentPosition(userID);
+
+		let skillGaps: Skill[] = [];
+
+		if (currentUserPosition) {
+			skillGaps = currentUserPosition.skills
+				.filter((posSkill) => {
+					const userSkill = user.skills.find(
+						(us) => us.name === posSkill.name
+					);
+					return (
+						!userSkill || (userSkill.level && userSkill.level < 100)
+					);
+				})
+				.map((posSkill) => ({
+					...posSkill,
+					level:
+						user.skills.find((us) => us.name === posSkill.name)
+							?.level ?? 0,
+				}));
+		}
+
+		return await getRecommendedCoursesHelper(skillGaps, user as any);
+	}
+
+	async getPotentialPositions(userID: string) {
+		const user = await User.findById(userID).exec();
 		if (!user) {
 			throw new HttpError(
 				"User not found",
@@ -356,68 +397,49 @@ class UserService {
 			);
 		}
 
-		// Compute skill gap for current position
-		let skillGaps: Skill[] = [];
-		const currentUserPosition = await this.getCurrentPosition(userID);
-		if (currentUserPosition) {
-			// ignore skills completed
-			const missingSkills = currentUserPosition.skills
-				.filter(
-					(s) =>
-						!(
-							user.skills.some((us) => us.name === s.name) &&
-							s.level === 100
-						)
-				)
-				.map((s) => ({
-					...s,
-					level:
-						user.skills.find((us) => us.name === s.name)?.level ??
-						0,
-				}));
-			skillGaps = missingSkills;
+		// 1. Get user's current skills and current position
+		const currentSkills = user.skills || [];
+		const currentPosition = await this.getCurrentPosition(userID);
+		const potentialPositions: PositionType[] = (await Position.find({
+			_id: { $ne: currentPosition?._id }, // exclude current position
+		})
+			.lean()
+			.exec()) as any;
+		const potentialRoles: {
+			position: PositionType;
+			missingSkills: Skill[];
+			recommendedCourses;
+		}[] = [];
+
+		for (const position of potentialPositions) {
+			// 3. Compute missing skills for this role
+			const missingSkills = position.skills.filter(
+				(posSkill) =>
+					!currentSkills.some(
+						(userSkill) =>
+							userSkill.name === posSkill.name &&
+							(userSkill.level ?? 0) >= (posSkill?.level ?? 0)
+					)
+			);
+
+			if (missingSkills.length === 0) continue;
+
+			const recommendedCourses = await getRecommendedCoursesHelper(
+				missingSkills as any,
+				user as any
+			);
+
+			potentialRoles.push({
+				position,
+				missingSkills,
+				recommendedCourses,
+			});
 		}
+		potentialRoles.sort(
+			(a, b) => b.missingSkills.length - a.missingSkills.length
+		);
 
-		const courses = await Course.find().exec();
-
-		// Score each course
-		const scoredCourses = courses
-			.map((course) => {
-				let relevance = 0;
-
-				course.skillsTaught.forEach((cs) => {
-					const gap = skillGaps.find((g) => g.name === cs.name);
-					if (gap) {
-						// Skill name
-						relevance += 3;
-
-						// Function area
-						if (gap.functionArea === cs.functionArea)
-							relevance += 2;
-
-						// Specialisation
-						if (gap.specialisation === cs.specialisation)
-							relevance += 1;
-
-						// Aspirations
-						const inAspirations = user.aspirations.some((role) =>
-							role.skills.some((s) => s.name === cs.name)
-						);
-						if (inAspirations) relevance += 5;
-
-						// Skill level gap
-						if (!gap.level) return;
-						relevance += Math.max(0, 100 - gap.level) / 50;
-					}
-				});
-
-				return { course, relevance };
-			})
-			.filter((c) => c.relevance > 0)
-			.sort((a, b) => b.relevance - a.relevance)
-			.map((c) => c.course);
-
-		return scoredCourses.slice(0, 10);
+		return potentialRoles;
 	}
 
 	async getCurrentPosition(userID: string) {
@@ -429,12 +451,56 @@ class UserService {
 				HttpStatusCode.NotFound
 			);
 		}
-		const currentRole: Position | undefined = user.careerPath.find(
-			(pos) => !pos.endDate
-		) as Position | undefined;
-		return currentRole;
+		return user.careerPath?.find((pos) => !pos.endDate);
 	}
 }
 
 const userService = new UserService();
 export default userService;
+
+async function getRecommendedCoursesHelper(skillGaps: Skill[], user: UserType) {
+	const courses = await Course.find().exec();
+
+	// Score each course and filter
+	const scoredCourses = courses
+		.map((course) => {
+			let totalRelevance = 0;
+
+			course.skillsTaught.forEach((cs) => {
+				// Find all gaps that match this skill name
+				const matchingGaps = skillGaps.filter(
+					(g) => g.name === cs.name
+				);
+
+				matchingGaps.forEach((gap) => {
+					let relevance = 3; // base for skill name match
+
+					// Function area match
+					if (gap.functionArea === cs.functionArea) relevance += 2;
+
+					// Specialisation match
+					if (gap.specialisation === cs.specialisation)
+						relevance += 1;
+
+					// Aspirations match
+					const inAspirations = user.aspirations.some((role) =>
+						role.skills.some((s) => s.name === cs.name)
+					);
+					if (inAspirations) relevance += 5;
+
+					// Skill level gap
+					if (gap.level)
+						relevance += Math.max(0, 100 - gap.level) / 50;
+
+					totalRelevance += relevance;
+				});
+			});
+
+			return { course, relevance: totalRelevance };
+		})
+		.filter((c) => c.relevance > 0)
+		.sort((a, b) => b.relevance - a.relevance)
+		.map((c) => c.course);
+
+	return scoredCourses.slice(0, 10);
+}

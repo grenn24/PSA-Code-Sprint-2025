@@ -78,6 +78,13 @@ class UserController {
 			.send(await userService.getRecommendedCourses(userID));
 	}
 
+	async getPotentialPositions(request: Request, response: Response) {
+		const userID = response.locals._id;
+		response
+			.status(200)
+			.send(await userService.getPotentialPositions(userID));
+	}
+
 	async getChats(request: Request, response: Response) {
 		const userID = response.locals._id;
 		response.status(200).send(await userService.getChats(userID));

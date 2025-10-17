@@ -1,19 +1,14 @@
 import { useEffect, useState } from "react";
-import {
-	PieChart,
-	Pie,
-	Cell,
-	ResponsiveContainer,
-	BarChart,
-	Bar,
-	XAxis,
-	YAxis,
-	Tooltip,
-} from "recharts";
-import { useAppSelector } from "../redux/store";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import { useAppDispatch, useAppSelector } from "../redux/store";
 import userService from "../services/user";
 import dayjs from "dayjs";
-import { BellIcon, CheckCircleIcon, CircleIcon } from "lucide-react";
+import {
+	ArrowRight,
+	BellIcon,
+	CheckCircleIcon,
+	CircleIcon,
+} from "lucide-react";
 import {
 	DndContext,
 	closestCenter,
@@ -30,6 +25,12 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import Masonry from "react-masonry-css";
+import { Course } from "@common/types/course";
+import { setUser } from "redux/slices/user";
+import { useNavigate } from "react-router-dom";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { User } from "@common/types/user";
+import TopMatches from "components/mentorMatch/TopMatches";
 
 const breakpointColumnsObj = {
 	default: 3,
@@ -37,29 +38,46 @@ const breakpointColumnsObj = {
 	640: 1,
 };
 
-const suggestedCourses = [
-	"Advanced Data Analytics",
-	"Leadership Fundamentals",
-	"Supply Chain Optimization",
-];
-const recommendedMentors = [
-	{ name: "Alice Tan", role: "Senior Operations Manager" },
-	{ name: "John Lim", role: "Team Lead, Logistics" },
-];
-
 const mentorPieData = [
 	{ name: "Matched", value: 2 },
 	{ name: "Available", value: 8 },
 ];
 const COLORS = ["#1976D2", "#BBDEFB"];
 
-const Card = ({ title, children, className = "" }) => (
-	<div
-		className={`bg-white rounded-xl shadow-md p-6 h-full flex flex-col ${className}`}
-	>
-		<h2 className="text-2xl font-bold font-inter text-gray-900 mb-4">
-			{title}
-		</h2>
+interface CardProp {
+	title: string;
+	children: React.ReactNode;
+	onViewMore?: () => void;
+}
+const Card = ({ title, children, onViewMore }: CardProp) => (
+	<div className="bg-white rounded-xl shadow-md p-6 h-full flex flex-col">
+		<div className="flex justify-between items-center mb-4">
+			<h2 className="text-2xl font-bold font-inter text-gray-900">
+				{title}
+			</h2>
+
+			{!!onViewMore && (
+				<div className="relative group">
+					<button
+						onClick={(e) => {
+							e.preventDefault();
+							e.stopPropagation();
+							onViewMore?.();
+						}}
+						onMouseDown={(e) => e.preventDefault()}
+						onMouseUp={(e) => e.preventDefault()}
+						className="flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium transition cursor-pointer select-none"
+					>
+						<ArrowRightIcon className="w-8 h-7 stroke-2" />
+					</button>
+					{/* Tooltip */}
+					<div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 rounded-md bg-gray-800 text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+						View More
+					</div>
+				</div>
+			)}
+		</div>
+
 		<div className="flex-1">{children}</div>
 	</div>
 );
@@ -86,9 +104,13 @@ const SortableCard = ({ id, children }) => {
 };
 
 const Home = () => {
-	const { user: initialUserData } = useAppSelector((state) => state.user);
-	const [user, setUser] = useState(initialUserData);
+	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
+	const { user } = useAppSelector((state) => state.user);
 	const sensors = useSensors(useSensor(PointerSensor));
+	const [recommendedCourses, setRecommendedCourses] = useState<Course[]>([]);
+	const [topMatches, setTopMatches] = useState<User[]>([]);
+
 	const [cards, setCards] = useState<string[]>([
 		"Career Path",
 		"Languages",
@@ -102,7 +124,15 @@ const Home = () => {
 
 	useEffect(() => {
 		if (!user?._id) return;
-		userService.getUserByID(user?._id).then(setUser);
+		userService
+			.getUserByID(user?._id)
+			.then((user) => dispatch(setUser(user)));
+		userService
+			.getRecommendedCourses(user?._id)
+			.then(setRecommendedCourses);
+		userService.getTopMatchedMentors(user?._id, 6, 0).then((users) => {
+			setTopMatches(users);
+		});
 	}, []);
 	const handleDragEnd = (event: DragEndEvent) => {
 		const { active, over } = event;
@@ -115,6 +145,11 @@ const Home = () => {
 				)
 			);
 		}
+	};
+
+	const onViewMore = {
+		"Career Path": () => navigate("/career"),
+		"Recommended Mentors": () => navigate("/mentor?tab=Suggested"),
 	};
 
 	const renderCardContent = (cardName: string) => {
@@ -329,8 +364,6 @@ const Home = () => {
 									<div className="font-semibold text-gray-800 mb-2">
 										{skill.name}
 									</div>
-
-									{/* Function Area & Specialisation Tags */}
 									<div className="flex flex-wrap gap-2 mb-2">
 										<span className="text-xs px-2 py-1 bg-indigo-100 text-indigo-800 rounded-full">
 											{skill.functionArea}
@@ -361,57 +394,85 @@ const Home = () => {
 
 			case "Suggested Courses":
 				return (
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-						{suggestedCourses.map((course, idx) => (
+					<div className="flex flex-col gap-4">
+						{recommendedCourses.map((course, idx) => (
 							<div
 								key={idx}
-								className="bg-blue-50 p-4 rounded-lg shadow-sm text-blue-900 font-medium cursor-pointer hover:shadow-md transition"
+								className="bg-white p-5 rounded-xl shadow hover:shadow-lg transition cursor-pointer border border-gray-200"
 							>
-								{course}
+								{/* Ranking badge */}
+								<div className="flex items-center justify-between mb-2">
+									<span className="text-sm font-semibold text-gray-500">
+										#{idx + 1}
+									</span>
+									<span className="text-xs text-gray-400">
+										{course.durationHours} hrs
+									</span>
+								</div>
+
+								{/* Course name */}
+								<h3 className="text-lg font-bold text-blue-800 mb-2">
+									{course.name}
+								</h3>
+
+								{/* Skills taught */}
+								<div className="flex flex-wrap gap-2 mb-2">
+									{course.skillsTaught.map((skill) => (
+										<span
+											key={skill.name}
+											className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full"
+										>
+											{skill.name}
+										</span>
+									))}
+								</div>
+
+								{/* Description */}
+								{course.description && (
+									<p className="text-sm text-gray-600">
+										{course.description}
+									</p>
+								)}
 							</div>
 						))}
 					</div>
 				);
 			case "Recommended Mentors":
 				return (
-					<>
-						<ResponsiveContainer width="100%" height={160}>
-							<PieChart>
-								<Pie
-									data={mentorPieData}
-									dataKey="value"
-									innerRadius={45}
-									outerRadius={65}
-									startAngle={90}
-									endAngle={-270}
-								>
-									{mentorPieData.map((entry, index) => (
-										<Cell
-											key={index}
-											fill={COLORS[index % COLORS.length]}
-										/>
-									))}
-								</Pie>
-								<Tooltip />
-							</PieChart>
-						</ResponsiveContainer>
-						<ul className="mt-4 space-y-3">
-							{recommendedMentors.map((mentor, idx) => (
-								<li
-									key={idx}
-									className="p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition cursor-pointer"
-								>
-									<p className="font-semibold font-inter">
-										{mentor.name}
-									</p>
-									<p className="text-gray-500 text-sm">
-										{mentor.role}
-									</p>
-								</li>
-							))}
-						</ul>
-					</>
+					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+						{topMatches.map((mentor, idx) => (
+							<div
+								key={idx}
+								className="bg-white rounded-xl shadow-sm p-4 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center gap-2"
+							>
+								{/* Avatar */}
+								<div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-2xl font-bold text-blue-700">
+									{mentor.name[0]}
+								</div>
+
+								{/* Name */}
+								<p className="font-semibold text-gray-800 text-lg leading-4.5">
+									{mentor.name}
+								</p>
+
+								{/* Role */}
+								<p className="text-sm text-gray-500">
+									{mentor.position}
+								</p>
+
+								{/* Skills in Common */}
+								{mentor.skills?.length > 0 && (
+									<div className="mt-2 text-sm text-gray-600 font-medium">
+										{mentor.skills.length} skill
+										{mentor.skills.length > 1 ? "s" : ""} in
+										common
+									</div>
+								)}
+							</div>
+						))}
+					</div>
 				);
+
 			case "Notifications":
 				return (
 					<ul className="space-y-3">
@@ -484,11 +545,9 @@ const Home = () => {
 					</ul>
 				);
 			case "Strengths":
-			case "Strengths":
 				return (
 					<div className="flex flex-wrap gap-3">
 						{user?.strengths.map((strength, idx) => {
-							// Map enum level to color
 							const levelColors: Record<string, string> = {
 								Advanced: "bg-green-100 text-green-800",
 								Intermediate: "bg-yellow-100 text-yellow-800",
@@ -546,7 +605,10 @@ const Home = () => {
 					>
 						{cards.map((cardName) => (
 							<SortableCard key={cardName} id={cardName}>
-								<Card title={cardName}>
+								<Card
+									title={cardName}
+									onViewMore={onViewMore[cardName]}
+								>
 									{renderCardContent(cardName)}
 								</Card>
 							</SortableCard>

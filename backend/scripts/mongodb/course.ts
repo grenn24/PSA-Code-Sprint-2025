@@ -139,7 +139,7 @@ export async function seedCourses() {
 		});
 
 		await Course.insertMany(courses);
-		console.log(`Seeded ${courses.length} courses successfully`);
+		console.log(`${courses.length} courses seeded successfully`);
 	} catch (err) {
 		console.error("Error inserting courses:", err);
 	}

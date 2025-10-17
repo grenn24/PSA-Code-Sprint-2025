@@ -146,6 +146,12 @@ npm run vdb:seed
 │   ├─ skills: Skill[]
 │   ├─ startDate: Date
 │   └─ endDate: Date | null
+├─ Aspirations: Position[]
+│   ├─ name: string
+│   ├─ focusAreas: string[]
+│   ├─ skills: Skill[]
+│   ├─ startDate: Date
+│   └─ endDate: Date | null
 ├─ Projects: Project[]
 │   ├─ name: string
 │   ├─ role: string

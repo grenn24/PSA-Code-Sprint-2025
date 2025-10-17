@@ -110,7 +110,7 @@ const TopMatches = () => {
 				Suggested Mentors
 			</h2>
 			<div className="w-full flex flex-col items-center">
-				<div className="relative w-full max-w-md h-[550px]">
+				<div className="relative w-full max-w-md h-[600px]">
 					<AnimatePresence mode="wait">
 						{topMatches[index] && (
 							<motion.div
@@ -156,7 +156,7 @@ const TopMatches = () => {
 									src={topMatches[index].avatar}
 									className="w-full h-7/10 object-cover"
 								/>
-								<div className="p-6 flex flex-col flex-1 overflow-auto">
+								<div className="p-4 flex flex-col flex-1 overflow-auto">
 									<h2 className="text-2xl font-semibold">
 										{topMatches[index].name}
 									</h2>
@@ -182,7 +182,7 @@ const TopMatches = () => {
 					</AnimatePresence>
 				</div>
 
-				<div className="flex gap-10 mt-6">
+				<div className="flex gap-10 mt-10">
 					<motion.button
 						whileTap={{ scale: 0.9 }}
 						onClick={() => handleAction("reject")}

@@ -16,6 +16,7 @@ import Events from "pages/Events";
 import NewEvent from "pages/NewEvent";
 import EventDetails from "pages/EventDetails";
 import SignUp from "pages/SignUp";
+import Career from "pages/Career";
 
 const App = () => {
 	dayjs.extend(duration);
@@ -31,6 +32,7 @@ const App = () => {
 				<Route element={<MainLayout />}>
 					<Route index element={<Home />}></Route>
 					<Route path="/mentor" element={<MentorMatch />} />
+					<Route path="/career" element={<Career />} />
 					<Route path="/wellness-buddy" element={<WellnessBuddy />} />
 					<Route path="/events-hub">
 						<Route index element={<Events />} />

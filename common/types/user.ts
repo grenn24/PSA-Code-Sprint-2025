@@ -85,6 +85,7 @@ export interface User {
 
 	notifications: Notification[];
 	careerPath: Position[];
+	aspirations: Position[];
 
 	lastSeen?: Date | null;
 	isOnline: boolean;

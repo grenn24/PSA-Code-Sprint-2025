@@ -41,6 +41,14 @@ userRouter.get(
 );
 
 userRouter.get(
+	"/:ID/potential-positions",
+	getID(),
+	userController.catchErrors(
+		userController.getPotentialPositions.bind(userController)
+	)
+);
+
+userRouter.get(
 	"/:ID/chats",
 	getID(),
 	userController.catchErrors(

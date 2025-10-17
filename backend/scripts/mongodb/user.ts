@@ -316,6 +316,10 @@ export const generateDefaultUser = () => {
 				name: "Chinese",
 				proficiency: "Professional",
 			},
+			{
+				name: "Japanese",
+				proficiency: "Conversational",
+			},
 		],
 		strengths: generateStrengths(),
 		education: [],

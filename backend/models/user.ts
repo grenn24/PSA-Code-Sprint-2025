@@ -1,4 +1,5 @@
 import { model, Schema } from "mongoose";
+import { positionSchema } from "./position.js";
 
 const moodSchema = new Schema({
 	level: { type: Number, min: 0, max: 10, required: true },
@@ -28,14 +29,6 @@ export const skillSchema = new Schema({
 	functionArea: { type: String, required: true },
 	specialisation: { type: String, required: true },
 	level: { type: Number, min: 0, max: 100 },
-});
-
-const positionSchema = new Schema({
-	name: { type: String, required: true },
-	focusAreas: { type: [String], default: [] },
-	skills: { type: [skillSchema], default: [] },
-	startDate: { type: Date, required: true },
-	endDate: { type: Date, default: null },
 });
 
 const educationSchema = new Schema({
@@ -162,7 +155,7 @@ const userSchema = new Schema(
 			default: [],
 		},
 		aspirations: {
-			type:[positionSchema],
+			type: [positionSchema],
 			default: [],
 		},
 		lastSeen: { type: Date, default: null },
