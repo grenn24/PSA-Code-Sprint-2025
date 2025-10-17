@@ -9,6 +9,8 @@ import WBConversation from "../models/wb.js";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc.js";
 import timezone from "dayjs/plugin/timezone.js";
+import { Course } from "../models/course.js";
+import { Position } from "../models/position.js";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 class UserService {
@@ -137,6 +139,9 @@ class UserService {
         if (!mentee)
             throw new HttpError("User not found", "NOT_FOUND", HttpStatusCode.NotFound);
         const excludedMentorIds = mentee.mentors.map((m) => new mongoose.Types.ObjectId(m._id));
+        // Compute experience in years
+        const menteeExperience = (new Date().getTime() - mentee.hireDate.getTime()) /
+            (1000 * 60 * 60 * 24 * 365);
         const candidates = await User.aggregate([
             {
                 $match: {
@@ -144,7 +149,7 @@ class UserService {
                         $ne: new mongoose.Types.ObjectId(userId),
                         $nin: excludedMentorIds,
                     },
-                    experienceLevel: { $gte: mentee.experienceLevel },
+                    hireDate: { $lte: mentee.hireDate }, // only more senior mentors
                     "mentorshipRequests.sender": {
                         $ne: new mongoose.Types.ObjectId(userId),
                     },
@@ -153,44 +158,52 @@ class UserService {
             {
                 $project: {
                     skills: 1,
-                    experienceLevel: 1,
+                    hireDate: 1,
                     careerPath: 1,
                     name: 1,
-                    experience_diff: {
-                        $subtract: ["$experienceLevel", mentee.experienceLevel],
-                    },
                     avatar: 1,
+                    position: 1,
+                    department: 1,
+                    unit: 1,
+                    // compute mentor experience in years
+                    experience_diff: {
+                        $divide: [
+                            { $subtract: [new Date(), "$hireDate"] },
+                            1000 * 60 * 60 * 24 * 365,
+                        ],
+                    },
                 },
             },
             { $limit: 200 },
         ]);
-        const w1 = 0.4;
-        const w2 = 0.2;
-        const w3 = 0.3;
+        const w1 = 0.4; // skill alignment
+        const w2 = 0.2; // experience difference
+        const w3 = 0.3; // career path similarity
         const scoredMentors = candidates.map((mentor) => {
             const skill_alignment = this.countOverlappingSkills(mentee.skills, mentor.skills);
-            const experience_diff = mentor.experienceLevel - mentee.experienceLevel;
+            const mentorExperience = (new Date().getTime() - new Date(mentor.hireDate).getTime()) /
+                (1000 * 60 * 60 * 24 * 365);
+            const experience_diff = mentorExperience - menteeExperience;
             const career_path_similarity = this.calculateCareerPathSimilarity(mentee.careerPath, mentor.careerPath);
             const score = w1 * skill_alignment +
                 w2 * experience_diff +
                 w3 * career_path_similarity;
-            return {
-                mentor,
-                score,
-            };
+            return { mentor, score };
         });
         return scoredMentors
             .sort((a, b) => b.score - a.score)
             .slice(page * (limit || scoredMentors.length), (limit || scoredMentors.length) * (page + 1))
             .map((m) => m.mentor);
     }
-    countOverlappingSkills(mentorSkills, menteeSkills) {
-        const overlap = mentorSkills.filter((s) => menteeSkills.includes(s.name.toLowerCase())).length;
-        return overlap;
+    // Skills overlap
+    countOverlappingSkills(menteeSkills, mentorSkills) {
+        const menteeSkillNames = new Set(menteeSkills.map((s) => s.name.toLowerCase()));
+        return mentorSkills.filter((s) => menteeSkillNames.has(s.name.toLowerCase())).length;
     }
+    // Career path similarity
     calculateCareerPathSimilarity(menteePath, mentorPath) {
-        const menteePositions = new Set(menteePath.map((p) => p.position));
-        const mentorPositions = new Set(mentorPath.map((p) => p.position));
+        const menteePositions = new Set(menteePath.map((p) => p.name));
+        const mentorPositions = new Set(mentorPath.map((p) => p.name));
         const intersection = [...menteePositions].filter((p) => mentorPositions.has(p));
         const union = new Set([...menteePositions, ...mentorPositions]);
         return union.size > 0 ? intersection.length / union.size : 0;
@@ -207,7 +220,100 @@ class UserService {
         await user.save();
         return user.moods[user.moods.length - 1];
     }
+    async getRecommendedCourses(userID) {
+        const user = await User.findById(userID).exec();
+        if (!user)
+            throw new HttpError("User not found", "NOT_FOUND", HttpStatusCode.NotFound);
+        // Get current position
+        const currentUserPosition = await this.getCurrentPosition(userID);
+        let skillGaps = [];
+        if (currentUserPosition) {
+            skillGaps = currentUserPosition.skills
+                .filter((posSkill) => {
+                const userSkill = user.skills.find((us) => us.name === posSkill.name);
+                return (!userSkill || (userSkill.level && userSkill.level < 100));
+            })
+                .map((posSkill) => ({
+                ...posSkill,
+                level: user.skills.find((us) => us.name === posSkill.name)
+                    ?.level ?? 0,
+            }));
+        }
+        return await getRecommendedCoursesHelper(skillGaps, user);
+    }
+    async getPotentialPositions(userID) {
+        const user = await User.findById(userID).exec();
+        if (!user) {
+            throw new HttpError("User not found", "NOT_FOUND", HttpStatusCode.NotFound);
+        }
+        // 1. Get user's current skills and current position
+        const currentSkills = user.skills || [];
+        const currentPosition = await this.getCurrentPosition(userID);
+        const potentialPositions = (await Position.find({
+            _id: { $ne: currentPosition?._id }, // exclude current position
+        })
+            .lean()
+            .exec());
+        const potentialRoles = [];
+        for (const position of potentialPositions) {
+            // 3. Compute missing skills for this role
+            const missingSkills = position.skills.filter((posSkill) => !currentSkills.some((userSkill) => userSkill.name === posSkill.name &&
+                (userSkill.level ?? 0) >= (posSkill?.level ?? 0)));
+            if (missingSkills.length === 0)
+                continue;
+            const recommendedCourses = await getRecommendedCoursesHelper(missingSkills, user);
+            potentialRoles.push({
+                position,
+                missingSkills,
+                recommendedCourses,
+            });
+        }
+        potentialRoles.sort((a, b) => b.missingSkills.length - a.missingSkills.length);
+        return potentialRoles;
+    }
+    async getCurrentPosition(userID) {
+        const user = await User.findById(userID).lean().exec();
+        if (!user) {
+            throw new HttpError("User not found", "NOT_FOUND", HttpStatusCode.NotFound);
+        }
+        return user.careerPath?.find((pos) => !pos.endDate);
+    }
 }
 const userService = new UserService();
 export default userService;
+async function getRecommendedCoursesHelper(skillGaps, user) {
+    const courses = await Course.find().exec();
+    // Score each course and filter
+    const scoredCourses = courses
+        .map((course) => {
+        let totalRelevance = 0;
+        course.skillsTaught.forEach((cs) => {
+            // Find all gaps that match this skill name
+            const matchingGaps = skillGaps.filter((g) => g.name === cs.name);
+            console.log(skillGaps);
+            matchingGaps.forEach((gap) => {
+                let relevance = 3; // base for skill name match
+                // Function area match
+                if (gap.functionArea === cs.functionArea)
+                    relevance += 2;
+                // Specialisation match
+                if (gap.specialisation === cs.specialisation)
+                    relevance += 1;
+                // Aspirations match
+                const inAspirations = user.aspirations.some((role) => role.skills.some((s) => s.name === cs.name));
+                if (inAspirations)
+                    relevance += 5;
+                // Skill level gap
+                if (gap.level)
+                    relevance += Math.max(0, 100 - gap.level) / 50;
+                totalRelevance += relevance;
+            });
+        });
+        return { course, relevance: totalRelevance };
+    })
+        .filter((c) => c.relevance > 0)
+        .sort((a, b) => b.relevance - a.relevance)
+        .map((c) => c.course);
+    return scoredCourses.slice(0, 10);
+}
 //# sourceMappingURL=user.js.map

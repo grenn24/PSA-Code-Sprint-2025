@@ -33,7 +33,9 @@ class UserController {
     }
     async addActivity(request, response) {
         const userID = response.locals._id;
-        response.status(200).send(await userService.addActivity(userID, request.body));
+        response
+            .status(200)
+            .send(await userService.addActivity(userID, request.body));
     }
     async deleteAllUsers(request, response) {
         response.status(200).send(await userService.deleteAllUsers());
@@ -49,6 +51,18 @@ class UserController {
         response
             .status(200)
             .send(await userService.getTopMatchedMentors(userID, limit, page));
+    }
+    async getRecommendedCourses(request, response) {
+        const userID = response.locals._id;
+        response
+            .status(200)
+            .send(await userService.getRecommendedCourses(userID));
+    }
+    async getPotentialPositions(request, response) {
+        const userID = response.locals._id;
+        response
+            .status(200)
+            .send(await userService.getPotentialPositions(userID));
     }
     async getChats(request, response) {
         const userID = response.locals._id;

@@ -2,9 +2,16 @@ import { HttpStatusCode } from "@common/constants/statusCode.js";
 import Event from "../models/event.js";
 import { HttpError } from "../middlewares/error.js";
 import mongoose from "mongoose";
+import s3Service from "../utilities/s3.js";
 class EventService {
     async getAllEvents(condition) {
-        return await Event.find(condition).exec();
+        const events = await Event.find(condition).exec();
+        for (const event of events) {
+            if (event.coverImage) {
+                event.coverImage.url = await s3Service.getPublicUrl(event.coverImage.s3Filename, event.coverImage.folder);
+            }
+        }
+        return events;
     }
     async getEventByID(eventID) {
         const event = await Event.findById(eventID)
@@ -12,6 +19,9 @@ class EventService {
             .exec();
         if (!event) {
             throw new HttpError("Event not found", "NOT_FOUND", HttpStatusCode.NotFound);
+        }
+        if (event.coverImage) {
+            event.coverImage.url = await s3Service.getPublicUrl(event?.coverImage.s3Filename, event?.coverImage.folder);
         }
         return event;
     }

@@ -1,23 +1,54 @@
 import { Schema } from "mongoose";
-declare const User: import("mongoose").Model<{
+export declare const skillSchema: Schema<any, import("mongoose").Model<any, any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, {
     name: string;
-    email: string;
+    functionArea: string;
+    specialisation: string;
+    level?: number | null | undefined;
+}, import("mongoose").Document<unknown, {}, import("mongoose").FlatRecord<{
+    name: string;
+    functionArea: string;
+    specialisation: string;
+    level?: number | null | undefined;
+}>> & import("mongoose").FlatRecord<{
+    name: string;
+    functionArea: string;
+    specialisation: string;
+    level?: number | null | undefined;
+}> & {
+    _id: import("mongoose").Types.ObjectId;
+} & {
+    __v: number;
+}>;
+declare const User: import("mongoose").Model<{
+    createdAt: NativeDate;
+    updatedAt: NativeDate;
+} & {
+    name: string;
+    skills: import("mongoose").Types.DocumentArray<{
+        name: string;
+        functionArea: string;
+        specialisation: string;
+        level?: number | null | undefined;
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        functionArea: string;
+        specialisation: string;
+        level?: number | null | undefined;
+    }> & {
+        name: string;
+        functionArea: string;
+        specialisation: string;
+        level?: number | null | undefined;
+    }>;
     position: string;
+    email: string;
+    organisation: string;
+    department: string;
+    unit: string;
     role: "user" | "admin";
+    hireDate: NativeDate;
     password: string;
     subordinates: import("mongoose").Types.ObjectId[];
-    createdAt: NativeDate;
-    experienceLevel: number;
-    skills: import("mongoose").Types.DocumentArray<{
-        level: number;
-        name?: string | null | undefined;
-    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        level: number;
-        name?: string | null | undefined;
-    }> & {
-        level: number;
-        name?: string | null | undefined;
-    }>;
     mentorshipRequests: import("mongoose").Types.DocumentArray<{
         message?: string | null | undefined;
         sender?: import("mongoose").Types.ObjectId | null | undefined;
@@ -30,39 +61,82 @@ declare const User: import("mongoose").Model<{
     }>;
     mentees: import("mongoose").Types.ObjectId[];
     notifications: import("mongoose").Types.DocumentArray<{
-        createdAt: NativeDate;
         message: string;
         read: boolean;
+        createdAt: NativeDate;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        createdAt: NativeDate;
         message: string;
         read: boolean;
+        createdAt: NativeDate;
     }> & {
-        createdAt: NativeDate;
         message: string;
         read: boolean;
+        createdAt: NativeDate;
     }>;
     careerPath: import("mongoose").Types.DocumentArray<{
-        position: string;
-        progress: number;
-        skillsRequired: string[];
-        startedAt?: NativeDate | null | undefined;
-        endedAt?: NativeDate | null | undefined;
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        position: string;
-        progress: number;
-        skillsRequired: string[];
-        startedAt?: NativeDate | null | undefined;
-        endedAt?: NativeDate | null | undefined;
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
     }> & {
-        position: string;
-        progress: number;
-        skillsRequired: string[];
-        startedAt?: NativeDate | null | undefined;
-        endedAt?: NativeDate | null | undefined;
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
     }>;
-    lastSeen: NativeDate;
-    isOnline: boolean;
     moods: import("mongoose").Types.DocumentArray<{
         date: NativeDate;
         level: number;
@@ -86,28 +160,163 @@ declare const User: import("mongoose").Model<{
         date: NativeDate;
         type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
     }>;
+    languages: import("mongoose").Types.DocumentArray<{
+        name: string;
+        proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+    }> & {
+        name: string;
+        proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+    }>;
+    strengths: import("mongoose").Types.DocumentArray<{
+        name: string;
+        level: "Intermediate" | "Beginner" | "Advanced";
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        level: "Intermediate" | "Beginner" | "Advanced";
+    }> & {
+        name: string;
+        level: "Intermediate" | "Beginner" | "Advanced";
+    }>;
+    education: import("mongoose").Types.DocumentArray<{
+        startDate: NativeDate;
+        endDate: NativeDate;
+        institution: string;
+        degree: string;
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        startDate: NativeDate;
+        endDate: NativeDate;
+        institution: string;
+        degree: string;
+    }> & {
+        startDate: NativeDate;
+        endDate: NativeDate;
+        institution: string;
+        degree: string;
+    }>;
+    projects: import("mongoose").Types.DocumentArray<{
+        name: string;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        description: string;
+        role: string;
+        outcomes: string[];
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        description: string;
+        role: string;
+        outcomes: string[];
+    }> & {
+        name: string;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        description: string;
+        role: string;
+        outcomes: string[];
+    }>;
+    aspirations: import("mongoose").Types.DocumentArray<{
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+    }> & {
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+    }>;
+    lastSeen: NativeDate;
+    isOnline: boolean;
     bio?: string | null | undefined;
     supervisor?: import("mongoose").Types.ObjectId | null | undefined;
     avatar?: string | null | undefined;
 }, {}, {}, {}, import("mongoose").Document<unknown, {}, {
+    createdAt: NativeDate;
+    updatedAt: NativeDate;
+} & {
     name: string;
-    email: string;
+    skills: import("mongoose").Types.DocumentArray<{
+        name: string;
+        functionArea: string;
+        specialisation: string;
+        level?: number | null | undefined;
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        functionArea: string;
+        specialisation: string;
+        level?: number | null | undefined;
+    }> & {
+        name: string;
+        functionArea: string;
+        specialisation: string;
+        level?: number | null | undefined;
+    }>;
     position: string;
+    email: string;
+    organisation: string;
+    department: string;
+    unit: string;
     role: "user" | "admin";
+    hireDate: NativeDate;
     password: string;
     subordinates: import("mongoose").Types.ObjectId[];
-    createdAt: NativeDate;
-    experienceLevel: number;
-    skills: import("mongoose").Types.DocumentArray<{
-        level: number;
-        name?: string | null | undefined;
-    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        level: number;
-        name?: string | null | undefined;
-    }> & {
-        level: number;
-        name?: string | null | undefined;
-    }>;
     mentorshipRequests: import("mongoose").Types.DocumentArray<{
         message?: string | null | undefined;
         sender?: import("mongoose").Types.ObjectId | null | undefined;
@@ -120,39 +329,82 @@ declare const User: import("mongoose").Model<{
     }>;
     mentees: import("mongoose").Types.ObjectId[];
     notifications: import("mongoose").Types.DocumentArray<{
-        createdAt: NativeDate;
         message: string;
         read: boolean;
+        createdAt: NativeDate;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        createdAt: NativeDate;
         message: string;
         read: boolean;
+        createdAt: NativeDate;
     }> & {
-        createdAt: NativeDate;
         message: string;
         read: boolean;
+        createdAt: NativeDate;
     }>;
     careerPath: import("mongoose").Types.DocumentArray<{
-        position: string;
-        progress: number;
-        skillsRequired: string[];
-        startedAt?: NativeDate | null | undefined;
-        endedAt?: NativeDate | null | undefined;
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        position: string;
-        progress: number;
-        skillsRequired: string[];
-        startedAt?: NativeDate | null | undefined;
-        endedAt?: NativeDate | null | undefined;
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
     }> & {
-        position: string;
-        progress: number;
-        skillsRequired: string[];
-        startedAt?: NativeDate | null | undefined;
-        endedAt?: NativeDate | null | undefined;
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
     }>;
-    lastSeen: NativeDate;
-    isOnline: boolean;
     moods: import("mongoose").Types.DocumentArray<{
         date: NativeDate;
         level: number;
@@ -176,28 +428,163 @@ declare const User: import("mongoose").Model<{
         date: NativeDate;
         type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
     }>;
+    languages: import("mongoose").Types.DocumentArray<{
+        name: string;
+        proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+    }> & {
+        name: string;
+        proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+    }>;
+    strengths: import("mongoose").Types.DocumentArray<{
+        name: string;
+        level: "Intermediate" | "Beginner" | "Advanced";
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        level: "Intermediate" | "Beginner" | "Advanced";
+    }> & {
+        name: string;
+        level: "Intermediate" | "Beginner" | "Advanced";
+    }>;
+    education: import("mongoose").Types.DocumentArray<{
+        startDate: NativeDate;
+        endDate: NativeDate;
+        institution: string;
+        degree: string;
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        startDate: NativeDate;
+        endDate: NativeDate;
+        institution: string;
+        degree: string;
+    }> & {
+        startDate: NativeDate;
+        endDate: NativeDate;
+        institution: string;
+        degree: string;
+    }>;
+    projects: import("mongoose").Types.DocumentArray<{
+        name: string;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        description: string;
+        role: string;
+        outcomes: string[];
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        description: string;
+        role: string;
+        outcomes: string[];
+    }> & {
+        name: string;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        description: string;
+        role: string;
+        outcomes: string[];
+    }>;
+    aspirations: import("mongoose").Types.DocumentArray<{
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+    }> & {
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+    }>;
+    lastSeen: NativeDate;
+    isOnline: boolean;
     bio?: string | null | undefined;
     supervisor?: import("mongoose").Types.ObjectId | null | undefined;
     avatar?: string | null | undefined;
 }> & {
+    createdAt: NativeDate;
+    updatedAt: NativeDate;
+} & {
     name: string;
-    email: string;
+    skills: import("mongoose").Types.DocumentArray<{
+        name: string;
+        functionArea: string;
+        specialisation: string;
+        level?: number | null | undefined;
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        functionArea: string;
+        specialisation: string;
+        level?: number | null | undefined;
+    }> & {
+        name: string;
+        functionArea: string;
+        specialisation: string;
+        level?: number | null | undefined;
+    }>;
     position: string;
+    email: string;
+    organisation: string;
+    department: string;
+    unit: string;
     role: "user" | "admin";
+    hireDate: NativeDate;
     password: string;
     subordinates: import("mongoose").Types.ObjectId[];
-    createdAt: NativeDate;
-    experienceLevel: number;
-    skills: import("mongoose").Types.DocumentArray<{
-        level: number;
-        name?: string | null | undefined;
-    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        level: number;
-        name?: string | null | undefined;
-    }> & {
-        level: number;
-        name?: string | null | undefined;
-    }>;
     mentorshipRequests: import("mongoose").Types.DocumentArray<{
         message?: string | null | undefined;
         sender?: import("mongoose").Types.ObjectId | null | undefined;
@@ -210,39 +597,82 @@ declare const User: import("mongoose").Model<{
     }>;
     mentees: import("mongoose").Types.ObjectId[];
     notifications: import("mongoose").Types.DocumentArray<{
-        createdAt: NativeDate;
         message: string;
         read: boolean;
+        createdAt: NativeDate;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        createdAt: NativeDate;
         message: string;
         read: boolean;
+        createdAt: NativeDate;
     }> & {
-        createdAt: NativeDate;
         message: string;
         read: boolean;
+        createdAt: NativeDate;
     }>;
     careerPath: import("mongoose").Types.DocumentArray<{
-        position: string;
-        progress: number;
-        skillsRequired: string[];
-        startedAt?: NativeDate | null | undefined;
-        endedAt?: NativeDate | null | undefined;
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        position: string;
-        progress: number;
-        skillsRequired: string[];
-        startedAt?: NativeDate | null | undefined;
-        endedAt?: NativeDate | null | undefined;
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
     }> & {
-        position: string;
-        progress: number;
-        skillsRequired: string[];
-        startedAt?: NativeDate | null | undefined;
-        endedAt?: NativeDate | null | undefined;
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
     }>;
-    lastSeen: NativeDate;
-    isOnline: boolean;
     moods: import("mongoose").Types.DocumentArray<{
         date: NativeDate;
         level: number;
@@ -266,6 +696,130 @@ declare const User: import("mongoose").Model<{
         date: NativeDate;
         type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
     }>;
+    languages: import("mongoose").Types.DocumentArray<{
+        name: string;
+        proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+    }> & {
+        name: string;
+        proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+    }>;
+    strengths: import("mongoose").Types.DocumentArray<{
+        name: string;
+        level: "Intermediate" | "Beginner" | "Advanced";
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        level: "Intermediate" | "Beginner" | "Advanced";
+    }> & {
+        name: string;
+        level: "Intermediate" | "Beginner" | "Advanced";
+    }>;
+    education: import("mongoose").Types.DocumentArray<{
+        startDate: NativeDate;
+        endDate: NativeDate;
+        institution: string;
+        degree: string;
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        startDate: NativeDate;
+        endDate: NativeDate;
+        institution: string;
+        degree: string;
+    }> & {
+        startDate: NativeDate;
+        endDate: NativeDate;
+        institution: string;
+        degree: string;
+    }>;
+    projects: import("mongoose").Types.DocumentArray<{
+        name: string;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        description: string;
+        role: string;
+        outcomes: string[];
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        description: string;
+        role: string;
+        outcomes: string[];
+    }> & {
+        name: string;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        description: string;
+        role: string;
+        outcomes: string[];
+    }>;
+    aspirations: import("mongoose").Types.DocumentArray<{
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+    }> & {
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+    }>;
+    lastSeen: NativeDate;
+    isOnline: boolean;
     bio?: string | null | undefined;
     supervisor?: import("mongoose").Types.ObjectId | null | undefined;
     avatar?: string | null | undefined;
@@ -273,25 +827,38 @@ declare const User: import("mongoose").Model<{
     _id: import("mongoose").Types.ObjectId;
 } & {
     __v: number;
-}, Schema<any, import("mongoose").Model<any, any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, {
+}, Schema<any, import("mongoose").Model<any, any, any, any, any, any>, {}, {}, {}, {}, {
+    timestamps: true;
+}, {
+    createdAt: NativeDate;
+    updatedAt: NativeDate;
+} & {
     name: string;
-    email: string;
+    skills: import("mongoose").Types.DocumentArray<{
+        name: string;
+        functionArea: string;
+        specialisation: string;
+        level?: number | null | undefined;
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        functionArea: string;
+        specialisation: string;
+        level?: number | null | undefined;
+    }> & {
+        name: string;
+        functionArea: string;
+        specialisation: string;
+        level?: number | null | undefined;
+    }>;
     position: string;
+    email: string;
+    organisation: string;
+    department: string;
+    unit: string;
     role: "user" | "admin";
+    hireDate: NativeDate;
     password: string;
     subordinates: import("mongoose").Types.ObjectId[];
-    createdAt: NativeDate;
-    experienceLevel: number;
-    skills: import("mongoose").Types.DocumentArray<{
-        level: number;
-        name?: string | null | undefined;
-    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        level: number;
-        name?: string | null | undefined;
-    }> & {
-        level: number;
-        name?: string | null | undefined;
-    }>;
     mentorshipRequests: import("mongoose").Types.DocumentArray<{
         message?: string | null | undefined;
         sender?: import("mongoose").Types.ObjectId | null | undefined;
@@ -304,39 +871,82 @@ declare const User: import("mongoose").Model<{
     }>;
     mentees: import("mongoose").Types.ObjectId[];
     notifications: import("mongoose").Types.DocumentArray<{
-        createdAt: NativeDate;
         message: string;
         read: boolean;
+        createdAt: NativeDate;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        createdAt: NativeDate;
         message: string;
         read: boolean;
+        createdAt: NativeDate;
     }> & {
-        createdAt: NativeDate;
         message: string;
         read: boolean;
+        createdAt: NativeDate;
     }>;
     careerPath: import("mongoose").Types.DocumentArray<{
-        position: string;
-        progress: number;
-        skillsRequired: string[];
-        startedAt?: NativeDate | null | undefined;
-        endedAt?: NativeDate | null | undefined;
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        position: string;
-        progress: number;
-        skillsRequired: string[];
-        startedAt?: NativeDate | null | undefined;
-        endedAt?: NativeDate | null | undefined;
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
     }> & {
-        position: string;
-        progress: number;
-        skillsRequired: string[];
-        startedAt?: NativeDate | null | undefined;
-        endedAt?: NativeDate | null | undefined;
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
     }>;
-    lastSeen: NativeDate;
-    isOnline: boolean;
     moods: import("mongoose").Types.DocumentArray<{
         date: NativeDate;
         level: number;
@@ -360,28 +970,163 @@ declare const User: import("mongoose").Model<{
         date: NativeDate;
         type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
     }>;
+    languages: import("mongoose").Types.DocumentArray<{
+        name: string;
+        proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+    }> & {
+        name: string;
+        proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+    }>;
+    strengths: import("mongoose").Types.DocumentArray<{
+        name: string;
+        level: "Intermediate" | "Beginner" | "Advanced";
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        level: "Intermediate" | "Beginner" | "Advanced";
+    }> & {
+        name: string;
+        level: "Intermediate" | "Beginner" | "Advanced";
+    }>;
+    education: import("mongoose").Types.DocumentArray<{
+        startDate: NativeDate;
+        endDate: NativeDate;
+        institution: string;
+        degree: string;
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        startDate: NativeDate;
+        endDate: NativeDate;
+        institution: string;
+        degree: string;
+    }> & {
+        startDate: NativeDate;
+        endDate: NativeDate;
+        institution: string;
+        degree: string;
+    }>;
+    projects: import("mongoose").Types.DocumentArray<{
+        name: string;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        description: string;
+        role: string;
+        outcomes: string[];
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        description: string;
+        role: string;
+        outcomes: string[];
+    }> & {
+        name: string;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        description: string;
+        role: string;
+        outcomes: string[];
+    }>;
+    aspirations: import("mongoose").Types.DocumentArray<{
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+    }> & {
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+    }>;
+    lastSeen: NativeDate;
+    isOnline: boolean;
     bio?: string | null | undefined;
     supervisor?: import("mongoose").Types.ObjectId | null | undefined;
     avatar?: string | null | undefined;
 }, import("mongoose").Document<unknown, {}, import("mongoose").FlatRecord<{
+    createdAt: NativeDate;
+    updatedAt: NativeDate;
+} & {
     name: string;
-    email: string;
+    skills: import("mongoose").Types.DocumentArray<{
+        name: string;
+        functionArea: string;
+        specialisation: string;
+        level?: number | null | undefined;
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        functionArea: string;
+        specialisation: string;
+        level?: number | null | undefined;
+    }> & {
+        name: string;
+        functionArea: string;
+        specialisation: string;
+        level?: number | null | undefined;
+    }>;
     position: string;
+    email: string;
+    organisation: string;
+    department: string;
+    unit: string;
     role: "user" | "admin";
+    hireDate: NativeDate;
     password: string;
     subordinates: import("mongoose").Types.ObjectId[];
-    createdAt: NativeDate;
-    experienceLevel: number;
-    skills: import("mongoose").Types.DocumentArray<{
-        level: number;
-        name?: string | null | undefined;
-    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        level: number;
-        name?: string | null | undefined;
-    }> & {
-        level: number;
-        name?: string | null | undefined;
-    }>;
     mentorshipRequests: import("mongoose").Types.DocumentArray<{
         message?: string | null | undefined;
         sender?: import("mongoose").Types.ObjectId | null | undefined;
@@ -394,39 +1139,82 @@ declare const User: import("mongoose").Model<{
     }>;
     mentees: import("mongoose").Types.ObjectId[];
     notifications: import("mongoose").Types.DocumentArray<{
-        createdAt: NativeDate;
         message: string;
         read: boolean;
+        createdAt: NativeDate;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        createdAt: NativeDate;
         message: string;
         read: boolean;
+        createdAt: NativeDate;
     }> & {
-        createdAt: NativeDate;
         message: string;
         read: boolean;
+        createdAt: NativeDate;
     }>;
     careerPath: import("mongoose").Types.DocumentArray<{
-        position: string;
-        progress: number;
-        skillsRequired: string[];
-        startedAt?: NativeDate | null | undefined;
-        endedAt?: NativeDate | null | undefined;
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        position: string;
-        progress: number;
-        skillsRequired: string[];
-        startedAt?: NativeDate | null | undefined;
-        endedAt?: NativeDate | null | undefined;
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
     }> & {
-        position: string;
-        progress: number;
-        skillsRequired: string[];
-        startedAt?: NativeDate | null | undefined;
-        endedAt?: NativeDate | null | undefined;
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
     }>;
-    lastSeen: NativeDate;
-    isOnline: boolean;
     moods: import("mongoose").Types.DocumentArray<{
         date: NativeDate;
         level: number;
@@ -450,28 +1238,163 @@ declare const User: import("mongoose").Model<{
         date: NativeDate;
         type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
     }>;
+    languages: import("mongoose").Types.DocumentArray<{
+        name: string;
+        proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+    }> & {
+        name: string;
+        proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+    }>;
+    strengths: import("mongoose").Types.DocumentArray<{
+        name: string;
+        level: "Intermediate" | "Beginner" | "Advanced";
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        level: "Intermediate" | "Beginner" | "Advanced";
+    }> & {
+        name: string;
+        level: "Intermediate" | "Beginner" | "Advanced";
+    }>;
+    education: import("mongoose").Types.DocumentArray<{
+        startDate: NativeDate;
+        endDate: NativeDate;
+        institution: string;
+        degree: string;
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        startDate: NativeDate;
+        endDate: NativeDate;
+        institution: string;
+        degree: string;
+    }> & {
+        startDate: NativeDate;
+        endDate: NativeDate;
+        institution: string;
+        degree: string;
+    }>;
+    projects: import("mongoose").Types.DocumentArray<{
+        name: string;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        description: string;
+        role: string;
+        outcomes: string[];
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        description: string;
+        role: string;
+        outcomes: string[];
+    }> & {
+        name: string;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        description: string;
+        role: string;
+        outcomes: string[];
+    }>;
+    aspirations: import("mongoose").Types.DocumentArray<{
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+    }> & {
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+    }>;
+    lastSeen: NativeDate;
+    isOnline: boolean;
     bio?: string | null | undefined;
     supervisor?: import("mongoose").Types.ObjectId | null | undefined;
     avatar?: string | null | undefined;
 }>> & import("mongoose").FlatRecord<{
+    createdAt: NativeDate;
+    updatedAt: NativeDate;
+} & {
     name: string;
-    email: string;
+    skills: import("mongoose").Types.DocumentArray<{
+        name: string;
+        functionArea: string;
+        specialisation: string;
+        level?: number | null | undefined;
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        functionArea: string;
+        specialisation: string;
+        level?: number | null | undefined;
+    }> & {
+        name: string;
+        functionArea: string;
+        specialisation: string;
+        level?: number | null | undefined;
+    }>;
     position: string;
+    email: string;
+    organisation: string;
+    department: string;
+    unit: string;
     role: "user" | "admin";
+    hireDate: NativeDate;
     password: string;
     subordinates: import("mongoose").Types.ObjectId[];
-    createdAt: NativeDate;
-    experienceLevel: number;
-    skills: import("mongoose").Types.DocumentArray<{
-        level: number;
-        name?: string | null | undefined;
-    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        level: number;
-        name?: string | null | undefined;
-    }> & {
-        level: number;
-        name?: string | null | undefined;
-    }>;
     mentorshipRequests: import("mongoose").Types.DocumentArray<{
         message?: string | null | undefined;
         sender?: import("mongoose").Types.ObjectId | null | undefined;
@@ -484,39 +1407,82 @@ declare const User: import("mongoose").Model<{
     }>;
     mentees: import("mongoose").Types.ObjectId[];
     notifications: import("mongoose").Types.DocumentArray<{
-        createdAt: NativeDate;
         message: string;
         read: boolean;
+        createdAt: NativeDate;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        createdAt: NativeDate;
         message: string;
         read: boolean;
+        createdAt: NativeDate;
     }> & {
-        createdAt: NativeDate;
         message: string;
         read: boolean;
+        createdAt: NativeDate;
     }>;
     careerPath: import("mongoose").Types.DocumentArray<{
-        position: string;
-        progress: number;
-        skillsRequired: string[];
-        startedAt?: NativeDate | null | undefined;
-        endedAt?: NativeDate | null | undefined;
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
     }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
-        position: string;
-        progress: number;
-        skillsRequired: string[];
-        startedAt?: NativeDate | null | undefined;
-        endedAt?: NativeDate | null | undefined;
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
     }> & {
-        position: string;
-        progress: number;
-        skillsRequired: string[];
-        startedAt?: NativeDate | null | undefined;
-        endedAt?: NativeDate | null | undefined;
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
     }>;
-    lastSeen: NativeDate;
-    isOnline: boolean;
     moods: import("mongoose").Types.DocumentArray<{
         date: NativeDate;
         level: number;
@@ -540,6 +1506,130 @@ declare const User: import("mongoose").Model<{
         date: NativeDate;
         type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
     }>;
+    languages: import("mongoose").Types.DocumentArray<{
+        name: string;
+        proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+    }> & {
+        name: string;
+        proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+    }>;
+    strengths: import("mongoose").Types.DocumentArray<{
+        name: string;
+        level: "Intermediate" | "Beginner" | "Advanced";
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        level: "Intermediate" | "Beginner" | "Advanced";
+    }> & {
+        name: string;
+        level: "Intermediate" | "Beginner" | "Advanced";
+    }>;
+    education: import("mongoose").Types.DocumentArray<{
+        startDate: NativeDate;
+        endDate: NativeDate;
+        institution: string;
+        degree: string;
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        startDate: NativeDate;
+        endDate: NativeDate;
+        institution: string;
+        degree: string;
+    }> & {
+        startDate: NativeDate;
+        endDate: NativeDate;
+        institution: string;
+        degree: string;
+    }>;
+    projects: import("mongoose").Types.DocumentArray<{
+        name: string;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        description: string;
+        role: string;
+        outcomes: string[];
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        description: string;
+        role: string;
+        outcomes: string[];
+    }> & {
+        name: string;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        description: string;
+        role: string;
+        outcomes: string[];
+    }>;
+    aspirations: import("mongoose").Types.DocumentArray<{
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+    }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+    }> & {
+        name: string;
+        focusAreas: string[];
+        skills: import("mongoose").Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+    }>;
+    lastSeen: NativeDate;
+    isOnline: boolean;
     bio?: string | null | undefined;
     supervisor?: import("mongoose").Types.ObjectId | null | undefined;
     avatar?: string | null | undefined;

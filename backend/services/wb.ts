@@ -248,17 +248,27 @@ class WBService {
 		const userProfile = `
 			Name: ${user.name}
 			Position: ${user.position}
-			Experience Level: ${user.experienceLevel}
+			Experience Level: ${dayjs().diff(user.hireDate, "year")} years
 			Bio: ${user.bio ?? "N/A"}
 			Skills: ${
 				user.skills
-					.map((s) => `${s.name} (level ${s.level})`)
+					.map((s) => `${s.name} (level ${s.level}/100)`)
 					.join(", ") || "N/A"
 			}
 			Career Path: ${
-				user.careerPath
-					.map((c) => `${c.position} (${c.progress}%)`)
-					.join(", ") || "N/A"
+				JSON.stringify(
+					user.careerPath.map((c) => ({
+						position: c.name,
+						duration: {
+							start: c.startDate,
+							end: c.endDate ?? "Present",
+						},
+						focusAreas: c.focusAreas,
+						skills: c.skills.map((s) => s.name),
+					})),
+					null,
+					2
+				) || "N/A"
 			}
 			Recent Mood Trends: ${
 				user.moods.length > 0
@@ -279,7 +289,9 @@ class WBService {
 
 		const prompt = `
 			You are a wellness assistant for PSA employees. 
-			Based on the user's profile and current time ${dayjs().tz("Asia/Singapore").format("HH:mm")}, provide **10 friendly, practical, and
+			Based on the user's profile and current time ${dayjs()
+				.tz("Asia/Singapore")
+				.format("HH:mm")}, provide **10 friendly, practical, and
 			relatable "Tip of the Moment"s"** that the user can apply in their daily work routine to improve wellness, focus, or mental health.
 
 			- Each tip must be in JSON format: { "text": "...", "category": "...", "image": "..." }.

@@ -4,42 +4,83 @@ import dayjs from "dayjs";
 import fs from "fs/promises";
 import { Project } from "@common/types/user.js";
 
-const SKILLS = [
-	"Data Analysis",
-	"Database Management",
-	"Excel Modeling",
-	"Process Optimization",
+const SKILL_NAMES = [
+	"Python",
+	"Java",
+	"SQL",
+	"React",
+	"Machine Learning",
 	"Leadership",
-	"Inventory Control",
-	"Supply Chain Planning",
-	"Advanced Analytics",
-	"Team Leadership",
-	"Statistical Modelling",
+	"Project Management",
+	"Communication",
+	"Data Analysis",
+	"Finance",
+	"Marketing",
+	"Cloud Computing",
+	"Data Visualization",
+	"AI Ethics",
+	"Time Management",
+	"Public Speaking",
+	"Problem Solving",
+	"C++",
+	"TypeScript",
+	"Docker",
+	"Kubernetes",
+	"Critical Thinking",
+	"Presentation Skills",
+	"Negotiation",
+	"Business Strategy",
+	"Excel",
+	"Data Engineering",
+	"Cybersecurity",
 ];
-const FUNCTION_AREA = [
+
+const FUNCTION_AREAS = [
+	"Data Analytics",
+	"Machine Learning",
+	"Leadership",
+	"Supply Chain",
+	"Project Management",
+	"Software Development",
+	"Communication",
+	"Finance",
+	"Marketing",
+	"Cloud Computing",
 	"Operations Management",
-	"Strategic Decision Making",
-	"Process Improvement",
-	"Project Coordination",
-	"Business Planning",
-	"Inventory Optimization",
-	"Performance Monitoring",
-	"Resource Allocation",
-	"Workflow Automation",
-	"Risk Mitigation",
+	"Risk Analysis",
+	"Product Management",
+	"Artificial Intelligence",
+	"Customer Insights",
+	"Quality Assurance",
+	"DevOps",
+	"Cybersecurity",
+	"UI/UX Design",
+	"Research & Development",
 ];
+
 const SPECIALISATIONS = [
 	"Predictive Modelling",
-	"Operational Strategy",
+	"Statistical Analysis",
+	"Team Management",
+	"Inventory Control",
+	"Process Optimization",
+	"Web Development",
+	"Data Visualization",
+	"AI Ethics",
+	"Financial Modelling",
+	"Negotiation",
+	"Deep Learning",
+	"Natural Language Processing",
+	"Cloud Architecture",
+	"Database Design",
+	"Agile Coaching",
 	"Business Intelligence",
-	"Risk Assessment",
-	"Quality Assurance",
-	"Process Engineering",
-	"Change Management",
-	"Sustainability Planning",
-	"Technology Integration",
-	"Machine Learning",
+	"Sustainability Strategy",
+	"Risk Mitigation",
+	"UI Prototyping",
+	"System Integration",
 ];
+
 const NOTIFICATIONS = [
 	"Welcome to PSA Horizon!",
 	"New course available: Advanced Analytics",
@@ -101,7 +142,7 @@ function getRandomDate(start, end) {
 }
 
 function generateStrengths() {
-	const shuffled = [...SKILLS].sort(() => 0.5 - Math.random());
+	const shuffled = [...SKILL_NAMES].sort(() => 0.5 - Math.random());
 	const selected = shuffled.slice(0, getRandomInt(3, 6));
 
 	return selected.map((skill) => ({
@@ -111,8 +152,8 @@ function generateStrengths() {
 }
 
 function generateRandomSkills() {
-	const shuffledSkills = [...SKILLS].sort(() => 0.5 - Math.random());
-	const shuffledFocus = [...FUNCTION_AREA].sort(() => 0.5 - Math.random());
+	const shuffledSkills = [...SKILL_NAMES].sort(() => 0.5 - Math.random());
+	const shuffledFocus = [...FUNCTION_AREAS].sort(() => 0.5 - Math.random());
 	const shuffledSpecialisations = [...SPECIALISATIONS].sort(
 		() => 0.5 - Math.random()
 	);
@@ -138,7 +179,7 @@ function generateCareerPath() {
 				? null
 				: getRandomDate(new Date(startDate), new Date(2025, 0, 1));
 
-		const focusAreas = [...FUNCTION_AREA]
+		const focusAreas = [...FUNCTION_AREAS]
 			.sort(() => 0.5 - Math.random())
 			.slice(0, getRandomInt(1, 2));
 

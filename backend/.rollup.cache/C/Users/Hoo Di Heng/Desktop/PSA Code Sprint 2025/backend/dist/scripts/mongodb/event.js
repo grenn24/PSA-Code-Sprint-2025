@@ -56,6 +56,11 @@ async function generateEvents(n) {
                 creator: creator._id.toString(),
                 participants: participants.map((u) => u._id.toString()),
                 comments,
+                coverImage: {
+                    s3Filename: "DSC04804.jpg",
+                    filename: "",
+                    folder: ["events"],
+                },
             });
         }
         return events;

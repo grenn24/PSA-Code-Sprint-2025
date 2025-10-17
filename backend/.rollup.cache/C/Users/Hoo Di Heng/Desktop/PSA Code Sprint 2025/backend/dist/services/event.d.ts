@@ -1,64 +1,64 @@
 import mongoose from "mongoose";
 declare class EventService {
     getAllEvents(condition: any): Promise<(mongoose.Document<unknown, {}, {
-        description: string;
-        title: string;
         startDate: NativeDate;
         endDate: NativeDate;
+        description: string;
+        participants: mongoose.Types.ObjectId[];
+        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
-        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }> & {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }>;
         location?: string | null | undefined;
         coverImage?: {
-            filename: string;
-            s3Filename: string;
-            folder: string[];
             description: string;
+            s3Filename: string;
+            filename: string;
+            folder: string[];
             url?: string | null | undefined;
             mimeType?: string | null | undefined;
         } | null | undefined;
     }> & {
-        description: string;
-        title: string;
         startDate: NativeDate;
         endDate: NativeDate;
+        description: string;
+        participants: mongoose.Types.ObjectId[];
+        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
-        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }> & {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }>;
         location?: string | null | undefined;
         coverImage?: {
-            filename: string;
-            s3Filename: string;
-            folder: string[];
             description: string;
+            s3Filename: string;
+            filename: string;
+            folder: string[];
             url?: string | null | undefined;
             mimeType?: string | null | undefined;
         } | null | undefined;
@@ -68,64 +68,64 @@ declare class EventService {
         __v: number;
     })[]>;
     getEventByID(eventID: string): Promise<mongoose.Document<unknown, {}, {
-        description: string;
-        title: string;
         startDate: NativeDate;
         endDate: NativeDate;
+        description: string;
+        participants: mongoose.Types.ObjectId[];
+        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
-        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }> & {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }>;
         location?: string | null | undefined;
         coverImage?: {
-            filename: string;
-            s3Filename: string;
-            folder: string[];
             description: string;
+            s3Filename: string;
+            filename: string;
+            folder: string[];
             url?: string | null | undefined;
             mimeType?: string | null | undefined;
         } | null | undefined;
     }> & {
-        description: string;
-        title: string;
         startDate: NativeDate;
         endDate: NativeDate;
+        description: string;
+        participants: mongoose.Types.ObjectId[];
+        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
-        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }> & {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }>;
         location?: string | null | undefined;
         coverImage?: {
-            filename: string;
-            s3Filename: string;
-            folder: string[];
             description: string;
+            s3Filename: string;
+            filename: string;
+            folder: string[];
             url?: string | null | undefined;
             mimeType?: string | null | undefined;
         } | null | undefined;
@@ -135,64 +135,64 @@ declare class EventService {
         __v: number;
     }>;
     createEvent(event: any): Promise<mongoose.Document<unknown, {}, {
-        description: string;
-        title: string;
         startDate: NativeDate;
         endDate: NativeDate;
+        description: string;
+        participants: mongoose.Types.ObjectId[];
+        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
-        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }> & {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }>;
         location?: string | null | undefined;
         coverImage?: {
-            filename: string;
-            s3Filename: string;
-            folder: string[];
             description: string;
+            s3Filename: string;
+            filename: string;
+            folder: string[];
             url?: string | null | undefined;
             mimeType?: string | null | undefined;
         } | null | undefined;
     }> & {
-        description: string;
-        title: string;
         startDate: NativeDate;
         endDate: NativeDate;
+        description: string;
+        participants: mongoose.Types.ObjectId[];
+        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
-        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }> & {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }>;
         location?: string | null | undefined;
         coverImage?: {
-            filename: string;
-            s3Filename: string;
-            folder: string[];
             description: string;
+            s3Filename: string;
+            filename: string;
+            folder: string[];
             url?: string | null | undefined;
             mimeType?: string | null | undefined;
         } | null | undefined;
@@ -202,64 +202,64 @@ declare class EventService {
         __v: number;
     }>;
     updateEvent(eventID: string, event: any): Promise<mongoose.Document<unknown, {}, {
-        description: string;
-        title: string;
         startDate: NativeDate;
         endDate: NativeDate;
+        description: string;
+        participants: mongoose.Types.ObjectId[];
+        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
-        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }> & {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }>;
         location?: string | null | undefined;
         coverImage?: {
-            filename: string;
-            s3Filename: string;
-            folder: string[];
             description: string;
+            s3Filename: string;
+            filename: string;
+            folder: string[];
             url?: string | null | undefined;
             mimeType?: string | null | undefined;
         } | null | undefined;
     }> & {
-        description: string;
-        title: string;
         startDate: NativeDate;
         endDate: NativeDate;
+        description: string;
+        participants: mongoose.Types.ObjectId[];
+        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
-        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }> & {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }>;
         location?: string | null | undefined;
         coverImage?: {
-            filename: string;
-            s3Filename: string;
-            folder: string[];
             description: string;
+            s3Filename: string;
+            filename: string;
+            folder: string[];
             url?: string | null | undefined;
             mimeType?: string | null | undefined;
         } | null | undefined;
@@ -269,64 +269,64 @@ declare class EventService {
         __v: number;
     }>;
     joinEvent(userID: string, eventID: string): Promise<mongoose.Document<unknown, {}, {
-        description: string;
-        title: string;
         startDate: NativeDate;
         endDate: NativeDate;
+        description: string;
+        participants: mongoose.Types.ObjectId[];
+        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
-        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }> & {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }>;
         location?: string | null | undefined;
         coverImage?: {
-            filename: string;
-            s3Filename: string;
-            folder: string[];
             description: string;
+            s3Filename: string;
+            filename: string;
+            folder: string[];
             url?: string | null | undefined;
             mimeType?: string | null | undefined;
         } | null | undefined;
     }> & {
-        description: string;
-        title: string;
         startDate: NativeDate;
         endDate: NativeDate;
+        description: string;
+        participants: mongoose.Types.ObjectId[];
+        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
-        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }> & {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }>;
         location?: string | null | undefined;
         coverImage?: {
-            filename: string;
-            s3Filename: string;
-            folder: string[];
             description: string;
+            s3Filename: string;
+            filename: string;
+            folder: string[];
             url?: string | null | undefined;
             mimeType?: string | null | undefined;
         } | null | undefined;
@@ -336,64 +336,64 @@ declare class EventService {
         __v: number;
     }>;
     leaveEvent(userID: string, eventID: string): Promise<mongoose.Document<unknown, {}, {
-        description: string;
-        title: string;
         startDate: NativeDate;
         endDate: NativeDate;
+        description: string;
+        participants: mongoose.Types.ObjectId[];
+        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
-        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }> & {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }>;
         location?: string | null | undefined;
         coverImage?: {
-            filename: string;
-            s3Filename: string;
-            folder: string[];
             description: string;
+            s3Filename: string;
+            filename: string;
+            folder: string[];
             url?: string | null | undefined;
             mimeType?: string | null | undefined;
         } | null | undefined;
     }> & {
-        description: string;
-        title: string;
         startDate: NativeDate;
         endDate: NativeDate;
+        description: string;
+        participants: mongoose.Types.ObjectId[];
+        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
-        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }> & {
-            author: mongoose.Types.ObjectId;
-            content: string;
             createdAt: NativeDate;
+            content: string;
+            author: mongoose.Types.ObjectId;
         }>;
         location?: string | null | undefined;
         coverImage?: {
-            filename: string;
-            s3Filename: string;
-            folder: string[];
             description: string;
+            s3Filename: string;
+            filename: string;
+            folder: string[];
             url?: string | null | undefined;
             mimeType?: string | null | undefined;
         } | null | undefined;

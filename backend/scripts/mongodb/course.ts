@@ -15,8 +15,21 @@ const SKILL_NAMES = [
 	"Cloud Computing",
 	"Data Visualization",
 	"AI Ethics",
+	"Time Management",
+	"Public Speaking",
+	"Problem Solving",
+	"C++",
+	"TypeScript",
+	"Docker",
+	"Kubernetes",
+	"Critical Thinking",
+	"Presentation Skills",
+	"Negotiation",
+	"Business Strategy",
+	"Excel",
+	"Data Engineering",
+	"Cybersecurity",
 ];
-
 
 const FUNCTION_AREAS = [
 	"Data Analytics",
@@ -29,6 +42,16 @@ const FUNCTION_AREAS = [
 	"Finance",
 	"Marketing",
 	"Cloud Computing",
+	"Operations Management",
+	"Risk Analysis",
+	"Product Management",
+	"Artificial Intelligence",
+	"Customer Insights",
+	"Quality Assurance",
+	"DevOps",
+	"Cybersecurity",
+	"UI/UX Design",
+	"Research & Development",
 ];
 
 const SPECIALISATIONS = [
@@ -42,6 +65,16 @@ const SPECIALISATIONS = [
 	"AI Ethics",
 	"Financial Modelling",
 	"Negotiation",
+	"Deep Learning",
+	"Natural Language Processing",
+	"Cloud Architecture",
+	"Database Design",
+	"Agile Coaching",
+	"Business Intelligence",
+	"Sustainability Strategy",
+	"Risk Mitigation",
+	"UI Prototyping",
+	"System Integration",
 ];
 
 const COURSE_NAMES = [
@@ -139,7 +172,7 @@ export async function seedCourses() {
 		});
 
 		await Course.insertMany(courses);
-		console.log(`${courses.length} courses seeded successfully`);
+		console.log(`${courses.length} courses seededsuccessfully`);
 	} catch (err) {
 		console.error("Error inserting courses:", err);
 	}

@@ -1,17 +1,24 @@
-export declare const generateUser: () => Promise<{
+import { Project } from "@common/types/user.js";
+export declare function generateProjects(count?: any): Project[];
+export declare const generateUser: (email: string, password: string) => Promise<{
     name: string;
+    organisation: string;
     email: string;
-    avatar: string;
-    bio: string;
     position: string;
+    department: string;
+    unit: string;
     role: string;
+    hireDate: Date;
     password: string;
     subordinates: never[];
-    experienceLevel: any;
+    avatar: string;
+    bio: string;
     mentorshipRequests: never[];
     skills: {
         name: string;
         level: any;
+        functionArea: string;
+        specialisation: string;
     }[];
     notifications: {
         message: string;
@@ -22,7 +29,89 @@ export declare const generateUser: () => Promise<{
         level: number;
         date: Date;
     }[];
+    activities: never[];
+    isOnline: boolean;
+    lastSeen: null;
+    languages: {
+        name: string;
+        proficiency: string;
+    }[];
+    strengths: {
+        name: string;
+        level: string;
+    }[];
+    education: never[];
+    projects: Project[];
+    mentees: never[];
+    supervisor: undefined;
 }>;
+export declare const generateDefaultUser: () => {
+    name: string;
+    organisation: string;
+    email: string;
+    position: string;
+    department: string;
+    unit: string;
+    role: string;
+    hireDate: Date;
+    password: string;
+    subordinates: never[];
+    avatar: string;
+    bio: string;
+    mentorshipRequests: never[];
+    skills: {
+        name: string;
+        functionArea: string;
+        specialisation: string;
+        level: number;
+    }[];
+    notifications: {
+        message: string;
+        read: boolean;
+    }[];
+    careerPath: ({
+        name: string;
+        focusAreas: string[];
+        skills: {
+            name: string;
+            level: any;
+            functionArea: string;
+            specialisation: string;
+        }[];
+        startDate: Date;
+        endDate: Date;
+    } | {
+        name: string;
+        focusAreas: string[];
+        skills: {
+            name: string;
+            level: any;
+            functionArea: string;
+            specialisation: string;
+        }[];
+        startDate: Date;
+        endDate: null;
+    })[];
+    moods: {
+        level: number;
+        date: Date;
+    }[];
+    activities: never[];
+    isOnline: boolean;
+    lastSeen: null;
+    languages: {
+        name: string;
+        proficiency: string;
+    }[];
+    strengths: {
+        name: string;
+        level: string;
+    }[];
+    education: never[];
+    projects: Project[];
+    mentees: never[];
+    supervisor: undefined;
+};
 export declare const generateUsers: (length: number, includeDefaultUser?: boolean) => Promise<{
     name: string;
     email: string;
@@ -31,12 +120,16 @@ export declare const generateUsers: (length: number, includeDefaultUser?: boolea
     position: string;
     role: string;
     password: string;
+    department: string;
+    unit: string;
+    hireDate: Date;
     subordinates: never[];
-    experienceLevel: any;
     mentorshipRequests: never[];
     skills: {
         name: string;
         level: any;
+        functionArea: string;
+        specialisation: string;
     }[];
     notifications: {
         message: string;
@@ -47,5 +140,43 @@ export declare const generateUsers: (length: number, includeDefaultUser?: boolea
         level: number;
         date: Date;
     }[];
+    strengths: {
+        name: string;
+        level: string;
+    }[];
+}[]>;
+export declare const generateUsersFromJSON: (employeeData: any[], includeDefaultUser?: boolean) => Promise<{
+    name: any;
+    email: any;
+    organisation: any;
+    position: any;
+    department: any;
+    unit: any;
+    role: string;
+    password: string;
+    hireDate: Date;
+    supervisor: undefined;
+    subordinates: never[];
+    avatar: string;
+    bio: string;
+    lastSeen: null;
+    skills: any;
+    languages: any;
+    strengths: any;
+    projects: any;
+    education: any;
+    careerPath: any;
+    notifications: {
+        message: string;
+        read: boolean;
+    }[];
+    mentorshipRequests: never[];
+    mentees: never[];
+    moods: {
+        level: number;
+        date: Date;
+    }[];
+    activities: never[];
+    isOnline: boolean;
 }[]>;
 export declare function seedUsers(): Promise<void>;

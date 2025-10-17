@@ -18,6 +18,7 @@ import require$$1$5, { Agent as Agent$1, request as request$4 } from 'http';
 import mongoose, { Schema as Schema$1, model } from 'mongoose';
 import winston, { format as format$1, transports } from 'winston';
 import require$$0$8 from 'semver';
+import 'fs/promises';
 import require$$1$6, { Agent, request as request$3 } from 'https';
 import require$$4$3 from 'tls';
 import require$$3$2, { Readable } from 'node:stream';
@@ -52732,6 +52733,21 @@ class HttpError {
     }
 }
 
+const skillSchema$1 = new Schema$1({
+    name: { type: String, required: true },
+    functionArea: { type: String, required: true },
+    specialisation: { type: String, required: true },
+    level: { type: Number, min: 0, max: 100 },
+});
+const positionSchema = new Schema$1({
+    name: { type: String, required: true },
+    focusAreas: { type: [String], default: [] },
+    skills: { type: [skillSchema$1], default: [] },
+    startDate: { type: Date, required: true },
+    endDate: { type: Date, default: null },
+});
+const Position = mongoose.model("Position", positionSchema);
+
 const moodSchema = new Schema$1({
     level: { type: Number, min: 0, max: 10, required: true },
     date: { type: Date, required: true },
@@ -52753,10 +52769,58 @@ const activitySchema = new Schema$1({
         required: true,
     },
 });
+const skillSchema = new Schema$1({
+    name: { type: String, required: true },
+    functionArea: { type: String, required: true },
+    specialisation: { type: String, required: true },
+    level: { type: Number, min: 0, max: 100 },
+});
+const educationSchema = new Schema$1({
+    institution: { type: String, required: true },
+    degree: { type: String, required: true },
+    startDate: { type: Date, required: true },
+    endDate: { type: Date, required: true },
+});
+const projectSchema = new Schema$1({
+    name: { type: String, required: true },
+    role: { type: String, required: true },
+    description: { type: String, required: true },
+    outcomes: { type: [String], default: [] },
+    startDate: { type: Date, required: true },
+    endDate: { type: Date, required: true },
+});
+const languageSchema = new Schema$1({
+    name: { type: String, required: true },
+    proficiency: {
+        type: String,
+        enum: ["Fluent", "Professional", "Conversational", "Intermediate"],
+        required: true,
+    },
+});
+const strengthSchema = new Schema$1({
+    name: { type: String, required: true },
+    level: {
+        type: String,
+        enum: ["Beginner", "Intermediate", "Advanced"],
+        required: true,
+    },
+});
 const userSchema = new Schema$1({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true, lowercase: true },
+    organisation: {
+        type: String,
+        default: "PSA Singapore",
+    },
     position: {
+        type: String,
+        required: true,
+    },
+    department: {
+        type: String,
+        required: true,
+    },
+    unit: {
         type: String,
         required: true,
     },
@@ -52765,22 +52829,12 @@ const userSchema = new Schema$1({
         enum: ["user", "admin"],
         default: "user",
     },
+    hireDate: { type: Date, required: true },
     password: { type: String, required: true },
     supervisor: { type: Schema$1.Types.ObjectId, ref: "User" },
     subordinates: [{ type: Schema$1.Types.ObjectId, ref: "User" }],
     avatar: { type: String },
-    createdAt: { type: Date, default: Date.now },
-    experienceLevel: { type: Number, default: 0 },
     bio: String,
-    skills: {
-        type: [
-            {
-                name: { type: String },
-                level: { type: Number, default: 0 },
-            },
-        ],
-        default: [],
-    },
     mentorshipRequests: {
         type: [
             {
@@ -52807,30 +52861,14 @@ const userSchema = new Schema$1({
         ],
         default: [],
     },
-    careerPath: [
-        {
-            position: {
-                type: String,
-                required: true,
-            },
-            progress: {
-                type: Number,
-                default: 0,
-            },
-            startedAt: {
-                type: Date,
-            },
-            endedAt: {
-                type: Date,
-            },
-            skillsRequired: {
-                type: [String],
-                default: [],
-            },
-        },
-    ],
-    lastSeen: { type: Date, default: null },
-    isOnline: { type: Boolean, default: false },
+    careerPath: {
+        type: [positionSchema],
+        default: [],
+    },
+    skills: {
+        type: [skillSchema],
+        default: [],
+    },
     moods: {
         type: [moodSchema],
         default: [],
@@ -52839,7 +52877,29 @@ const userSchema = new Schema$1({
         type: [activitySchema],
         default: [],
     },
-});
+    languages: {
+        type: [languageSchema],
+        default: [],
+    },
+    strengths: {
+        type: [strengthSchema],
+        default: [],
+    },
+    education: {
+        type: [educationSchema],
+        default: [],
+    },
+    projects: {
+        type: [projectSchema],
+        default: [],
+    },
+    aspirations: {
+        type: [positionSchema],
+        default: [],
+    },
+    lastSeen: { type: Date, default: null },
+    isOnline: { type: Boolean, default: false },
+}, { timestamps: true });
 userSchema.virtual("mentors", {
     ref: "User",
     localField: "_id",
@@ -57458,6 +57518,258 @@ function requireDayjs_min () {
 var dayjs_minExports = requireDayjs_min();
 var dayjs = /*@__PURE__*/getDefaultExportFromCjs(dayjs_minExports);
 
+const SKILL_NAMES = [
+    "Python",
+    "Java",
+    "SQL",
+    "React",
+    "Machine Learning",
+    "Leadership",
+    "Project Management",
+    "Communication",
+    "Data Analysis",
+    "Finance",
+    "Marketing",
+    "Cloud Computing",
+    "Data Visualization",
+    "AI Ethics",
+    "Time Management",
+    "Public Speaking",
+    "Problem Solving",
+    "C++",
+    "TypeScript",
+    "Docker",
+    "Kubernetes",
+    "Critical Thinking",
+    "Presentation Skills",
+    "Negotiation",
+    "Business Strategy",
+    "Excel",
+    "Data Engineering",
+    "Cybersecurity",
+];
+const FUNCTION_AREAS = [
+    "Data Analytics",
+    "Machine Learning",
+    "Leadership",
+    "Supply Chain",
+    "Project Management",
+    "Software Development",
+    "Communication",
+    "Finance",
+    "Marketing",
+    "Cloud Computing",
+    "Operations Management",
+    "Risk Analysis",
+    "Product Management",
+    "Artificial Intelligence",
+    "Customer Insights",
+    "Quality Assurance",
+    "DevOps",
+    "Cybersecurity",
+    "UI/UX Design",
+    "Research & Development",
+];
+const SPECIALISATIONS = [
+    "Predictive Modelling",
+    "Statistical Analysis",
+    "Team Management",
+    "Inventory Control",
+    "Process Optimization",
+    "Web Development",
+    "Data Visualization",
+    "AI Ethics",
+    "Financial Modelling",
+    "Negotiation",
+    "Deep Learning",
+    "Natural Language Processing",
+    "Cloud Architecture",
+    "Database Design",
+    "Agile Coaching",
+    "Business Intelligence",
+    "Sustainability Strategy",
+    "Risk Mitigation",
+    "UI Prototyping",
+    "System Integration",
+];
+const NOTIFICATIONS = [
+    "Welcome to PSA Horizon!",
+    "New course available: Advanced Analytics",
+    "Reminder: Update your skills profile",
+];
+const PROJECT_NAMES = [
+    "Treasury Management System Enhancement",
+    "Customer Insights Dashboard",
+    "Port Operations Optimization",
+    "Predictive Maintenance AI Platform",
+    "Smart Inventory Control System",
+    "Logistics Route Optimizer",
+    "Data Governance Framework",
+    "Supplier Performance Tracker",
+    "Workforce Scheduling Application",
+    "Risk Analytics Engine",
+];
+const ROLES = [
+    "Analyst",
+    "Engineer",
+    "Data Scientist",
+    "Consultant",
+    "Developer",
+    "Project Lead",
+];
+const DESCRIPTIONS = [
+    "Developed automated workflows to streamline manual processes.",
+    "Enhanced data accuracy through rule-based validation and integration.",
+    "Built interactive dashboards for real-time performance tracking.",
+    "Optimized predictive algorithms to improve operational efficiency.",
+    "Implemented API integrations for seamless data exchange across systems.",
+    "Redesigned the system architecture for better scalability and reliability.",
+    "Introduced analytics-driven insights for strategic decision making.",
+    "Collaborated with cross-functional teams to improve delivery speed.",
+];
+const OUTCOMES = [
+    "Reduced processing time by 40%",
+    "Increased data accuracy by 25%",
+    "Enhanced operational visibility",
+    "Improved reporting turnaround time",
+    "Achieved 99.9% system uptime",
+    "Reduced manual work by 60%",
+    "Improved user satisfaction scores",
+    "Enabled faster executive decision making",
+];
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+function getRandomDate(start, end) {
+    const date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+    return date;
+}
+function generateStrengths() {
+    const shuffled = [...SKILL_NAMES].sort(() => 0.5 - Math.random());
+    const selected = shuffled.slice(0, getRandomInt(3, 6));
+    return selected.map((skill) => ({
+        name: skill,
+        level: ["Beginner", "Intermediate", "Advanced"][getRandomInt(0, 2)],
+    }));
+}
+function generateRandomSkills() {
+    const shuffledSkills = [...SKILL_NAMES].sort(() => 0.5 - Math.random());
+    const shuffledFocus = [...FUNCTION_AREAS].sort(() => 0.5 - Math.random());
+    const shuffledSpecialisations = [...SPECIALISATIONS].sort(() => 0.5 - Math.random());
+    return shuffledSkills.slice(0, getRandomInt(1, 3)).map((skill, index) => ({
+        name: skill,
+        level: getRandomInt(40, 90),
+        functionArea: shuffledFocus[index],
+        specialisation: shuffledSpecialisations[index],
+    }));
+}
+function generateCareerPath() {
+    const pathLength = 3;
+    const path = [];
+    for (let i = 0; i < pathLength; i++) {
+        const startDate = getRandomDate(new Date(2018, 0, 1), new Date(2023, 0, 1));
+        const endDate = i === pathLength - 1
+            ? null
+            : getRandomDate(new Date(startDate), new Date(2025, 0, 1));
+        const focusAreas = [...FUNCTION_AREAS]
+            .sort(() => 0.5 - Math.random())
+            .slice(0, getRandomInt(1, 2));
+        path.push({
+            name: f$1.person.jobTitle(),
+            focusAreas,
+            skills: generateRandomSkills(),
+            startDate,
+            endDate,
+        });
+    }
+    return path;
+}
+function generateMoodData(start, skipProbability = 0.3) {
+    const data = [];
+    const today = new Date();
+    const startOfCurrentWeek = new Date(today);
+    startOfCurrentWeek.setHours(0, 0, 0, 0);
+    startOfCurrentWeek.setDate(today.getDate() - today.getDay());
+    for (let d = new Date(start); d <= today; d.setDate(d.getDate() + 1)) {
+        const isCurrentWeek = d >= startOfCurrentWeek;
+        const include = isCurrentWeek || Math.random() > skipProbability;
+        if (include) {
+            data.push({
+                date: new Date(d),
+                level: Math.floor(Math.random() * 10) + 1,
+            });
+        }
+    }
+    return data;
+}
+function generateNotifications() {
+    const count = getRandomInt(1, 3);
+    return Array.from({ length: count }).map(() => ({
+        message: NOTIFICATIONS[getRandomInt(0, NOTIFICATIONS.length - 1)],
+        read: Math.random() > 0.5,
+    }));
+}
+function generateProjects(count = getRandomInt(3, 5)) {
+    const projects = [];
+    for (let i = 0; i < count; i++) {
+        const projectName = PROJECT_NAMES[getRandomInt(0, PROJECT_NAMES.length - 1)];
+        const role = ROLES[getRandomInt(0, ROLES.length - 1)];
+        const start = getRandomDate(new Date(2022, 0, 1), new Date(2024, 11, 31));
+        const end = getRandomDate(new Date(start), new Date(2025, 11, 31));
+        const description = DESCRIPTIONS[getRandomInt(0, DESCRIPTIONS.length - 1)];
+        const outcomesCount = getRandomInt(1, 2);
+        const projectOutcomes = Array.from({ length: outcomesCount }, () => OUTCOMES[getRandomInt(0, OUTCOMES.length - 1)]);
+        projects.push({
+            name: projectName,
+            role,
+            startDate: start,
+            endDate: end,
+            description,
+            outcomes: projectOutcomes,
+        });
+    }
+    return projects;
+}
+const generateUser = async (email, password) => {
+    return {
+        name: f$1.person.fullName(),
+        organisation: "PSA Singapore",
+        email,
+        position: f$1.person.jobTitle(),
+        department: "Engineering",
+        unit: "Software Development",
+        role: "user",
+        hireDate: new Date("2023-01-01"),
+        password,
+        subordinates: [],
+        avatar: f$1.image.avatar(),
+        bio: f$1.person.bio(),
+        mentorshipRequests: [],
+        skills: generateRandomSkills(),
+        notifications: generateNotifications(),
+        careerPath: generateCareerPath(),
+        moods: generateMoodData(dayjs().subtract(12, "month").toDate()),
+        activities: [],
+        isOnline: false,
+        lastSeen: null,
+        languages: [
+            {
+                name: "English",
+                proficiency: "Professional",
+            },
+            {
+                name: "Chinese",
+                proficiency: "Professional",
+            },
+        ],
+        strengths: generateStrengths(),
+        education: [],
+        projects: generateProjects(),
+        mentees: [],
+        supervisor: undefined,
+    };
+};
+
 const messageSchema = new Schema$1({
     content: {
         type: String,
@@ -57523,95 +57835,6 @@ async function generateChats(email, limit = 3) {
     }
 }
 
-const skillsPool = [
-    "Data Analytics",
-    "Data Management",
-    "Excel",
-    "Process Optimization",
-    "Leadership",
-    "Inventory Management",
-    "Supply Chain Management",
-    "Advanced Data Analysis",
-    "Team Management",
-];
-const notificationsPool = [
-    "Welcome to PSA Horizon!",
-    "New course available: Advanced Analytics",
-    "Reminder: Update your skills profile",
-];
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-function generateRandomSkills() {
-    const shuffled = skillsPool.sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, getRandomInt(1, 3)).map((skill) => ({
-        name: skill,
-        level: getRandomInt(40, 80),
-    }));
-}
-function generateCareerPath() {
-    const pathLength = 3;
-    const path = [];
-    for (let i = 0; i < pathLength; i++) {
-        const progress = i === 0 ? 100 : i === pathLength - 1 ? 0 : getRandomInt(30, 80);
-        path.push({
-            position: f$1.person.jobTitle(),
-            progress,
-            startedAt: `202${i + 3}-01-01T00:00:00.000Z`,
-            endedAt: i === 0 ? `202${i + 3}-12-31T00:00:00.000Z` : undefined,
-            skillsRequired: generateRandomSkills().map((s) => s.name),
-        });
-    }
-    return path;
-}
-function generateMoodData(start, skipProbability = 0.3) {
-    const data = [];
-    const today = new Date();
-    // get the start of the current week (Sunday)
-    const startOfCurrentWeek = new Date(today);
-    startOfCurrentWeek.setHours(0, 0, 0, 0);
-    startOfCurrentWeek.setDate(today.getDate() - today.getDay());
-    for (let d = new Date(start); d <= today; d.setDate(d.getDate() + 1)) {
-        const isCurrentWeek = d >= startOfCurrentWeek;
-        const include = isCurrentWeek || Math.random() > skipProbability;
-        if (include) {
-            data.push({
-                date: new Date(d),
-                level: Math.floor(Math.random() * 10) + 1,
-            });
-        }
-    }
-    return data;
-}
-function generateNotifications() {
-    const count = getRandomInt(1, 3);
-    return Array.from({ length: count }).map(() => ({
-        message: notificationsPool[getRandomInt(0, notificationsPool.length - 1)],
-        read: Math.random() > 0.5,
-    }));
-}
-const generateUser = async () => {
-    const email = f$1.internet.email();
-    const chats = generateChats(email);
-    await Chat$2.insertMany(chats);
-    return {
-        name: f$1.person.fullName(),
-        email,
-        avatar: f$1.image.avatar(),
-        bio: f$1.person.bio(),
-        position: f$1.person.jobTitle(),
-        role: "user",
-        password: "$2b$10$TS8eBH1GUf7F3haX1WnX9uqVCzYW9f4ig5abjp4fEMUVkdrqrh91a",
-        subordinates: [],
-        experienceLevel: getRandomInt(0, 25),
-        mentorshipRequests: [],
-        skills: generateRandomSkills(),
-        notifications: generateNotifications(),
-        careerPath: generateCareerPath(),
-        moods: generateMoodData(dayjs().subtract(12, "month").toDate()),
-    };
-};
-
 class AuthService {
     async login(email, password) {
         const user = await User.findOne({ email: email.toLowerCase() })
@@ -57647,7 +57870,8 @@ class AuthService {
         if (existingUser) {
             throw new HttpError(`Email is already used by an existing user`, "DUPLICATE_EMAIL", 400);
         }
-        const newUser = new User(await generateUser());
+        const newUser = new User(await generateUser(email, password));
+        await Chat$2.insertMany(await generateChats(newUser.email));
         newUser.email = email.toLowerCase();
         const salt = await bcrypt.genSalt(10);
         newUser.password = await bcrypt.hash(password, salt);
@@ -104023,14 +104247,20 @@ class WBService {
         const userProfile = `
 			Name: ${user.name}
 			Position: ${user.position}
-			Experience Level: ${user.experienceLevel}
+			Experience Level: ${dayjs().diff(user.hireDate, "year")} years
 			Bio: ${user.bio ?? "N/A"}
 			Skills: ${user.skills
-            .map((s) => `${s.name} (level ${s.level})`)
+            .map((s) => `${s.name} (level ${s.level}/100)`)
             .join(", ") || "N/A"}
-			Career Path: ${user.careerPath
-            .map((c) => `${c.position} (${c.progress}%)`)
-            .join(", ") || "N/A"}
+			Career Path: ${JSON.stringify(user.careerPath.map((c) => ({
+            position: c.name,
+            duration: {
+                start: c.startDate,
+                end: c.endDate ?? "Present",
+            },
+            focusAreas: c.focusAreas,
+            skills: c.skills.map((s) => s.name),
+        })), null, 2) || "N/A"}
 			Recent Mood Trends: ${user.moods.length > 0
             ? user.moods
                 .slice(-10)
@@ -104040,7 +104270,9 @@ class WBService {
 			`;
         const prompt = `
 			You are a wellness assistant for PSA employees. 
-			Based on the user's profile and current time ${dayjs().tz("Asia/Singapore").format("HH:mm")}, provide **10 friendly, practical, and
+			Based on the user's profile and current time ${dayjs()
+            .tz("Asia/Singapore")
+            .format("HH:mm")}, provide **10 friendly, practical, and
 			relatable "Tip of the Moment"s"** that the user can apply in their daily work routine to improve wellness, focus, or mental health.
 
 			- Each tip must be in JSON format: { "text": "...", "category": "...", "image": "..." }.
@@ -104561,6 +104793,14 @@ class WebsocketService {
 }
 const websocketService = new WebsocketService();
 
+const CourseSchema = new Schema$1({
+    name: { type: String, required: true },
+    skillsTaught: { type: [skillSchema], required: true },
+    durationHours: { type: Number, required: true },
+    description: { type: String },
+}, { timestamps: true });
+const Course = mongoose.model("Course", CourseSchema);
+
 dayjs.extend(utc);
 dayjs.extend(timezone);
 class UserService {
@@ -104689,6 +104929,9 @@ class UserService {
         if (!mentee)
             throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
         const excludedMentorIds = mentee.mentors.map((m) => new mongoose.Types.ObjectId(m._id));
+        // Compute experience in years
+        const menteeExperience = (new Date().getTime() - mentee.hireDate.getTime()) /
+            (1000 * 60 * 60 * 24 * 365);
         const candidates = await User.aggregate([
             {
                 $match: {
@@ -104696,7 +104939,7 @@ class UserService {
                         $ne: new mongoose.Types.ObjectId(userId),
                         $nin: excludedMentorIds,
                     },
-                    experienceLevel: { $gte: mentee.experienceLevel },
+                    hireDate: { $lte: mentee.hireDate }, // only more senior mentors
                     "mentorshipRequests.sender": {
                         $ne: new mongoose.Types.ObjectId(userId),
                     },
@@ -104705,44 +104948,52 @@ class UserService {
             {
                 $project: {
                     skills: 1,
-                    experienceLevel: 1,
+                    hireDate: 1,
                     careerPath: 1,
                     name: 1,
-                    experience_diff: {
-                        $subtract: ["$experienceLevel", mentee.experienceLevel],
-                    },
                     avatar: 1,
+                    position: 1,
+                    department: 1,
+                    unit: 1,
+                    // compute mentor experience in years
+                    experience_diff: {
+                        $divide: [
+                            { $subtract: [new Date(), "$hireDate"] },
+                            1000 * 60 * 60 * 24 * 365,
+                        ],
+                    },
                 },
             },
             { $limit: 200 },
         ]);
-        const w1 = 0.4;
-        const w2 = 0.2;
-        const w3 = 0.3;
+        const w1 = 0.4; // skill alignment
+        const w2 = 0.2; // experience difference
+        const w3 = 0.3; // career path similarity
         const scoredMentors = candidates.map((mentor) => {
             const skill_alignment = this.countOverlappingSkills(mentee.skills, mentor.skills);
-            const experience_diff = mentor.experienceLevel - mentee.experienceLevel;
+            const mentorExperience = (new Date().getTime() - new Date(mentor.hireDate).getTime()) /
+                (1000 * 60 * 60 * 24 * 365);
+            const experience_diff = mentorExperience - menteeExperience;
             const career_path_similarity = this.calculateCareerPathSimilarity(mentee.careerPath, mentor.careerPath);
             const score = w1 * skill_alignment +
                 w2 * experience_diff +
                 w3 * career_path_similarity;
-            return {
-                mentor,
-                score,
-            };
+            return { mentor, score };
         });
         return scoredMentors
             .sort((a, b) => b.score - a.score)
             .slice(page * (limit || scoredMentors.length), (limit || scoredMentors.length) * (page + 1))
             .map((m) => m.mentor);
     }
-    countOverlappingSkills(mentorSkills, menteeSkills) {
-        const overlap = mentorSkills.filter((s) => menteeSkills.includes(s.name.toLowerCase())).length;
-        return overlap;
+    // Skills overlap
+    countOverlappingSkills(menteeSkills, mentorSkills) {
+        const menteeSkillNames = new Set(menteeSkills.map((s) => s.name.toLowerCase()));
+        return mentorSkills.filter((s) => menteeSkillNames.has(s.name.toLowerCase())).length;
     }
+    // Career path similarity
     calculateCareerPathSimilarity(menteePath, mentorPath) {
-        const menteePositions = new Set(menteePath.map((p) => p.position));
-        const mentorPositions = new Set(mentorPath.map((p) => p.position));
+        const menteePositions = new Set(menteePath.map((p) => p.name));
+        const mentorPositions = new Set(mentorPath.map((p) => p.name));
         const intersection = [...menteePositions].filter((p) => mentorPositions.has(p));
         const union = new Set([...menteePositions, ...mentorPositions]);
         return union.size > 0 ? intersection.length / union.size : 0;
@@ -104759,8 +105010,101 @@ class UserService {
         await user.save();
         return user.moods[user.moods.length - 1];
     }
+    async getRecommendedCourses(userID) {
+        const user = await User.findById(userID).exec();
+        if (!user)
+            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        // Get current position
+        const currentUserPosition = await this.getCurrentPosition(userID);
+        let skillGaps = [];
+        if (currentUserPosition) {
+            skillGaps = currentUserPosition.skills
+                .filter((posSkill) => {
+                const userSkill = user.skills.find((us) => us.name === posSkill.name);
+                return (!userSkill || (userSkill.level && userSkill.level < 100));
+            })
+                .map((posSkill) => ({
+                ...posSkill,
+                level: user.skills.find((us) => us.name === posSkill.name)
+                    ?.level ?? 0,
+            }));
+        }
+        return await getRecommendedCoursesHelper(skillGaps, user);
+    }
+    async getPotentialPositions(userID) {
+        const user = await User.findById(userID).exec();
+        if (!user) {
+            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        }
+        // 1. Get user's current skills and current position
+        const currentSkills = user.skills || [];
+        const currentPosition = await this.getCurrentPosition(userID);
+        const potentialPositions = (await Position.find({
+            _id: { $ne: currentPosition?._id }, // exclude current position
+        })
+            .lean()
+            .exec());
+        const potentialRoles = [];
+        for (const position of potentialPositions) {
+            // 3. Compute missing skills for this role
+            const missingSkills = position.skills.filter((posSkill) => !currentSkills.some((userSkill) => userSkill.name === posSkill.name &&
+                (userSkill.level ?? 0) >= (posSkill?.level ?? 0)));
+            if (missingSkills.length === 0)
+                continue;
+            const recommendedCourses = await getRecommendedCoursesHelper(missingSkills, user);
+            potentialRoles.push({
+                position,
+                missingSkills,
+                recommendedCourses,
+            });
+        }
+        potentialRoles.sort((a, b) => b.missingSkills.length - a.missingSkills.length);
+        return potentialRoles;
+    }
+    async getCurrentPosition(userID) {
+        const user = await User.findById(userID).lean().exec();
+        if (!user) {
+            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        }
+        return user.careerPath?.find((pos) => !pos.endDate);
+    }
 }
 const userService = new UserService();
+async function getRecommendedCoursesHelper(skillGaps, user) {
+    const courses = await Course.find().exec();
+    // Score each course and filter
+    const scoredCourses = courses
+        .map((course) => {
+        let totalRelevance = 0;
+        course.skillsTaught.forEach((cs) => {
+            // Find all gaps that match this skill name
+            const matchingGaps = skillGaps.filter((g) => g.name === cs.name);
+            console.log(skillGaps);
+            matchingGaps.forEach((gap) => {
+                let relevance = 3; // base for skill name match
+                // Function area match
+                if (gap.functionArea === cs.functionArea)
+                    relevance += 2;
+                // Specialisation match
+                if (gap.specialisation === cs.specialisation)
+                    relevance += 1;
+                // Aspirations match
+                const inAspirations = user.aspirations.some((role) => role.skills.some((s) => s.name === cs.name));
+                if (inAspirations)
+                    relevance += 5;
+                // Skill level gap
+                if (gap.level)
+                    relevance += Math.max(0, 100 - gap.level) / 50;
+                totalRelevance += relevance;
+            });
+        });
+        return { course, relevance: totalRelevance };
+    })
+        .filter((c) => c.relevance > 0)
+        .sort((a, b) => b.relevance - a.relevance)
+        .map((c) => c.course);
+    return scoredCourses.slice(0, 10);
+}
 
 class UserController {
     async getAllUsers(request, response) {
@@ -104794,7 +105138,9 @@ class UserController {
     }
     async addActivity(request, response) {
         const userID = response.locals._id;
-        response.status(200).send(await userService.addActivity(userID, request.body));
+        response
+            .status(200)
+            .send(await userService.addActivity(userID, request.body));
     }
     async deleteAllUsers(request, response) {
         response.status(200).send(await userService.deleteAllUsers());
@@ -104810,6 +105156,18 @@ class UserController {
         response
             .status(200)
             .send(await userService.getTopMatchedMentors(userID, limit, page));
+    }
+    async getRecommendedCourses(request, response) {
+        const userID = response.locals._id;
+        response
+            .status(200)
+            .send(await userService.getRecommendedCourses(userID));
+    }
+    async getPotentialPositions(request, response) {
+        const userID = response.locals._id;
+        response
+            .status(200)
+            .send(await userService.getPotentialPositions(userID));
     }
     async getChats(request, response) {
         const userID = response.locals._id;
@@ -104907,6 +105265,8 @@ userRouter.get("", userController.catchErrors(userController.getAllUsers.bind(us
 userRouter.get("/:ID", getID(), userController.catchErrors(userController.getUserByID.bind(userController)));
 userRouter.get("/:ID/wb", getID(), userController.catchErrors(userController.getWBConversations.bind(userController)));
 userRouter.get("/:ID/top-matches", getID(), userController.catchErrors(userController.getTopMatchedMentors.bind(userController)));
+userRouter.get("/:ID/recommended-courses", getID(), userController.catchErrors(userController.getRecommendedCourses.bind(userController)));
+userRouter.get("/:ID/potential-positions", getID(), userController.catchErrors(userController.getPotentialPositions.bind(userController)));
 userRouter.get("/:ID/chats", getID(), userController.catchErrors(userController.getChats.bind(userController)));
 userRouter.post("", userController.catchErrors(userController.createUser.bind(userController)));
 userRouter.post("/:ID/notifications", getID(), userController.catchErrors(userController.addNotification.bind(userController)));
@@ -117423,7 +117783,7 @@ const fromEnv = (init) => async () => {
 
 const ENV_IMDS_DISABLED$1 = "AWS_EC2_METADATA_DISABLED";
 const remoteProvider = async (init) => {
-    const { ENV_CMDS_FULL_URI, ENV_CMDS_RELATIVE_URI, fromContainerMetadata, fromInstanceMetadata } = await import('./index-C404B2Yp.js');
+    const { ENV_CMDS_FULL_URI, ENV_CMDS_RELATIVE_URI, fromContainerMetadata, fromInstanceMetadata } = await import('./index-CgF2JVON.js');
     if (process.env[ENV_CMDS_RELATIVE_URI] || process.env[ENV_CMDS_FULL_URI]) {
         init.logger?.debug("@aws-sdk/credential-provider-node - remoteProvider::fromHttp/fromContainerMetadata");
         const { fromHttp } = await import('./index-C5V8QFbL.js');
@@ -117471,19 +117831,19 @@ const defaultProvider = (init = {}) => memoize(chain(async () => {
     if (!ssoStartUrl && !ssoAccountId && !ssoRegion && !ssoRoleName && !ssoSession) {
         throw new CredentialsProviderError("Skipping SSO provider in default chain (inputs do not include SSO fields).", { logger: init.logger });
     }
-    const { fromSSO } = await import('./index-zipxfOcu.js');
+    const { fromSSO } = await import('./index-D86zxVpE.js');
     return fromSSO(init)();
 }, async () => {
     init.logger?.debug("@aws-sdk/credential-provider-node - defaultProvider::fromIni");
-    const { fromIni } = await import('./index-km8SGoDG.js');
+    const { fromIni } = await import('./index-uLeslH21.js');
     return fromIni(init)();
 }, async () => {
     init.logger?.debug("@aws-sdk/credential-provider-node - defaultProvider::fromProcess");
-    const { fromProcess } = await import('./index-Bci27sv3.js');
+    const { fromProcess } = await import('./index-DW_0B0gF.js');
     return fromProcess(init)();
 }, async () => {
     init.logger?.debug("@aws-sdk/credential-provider-node - defaultProvider::fromTokenFile");
-    const { fromTokenFile } = await import('./index-Dh0v_kW1.js');
+    const { fromTokenFile } = await import('./index-BEg0QBN1.js');
     return fromTokenFile(init)();
 }, async () => {
     init.logger?.debug("@aws-sdk/credential-provider-node - defaultProvider::remoteProvider");
@@ -118327,7 +118687,7 @@ const inferPhysicalRegion = async () => {
     }
     if (!process.env[ENV_IMDS_DISABLED]) {
         try {
-            const { getInstanceMetadataEndpoint, httpRequest } = await import('./index-C404B2Yp.js');
+            const { getInstanceMetadataEndpoint, httpRequest } = await import('./index-CgF2JVON.js');
             const endpoint = await getInstanceMetadataEndpoint();
             return (await httpRequest({ ...endpoint, path: IMDS_REGION_PATH })).toString();
         }
@@ -127163,7 +127523,13 @@ const Event = model("Event", eventSchema);
 
 class EventService {
     async getAllEvents(condition) {
-        return await Event.find(condition).exec();
+        const events = await Event.find(condition).exec();
+        for (const event of events) {
+            if (event.coverImage) {
+                event.coverImage.url = await s3Service.getPublicUrl(event.coverImage.s3Filename, event.coverImage.folder);
+            }
+        }
+        return events;
     }
     async getEventByID(eventID) {
         const event = await Event.findById(eventID)
@@ -127171,6 +127537,9 @@ class EventService {
             .exec();
         if (!event) {
             throw new HttpError("Event not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        }
+        if (event.coverImage) {
+            event.coverImage.url = await s3Service.getPublicUrl(event?.coverImage.s3Filename, event?.coverImage.folder);
         }
         return event;
     }

@@ -1,24 +1,20 @@
 import mongoose from "mongoose";
+import { Position as PositionType, Skill } from "@common/types/user.js";
 declare class UserService {
     getAllUsers(): Promise<(mongoose.Document<unknown, {}, {
+        createdAt: NativeDate;
+        updatedAt: NativeDate;
+    } & {
         name: string;
         email: string;
+        organisation: string;
         position: string;
+        department: string;
+        unit: string;
         role: "user" | "admin";
+        hireDate: NativeDate;
         password: string;
         subordinates: mongoose.Types.ObjectId[];
-        createdAt: NativeDate;
-        experienceLevel: number;
-        skills: mongoose.Types.DocumentArray<{
-            level: number;
-            name?: string | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            level: number;
-            name?: string | null | undefined;
-        }> & {
-            level: number;
-            name?: string | null | undefined;
-        }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
             message?: string | null | undefined;
             sender?: mongoose.Types.ObjectId | null | undefined;
@@ -31,39 +27,98 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }> & {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }>;
-        lastSeen: NativeDate;
-        isOnline: boolean;
+        skills: mongoose.Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -87,28 +142,147 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
+        languages: mongoose.Types.DocumentArray<{
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }> & {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }>;
+        strengths: mongoose.Types.DocumentArray<{
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }> & {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }>;
+        education: mongoose.Types.DocumentArray<{
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }> & {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }>;
+        projects: mongoose.Types.DocumentArray<{
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }> & {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }>;
+        aspirations: mongoose.Types.DocumentArray<{
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }> & {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
     }> & {
+        createdAt: NativeDate;
+        updatedAt: NativeDate;
+    } & {
         name: string;
         email: string;
+        organisation: string;
         position: string;
+        department: string;
+        unit: string;
         role: "user" | "admin";
+        hireDate: NativeDate;
         password: string;
         subordinates: mongoose.Types.ObjectId[];
-        createdAt: NativeDate;
-        experienceLevel: number;
-        skills: mongoose.Types.DocumentArray<{
-            level: number;
-            name?: string | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            level: number;
-            name?: string | null | undefined;
-        }> & {
-            level: number;
-            name?: string | null | undefined;
-        }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
             message?: string | null | undefined;
             sender?: mongoose.Types.ObjectId | null | undefined;
@@ -121,39 +295,98 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }> & {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }>;
-        lastSeen: NativeDate;
-        isOnline: boolean;
+        skills: mongoose.Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -177,6 +410,130 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
+        languages: mongoose.Types.DocumentArray<{
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }> & {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }>;
+        strengths: mongoose.Types.DocumentArray<{
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }> & {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }>;
+        education: mongoose.Types.DocumentArray<{
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }> & {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }>;
+        projects: mongoose.Types.DocumentArray<{
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }> & {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }>;
+        aspirations: mongoose.Types.DocumentArray<{
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }> & {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
@@ -186,24 +543,19 @@ declare class UserService {
         __v: number;
     })[]>;
     createUser(userData: any): Promise<mongoose.Document<unknown, {}, {
+        createdAt: NativeDate;
+        updatedAt: NativeDate;
+    } & {
         name: string;
         email: string;
+        organisation: string;
         position: string;
+        department: string;
+        unit: string;
         role: "user" | "admin";
+        hireDate: NativeDate;
         password: string;
         subordinates: mongoose.Types.ObjectId[];
-        createdAt: NativeDate;
-        experienceLevel: number;
-        skills: mongoose.Types.DocumentArray<{
-            level: number;
-            name?: string | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            level: number;
-            name?: string | null | undefined;
-        }> & {
-            level: number;
-            name?: string | null | undefined;
-        }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
             message?: string | null | undefined;
             sender?: mongoose.Types.ObjectId | null | undefined;
@@ -216,39 +568,98 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }> & {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }>;
-        lastSeen: NativeDate;
-        isOnline: boolean;
+        skills: mongoose.Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -272,28 +683,147 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
+        languages: mongoose.Types.DocumentArray<{
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }> & {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }>;
+        strengths: mongoose.Types.DocumentArray<{
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }> & {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }>;
+        education: mongoose.Types.DocumentArray<{
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }> & {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }>;
+        projects: mongoose.Types.DocumentArray<{
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }> & {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }>;
+        aspirations: mongoose.Types.DocumentArray<{
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }> & {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
     }> & {
+        createdAt: NativeDate;
+        updatedAt: NativeDate;
+    } & {
         name: string;
         email: string;
+        organisation: string;
         position: string;
+        department: string;
+        unit: string;
         role: "user" | "admin";
+        hireDate: NativeDate;
         password: string;
         subordinates: mongoose.Types.ObjectId[];
-        createdAt: NativeDate;
-        experienceLevel: number;
-        skills: mongoose.Types.DocumentArray<{
-            level: number;
-            name?: string | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            level: number;
-            name?: string | null | undefined;
-        }> & {
-            level: number;
-            name?: string | null | undefined;
-        }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
             message?: string | null | undefined;
             sender?: mongoose.Types.ObjectId | null | undefined;
@@ -306,39 +836,98 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }> & {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }>;
-        lastSeen: NativeDate;
-        isOnline: boolean;
+        skills: mongoose.Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -362,6 +951,130 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
+        languages: mongoose.Types.DocumentArray<{
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }> & {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }>;
+        strengths: mongoose.Types.DocumentArray<{
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }> & {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }>;
+        education: mongoose.Types.DocumentArray<{
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }> & {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }>;
+        projects: mongoose.Types.DocumentArray<{
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }> & {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }>;
+        aspirations: mongoose.Types.DocumentArray<{
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }> & {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
@@ -371,24 +1084,19 @@ declare class UserService {
         __v: number;
     }>;
     getUserByID(userId: any): Promise<mongoose.Document<unknown, {}, {
+        createdAt: NativeDate;
+        updatedAt: NativeDate;
+    } & {
         name: string;
         email: string;
+        organisation: string;
         position: string;
+        department: string;
+        unit: string;
         role: "user" | "admin";
+        hireDate: NativeDate;
         password: string;
         subordinates: mongoose.Types.ObjectId[];
-        createdAt: NativeDate;
-        experienceLevel: number;
-        skills: mongoose.Types.DocumentArray<{
-            level: number;
-            name?: string | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            level: number;
-            name?: string | null | undefined;
-        }> & {
-            level: number;
-            name?: string | null | undefined;
-        }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
             message?: string | null | undefined;
             sender?: mongoose.Types.ObjectId | null | undefined;
@@ -401,39 +1109,98 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }> & {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }>;
-        lastSeen: NativeDate;
-        isOnline: boolean;
+        skills: mongoose.Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -457,28 +1224,147 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
+        languages: mongoose.Types.DocumentArray<{
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }> & {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }>;
+        strengths: mongoose.Types.DocumentArray<{
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }> & {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }>;
+        education: mongoose.Types.DocumentArray<{
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }> & {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }>;
+        projects: mongoose.Types.DocumentArray<{
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }> & {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }>;
+        aspirations: mongoose.Types.DocumentArray<{
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }> & {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
     }> & {
+        createdAt: NativeDate;
+        updatedAt: NativeDate;
+    } & {
         name: string;
         email: string;
+        organisation: string;
         position: string;
+        department: string;
+        unit: string;
         role: "user" | "admin";
+        hireDate: NativeDate;
         password: string;
         subordinates: mongoose.Types.ObjectId[];
-        createdAt: NativeDate;
-        experienceLevel: number;
-        skills: mongoose.Types.DocumentArray<{
-            level: number;
-            name?: string | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            level: number;
-            name?: string | null | undefined;
-        }> & {
-            level: number;
-            name?: string | null | undefined;
-        }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
             message?: string | null | undefined;
             sender?: mongoose.Types.ObjectId | null | undefined;
@@ -491,39 +1377,98 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }> & {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }>;
-        lastSeen: NativeDate;
-        isOnline: boolean;
+        skills: mongoose.Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -547,6 +1492,130 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
+        languages: mongoose.Types.DocumentArray<{
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }> & {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }>;
+        strengths: mongoose.Types.DocumentArray<{
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }> & {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }>;
+        education: mongoose.Types.DocumentArray<{
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }> & {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }>;
+        projects: mongoose.Types.DocumentArray<{
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }> & {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }>;
+        aspirations: mongoose.Types.DocumentArray<{
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }> & {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
@@ -556,24 +1625,19 @@ declare class UserService {
         __v: number;
     }>;
     updateUser(userId: any, userData: any): Promise<(mongoose.Document<unknown, {}, {
+        createdAt: NativeDate;
+        updatedAt: NativeDate;
+    } & {
         name: string;
         email: string;
+        organisation: string;
         position: string;
+        department: string;
+        unit: string;
         role: "user" | "admin";
+        hireDate: NativeDate;
         password: string;
         subordinates: mongoose.Types.ObjectId[];
-        createdAt: NativeDate;
-        experienceLevel: number;
-        skills: mongoose.Types.DocumentArray<{
-            level: number;
-            name?: string | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            level: number;
-            name?: string | null | undefined;
-        }> & {
-            level: number;
-            name?: string | null | undefined;
-        }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
             message?: string | null | undefined;
             sender?: mongoose.Types.ObjectId | null | undefined;
@@ -586,39 +1650,98 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }> & {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }>;
-        lastSeen: NativeDate;
-        isOnline: boolean;
+        skills: mongoose.Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -642,28 +1765,147 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
+        languages: mongoose.Types.DocumentArray<{
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }> & {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }>;
+        strengths: mongoose.Types.DocumentArray<{
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }> & {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }>;
+        education: mongoose.Types.DocumentArray<{
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }> & {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }>;
+        projects: mongoose.Types.DocumentArray<{
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }> & {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }>;
+        aspirations: mongoose.Types.DocumentArray<{
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }> & {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
     }> & {
+        createdAt: NativeDate;
+        updatedAt: NativeDate;
+    } & {
         name: string;
         email: string;
+        organisation: string;
         position: string;
+        department: string;
+        unit: string;
         role: "user" | "admin";
+        hireDate: NativeDate;
         password: string;
         subordinates: mongoose.Types.ObjectId[];
-        createdAt: NativeDate;
-        experienceLevel: number;
-        skills: mongoose.Types.DocumentArray<{
-            level: number;
-            name?: string | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            level: number;
-            name?: string | null | undefined;
-        }> & {
-            level: number;
-            name?: string | null | undefined;
-        }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
             message?: string | null | undefined;
             sender?: mongoose.Types.ObjectId | null | undefined;
@@ -676,39 +1918,98 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }> & {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }>;
-        lastSeen: NativeDate;
-        isOnline: boolean;
+        skills: mongoose.Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -732,6 +2033,130 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
+        languages: mongoose.Types.DocumentArray<{
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }> & {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }>;
+        strengths: mongoose.Types.DocumentArray<{
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }> & {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }>;
+        education: mongoose.Types.DocumentArray<{
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }> & {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }>;
+        projects: mongoose.Types.DocumentArray<{
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }> & {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }>;
+        aspirations: mongoose.Types.DocumentArray<{
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }> & {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
@@ -741,24 +2166,19 @@ declare class UserService {
         __v: number;
     }) | null>;
     addNotification(userId: string, message: string): Promise<mongoose.Document<unknown, {}, {
+        createdAt: NativeDate;
+        updatedAt: NativeDate;
+    } & {
         name: string;
         email: string;
+        organisation: string;
         position: string;
+        department: string;
+        unit: string;
         role: "user" | "admin";
+        hireDate: NativeDate;
         password: string;
         subordinates: mongoose.Types.ObjectId[];
-        createdAt: NativeDate;
-        experienceLevel: number;
-        skills: mongoose.Types.DocumentArray<{
-            level: number;
-            name?: string | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            level: number;
-            name?: string | null | undefined;
-        }> & {
-            level: number;
-            name?: string | null | undefined;
-        }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
             message?: string | null | undefined;
             sender?: mongoose.Types.ObjectId | null | undefined;
@@ -771,39 +2191,98 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }> & {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }>;
-        lastSeen: NativeDate;
-        isOnline: boolean;
+        skills: mongoose.Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -827,28 +2306,147 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
+        languages: mongoose.Types.DocumentArray<{
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }> & {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }>;
+        strengths: mongoose.Types.DocumentArray<{
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }> & {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }>;
+        education: mongoose.Types.DocumentArray<{
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }> & {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }>;
+        projects: mongoose.Types.DocumentArray<{
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }> & {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }>;
+        aspirations: mongoose.Types.DocumentArray<{
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }> & {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
     }> & {
+        createdAt: NativeDate;
+        updatedAt: NativeDate;
+    } & {
         name: string;
         email: string;
+        organisation: string;
         position: string;
+        department: string;
+        unit: string;
         role: "user" | "admin";
+        hireDate: NativeDate;
         password: string;
         subordinates: mongoose.Types.ObjectId[];
-        createdAt: NativeDate;
-        experienceLevel: number;
-        skills: mongoose.Types.DocumentArray<{
-            level: number;
-            name?: string | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            level: number;
-            name?: string | null | undefined;
-        }> & {
-            level: number;
-            name?: string | null | undefined;
-        }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
             message?: string | null | undefined;
             sender?: mongoose.Types.ObjectId | null | undefined;
@@ -861,39 +2459,98 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }> & {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }>;
-        lastSeen: NativeDate;
-        isOnline: boolean;
+        skills: mongoose.Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -917,6 +2574,130 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
+        languages: mongoose.Types.DocumentArray<{
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }> & {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }>;
+        strengths: mongoose.Types.DocumentArray<{
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }> & {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }>;
+        education: mongoose.Types.DocumentArray<{
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }> & {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }>;
+        projects: mongoose.Types.DocumentArray<{
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }> & {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }>;
+        aspirations: mongoose.Types.DocumentArray<{
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }> & {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
@@ -927,24 +2708,19 @@ declare class UserService {
     }>;
     sendMentorshipRequest(senderID: string, mentorID: string, message?: string): Promise<void>;
     addActivity(userID: string, activity: any): Promise<mongoose.Document<unknown, {}, {
+        createdAt: NativeDate;
+        updatedAt: NativeDate;
+    } & {
         name: string;
         email: string;
+        organisation: string;
         position: string;
+        department: string;
+        unit: string;
         role: "user" | "admin";
+        hireDate: NativeDate;
         password: string;
         subordinates: mongoose.Types.ObjectId[];
-        createdAt: NativeDate;
-        experienceLevel: number;
-        skills: mongoose.Types.DocumentArray<{
-            level: number;
-            name?: string | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            level: number;
-            name?: string | null | undefined;
-        }> & {
-            level: number;
-            name?: string | null | undefined;
-        }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
             message?: string | null | undefined;
             sender?: mongoose.Types.ObjectId | null | undefined;
@@ -957,39 +2733,98 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }> & {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }>;
-        lastSeen: NativeDate;
-        isOnline: boolean;
+        skills: mongoose.Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -1013,28 +2848,147 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
+        languages: mongoose.Types.DocumentArray<{
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }> & {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }>;
+        strengths: mongoose.Types.DocumentArray<{
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }> & {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }>;
+        education: mongoose.Types.DocumentArray<{
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }> & {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }>;
+        projects: mongoose.Types.DocumentArray<{
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }> & {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }>;
+        aspirations: mongoose.Types.DocumentArray<{
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }> & {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
     }> & {
+        createdAt: NativeDate;
+        updatedAt: NativeDate;
+    } & {
         name: string;
         email: string;
+        organisation: string;
         position: string;
+        department: string;
+        unit: string;
         role: "user" | "admin";
+        hireDate: NativeDate;
         password: string;
         subordinates: mongoose.Types.ObjectId[];
-        createdAt: NativeDate;
-        experienceLevel: number;
-        skills: mongoose.Types.DocumentArray<{
-            level: number;
-            name?: string | null | undefined;
-        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            level: number;
-            name?: string | null | undefined;
-        }> & {
-            level: number;
-            name?: string | null | undefined;
-        }>;
         mentorshipRequests: mongoose.Types.DocumentArray<{
             message?: string | null | undefined;
             sender?: mongoose.Types.ObjectId | null | undefined;
@@ -1047,39 +3001,98 @@ declare class UserService {
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
             message: string;
             read: boolean;
+            createdAt: NativeDate;
         }>;
         careerPath: mongoose.Types.DocumentArray<{
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }> & {
-            position: string;
-            progress: number;
-            skillsRequired: string[];
-            startedAt?: NativeDate | null | undefined;
-            endedAt?: NativeDate | null | undefined;
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
         }>;
-        lastSeen: NativeDate;
-        isOnline: boolean;
+        skills: mongoose.Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
         moods: mongoose.Types.DocumentArray<{
             date: NativeDate;
             level: number;
@@ -1103,6 +3116,130 @@ declare class UserService {
             date: NativeDate;
             type: "dailyCheckIn" | "mindfulness" | "mentorMessage" | "mentorVideoCall";
         }>;
+        languages: mongoose.Types.DocumentArray<{
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }> & {
+            name: string;
+            proficiency: "Fluent" | "Professional" | "Conversational" | "Intermediate";
+        }>;
+        strengths: mongoose.Types.DocumentArray<{
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }> & {
+            name: string;
+            level: "Intermediate" | "Beginner" | "Advanced";
+        }>;
+        education: mongoose.Types.DocumentArray<{
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }> & {
+            startDate: NativeDate;
+            endDate: NativeDate;
+            institution: string;
+            degree: string;
+        }>;
+        projects: mongoose.Types.DocumentArray<{
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }> & {
+            name: string;
+            role: string;
+            startDate: NativeDate;
+            endDate: NativeDate;
+            description: string;
+            outcomes: string[];
+        }>;
+        aspirations: mongoose.Types.DocumentArray<{
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }> & {
+            name: string;
+            focusAreas: string[];
+            skills: mongoose.Types.DocumentArray<{
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }> & {
+                name: string;
+                functionArea: string;
+                specialisation: string;
+                level?: number | null | undefined;
+            }>;
+            startDate: NativeDate;
+            endDate: NativeDate;
+        }>;
+        lastSeen: NativeDate;
+        isOnline: boolean;
         bio?: string | null | undefined;
         supervisor?: mongoose.Types.ObjectId | null | undefined;
         avatar?: string | null | undefined;
@@ -1116,25 +3253,25 @@ declare class UserService {
         participants: mongoose.Types.ObjectId[];
         messages: mongoose.Types.DocumentArray<{
             type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-            createdAt: NativeDate;
             sender: mongoose.Types.ObjectId;
             read: boolean;
+            createdAt: NativeDate;
             content: string;
             metadata: any;
             readAt?: NativeDate | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
             type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-            createdAt: NativeDate;
             sender: mongoose.Types.ObjectId;
             read: boolean;
+            createdAt: NativeDate;
             content: string;
             metadata: any;
             readAt?: NativeDate | null | undefined;
         }> & {
             type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-            createdAt: NativeDate;
             sender: mongoose.Types.ObjectId;
             read: boolean;
+            createdAt: NativeDate;
             content: string;
             metadata: any;
             readAt?: NativeDate | null | undefined;
@@ -1144,25 +3281,25 @@ declare class UserService {
         participants: mongoose.Types.ObjectId[];
         messages: mongoose.Types.DocumentArray<{
             type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-            createdAt: NativeDate;
             sender: mongoose.Types.ObjectId;
             read: boolean;
+            createdAt: NativeDate;
             content: string;
             metadata: any;
             readAt?: NativeDate | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
             type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-            createdAt: NativeDate;
             sender: mongoose.Types.ObjectId;
             read: boolean;
+            createdAt: NativeDate;
             content: string;
             metadata: any;
             readAt?: NativeDate | null | undefined;
         }> & {
             type: "text" | "file" | "tip" | "quiz" | "poll" | "feedback" | "feedbackRequest" | "question" | "moodUpdate" | "wellbeingPrompt";
-            createdAt: NativeDate;
             sender: mongoose.Types.ObjectId;
             read: boolean;
+            createdAt: NativeDate;
             content: string;
             metadata: any;
             readAt?: NativeDate | null | undefined;
@@ -1173,17 +3310,17 @@ declare class UserService {
         __v: number;
     })[]>;
     getNotifications(userID: string): Promise<mongoose.Types.DocumentArray<{
-        createdAt: NativeDate;
         message: string;
         read: boolean;
+        createdAt: NativeDate;
     }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-        createdAt: NativeDate;
         message: string;
         read: boolean;
+        createdAt: NativeDate;
     }> & {
-        createdAt: NativeDate;
         message: string;
         read: boolean;
+        createdAt: NativeDate;
     }>>;
     getWBConversations(userID: string): Promise<(mongoose.Document<unknown, {}, {
         createdAt: NativeDate;
@@ -1241,6 +3378,197 @@ declare class UserService {
         level: number;
         notes: string[];
     }>;
+    getRecommendedCourses(userID: string): Promise<(mongoose.Document<unknown, {}, {
+        createdAt: NativeDate;
+        updatedAt: NativeDate;
+    } & {
+        name: string;
+        skillsTaught: mongoose.Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        durationHours: number;
+        description?: string | null | undefined;
+    }> & {
+        createdAt: NativeDate;
+        updatedAt: NativeDate;
+    } & {
+        name: string;
+        skillsTaught: mongoose.Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        durationHours: number;
+        description?: string | null | undefined;
+    } & {
+        _id: mongoose.Types.ObjectId;
+    } & {
+        __v: number;
+    })[]>;
+    getPotentialPositions(userID: string): Promise<{
+        position: PositionType;
+        missingSkills: Skill[];
+        recommendedCourses: any;
+    }[]>;
+    getCurrentPosition(userID: string): Promise<(mongoose.Types.Subdocument<string | mongoose.Types.ObjectId, any, mongoose.FlattenMaps<{
+        name: string;
+        focusAreas: string[];
+        skills: mongoose.Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+    } | {
+        name: string;
+        focusAreas: string[];
+        skills: mongoose.Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        _id: string;
+        __v: number;
+    } | {
+        name: string;
+        focusAreas: string[];
+        skills: mongoose.Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        _id: string;
+        __v: number;
+    }>> & mongoose.FlattenMaps<{
+        name: string;
+        focusAreas: string[];
+        skills: mongoose.Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+    } | {
+        name: string;
+        focusAreas: string[];
+        skills: mongoose.Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        _id: string;
+        __v: number;
+    } | {
+        name: string;
+        focusAreas: string[];
+        skills: mongoose.Types.DocumentArray<{
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }> & {
+            name: string;
+            functionArea: string;
+            specialisation: string;
+            level?: number | null | undefined;
+        }>;
+        startDate: NativeDate;
+        endDate: NativeDate;
+        _id: string;
+        __v: number;
+    }>) | undefined>;
 }
 declare const userService: UserService;
 export default userService;

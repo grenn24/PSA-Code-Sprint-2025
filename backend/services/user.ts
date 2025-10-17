@@ -471,7 +471,7 @@ async function getRecommendedCoursesHelper(skillGaps: Skill[], user: UserType) {
 				const matchingGaps = skillGaps.filter(
 					(g) => g.name === cs.name
 				);
-
+				console.log(skillGaps);
 				matchingGaps.forEach((gap) => {
 					let relevance = 3; // base for skill name match
 
