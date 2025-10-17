@@ -23,7 +23,7 @@ const PendingInvites = () => {
 			mentorshipRequests: user?.mentorshipRequests?.filter(
 				(req) => req._id !== request._id
 			),
-			mentees: [...(user?.mentees || []), request.sender?._id],
+			mentees: [...(user?.mentees || []), (request.sender as User)?._id],
 		});
 		dispatch(setUser(newUser));
 	};
@@ -68,16 +68,16 @@ const PendingInvites = () => {
 						<div className="flex items-center gap-3">
 							{/* Sender Avatar */}
 							<img
-								src={invite.sender?.avatar}
-								alt={invite.sender?.name}
+								src={(invite.sender as User)?.avatar}
+								alt={(invite.sender as User)?.name}
 								className="w-14 h-14 rounded-full object-cover"
 							/>
 							<div>
 								<h3 className="font-medium text-gray-800">
-									{invite.sender?.name}
+									{(invite.sender as User)?.name}
 								</h3>
 								<p className="text-sm text-gray-500">
-									{invite.sender?.position}
+									{(invite.sender as User)?.position}
 								</p>
 							</div>
 						</div>

@@ -33,6 +33,14 @@ userRouter.get(
 );
 
 userRouter.get(
+	"/:ID/recommended-courses",
+	getID(),
+	userController.catchErrors(
+		userController.getRecommendedCourses.bind(userController)
+	)
+);
+
+userRouter.get(
 	"/:ID/chats",
 	getID(),
 	userController.catchErrors(

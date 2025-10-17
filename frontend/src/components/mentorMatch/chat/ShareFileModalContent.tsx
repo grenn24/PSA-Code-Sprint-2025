@@ -91,8 +91,8 @@ const ShareFileModalContent = ({ sendMessage, setOpenMenuModal }: Prop) => {
 				</div>
 			)}
 			<FileInput
-				openInput={openFileInput}
-				setOpenInput={setOpenFileInput}
+				open={openFileInput}
+				setOpen={setOpenFileInput}
 				onFileSubmit={handleFileSubmit}
 			/>
 		</div>

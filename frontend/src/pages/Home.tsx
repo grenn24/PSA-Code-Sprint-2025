@@ -97,6 +97,7 @@ const Home = () => {
 		"Suggested Courses",
 		"Recommended Mentors",
 		"Notifications",
+		"Strengths",
 	]);
 
 	useEffect(() => {
@@ -261,7 +262,7 @@ const Home = () => {
 								className="p-5 bg-gradient-to-br from-indigo-50 to-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
 							>
 								{/* Header Row */}
-								<div className="flex justify-between items-start mb-4">
+								<div className="flex justify-between items-start mb-4 gap-4">
 									<div>
 										<h3 className="text-xl font-semibold text-gray-800 font-inter">
 											{proj.name}
@@ -272,7 +273,7 @@ const Home = () => {
 									</div>
 
 									{/* Project period */}
-									<p className="text-md text-gray-500">
+									<p className="text-md text-gray-500 text-right">
 										{proj.startDate
 											? new Date(
 													proj.startDate
@@ -311,20 +312,53 @@ const Home = () => {
 				);
 			case "Skills":
 				return (
-					<ResponsiveContainer width="100%" height={220}>
-						<BarChart data={user?.skills}>
-							<XAxis dataKey="name" stroke="#9CA3AF" />
-							<YAxis stroke="#9CA3AF" />
-							<Tooltip />
-							<Bar
-								dataKey="level"
-								fill="#1976D2"
-								barSize={24}
-								radius={[4, 4, 0, 0]}
-							/>
-						</BarChart>
-					</ResponsiveContainer>
+					<div className="space-y-4">
+						{user?.skills.map((skill, idx) => {
+							// Color coding based on level
+							let levelColor = "#FBBF24"; // Beginner (yellow)
+							if (skill.level >= 50 && skill.level < 80)
+								levelColor = "#3B82F6"; // Intermediate (blue)
+							if (skill.level >= 80) levelColor = "#10B981"; // Advanced (green)
+
+							return (
+								<div
+									key={idx}
+									className="p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition"
+								>
+									{/* Skill Name */}
+									<div className="font-semibold text-gray-800 mb-2">
+										{skill.name}
+									</div>
+
+									{/* Function Area & Specialisation Tags */}
+									<div className="flex flex-wrap gap-2 mb-2">
+										<span className="text-xs px-2 py-1 bg-indigo-100 text-indigo-800 rounded-full">
+											{skill.functionArea}
+										</span>
+										<span className="text-xs px-2 py-1 bg-purple-100 text-purple-800 rounded-full">
+											{skill.specialisation}
+										</span>
+									</div>
+
+									{/* Progress Bar */}
+									<div className="w-full bg-gray-200 rounded-full h-5 relative">
+										<div
+											className="h-5 rounded-full transition-all"
+											style={{
+												width: `${skill.level}%`,
+												backgroundColor: levelColor,
+											}}
+										></div>
+										<span className="absolute right-2 top-0 text-xs font-medium text-gray-700">
+											{skill.level}%
+										</span>
+									</div>
+								</div>
+							);
+						})}
+					</div>
 				);
+
 			case "Suggested Courses":
 				return (
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -448,6 +482,36 @@ const Home = () => {
 							);
 						})}
 					</ul>
+				);
+			case "Strengths":
+			case "Strengths":
+				return (
+					<div className="flex flex-wrap gap-3">
+						{user?.strengths.map((strength, idx) => {
+							// Map enum level to color
+							const levelColors: Record<string, string> = {
+								Advanced: "bg-green-100 text-green-800",
+								Intermediate: "bg-yellow-100 text-yellow-800",
+								Beginner: "bg-gray-100 text-gray-700",
+							};
+
+							return (
+								<div
+									key={idx}
+									className={`flex items-center gap-2 px-4 py-2 rounded-lg shadow-sm ${
+										levelColors[strength.level]
+									} cursor-pointer hover:shadow-md transition`}
+								>
+									<span className="font-semibold">
+										{strength.name}
+									</span>
+									<span className="px-2 py-0.5 text-xs rounded-full bg-white border border-gray-200">
+										{strength.level}
+									</span>
+								</div>
+							);
+						})}
+					</div>
 				);
 			default:
 				return null;

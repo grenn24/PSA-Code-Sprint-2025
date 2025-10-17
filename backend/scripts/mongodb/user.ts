@@ -348,6 +348,7 @@ export const generateUsers = async (
 				notifications: generateNotifications(),
 				careerPath: generateCareerPath(),
 				moods: generateMoodData(dayjs().subtract(12, "month").toDate()),
+				strengths: generateStrengths(),
 			};
 		})
 	);

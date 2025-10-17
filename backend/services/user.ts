@@ -9,7 +9,8 @@ import WBConversation from "../models/wb.js";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc.js";
 import timezone from "dayjs/plugin/timezone.js";
-import { Skill } from "@common/types/user.js";
+import { Position, Skill } from "@common/types/user.js";
+import { Course } from "../models/course.js";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -298,7 +299,10 @@ class UserService {
 	}
 
 	// Skills overlap
-	private countOverlappingSkills(menteeSkills: Skill[], mentorSkills: Skill[]) {
+	private countOverlappingSkills(
+		menteeSkills,
+		mentorSkills
+	) {
 		const menteeSkillNames = new Set(
 			menteeSkills.map((s) => s.name.toLowerCase())
 		);
@@ -340,6 +344,95 @@ class UserService {
 
 		await user.save();
 		return user.moods[user.moods.length - 1];
+	}
+
+	async getRecommendedCourses(userID: string) {
+		const user = await User.findById(userID).exec();
+		if (!user) {
+			throw new HttpError(
+				"User not found",
+				"NOT_FOUND",
+				HttpStatusCode.NotFound
+			);
+		}
+
+		// Compute skill gap for current position
+		let skillGaps: Skill[] = [];
+		const currentUserPosition = await this.getCurrentPosition(userID);
+		if (currentUserPosition) {
+			// ignore skills completed
+			const missingSkills = currentUserPosition.skills
+				.filter(
+					(s) =>
+						!(
+							user.skills.some((us) => us.name === s.name) &&
+							s.level === 100
+						)
+				)
+				.map((s) => ({
+					...s,
+					level:
+						user.skills.find((us) => us.name === s.name)?.level ??
+						0,
+				}));
+			skillGaps = missingSkills;
+		}
+
+		const courses = await Course.find().exec();
+
+		// Score each course
+		const scoredCourses = courses
+			.map((course) => {
+				let relevance = 0;
+
+				course.skillsTaught.forEach((cs) => {
+					const gap = skillGaps.find((g) => g.name === cs.name);
+					if (gap) {
+						// Skill name
+						relevance += 3;
+
+						// Function area
+						if (gap.functionArea === cs.functionArea)
+							relevance += 2;
+
+						// Specialisation
+						if (gap.specialisation === cs.specialisation)
+							relevance += 1;
+
+						// Aspirations
+						const inAspirations = user.aspirations.some((role) =>
+							role.skills.some((s) => s.name === cs.name)
+						);
+						if (inAspirations) relevance += 5;
+
+						// Skill level gap
+						if (!gap.level) return;
+						relevance += Math.max(0, 100 - gap.level) / 50;
+					}
+				});
+
+				return { course, relevance };
+			})
+			.filter((c) => c.relevance > 0)
+			.sort((a, b) => b.relevance - a.relevance)
+			.map((c) => c.course);
+
+		return scoredCourses.slice(0, 10);
+	}
+
+	async getCurrentPosition(userID: string) {
+		const user = await User.findById(userID).lean().exec();
+		if (!user) {
+			throw new HttpError(
+				"User not found",
+				"NOT_FOUND",
+				HttpStatusCode.NotFound
+			);
+		}
+		const currentRole: Position | undefined = user.careerPath.find(
+			(pos) => !pos.endDate
+		) as Position | undefined;
+		return currentRole;
 	}
 }
 

@@ -2,6 +2,7 @@ import { Chat } from "@common/types/chat";
 import createApiClient from "../utilities/apiClient";
 import { User } from "@common/types/user";
 import { WBConversation } from "@common/types/wb";
+import { Course } from "@common/types/course";
 
 class UserService {
 	apiClient = createApiClient("/user");
@@ -54,6 +55,13 @@ class UserService {
 
 	async addActivity(userID: string, activity: User["activities"][number]) {
 		await this.apiClient.post(`/${userID}/activities`, activity);
+	}
+
+	async getRecommendedCourses(userID: string) {
+		const response = await this.apiClient.get<Course[]>(
+			`/${userID}/recommended-courses`
+		);
+		return response.data;
 	}
 }
 

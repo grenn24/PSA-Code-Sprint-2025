@@ -82,6 +82,37 @@ const Explore = () => {
 		</div>
 	);
 
+	const getExperienceYears = (mentor: User) => {
+		const hireDate = new Date(mentor.hireDate);
+		const today = new Date();
+		const diffYears =
+			(today.getTime() - hireDate.getTime()) /
+			(1000 * 60 * 60 * 24 * 365);
+		return Math.floor(diffYears);
+	};
+
+	const filteredMentors = mentors
+		.filter((mentor) => {
+			return mentor.name
+				.toLowerCase()
+				.includes(searchValue.trim().toLowerCase());
+		})
+		.filter((mentor) => {
+			if (selectedFilters.experienceLevel.length === 0) return true;
+			const years = getExperienceYears(mentor);
+			return selectedFilters.experienceLevel.some((level) => {
+				const [min, max] = EXPERIENCE_RANGES[level];
+				return years >= min && years <= max;
+			});
+		})
+		.filter((mentor) => {
+			if (selectedFilters.skills.length === 0) return true;
+			const mentorSkillNames = mentor.skills.map((s) => s.name);
+			return selectedFilters.skills.every((skill) =>
+				mentorSkillNames.includes(skill)
+			);
+		});
+
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: 15 }}
@@ -117,7 +148,7 @@ const Explore = () => {
 							exit={{ opacity: 0, y: -10 }}
 							className="absolute top-40 right-9 w-64 bg-white/80 backdrop-blur-md shadow-lg rounded-xl p-4 z-50 flex flex-col gap-4"
 						>
-							<div className="flex justify-between items-center mb-2">
+							<div className="flex justify-between items-center">
 								<h4 className="font-semibold text-gray-800">
 									Filters
 								</h4>
@@ -125,25 +156,54 @@ const Explore = () => {
 									<XMarkIcon className="w-5 h-5 text-gray-500" />
 								</button>
 							</div>
+							<div className="max-h-100 overflow-y-auto flex flex-col gap-4">
+								{/* Experience Filter */}
+								<div>
+									<p className="text-gray-600 text-sm font-medium mb-1">
+										Experience
+									</p>
+									<div className="flex flex-wrap gap-2">
+										{FILTER_OPTIONS.experienceLevel.map(
+											(option) => (
+												<button
+													key={option}
+													onClick={() =>
+														toggleFilter(
+															"experienceLevel",
+															option
+														)
+													}
+													className={`px-2 py-1 text-xs rounded-full border ${
+														selectedFilters.experienceLevel.includes(
+															option
+														)
+															? "bg-blue-500 text-white border-blue-500"
+															: "bg-gray-100 text-gray-700 border-gray-200"
+													}`}
+												>
+													{option}
+												</button>
+											)
+										)}
+									</div>
+								</div>
 
-							{/* Experience Filter */}
-							<div>
-								<p className="text-gray-600 text-sm font-medium mb-1">
-									Experience
-								</p>
-								<div className="flex flex-wrap gap-2">
-									{FILTER_OPTIONS.experienceLevel.map(
-										(option) => (
+								<div>
+									<p className="text-gray-600 text-sm font-medium mb-1">
+										Skills
+									</p>
+									<div className="flex flex-wrap gap-2">
+										{FILTER_OPTIONS.skills.map((option) => (
 											<button
 												key={option}
 												onClick={() =>
 													toggleFilter(
-														"experienceLevel",
+														"skills",
 														option
 													)
 												}
 												className={`px-2 py-1 text-xs rounded-full border ${
-													selectedFilters.experienceLevel.includes(
+													selectedFilters.skills.includes(
 														option
 													)
 														? "bg-blue-500 text-white border-blue-500"
@@ -152,33 +212,8 @@ const Explore = () => {
 											>
 												{option}
 											</button>
-										)
-									)}
-								</div>
-							</div>
-
-							<div>
-								<p className="text-gray-600 text-sm font-medium mb-1">
-									Skills
-								</p>
-								<div className="flex flex-wrap gap-2">
-									{FILTER_OPTIONS.skills.map((option) => (
-										<button
-											key={option}
-											onClick={() =>
-												toggleFilter("skills", option)
-											}
-											className={`px-2 py-1 text-xs rounded-full border ${
-												selectedFilters.skills.includes(
-													option
-												)
-													? "bg-blue-500 text-white border-blue-500"
-													: "bg-gray-100 text-gray-700 border-gray-200"
-											}`}
-										>
-											{option}
-										</button>
-									))}
+										))}
+									</div>
 								</div>
 							</div>
 						</motion.div>
@@ -191,7 +226,7 @@ const Explore = () => {
 					? Array(12)
 							.fill(0)
 							.map((_, i) => <SkeletonCard key={i} />)
-					: mentors
+					: filteredMentors
 							.filter((m) =>
 								m.name
 									.toLowerCase()

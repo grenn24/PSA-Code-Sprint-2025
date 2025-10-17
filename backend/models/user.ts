@@ -23,11 +23,11 @@ const activitySchema = new Schema({
 	},
 });
 
-const skillSchema = new Schema({
+export const skillSchema = new Schema({
 	name: { type: String, required: true },
 	functionArea: { type: String, required: true },
 	specialisation: { type: String, required: true },
-	level: { type: Number, min: 0, max: 100, required: true },
+	level: { type: Number, min: 0, max: 100 },
 });
 
 const positionSchema = new Schema({

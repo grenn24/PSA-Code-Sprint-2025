@@ -3,6 +3,7 @@ import db from "../../startup/db.js";
 import { seedEvents } from "./event.js";
 import { seedUsers } from "./user.js";
 import { seedChats } from "./chat.js";
+import { seedCourses } from "./course.js";
 
 async function seed() {
 	try {
@@ -10,6 +11,7 @@ async function seed() {
 		await seedUsers();
 		await seedEvents();
 		await seedChats();
+		await seedCourses();
 		conn?.close();
 		console.log("Database seeded successfully");
 	} catch (err) {

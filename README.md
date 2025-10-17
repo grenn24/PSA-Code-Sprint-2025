@@ -143,7 +143,7 @@ npm run vdb:seed
 ├─ CareerPath: Position[]
 │   ├─ name: string
 │   ├─ focusAreas: string[]
-│   ├─ skills: string[]
+│   ├─ skills: Skill[]
 │   ├─ startDate: Date
 │   └─ endDate: Date | null
 ├─ Projects: Project[]
