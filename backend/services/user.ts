@@ -9,6 +9,7 @@ import WBConversation from "../models/wb.js";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc.js";
 import timezone from "dayjs/plugin/timezone.js";
+import { Skill } from "@common/types/user.js";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -217,9 +218,16 @@ class UserService {
 				"NOT_FOUND",
 				HttpStatusCode.NotFound
 			);
+
 		const excludedMentorIds = (mentee as any).mentors.map(
-			(m) => new mongoose.Types.ObjectId(m._id)
+			(m: any) => new mongoose.Types.ObjectId(m._id)
 		);
+
+		// Compute experience in years
+		const menteeExperience =
+			(new Date().getTime() - mentee.hireDate.getTime()) /
+			(1000 * 60 * 60 * 24 * 365);
+
 		const candidates = await User.aggregate([
 			{
 				$match: {
@@ -227,7 +235,7 @@ class UserService {
 						$ne: new mongoose.Types.ObjectId(userId),
 						$nin: excludedMentorIds,
 					},
-					experienceLevel: { $gte: mentee.experienceLevel },
+					hireDate: { $lte: mentee.hireDate }, // only more senior mentors
 					"mentorshipRequests.sender": {
 						$ne: new mongoose.Types.ObjectId(userId),
 					},
@@ -236,29 +244,37 @@ class UserService {
 			{
 				$project: {
 					skills: 1,
-					experienceLevel: 1,
+					hireDate: 1,
 					careerPath: 1,
 					name: 1,
-					experience_diff: {
-						$subtract: ["$experienceLevel", mentee.experienceLevel],
-					},
 					avatar: 1,
+					// compute mentor experience in years
+					experience_diff: {
+						$divide: [
+							{ $subtract: [new Date(), "$hireDate"] },
+							1000 * 60 * 60 * 24 * 365,
+						],
+					},
 				},
 			},
 			{ $limit: 200 },
 		]);
 
-		const w1 = 0.4;
-		const w2 = 0.2;
-		const w3 = 0.3;
+		const w1 = 0.4; // skill alignment
+		const w2 = 0.2; // experience difference
+		const w3 = 0.3; // career path similarity
 
-		const scoredMentors = candidates.map((mentor) => {
+		const scoredMentors = candidates.map((mentor: any) => {
 			const skill_alignment = this.countOverlappingSkills(
 				mentee.skills,
 				mentor.skills
 			);
-			const experience_diff =
-				mentor.experienceLevel - mentee.experienceLevel;
+
+			const mentorExperience =
+				(new Date().getTime() - new Date(mentor.hireDate).getTime()) /
+				(1000 * 60 * 60 * 24 * 365);
+			const experience_diff = mentorExperience - menteeExperience;
+
 			const career_path_similarity = this.calculateCareerPathSimilarity(
 				mentee.careerPath,
 				mentor.careerPath
@@ -269,10 +285,7 @@ class UserService {
 				w2 * experience_diff +
 				w3 * career_path_similarity;
 
-			return {
-				mentor,
-				score,
-			};
+			return { mentor, score };
 		});
 
 		return scoredMentors
@@ -284,20 +297,23 @@ class UserService {
 			.map((m) => m.mentor);
 	}
 
-	private countOverlappingSkills(mentorSkills: any[], menteeSkills: any[]) {
-		const overlap = mentorSkills.filter((s) =>
-			menteeSkills.includes(s.name.toLowerCase())
+	// Skills overlap
+	private countOverlappingSkills(menteeSkills: Skill[], mentorSkills: Skill[]) {
+		const menteeSkillNames = new Set(
+			menteeSkills.map((s) => s.name.toLowerCase())
+		);
+		return mentorSkills.filter((s) =>
+			menteeSkillNames.has(s.name.toLowerCase())
 		).length;
-
-		return overlap;
 	}
 
+	// Career path similarity
 	private calculateCareerPathSimilarity(
 		menteePath: any[],
 		mentorPath: any[]
 	) {
-		const menteePositions = new Set(menteePath.map((p) => p.position));
-		const mentorPositions = new Set(mentorPath.map((p) => p.position));
+		const menteePositions = new Set(menteePath.map((p) => p.name));
+		const mentorPositions = new Set(mentorPath.map((p) => p.name));
 
 		const intersection = [...menteePositions].filter((p) =>
 			mentorPositions.has(p)
@@ -306,7 +322,6 @@ class UserService {
 
 		return union.size > 0 ? intersection.length / union.size : 0;
 	}
-
 	async deleteAllUsers() {
 		return await User.deleteMany({}).exec();
 	}

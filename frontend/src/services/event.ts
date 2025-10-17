@@ -17,7 +17,7 @@ class EventService {
 	}
 
 	async createEvent(event) {
-		const response = await this.apiClient.post("/", event);
+		const response = await this.apiClient.post<Event, Event>("/", event);
 		return response.data;
 	}
 

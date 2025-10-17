@@ -23,93 +23,149 @@ const activitySchema = new Schema({
 	},
 });
 
-const userSchema = new Schema({
+const skillSchema = new Schema({
 	name: { type: String, required: true },
-	email: { type: String, required: true, unique: true, lowercase: true },
-	position: {
+	functionArea: { type: String, required: true },
+	specialisation: { type: String, required: true },
+	level: { type: Number, min: 0, max: 100, required: true },
+});
+
+const positionSchema = new Schema({
+	name: { type: String, required: true },
+	focusAreas: { type: [String], default: [] },
+	skills: { type: [String], default: [] },
+	startDate: { type: Date, required: true },
+	endDate: { type: Date, default: null },
+});
+
+const educationSchema = new Schema({
+	institution: { type: String, required: true },
+	degree: { type: String, required: true },
+	startDate: { type: Date, required: true },
+	endDate: { type: Date, required: true },
+});
+
+const projectSchema = new Schema({
+	name: { type: String, required: true },
+	role: { type: String, required: true },
+	description: { type: String, required: true },
+	outcomes: { type: [String], default: [] },
+	startDate: { type: Date, required: true },
+	endDate: { type: Date, required: true },
+});
+
+const languageSchema = new Schema({
+	name: { type: String, required: true },
+	proficiency: {
 		type: String,
+		enum: ["Fluent", "Professional", "Conversational", "Intermediate"],
 		required: true,
 	},
-	role: {
+});
+
+const strengthSchema = new Schema({
+	name: { type: String, required: true },
+	level: {
 		type: String,
-		enum: ["user", "admin"],
-		default: "user",
-	},
-	password: { type: String, required: true },
-	supervisor: { type: Schema.Types.ObjectId, ref: "User" },
-	subordinates: [{ type: Schema.Types.ObjectId, ref: "User" }],
-	avatar: { type: String },
-	createdAt: { type: Date, default: Date.now },
-	experienceLevel: { type: Number, default: 0 },
-	bio: String,
-	skills: {
-		type: [
-			{
-				name: { type: String },
-				level: { type: Number, default: 0 },
-			},
-		],
-		default: [],
-	},
-	mentorshipRequests: {
-		type: [
-			{
-				sender: { type: Schema.Types.ObjectId, ref: "User" },
-				message: String,
-			},
-		],
-		default: [],
-	},
-	mentees: {
-		type: [{ type: Schema.Types.ObjectId, ref: "User" }],
-		default: [],
-	},
-	notifications: {
-		type: [
-			{
-				message: {
-					type: String,
-					required: true,
-				},
-				read: { type: Boolean, default: false },
-				createdAt: { type: Date, default: Date.now },
-			},
-		],
-		default: [],
-	},
-	careerPath: [
-		{
-			position: {
-				type: String,
-				required: true,
-			},
-			progress: {
-				type: Number,
-				default: 0,
-			},
-			startedAt: {
-				type: Date,
-			},
-			endedAt: {
-				type: Date,
-			},
-			skillsRequired: {
-				type: [String],
-				default: [],
-			},
-		},
-	],
-	lastSeen: { type: Date, default: null },
-	isOnline: { type: Boolean, default: false },
-	moods: {
-		type: [moodSchema],
-		default: [],
-	},
-	activities: {
-		type: [activitySchema],
-		default: [],
+		enum: ["Beginner", "Intermediate", "Advanced"],
+		required: true,
 	},
 });
+
+const userSchema = new Schema(
+	{
+		name: { type: String, required: true },
+		email: { type: String, required: true, unique: true, lowercase: true },
+		organisation: {
+			type: String,
+			default: "PSA Singapore",
+		},
+		position: {
+			type: String,
+			required: true,
+		},
+		department: {
+			type: String,
+			required: true,
+		},
+		unit: {
+			type: String,
+			required: true,
+		},
+		role: {
+			type: String,
+			enum: ["user", "admin"],
+			default: "user",
+		},
+		hireDate: { type: Date, required: true },
+		password: { type: String, required: true },
+		supervisor: { type: Schema.Types.ObjectId, ref: "User" },
+		subordinates: [{ type: Schema.Types.ObjectId, ref: "User" }],
+		avatar: { type: String },
+		bio: String,
+		mentorshipRequests: {
+			type: [
+				{
+					sender: { type: Schema.Types.ObjectId, ref: "User" },
+					message: String,
+				},
+			],
+			default: [],
+		},
+		mentees: {
+			type: [{ type: Schema.Types.ObjectId, ref: "User" }],
+			default: [],
+		},
+		notifications: {
+			type: [
+				{
+					message: {
+						type: String,
+						required: true,
+					},
+					read: { type: Boolean, default: false },
+					createdAt: { type: Date, default: Date.now },
+				},
+			],
+			default: [],
+		},
+		careerPath: {
+			type: [positionSchema],
+			default: [],
+		},
+		skills: {
+			type: [skillSchema],
+			default: [],
+		},
+		moods: {
+			type: [moodSchema],
+			default: [],
+		},
+		activities: {
+			type: [activitySchema],
+			default: [],
+		},
+		languages: {
+			type: [languageSchema],
+			default: [],
+		},
+		strengths: {
+			type: [strengthSchema],
+			default: [],
+		},
+		education: {
+			type: [educationSchema],
+			default: [],
+		},
+		projects: {
+			type: [projectSchema],
+			default: [],
+		},
+		lastSeen: { type: Date, default: null },
+		isOnline: { type: Boolean, default: false },
+	},
+	{ timestamps: true }
+);
 
 userSchema.virtual("mentors", {
 	ref: "User",

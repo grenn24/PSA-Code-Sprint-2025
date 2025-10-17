@@ -11,16 +11,13 @@ PSA Horizon is an integrated employee development platform designed to empower P
 ### Career Dashboard
 - Track your career path and skill progress
 - View recommended courses and event opportunities
-
 ### Events Hub
 - View recommended and trending employee-initiated events
 - Online calls
-
 ### Mentor Matching
 - Intelligent matching suggestions based on interests, skills, and career aspirations
 - Explore potential mentorship connections and send personalised invites
 - Real-time communication between mentors and mentees (text and video)
-
 ### Wellness Buddy
 - Offer practical and personalised advice to personal wellbeing
 - Track historical mood changes from past conversations
@@ -28,6 +25,7 @@ PSA Horizon is an integrated employee development platform designed to empower P
 - Dashboard showing key mood indicators and daily goals
 
 ## User Guide
+After setup:  
 - Log in to default account:  
   Email: gren@gmail.com  
   Password: password123
@@ -43,7 +41,7 @@ https://psa-code-sprint-2025.vercel.app
 2. Download the latest executable *Codes_Gren.zip* from the [releases]("https://github.com/grenn24/PSA-Code-Sprint-2025") page
 3. Ensure that ports **3000** and **5173** are available
 4. Open command prompt in the root folder
-5. Running the startup script:  
+5. Run the startup script:  
    - Windows: start.bat
    - Linux/MacOS: ./start.sh
 
@@ -55,7 +53,7 @@ https://psa-code-sprint-2025.vercel.app
 ```
 npm run db:clear
 ```
-- Seed the database with sample user and chat data:
+- Seed the database with sample user and chat data (derived from sample json data and mocked data):
 ```
 npm run db:seed
 ```
@@ -109,3 +107,70 @@ npm run vdb:seed
 | PUT | /api/chat/:id/message/:id | Update an existing mentor-mentee chat message | Yes |
 
 > **Note:** Notifications, chat updates and wellness buddy interactions are handled using websocket
+
+## Schema
+### User
+```text
+├─ _id: string
+├─ name: string
+├─ email: string
+├─ organisation: string
+├─ position: string
+├─ department: string
+├─ unit: string
+├─ role: "user" | "admin"
+├─ hireDate: Date
+├─ password: string
+├─ supervisor: User | string
+├─ subordinates: User[] | string[]
+├─ avatar: string
+├─ bio: string
+├─ isOnline: boolean
+├─ lastSeen: Date | null
+├─ createdAt: Date
+└─ updatedAt: Date
+├─ Skills: Skill[]
+│   ├─ name: string
+│   ├─ functionArea: string
+│   ├─ specialisation: string
+│   └─ level: 0–100
+├─ Strengths: Strength[]
+│   ├─ name: string
+│   └─ level: Beginner | Intermediate | Advanced
+├─ Languages: Language[]
+│   ├─ name: string
+│   └─ proficiency: Fluent | Professional | Conversational | Intermediate
+├─ CareerPath: Position[]
+│   ├─ name: string
+│   ├─ focusAreas: string[]
+│   ├─ skills: string[]
+│   ├─ startDate: Date
+│   └─ endDate: Date | null
+├─ Projects: Project[]
+│   ├─ name: string
+│   ├─ role: string
+│   ├─ description: string
+│   ├─ outcomes: string[]
+│   ├─ startDate: Date
+│   └─ endDate: Date
+├─ Education: Education[]
+│   ├─ institution: string
+│   ├─ degree: string
+│   ├─ startDate: Date
+│   └─ endDate: Date
+├─ Notifications: Notification[]
+│   ├─ message: string
+│   ├─ read: boolean
+│   └─ createdAt: Date
+├─ MentorshipRequests: MentorshipRequest[]
+│   ├─ sender: User | string
+│   └─ message: string
+├─ Mentees: User[]
+├─ Mentors: User[]
+├─ Moods: Mood[]
+│   ├─ level: number
+│   ├─ date: Date
+│   └─ notes: string[]
+└─ Activities: Activity[]
+    ├─ type: dailyCheckIn | mindfulness | mentorMessage | mentorVideoCall
+    └─ date: Date

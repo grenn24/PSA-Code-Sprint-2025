@@ -197,31 +197,6 @@ const Explore = () => {
 									.toLowerCase()
 									.includes(searchValue.trim().toLowerCase())
 							)
-							.filter((m) => {
-								if (
-									selectedFilters.experienceLevel.length > 0
-								) {
-									return selectedFilters.experienceLevel.some(
-										(level) => {
-											const [min, max] =
-												EXPERIENCE_RANGES[level];
-											return (
-												m.experienceLevel >= min &&
-												m.experienceLevel <= max
-											);
-										}
-									);
-								}
-								return true;
-							})
-							.filter((m) => {
-								if (selectedFilters.skills.length > 0) {
-									return m.skills.some((s) =>
-										selectedFilters.skills.includes(s.name)
-									);
-								}
-								return true;
-							})
 							.map((m, i) => (
 								<motion.div
 									key={i}

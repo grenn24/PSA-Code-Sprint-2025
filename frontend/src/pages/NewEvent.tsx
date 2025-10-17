@@ -6,6 +6,9 @@ import { IoArrowBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import eventService from "services/event";
 import { useAppSelector } from "redux/store";
+import FileInput from "components/FileInput";
+import { S3File } from "@common/types/file";
+import s3Service from "utilities/s3";
 
 const defaultCategories = ["Workshop", "Wellness", "Tech", "Training"];
 
@@ -13,7 +16,6 @@ const NewEvent: React.FC = () => {
 	const navigate = useNavigate();
 	const { user } = useAppSelector((state) => state.user);
 
-	// Form state
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const [startDate, setStartDate] = useState(
@@ -27,9 +29,9 @@ const NewEvent: React.FC = () => {
 	const [allCategories, setAllCategories] = useState(defaultCategories);
 	const [mode, setMode] = useState<"online" | "offline">("online");
 	const [location, setLocation] = useState("");
-	const [coverImage, setCoverImage] = useState<File | null>(null);
+	const [coverImage, setCoverImage] = useState<S3File | null>(null);
+	const [openFileInput, setOpenFileInput] = useState(false);
 
-	// Validation errors
 	const [errors, setErrors] = useState<{
 		title?: string;
 		description?: string;
@@ -38,8 +40,13 @@ const NewEvent: React.FC = () => {
 		mode?: string;
 	}>({});
 
-	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		if (e.target.files?.[0]) setCoverImage(e.target.files[0]);
+	const handleFileChange = async (fileList: FileList) => {
+		if (fileList?.[0]) {
+			const s3File = await s3Service.uploadFileWithHashing(fileList[0], [
+				"events",
+			]);
+			setCoverImage(s3File);
+		}
 	};
 
 	const toggleCategory = (cat: string) => {
@@ -68,9 +75,9 @@ const NewEvent: React.FC = () => {
 
 		setErrors(newErrors);
 
-		if (Object.keys(newErrors).length > 0) return; // Stop if errors
+		if (Object.keys(newErrors).length > 0) return;
 
-		const newEvent = {
+		const newEventData = {
 			title,
 			description,
 			startDate,
@@ -83,10 +90,18 @@ const NewEvent: React.FC = () => {
 		};
 
 		try {
-			await eventService.createEvent(newEvent);
-			navigate("/events-hub");
+			const newEvent = await eventService.createEvent(newEventData);
+			navigate(`/events-hub/${newEvent._id}`);
 		} catch (err) {
 			console.error("Error creating event:", err);
+		}
+	};
+
+	const handleFileDelete = async (e) => {
+		e.stopPropagation();
+		setCoverImage(null);
+		if (coverImage) {
+			await s3Service.removeFile(coverImage);
 		}
 	};
 
@@ -292,24 +307,39 @@ const NewEvent: React.FC = () => {
 						onDragOver={(e) => e.preventDefault()}
 						onDrop={(e) => {
 							e.preventDefault();
-							if (
-								e.dataTransfer.files &&
-								e.dataTransfer.files[0]
-							) {
-								handleFileChange({
-									target: { files: e.dataTransfer.files },
-								} as any);
+							if (e.dataTransfer.files) {
+								handleFileChange(e.dataTransfer.files);
 							}
 						}}
-						className="w-full h-40 rounded-xl border-2 border-dashed border-gray-300 bg-white/30 backdrop-blur-sm p-6 flex flex-col items-center justify-center text-gray-500 cursor-pointer hover:border-indigo-500 hover:text-indigo-500 transition"
+						onClick={() => !coverImage && setOpenFileInput(true)}
+						className="w-full h-60 rounded-xl border-2 border-dashed border-gray-300 bg-white/30 backdrop-blur-sm p-6 flex flex-col items-center justify-center text-gray-500 cursor-pointer hover:border-indigo-500 hover:text-indigo-500 transition relative overflow-hidden"
 					>
-						<p className="mb-2">Drag & drop an image here</p>
+						{/* If image exists, show preview + delete button */}
+						{coverImage?.url ? (
+							<>
+								<img
+									src={coverImage.url}
+									alt={coverImage.filename}
+									className="absolute inset-0 w-full h-full object-contain rounded-xl"
+								/>
+								<button
+									type="button"
+									onClick={handleFileDelete}
+									title="Remove cover image"
+									className="cursor-pointer absolute top-3 right-3 z-20 p-2 rounded-full backdrop-blur-md bg-white/30 text-gray-700 hover:bg-white/50 hover:text-gray-900 transition border border-white/40 shadow-sm"
+								>
+									🗑️
+								</button>
+							</>
+						) : (
+							<p className="mb-2 z-10">
+								Drag & drop an image here
+							</p>
+						)}
 					</div>
-					{coverImage && (
-						<p className="mt-2 text-sm text-gray-600">
-							{coverImage.name}
-						</p>
-					)}
+					<p className="mt-2 text-sm text-gray-600">
+						{coverImage?.filename}
+					</p>
 				</div>
 				{/* Submit */}
 				<motion.button
@@ -320,6 +350,11 @@ const NewEvent: React.FC = () => {
 					Create Event
 				</motion.button>
 			</motion.div>
+			<FileInput
+				open={openFileInput}
+				setOpen={setOpenFileInput}
+				onFileSubmit={handleFileChange}
+			/>
 		</div>
 	);
 };

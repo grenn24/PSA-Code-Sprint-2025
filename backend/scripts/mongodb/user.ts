@@ -1,53 +1,156 @@
 import { faker } from "@faker-js/faker";
 import User from "../../models/user.js";
 import dayjs from "dayjs";
-import { generateChats } from "./chat.js";
-import Chat from "../../models/chat.js";
+import fs from "fs/promises";
+import { Project } from "@common/types/user.js";
 
-const skillsPool = [
-	"Data Analytics",
-	"Data Management",
-	"Excel",
+const SKILLS = [
+	"Data Analysis",
+	"Database Management",
+	"Excel Modeling",
 	"Process Optimization",
 	"Leadership",
-	"Inventory Management",
-	"Supply Chain Management",
-	"Advanced Data Analysis",
-	"Team Management",
+	"Inventory Control",
+	"Supply Chain Planning",
+	"Advanced Analytics",
+	"Team Leadership",
+	"Statistical Modelling",
 ];
-
-const notificationsPool = [
+const FUNCTION_AREA = [
+	"Operations Management",
+	"Strategic Decision Making",
+	"Process Improvement",
+	"Project Coordination",
+	"Business Planning",
+	"Inventory Optimization",
+	"Performance Monitoring",
+	"Resource Allocation",
+	"Workflow Automation",
+	"Risk Mitigation",
+];
+const SPECIALISATIONS = [
+	"Predictive Modelling",
+	"Operational Strategy",
+	"Business Intelligence",
+	"Risk Assessment",
+	"Quality Assurance",
+	"Process Engineering",
+	"Change Management",
+	"Sustainability Planning",
+	"Technology Integration",
+	"Machine Learning",
+];
+const NOTIFICATIONS = [
 	"Welcome to PSA Horizon!",
 	"New course available: Advanced Analytics",
 	"Reminder: Update your skills profile",
 ];
+const PROJECT_NAMES = [
+	"Treasury Management System Enhancement",
+	"Customer Insights Dashboard",
+	"Port Operations Optimization",
+	"Predictive Maintenance AI Platform",
+	"Smart Inventory Control System",
+	"Logistics Route Optimizer",
+	"Data Governance Framework",
+	"Supplier Performance Tracker",
+	"Workforce Scheduling Application",
+	"Risk Analytics Engine",
+];
+const ROLES = [
+	"Analyst",
+	"Engineer",
+	"Data Scientist",
+	"Consultant",
+	"Developer",
+	"Project Lead",
+];
+const DESCRIPTIONS = [
+	"Developed automated workflows to streamline manual processes.",
+	"Enhanced data accuracy through rule-based validation and integration.",
+	"Built interactive dashboards for real-time performance tracking.",
+	"Optimized predictive algorithms to improve operational efficiency.",
+	"Implemented API integrations for seamless data exchange across systems.",
+	"Redesigned the system architecture for better scalability and reliability.",
+	"Introduced analytics-driven insights for strategic decision making.",
+	"Collaborated with cross-functional teams to improve delivery speed.",
+];
+const OUTCOMES = [
+	"Reduced processing time by 40%",
+	"Increased data accuracy by 25%",
+	"Enhanced operational visibility",
+	"Improved reporting turnaround time",
+	"Achieved 99.9% system uptime",
+	"Reduced manual work by 60%",
+	"Improved user satisfaction scores",
+	"Enabled faster executive decision making",
+];
+
+const HASHED_PASSWORD =
+	"$2b$10$TS8eBH1GUf7F3haX1WnX9uqVCzYW9f4ig5abjp4fEMUVkdrqrh91a";
 
 function getRandomInt(min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function generateRandomSkills() {
-	const shuffled = skillsPool.sort(() => 0.5 - Math.random());
-	return shuffled.slice(0, getRandomInt(1, 3)).map((skill) => ({
+function getRandomDate(start, end) {
+	const date = new Date(
+		start.getTime() + Math.random() * (end.getTime() - start.getTime())
+	);
+	return date;
+}
+
+function generateStrengths() {
+	const shuffled = [...SKILLS].sort(() => 0.5 - Math.random());
+	const selected = shuffled.slice(0, getRandomInt(3, 6));
+
+	return selected.map((skill) => ({
 		name: skill,
-		level: getRandomInt(40, 80),
+		level: ["Beginner", "Intermediate", "Advanced"][getRandomInt(0, 2)],
 	}));
 }
 
+function generateRandomSkills() {
+	const shuffledSkills = [...SKILLS].sort(() => 0.5 - Math.random());
+	const shuffledFocus = [...FUNCTION_AREA].sort(() => 0.5 - Math.random());
+	const shuffledSpecialisations = [...SPECIALISATIONS].sort(
+		() => 0.5 - Math.random()
+	);
+
+	return shuffledSkills.slice(0, getRandomInt(1, 3)).map((skill, index) => ({
+		name: skill,
+		level: getRandomInt(40, 80),
+		functionArea: shuffledFocus[index],
+		specialisation: shuffledSpecialisations[index],
+	}));
+}
 function generateCareerPath() {
 	const pathLength = 3;
 	const path: any[] = [];
+
 	for (let i = 0; i < pathLength; i++) {
-		const progress =
-			i === 0 ? 100 : i === pathLength - 1 ? 0 : getRandomInt(30, 80);
+		const startDate = getRandomDate(
+			new Date(2018, 0, 1),
+			new Date(2023, 0, 1)
+		);
+		const endDate =
+			i === pathLength - 1
+				? null
+				: getRandomDate(new Date(startDate), new Date(2025, 0, 1));
+
+		const focusAreas = [...FUNCTION_AREA]
+			.sort(() => 0.5 - Math.random())
+			.slice(0, getRandomInt(1, 2));
+
 		path.push({
-			position: faker.person.jobTitle(),
-			progress,
-			startedAt: `202${i + 3}-01-01T00:00:00.000Z`,
-			endedAt: i === 0 ? `202${i + 3}-12-31T00:00:00.000Z` : undefined,
-			skillsRequired: generateRandomSkills().map((s) => s.name),
+			name: faker.person.jobTitle(),
+			focusAreas,
+			skills: generateRandomSkills().map((s) => s.name),
+			startDate,
+			endDate,
 		});
 	}
+
 	return path;
 }
 
@@ -55,7 +158,6 @@ function generateMoodData(start: Date, skipProbability = 0.3) {
 	const data: { level: number; date: Date }[] = [];
 	const today = new Date();
 
-	// get the start of the current week (Sunday)
 	const startOfCurrentWeek = new Date(today);
 	startOfCurrentWeek.setHours(0, 0, 0, 0);
 	startOfCurrentWeek.setDate(today.getDate() - today.getDay());
@@ -78,32 +180,148 @@ function generateMoodData(start: Date, skipProbability = 0.3) {
 function generateNotifications() {
 	const count = getRandomInt(1, 3);
 	return Array.from({ length: count }).map(() => ({
-		message:
-			notificationsPool[getRandomInt(0, notificationsPool.length - 1)],
+		message: NOTIFICATIONS[getRandomInt(0, NOTIFICATIONS.length - 1)],
 		read: Math.random() > 0.5,
 	}));
 }
 
-export const generateUser = async () => {
-	const email = faker.internet.email();
-	const chats = generateChats(email);
-	await Chat.insertMany(chats);
+export function generateProjects(count = getRandomInt(3, 5)) {
+	const projects: Project[] = [];
+	for (let i = 0; i < count; i++) {
+		const projectName =
+			PROJECT_NAMES[getRandomInt(0, PROJECT_NAMES.length - 1)];
+		const role = ROLES[getRandomInt(0, ROLES.length - 1)];
+		const start = getRandomDate(
+			new Date(2022, 0, 1),
+			new Date(2024, 11, 31)
+		);
+		const end = getRandomDate(new Date(start), new Date(2025, 11, 31));
+
+		const description =
+			DESCRIPTIONS[getRandomInt(0, DESCRIPTIONS.length - 1)];
+		const outcomesCount = getRandomInt(1, 2);
+		const projectOutcomes = Array.from(
+			{ length: outcomesCount },
+			() => OUTCOMES[getRandomInt(0, OUTCOMES.length - 1)]
+		);
+
+		projects.push({
+			name: projectName,
+			role,
+			startDate: start,
+			endDate: end,
+			description,
+			outcomes: projectOutcomes,
+		});
+	}
+	return projects;
+}
+
+export const generateUser = async (email: string, password: string) => {
 	return {
 		name: faker.person.fullName(),
+		organisation: "PSA Singapore",
 		email,
+		position: faker.person.jobTitle(),
+		department: "Engineering",
+		unit: "Software Development",
+		role: "user",
+		hireDate: new Date("2023-01-01"),
+		password,
+		subordinates: [],
 		avatar: faker.image.avatar(),
 		bio: faker.person.bio(),
-		position: faker.person.jobTitle(),
-		role: "user",
-		password:
-			"$2b$10$TS8eBH1GUf7F3haX1WnX9uqVCzYW9f4ig5abjp4fEMUVkdrqrh91a",
-		subordinates: [],
-		experienceLevel: getRandomInt(0, 25),
 		mentorshipRequests: [],
 		skills: generateRandomSkills(),
 		notifications: generateNotifications(),
 		careerPath: generateCareerPath(),
 		moods: generateMoodData(dayjs().subtract(12, "month").toDate()),
+		activities: [],
+		isOnline: false,
+		lastSeen: null,
+		languages: [
+			{
+				name: "English",
+				proficiency: "Professional",
+			},
+			{
+				name: "Chinese",
+				proficiency: "Professional",
+			},
+		],
+		strengths: generateStrengths(),
+		education: [],
+		projects: generateProjects(),
+		mentees: [],
+		supervisor: undefined,
+	};
+};
+
+export const generateDefaultUser = () => {
+	return {
+		name: "Di Heng",
+		organisation: "PSA Singapore",
+		email: "gren@gmail.com",
+		position: "Software Engineer",
+		department: "Engineering",
+		unit: "Software Development",
+		role: "user",
+		hireDate: new Date("2023-01-01"),
+		password: HASHED_PASSWORD,
+		subordinates: [],
+		avatar: faker.image.avatar(),
+		bio: faker.person.bio(),
+		mentorshipRequests: [],
+		skills: [
+			{
+				name: "Software Engineer",
+				functionArea: "Software",
+				specialisation: "Full Stack",
+				level: 60,
+			},
+			{
+				name: "AI Engineer",
+				functionArea: "AI",
+				specialisation: "Machine Learning",
+				level: 50,
+			},
+		],
+		notifications: [{ message: "Welcome to PSA Horizon!", read: false }],
+		careerPath: [
+			{
+				name: "Junior Software Engineer",
+				focusAreas: ["Software Engineering"],
+				skills: ["UI/UX Design", "Backend APIs"],
+				startDate: new Date("2023-01-01"),
+				endDate: new Date("2023-12-31"),
+			},
+			{
+				name: "Senior Software Engineer",
+				focusAreas: ["Software Engineering"],
+				skills: ["Full Stack Development", "Microservices"],
+				startDate: new Date("2024-01-01"),
+				endDate: null,
+			},
+		],
+		moods: generateMoodData(dayjs().subtract(12, "month").toDate()),
+		activities: [],
+		isOnline: false,
+		lastSeen: null,
+		languages: [
+			{
+				name: "English",
+				proficiency: "Professional",
+			},
+			{
+				name: "Chinese",
+				proficiency: "Professional",
+			},
+		],
+		strengths: generateStrengths(),
+		education: [],
+		projects: generateProjects(),
+		mentees: [],
+		supervisor: undefined,
 	};
 };
 
@@ -113,18 +331,18 @@ export const generateUsers = async (
 ) => {
 	const users = await Promise.all(
 		Array.from({ length }).map(async () => {
-			const email = faker.internet.email();
 			return {
 				name: faker.person.fullName(),
-				email,
+				email: faker.internet.email(),
 				avatar: faker.image.avatar(),
 				bio: faker.person.bio(),
 				position: faker.person.jobTitle(),
 				role: "user",
-				password:
-					"$2b$10$TS8eBH1GUf7F3haX1WnX9uqVCzYW9f4ig5abjp4fEMUVkdrqrh91a",
+				password: HASHED_PASSWORD,
+				department: faker.person.jobArea(),
+				unit: faker.person.jobDescriptor(),
+				hireDate: faker.date.past({ years: 5 }),
 				subordinates: [],
-				experienceLevel: getRandomInt(0, 25),
 				mentorshipRequests: [],
 				skills: generateRandomSkills(),
 				notifications: generateNotifications(),
@@ -134,75 +352,107 @@ export const generateUsers = async (
 		})
 	);
 	if (includeDefaultUser) {
-		users.push({
-			name: "Di Heng",
-			email: "gren@gmail.com",
-			position: "Software Engineer",
-			role: "user",
-			bio: faker.person.bio(),
-			password:
-				"$2b$10$TS8eBH1GUf7F3haX1WnX9uqVCzYW9f4ig5abjp4fEMUVkdrqrh91a",
-			subordinates: [],
-			experienceLevel: 2,
-			mentorshipRequests: [],
-			avatar: "https://avatars.githubusercontent.com/u/126308058?v=4",
-			skills: [
-				{
-					name: "Software Engineer",
-					level: 60,
-				},
-				{
-					name: "AI Engineer",
-					level: 50,
-				},
-			],
-			notifications: [
-				{
-					message: "Welcome to PSA Horizon!",
-					read: false,
-				},
-			],
-			careerPath: [
-				{
-					position: "Junior Software Engineer",
-					progress: 100,
-					startedAt: "2023-01-01T00:00:00.000Z",
-					endedAt: "2023-12-31T00:00:00.000Z",
-					skillsRequired: [
-						"Data Analysis",
-						"Excel",
-						"Basic Logistics",
-					],
-					_id: "68e0fa5fb8980e66e106acae",
-				},
-				{
-					position: "Software Engineer",
-					progress: 65,
-					startedAt: "2024-01-01T00:00:00.000Z",
-					skillsRequired: [
-						"Advanced Data Analysis",
-						"Process Optimization",
-					],
-					_id: "68e0fa5fb8980e66e106acaf",
-				},
-				{
-					position: "Senior Software Engineer",
-					progress: 0,
-					skillsRequired: ["Leadership", "Supply Chain Management"],
-					_id: "68e0fa5fb8980e66e106acb0",
-				},
-			],
-			moods: generateMoodData(dayjs().subtract(12, "month").toDate()),
-		});
+		users.push(generateDefaultUser());
 	}
+	return users;
+};
+
+export const generateUsersFromJSON = async (
+	employeeData: any[],
+	includeDefaultUser = true
+) => {
+	const users = await Promise.all(
+		employeeData.map(async (emp) => {
+			const personal = emp.personal_info ?? {};
+			const employment = emp.employment_info ?? {};
+
+			const user = {
+				name: personal.name ?? faker.person.fullName(),
+				email: personal.email ?? faker.internet.email(),
+				organisation: personal.office_location ?? "PSA Singapore",
+				position: employment.job_title ?? faker.person.jobTitle(),
+				department: employment.department ?? "General Department",
+				unit: employment.unit ?? "General Unit",
+				role: "user",
+				password: HASHED_PASSWORD,
+				hireDate: employment.hire_date
+					? new Date(employment.hire_date)
+					: faker.date.past({ years: 5 }),
+				supervisor: undefined,
+				subordinates: [],
+				avatar: faker.image.avatar(),
+				bio: faker.person.bio(),
+				lastSeen: null,
+				skills: (emp.skills ?? []).map((s: any) => ({
+					name: s.skill_name,
+					functionArea: s.function_area,
+					specialisation: s.specialization,
+					level: getRandomInt(40, 100),
+				})),
+				languages: (personal.languages ?? []).map((l: any) => ({
+					name: l.language,
+					proficiency: l.proficiency,
+				})),
+				strengths: (emp.competencies ?? []).map((c: any) => ({
+					name: c.name,
+					level: c.level,
+				})),
+				projects: (emp.projects ?? []).map((p: any) => ({
+					name: p.project_name,
+					role: p.role,
+					description: p.description,
+					outcomes: p.outcomes ?? [],
+					startDate: new Date(p.period.start),
+					endDate: p.period.end ? new Date(p.period.end) : new Date(),
+				})),
+				education: (emp.education ?? []).map((e: any) => ({
+					institution: e.institution,
+					degree: e.degree,
+					startDate: new Date(e.period.start),
+					endDate: new Date(e.period.end),
+				})),
+				careerPath: (emp.positions_history ?? []).map((p: any) => ({
+					name: p.role_title,
+					focusAreas: p.focus_areas ?? [],
+					skills: p.key_skills_used ?? [],
+					startDate: new Date(p.period.start),
+					endDate: p.period.end ? new Date(p.period.end) : null,
+				})),
+				notifications: generateNotifications(),
+				mentorshipRequests: [],
+				mentees: [],
+				moods: generateMoodData(dayjs().subtract(12, "month").toDate()),
+				activities: [],
+				isOnline: false,
+			};
+
+			return user;
+		})
+	);
+
+	if (includeDefaultUser) {
+		users.push(generateDefaultUser());
+	}
+
 	return users;
 };
 
 export async function seedUsers() {
 	try {
-		const users = await generateUsers(500);
-		await User.insertMany(users);
-		console.log("Users seeded successfully");
+		const data = await fs.readFile(
+			"./scripts/mongodb/Employee_Profiles.json",
+			"utf-8"
+		);
+		const jsonData = JSON.parse(data);
+		const totalUsers = 500;
+
+		const jsonUsers = await generateUsersFromJSON(jsonData, true);
+		const mockUsers = await generateUsers(totalUsers - jsonUsers.length);
+		const usersToInsert = [...jsonUsers, ...mockUsers];
+
+		await User.insertMany(usersToInsert);
+
+		console.log(`Seeded ${usersToInsert.length} users successfully`);
 	} catch (err) {
 		console.error("Error inserting users:", err);
 	}

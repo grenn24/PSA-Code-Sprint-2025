@@ -6,10 +6,11 @@ import eventService from "services/event";
 import { motion } from "framer-motion";
 
 interface Prop {
+	index: number;
 	event: Event;
 	setEvent: (event: Event) => void;
 }
-const EventCard: React.FC<Prop> = ({ event, setEvent }) => {
+const EventCard: React.FC<Prop> = ({index, event, setEvent }) => {
 	const { user } = useAppSelector((state) => state.user);
 	const navigate = useNavigate();
 	const [hovered, setHovered] = useState(false);
@@ -44,7 +45,7 @@ const EventCard: React.FC<Prop> = ({ event, setEvent }) => {
 	return (
 		<div
 			onClick={() => navigate(`/events-hub/${event._id}`)}
-			className="relative z-10 overflow-visible cursor-pointer"
+			className={`relative z-${index} overflow-visible cursor-pointer`}
 			onMouseEnter={() => setHovered(true)}
 			onMouseLeave={() => setHovered(false)}
 		>

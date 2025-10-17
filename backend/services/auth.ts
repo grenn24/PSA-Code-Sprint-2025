@@ -4,6 +4,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import config from "config";
 import { generateUser } from "../scripts/mongodb/user.js";
+import { generateChats } from "../scripts/mongodb/chat.js";
+import Chat from "../models/chat.js";
 
 class AuthService {
 	async login(email: string, password: string) {
@@ -58,7 +60,8 @@ class AuthService {
 			);
 		}
 
-		const newUser = new User(await generateUser());
+		const newUser = new User(await generateUser(email, password));
+		await Chat.insertMany(await generateChats(newUser.email));
 		newUser.email = email.toLowerCase();
 		const salt = await bcrypt.genSalt(10);
 		newUser.password = await bcrypt.hash(password, salt);

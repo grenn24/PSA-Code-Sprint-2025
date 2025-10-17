@@ -9,6 +9,7 @@ import {
 	MessageSquare,
 	LogOut,
 	UserPlus,
+	Trash,
 } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { Event } from "@common/types/event";
@@ -89,6 +90,7 @@ const EventDetails = () => {
 	const isJoined = !!event?.participants.find((participant) => {
 		return (participant as User)._id === user._id;
 	});
+	const isCreator = event?.creator?._id === user._id;
 
 	const handleToggleJoin = async () => {
 		if (!user?._id || !event?._id) return;
@@ -107,10 +109,17 @@ const EventDetails = () => {
 		<div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white text-gray-900">
 			{/* Cover Image */}
 			<div className="relative w-full h-72 overflow-hidden rounded-b-3xl shadow-md">
+				{!event.coverImage?.url && (
+					<div className="absolute inset-0 bg-gradient-to-br from-purple-200 via-purple-300 to-indigo-400 animate-pulse" />
+				)}
+
+				{/* Image */}
 				<img
-					src={event.coverImage?.url || "/placeholder.jpg"}
+					src={event.coverImage?.url || ""}
 					alt={event.title}
-					className="w-full h-full object-cover"
+					className={`w-full h-full object-cover transition-opacity duration-500 ${
+						event.coverImage?.url ? "opacity-100" : "opacity-0"
+					}`}
 				/>
 				<div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 				<div className="absolute bottom-6 left-6 text-white">
@@ -126,13 +135,18 @@ const EventDetails = () => {
 					disabled={isJoining}
 					className={`absolute bottom-6 right-6 flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-white shadow-lg transition 
 						${
-							isJoined
+							isJoined || isCreator
 								? "bg-red-500/80 hover:bg-red-600"
 								: "bg-indigo-600/80 hover:bg-indigo-700"
 						} 
 						${isJoining ? "opacity-70 cursor-wait" : ""}`}
 				>
-					{isJoining ? (
+					{isCreator ? (
+						<>
+							<Trash size={18} />
+							Delete Event
+						</>
+					) : isJoining ? (
 						<span>Loading...</span>
 					) : isJoined ? (
 						<>
@@ -215,7 +229,7 @@ const EventDetails = () => {
 					</h2>
 
 					{/* Add Comment Box */}
-					{isJoined && (
+					{(isJoined || isCreator) && (
 						<div className="bg-white rounded-xl p-4 shadow-sm mb-6 border border-gray-100">
 							<textarea
 								value={newComment}

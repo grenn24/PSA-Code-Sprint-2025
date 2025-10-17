@@ -56,7 +56,6 @@ async function generateEvents(n: number) {
 				};
 			});
 
-
 			events.push({
 				title: faker.lorem.sentence(3),
 				description: faker.lorem.paragraph(),
@@ -71,6 +70,11 @@ async function generateEvents(n: number) {
 				creator: creator._id.toString(),
 				participants: participants.map((u) => u._id.toString()),
 				comments,
+				coverImage: {
+					s3Filename: "DSC04804.jpg",
+					filename: "",
+					folder: ["events"],
+				},
 			});
 		}
 

@@ -141,9 +141,10 @@ const Events: React.FC = () => {
 					/>
 				</div>
 			) : !searchTerm ? (
-				sections.map((section) => (
+				sections.map((section, index) => (
 					<EventSection
 						key={section.title}
+						index={index}
 						title={section.title}
 						events={section.events}
 						setEvents={setEvents}
@@ -155,9 +156,10 @@ const Events: React.FC = () => {
 						{`${filteredEvents.length} Results`}
 					</h2>
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-						{filteredEvents.map((event) => (
+						{filteredEvents.map((event, index) => (
 							<EventCard
 								key={event._id}
+								index={index}
 								event={event}
 								setEvent={(newEvent) =>
 									setEvents((oldEvents) =>
