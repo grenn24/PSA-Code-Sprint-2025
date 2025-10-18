@@ -322,9 +322,11 @@ const VideoCall: React.FC<VideoCallProps> = ({
 						remoteVideoRef.current,
 						setExpression
 					);
-					setMoodAnalysis(moodDetector);
-				} else {
 				
+				} else {
+					moodAnalysis?.();
+					setMoodAnalysis(null);
+					setExpression(null);
 				}
 			},
 			icon: <Activity size={24} />,

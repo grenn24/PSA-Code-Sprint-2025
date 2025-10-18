@@ -41,9 +41,7 @@ export async function startMoodDetection(
 
 	loop();
 
-	return () => {
-		isRunning = false;
-	};
+
 }
 
 export async function stopMoodDetection(stopFunction: () => void) {
