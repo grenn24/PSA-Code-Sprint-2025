@@ -149,6 +149,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 	useEffect(() => {
 		if (remoteVideoRef.current && remoteStream) {
 			remoteVideoRef.current.srcObject = remoteStream;
+			console.log("starting mood analysis");
 			analyseMood(remoteVideoRef.current);
 		}
 	}, [remoteStream]);
