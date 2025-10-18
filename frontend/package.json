@@ -31,6 +31,7 @@
 		"clsx": "^2.1.1",
 		"config": "^3.3.12",
 		"dayjs": "^1.11.18",
+		"face-api.js": "^0.22.2",
 		"framer-motion": "^12.23.22",
 		"jsonwebtoken": "^9.0.2",
 		"locale-currency": "^0.0.4",

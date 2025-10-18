@@ -27,6 +27,7 @@ import websocketService from "utilities/websocket";
 import { User } from "@common/types/user";
 import chatService from "services/chat";
 import { useAppSelector } from "redux/store";
+import * as faceapi from "face-api.js";
 
 interface VideoCallProps {
 	localStream: MediaStream | null;
@@ -109,6 +110,18 @@ const MINDFULNESS_PHASES = [
 	},
 ];
 
+async function analyseMood(video: HTMLVideoElement) {
+	const detections = await faceapi
+		.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
+		.withFaceExpressions();
+
+	if (detections) {
+		console.log(detections.expressions);
+	}
+	requestAnimationFrame(() => analyseMood(video));
+}
+
+
 const VideoCall: React.FC<VideoCallProps> = ({
 	localStream,
 	remoteStream,
@@ -146,6 +159,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 	useEffect(() => {
 		if (remoteVideoRef.current && remoteStream) {
 			remoteVideoRef.current.srcObject = remoteStream;
+			analyseMood(remoteVideoRef.current);
 		}
 	}, [remoteStream]);
 
