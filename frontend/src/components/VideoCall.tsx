@@ -172,11 +172,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 	useEffect(() => {
 		if (remoteVideoRef.current && remoteStream) {
 			remoteVideoRef.current.srcObject = remoteStream;
-			startMoodDetection(
-				remoteVideoRef.current,
-				setExpression,
-				skipRef
-			);
+			startMoodDetection(remoteVideoRef.current, setExpression, skipRef);
 		}
 	}, [remoteStream]);
 
@@ -321,10 +317,10 @@ const VideoCall: React.FC<VideoCallProps> = ({
 			tooltip: "Live Captions",
 		},
 		{
-			onClick: () => setMoodAnalysis((prev) => {
-				skipRef.current = !prev;
-				return !prev;
-			}),
+			onClick: () => {
+				skipRef.current = !skipRef.current;
+				setMoodAnalysis((prev) => !prev);
+			},
 			icon: <Activity size={24} />,
 			tooltip: "Analyze Mood",
 		},
