@@ -25,7 +25,7 @@ import require$$3$1, { Readable } from 'node:stream';
 import require$$5$2 from 'assert';
 import { versions, env as env$1 } from 'process';
 import require$$3$2 from 'mock-aws-s3';
-import require$$5$3 from 'aws-sdk';
+import require$$5$3 from '@aws-sdk/client-s3';
 import require$$6$1 from 'nock';
 import require$$0$a from 'child_process';
 
