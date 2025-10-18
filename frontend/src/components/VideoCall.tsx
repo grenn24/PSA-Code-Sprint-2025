@@ -28,6 +28,7 @@ import { User } from "@common/types/user";
 import chatService from "services/chat";
 import { useAppSelector } from "redux/store";
 import * as faceapi from "face-api.js";
+import { analyseMood } from "utilities/face";
 
 interface VideoCallProps {
 	localStream: MediaStream | null;
@@ -110,19 +111,7 @@ const MINDFULNESS_PHASES = [
 	},
 ];
 
-function analyseMood(video: HTMLVideoElement) {
-	faceapi
-		.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
-		.withFaceExpressions()
-		.then((detections) => {
-			if (detections) {
-				console.log("facial expressions", detections.expressions);
-			}
-			return detections;
-		});
 
-	requestAnimationFrame(() => analyseMood(video));
-}
 const VideoCall: React.FC<VideoCallProps> = ({
 	localStream,
 	remoteStream,
