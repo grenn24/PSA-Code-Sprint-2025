@@ -25,6 +25,7 @@ export async function startMoodDetection(
 
 	async function loop() {
 		console.log("looping");
+		if (skipRef && skipRef.current) return;
 		faceapi
 			.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
 			.withFaceExpressions()
@@ -37,11 +38,7 @@ export async function startMoodDetection(
 			})
 			.catch((err) => console.error("Detection error:", err));
 	}
-	const interval = setInterval(() => {
-		if (!skipRef?.current) {
-			loop();
-		}
-	}, intervalMs);
+	const interval = setInterval(loop, intervalMs);
 }
 
 export async function stopMoodDetection(stopFunction: () => void) {
