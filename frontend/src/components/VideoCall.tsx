@@ -853,87 +853,113 @@ const VideoCall: React.FC<VideoCallProps> = ({
 					</motion.div>
 				</AnimatePresence>
 			)}
-			{expression && (
+			{!!moodAnalysis && (
 				<motion.div
 					initial={{ opacity: 0, scale: 0.9 }}
 					animate={{ opacity: 1, scale: 1 }}
 					exit={{ opacity: 0, scale: 0.9 }}
 					transition={{ duration: 0.4 }}
 					className="absolute top-6 right-6 z-50 flex flex-col items-center gap-4 
-			bg-gradient-to-br from-black/60 to-gray-800/60 backdrop-blur-lg 
-			px-6 py-5 rounded-2xl shadow-2xl border border-white/10 
-			text-white font-semibold w-64"
-					style={{
-						boxShadow: `0 0 30px ${
-							getMoodInfo(expression).color
-						}80`,
-					}}
+        bg-gradient-to-br from-black/60 to-gray-800/60 backdrop-blur-lg 
+        px-6 py-5 rounded-2xl shadow-2xl border border-white/10 
+        text-white font-semibold w-64"
 				>
-					{/* Emoji + Mood Text */}
-					<div className="flex flex-col items-center gap-2">
-						<motion.span
-							key={getMoodInfo(expression).emoji}
-							initial={{ scale: 0 }}
-							animate={{ scale: 1 }}
-							transition={{ type: "spring", stiffness: 300 }}
-							className="text-6xl"
-							style={{
-								textShadow: `0 0 15px ${
-									getMoodInfo(expression).color
-								}`,
-							}}
-						>
-							{getMoodInfo(expression).emoji}
-						</motion.span>
-						<span
-							className="text-xl tracking-wide font-bold"
-							style={{
-								color: getMoodInfo(expression).color,
-							}}
-						>
-							{getMoodInfo(expression).text}
-						</span>
-					</div>
+					{expression ? (
+						<>
+							{/* Emoji + Mood Text */}
+							<div className="flex flex-col items-center gap-2">
+								<motion.span
+									key={getMoodInfo(expression).emoji}
+									initial={{ scale: 0 }}
+									animate={{ scale: 1 }}
+									transition={{
+										type: "spring",
+										stiffness: 300,
+									}}
+									className="text-6xl"
+									style={{
+										textShadow: `0 0 15px ${
+											getMoodInfo(expression).color
+										}`,
+									}}
+								>
+									{getMoodInfo(expression).emoji}
+								</motion.span>
+								<span
+									className="text-xl tracking-wide font-bold"
+									style={{
+										color: getMoodInfo(expression).color,
+									}}
+								>
+									{getMoodInfo(expression).text}
+								</span>
+							</div>
 
-					{/* Confidence Slider */}
-					<div className="w-full">
-						<div className="flex justify-between text-xs mb-1">
-							<span className="text-gray-300">Confidence</span>
-							<span className="text-gray-200 font-mono">
-								{(getMoodInfo(expression).score * 100).toFixed(
-									0
-								)}
-								%
+							{/* Confidence Slider */}
+							<div className="w-full">
+								<div className="flex justify-between text-xs mb-1">
+									<span className="text-gray-300">
+										Confidence
+									</span>
+									<span className="text-gray-200 font-mono">
+										{(
+											getMoodInfo(expression).score * 100
+										).toFixed(0)}
+										%
+									</span>
+								</div>
+								<div className="relative w-full h-3 bg-gray-700 rounded-full overflow-hidden">
+									<motion.div
+										className="absolute top-0 left-0 h-full rounded-full"
+										initial={{ width: 0 }}
+										animate={{
+											width: `${
+												getMoodInfo(expression).score *
+												100
+											}%`,
+											backgroundColor:
+												getMoodInfo(expression).color,
+										}}
+										transition={{
+											duration: 0.5,
+											ease: "easeOut",
+										}}
+									/>
+								</div>
+							</div>
+
+							{/* Subtle mood ring glow */}
+							<motion.div
+								className="absolute -z-10 w-60 h-60 rounded-full blur-3xl opacity-30"
+								style={{
+									background: getMoodInfo(expression).color,
+								}}
+								animate={{
+									scale: [1, 1.1, 1],
+									opacity: [0.3, 0.5, 0.3],
+								}}
+								transition={{ duration: 3, repeat: Infinity }}
+							/>
+						</>
+					) : (
+						/* 🕓 Loading / No face detected state */
+						<div className="flex flex-col items-center justify-center gap-3 py-6">
+							<motion.div
+								className="w-10 h-10 border-4 border-gray-400 border-t-white rounded-full"
+								animate={{ rotate: 360 }}
+								transition={{
+									duration: 1,
+									repeat: Infinity,
+									ease: "linear",
+								}}
+							/>
+							<span className="text-gray-300 text-sm">
+								{moodAnalysis
+									? "Detecting face..."
+									: "Starting mood analysis..."}
 							</span>
 						</div>
-						<div className="relative w-full h-3 bg-gray-700 rounded-full overflow-hidden">
-							<motion.div
-								className="absolute top-0 left-0 h-full rounded-full"
-								initial={{ width: 0 }}
-								animate={{
-									width: `${
-										getMoodInfo(expression).score * 100
-									}%`,
-									backgroundColor:
-										getMoodInfo(expression).color,
-								}}
-								transition={{ duration: 0.5, ease: "easeOut" }}
-							/>
-						</div>
-					</div>
-
-					{/* Subtle mood ring glow */}
-					<motion.div
-						className="absolute -z-10 w-60 h-60 rounded-full blur-3xl opacity-30"
-						style={{
-							background: getMoodInfo(expression).color,
-						}}
-						animate={{
-							scale: [1, 1.1, 1],
-							opacity: [0.3, 0.5, 0.3],
-						}}
-						transition={{ duration: 3, repeat: Infinity }}
-					/>
+					)}
 				</motion.div>
 			)}
 		</div>
