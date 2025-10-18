@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 import s3Service from "../utilities/s3.js";
 class EventService {
     async getAllEvents(condition) {
-        const events = await Event.find(condition).exec();
+        const events = await Event.find(condition).populate("creator").exec();
         for (const event of events) {
             if (event.coverImage) {
                 event.coverImage.url = await s3Service.getPublicUrl(event.coverImage.s3Filename, event.coverImage.folder);
@@ -59,6 +59,13 @@ class EventService {
         event.participants = event.participants.filter((participant) => participant.toString() !== userID);
         await event.save();
         return await this.getEventByID(eventID);
+    }
+    async deleteEventByID(eventID) {
+        const deletedEvent = await Event.findByIdAndDelete(eventID).exec();
+        if (!deletedEvent) {
+            throw new HttpError("Event not found", "NOT_FOUND", HttpStatusCode.NotFound);
+        }
+        return deletedEvent;
     }
 }
 const eventService = new EventService();

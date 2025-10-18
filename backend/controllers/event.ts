@@ -33,6 +33,11 @@ class EventController {
 		const event = await eventService.leaveEvent(user.id, eventID);
 		response.status(200).send(event);
 	}
+	async deleteEventByID(request: Request, response: Response) {
+		const eventID = response.locals._id;
+		const event = await eventService.deleteEventByID(eventID);
+		response.status(200).send(event);
+	}
 
 	catchErrors(handler) {
 		return async (

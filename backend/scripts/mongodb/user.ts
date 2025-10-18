@@ -143,7 +143,7 @@ function getRandomDate(start, end) {
 
 function generateStrengths() {
 	const shuffled = [...SKILL_NAMES].sort(() => 0.5 - Math.random());
-	const selected = shuffled.slice(0, getRandomInt(3, 6));
+	const selected = shuffled.slice(0, getRandomInt(1, 6));
 
 	return selected.map((skill) => ({
 		name: skill,
@@ -313,20 +313,7 @@ export const generateDefaultUser = () => {
 		avatar: faker.image.avatar(),
 		bio: faker.person.bio(),
 		mentorshipRequests: [],
-		skills: [
-			{
-				name: "Software Engineer",
-				functionArea: "Software",
-				specialisation: "Full Stack",
-				level: 60,
-			},
-			{
-				name: "AI Engineer",
-				functionArea: "AI",
-				specialisation: "Machine Learning",
-				level: 50,
-			},
-		],
+		skills: generateRandomSkills(),
 		notifications: [{ message: "Welcome to PSA Horizon!", read: false }],
 		careerPath: [
 			{
@@ -483,6 +470,34 @@ export const generateUsersFromJSON = async (
 	return users;
 };
 
+async function generateSupervisors() {
+	const users = await User.find().sort({ hireDate: 1 }).exec();
+	if (users.length === 0) {
+		console.log("No users found in database.");
+		return;
+	}
+
+	for (const user of users) {
+		// Skip if already has a supervisor
+		if (user.supervisor) continue;
+
+		const possibleSupervisors = users.filter(
+			(u) => u.hireDate < user.hireDate
+		);
+
+		if (possibleSupervisors.length === 0) continue; // no one more senior
+
+		// Randomly assign one supervisor
+		const supervisor =
+			possibleSupervisors[
+				Math.floor(Math.random() * possibleSupervisors.length)
+			];
+
+		user.supervisor = supervisor._id;
+		await user.save();
+	}
+}
+
 export async function seedUsers() {
 	try {
 		const data = await fs.readFile(
@@ -497,6 +512,7 @@ export async function seedUsers() {
 		const usersToInsert = [...jsonUsers, ...mockUsers];
 
 		await User.insertMany(usersToInsert);
+		await generateSupervisors();
 
 		console.log(`Seeded ${usersToInsert.length} users successfully`);
 	} catch (err) {

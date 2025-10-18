@@ -29,46 +29,6 @@ interface PotentialRole {
 	relevance: number; // 0-100
 }
 
-const mockPotentialRoles: PotentialRole[] = [
-	{
-		position: {
-			name: "Senior Product Manager",
-			focusAreas: ["Product Strategy", "Leadership"],
-			skills: [],
-			startDate: "",
-			endDate: null,
-		},
-		missingSkills: [
-			{ name: "Data Analysis", level: "Intermediate" },
-			{ name: "Leadership", level: "Beginner" },
-			{ name: "SQL", level: "Intermediate" },
-		],
-		recommendedCourses: [
-			{ name: "Advanced Data Analytics" },
-			{ name: "Leadership Fundamentals" },
-			{ name: "SQL for Analysts" },
-		],
-		relevance: 85,
-	},
-	{
-		position: {
-			name: "Tech Lead",
-			focusAreas: ["Architecture", "Mentorship"],
-			skills: [],
-			startDate: "",
-			endDate: null,
-		},
-		missingSkills: [
-			{ name: "System Design", level: "Intermediate" },
-			{ name: "Leadership", level: "Intermediate" },
-		],
-		recommendedCourses: [
-			{ name: "Leadership Fundamentals" },
-			{ name: "Advanced System Design" },
-		],
-		relevance: 78,
-	},
-];
 
 const renderStars = (percent: number) => {
 	const fullStars = Math.floor(percent / 20); // 5 stars max
@@ -165,7 +125,7 @@ const Career: React.FC = () => {
 					Potential Next Roles
 				</h2>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-					{mockPotentialRoles.map((role, idx) => (
+					{potentialPositions.map((role, idx) => (
 						<div
 							key={idx}
 							className="bg-white p-6 rounded-xl shadow-md border border-gray-200 hover:shadow-lg transition flex flex-col justify-between"

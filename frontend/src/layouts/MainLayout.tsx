@@ -46,17 +46,18 @@ const routes = [
 		filled: BriefcaseSolid,
 	},
 	{
-		path: "/mentor",
-		label: "Mentor Match",
-		outline: UsersOutline,
-		filled: UsersSolid,
-	},
-	{
 		path: "/events-hub",
 		label: "Events Hub",
 		outline: CalendarOutline,
 		filled: CalendarSolid,
 	},
+	{
+		path: "/mentor",
+		label: "Mentor Match",
+		outline: UsersOutline,
+		filled: UsersSolid,
+	},
+
 	{
 		path: "/wellness-buddy",
 		label: "WellnessBuddy",

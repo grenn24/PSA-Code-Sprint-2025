@@ -73,8 +73,8 @@ export interface User {
 	role?: "user" | "admin";
 	hireDate: Date;
 	password: string;
-	supervisor?: User | string;
-	subordinates?: (User | string)[];
+	supervisor?: User;
+	subordinates: User[];
 	avatar?: string;
 	bio?: string;
 

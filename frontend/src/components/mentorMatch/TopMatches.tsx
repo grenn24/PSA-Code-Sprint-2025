@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { User } from "@common/types/user";
 import userService from "../../services/user";
 import { useAppSelector } from "../../redux/store";
+import dayjs from "dayjs";
 
 const overlayVariants = {
 	initial: { opacity: 0 },
@@ -107,10 +108,10 @@ const TopMatches = () => {
 	return (
 		<div className="flex flex-col">
 			<h2 className="text-2xl font-semibold text-indigo-700 mb-[24px] font-inter">
-				Suggested Mentors
+				Top Matches
 			</h2>
 			<div className="w-full flex flex-col items-center">
-				<div className="relative w-full max-w-md h-[600px]">
+				<div className="relative w-full max-w-5xl h-[600px]">
 					<AnimatePresence mode="wait">
 						{topMatches[index] && (
 							<motion.div
@@ -134,7 +135,7 @@ const TopMatches = () => {
 									duration: 0.3,
 									ease: "easeInOut",
 								}}
-								className="absolute w-full h-full bg-white rounded-3xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden"
+								className="absolute w-full h-full bg-white rounded-3xl shadow-xl flex  overflow-hidden"
 							>
 								{action && (
 									<motion.div
@@ -152,10 +153,13 @@ const TopMatches = () => {
 									</motion.div>
 								)}
 
+								{/* Avatar */}
 								<img
 									src={topMatches[index].avatar}
-									className="w-full h-7/10 object-cover"
+									className="h-full object-cover"
 								/>
+
+								{/* Info Section */}
 								<div className="p-4 flex flex-col flex-1 overflow-auto">
 									<h2 className="text-2xl font-semibold">
 										{topMatches[index].name}
@@ -163,17 +167,99 @@ const TopMatches = () => {
 									<p className="text-gray-500">
 										{topMatches[index].position}
 									</p>
-									<div className="flex gap-2 mt-3 flex-wrap">
-										{topMatches[index].skills.map((s) => (
-											<span
-												key={s.name}
-												className="px-3 py-1 text-xs bg-indigo-100 text-indigo-700 rounded-full"
-											>
-												{s.name}
+
+									{/* Department & Unit */}
+									<div className="flex gap-4 mt-2 text-sm text-gray-600">
+										{topMatches[index].department && (
+											<span>
+												🏢{" "}
+												{topMatches[index].department}
 											</span>
-										))}
+										)}
+										{topMatches[index].unit && (
+											<span>
+												📌 {topMatches[index].unit}
+											</span>
+										)}
 									</div>
-									<p className="text-sm text-gray-700 mt-4 flex-1">
+
+									{/* Hire Date */}
+									{topMatches[index].hireDate && (
+										<p className="mt-1 text-sm text-gray-500">
+											🗓 Joined:{" "}
+											{dayjs(
+												topMatches[index].hireDate
+											).format("DD MMM YYYY")}
+										</p>
+									)}
+
+									{/* Skills */}
+									<div className="mb-3 mt-5">
+										<p className="text-sm font-inter font-bold text-gray-500 mb-1">
+											Skills
+										</p>
+										<div className="flex gap-2 flex-wrap">
+											{topMatches[index].skills.map(
+												(s) => (
+													<span
+														key={s.name}
+														className="px-3 py-1 text-xs bg-indigo-100 text-indigo-700 rounded-full"
+													>
+														{s.name}
+													</span>
+												)
+											)}
+										</div>
+									</div>
+
+									{/* Languages */}
+									{topMatches[index].languages?.length >
+										0 && (
+										<div className="mb-3">
+											<p className="text-sm font-inter font-bold text-gray-500 mb-1">
+												Languages
+											</p>
+											<div className="flex flex-wrap gap-2">
+												{topMatches[
+													index
+												].languages.map((lang) => (
+													<span
+														key={lang.name}
+														className="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full"
+													>
+														{lang.name} (
+														{lang.proficiency})
+													</span>
+												))}
+											</div>
+										</div>
+									)}
+
+									{/* Strengths */}
+									{topMatches[index].strengths?.length >
+										0 && (
+										<div>
+											<p className="text-sm font-inter font-bold text-gray-500 mb-1">
+												Strengths
+											</p>
+											<div className="flex flex-wrap gap-2">
+												{topMatches[
+													index
+												].strengths.map((strength) => (
+													<span
+														key={strength.name}
+														className="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded-full"
+													>
+														{strength.name} (
+														{strength.level})
+													</span>
+												))}
+											</div>
+										</div>
+									)}
+
+									{/* Bio */}
+									<p className="text-sm text-gray-700 mt-4 flex-1 whitespace-pre-wrap">
 										{topMatches[index].bio}
 									</p>
 								</div>

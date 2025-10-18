@@ -11,5 +11,6 @@ eventRouter.post("", eventController.catchErrors(eventController.createEvent.bin
 eventRouter.put("/:ID", getID(), eventController.catchErrors(eventController.updateEvent.bind(eventController)));
 eventRouter.post("/:ID/join", getID(), eventController.catchErrors(eventController.joinEvent.bind(eventController)));
 eventRouter.post("/:ID/leave", getID(), eventController.catchErrors(eventController.leaveEvent.bind(eventController)));
+eventRouter.delete("/:ID", getID(), eventController.catchErrors(eventController.deleteEventByID.bind(eventController)));
 export default eventRouter;
 //# sourceMappingURL=event.js.map

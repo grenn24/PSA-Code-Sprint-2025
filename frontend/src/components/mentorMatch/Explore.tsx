@@ -8,6 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import userService from "../../services/user";
 import { useAppSelector } from "../../redux/store";
+import dayjs from "dayjs";
 
 const EXPERIENCE_RANGES: { [key: string]: [number, number] } = {
 	Junior: [0, 2],
@@ -18,6 +19,8 @@ const EXPERIENCE_RANGES: { [key: string]: [number, number] } = {
 
 const Explore = () => {
 	const { user } = useAppSelector((state) => state.user);
+	const [openMessageModal, setOpenMessageModal] = useState<User | null>(null);
+	const [message, setMessage] = useState("");
 	const [mentors, setMentors] = useState<User[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [searchValue, setSearchValue] = useState("");
@@ -27,6 +30,8 @@ const Explore = () => {
 	}>({
 		experienceLevel: [],
 		skills: [],
+		languages: [],
+		strengths:[]
 	});
 
 	useEffect(() => {
@@ -42,6 +47,20 @@ const Explore = () => {
 			...new Set(
 				mentors.flatMap((mentor) =>
 					mentor.skills.map((skill) => skill.name)
+				)
+			),
+		],
+		languages: [
+			...new Set(
+				mentors.flatMap((mentor) =>
+					mentor.languages.map((language) => language.name)
+				)
+			),
+		],
+		strengths: [
+			...new Set(
+				mentors.flatMap((mentor) =>
+					mentor.strengths.map((strength) => strength.name)
 				)
 			),
 		],
@@ -111,7 +130,19 @@ const Explore = () => {
 			return selectedFilters.skills.every((skill) =>
 				mentorSkillNames.includes(skill)
 			);
+		})
+		.filter((mentor) => {
+			if (selectedFilters.languages.length === 0) return true;
+			const mentorLanguagesNames = mentor.languages.map((s) => s.name);
+			return selectedFilters.languages.every((language) =>
+				mentorLanguagesNames.includes(language)
+			);
 		});
+
+	const sendMentorRequest = async (mentorID: string, message: string) => {
+		await userService.sendMentorshipRequest(mentorID, message);
+		setOpenMessageModal(null);
+	};
 
 	return (
 		<motion.div
@@ -120,6 +151,9 @@ const Explore = () => {
 			exit={{ opacity: 0, y: -15 }}
 			className="space-y-8"
 		>
+			<h2 className="text-2xl font-semibold text-indigo-700 mb-[24px] font-inter">
+				Explore
+			</h2>
 			{/* Header + Search */}
 			<div className="flex flex-col sm:flex-row items-center justify-between gap-6">
 				<div className="relative w-full">
@@ -215,6 +249,66 @@ const Explore = () => {
 										))}
 									</div>
 								</div>
+
+								<div>
+									<p className="text-gray-600 text-sm font-medium mb-1">
+										Strengths
+									</p>
+									<div className="flex flex-wrap gap-2">
+										{FILTER_OPTIONS.strengths.map(
+											(option) => (
+												<button
+													key={option}
+													onClick={() =>
+														toggleFilter(
+															"strengths",
+															option
+														)
+													}
+													className={`px-2 py-1 text-xs rounded-full border ${
+														selectedFilters.strengths.includes(
+															option
+														)
+															? "bg-blue-500 text-white border-blue-500"
+															: "bg-gray-100 text-gray-700 border-gray-200"
+													}`}
+												>
+													{option}
+												</button>
+											)
+										)}
+									</div>
+								</div>
+
+								<div>
+									<p className="text-gray-600 text-sm font-medium mb-1">
+										Languages
+									</p>
+									<div className="flex flex-wrap gap-2">
+										{FILTER_OPTIONS.languages.map(
+											(option) => (
+												<button
+													key={option}
+													onClick={() =>
+														toggleFilter(
+															"languages",
+															option
+														)
+													}
+													className={`px-2 py-1 text-xs rounded-full border ${
+														selectedFilters.languages.includes(
+															option
+														)
+															? "bg-blue-500 text-white border-blue-500"
+															: "bg-gray-100 text-gray-700 border-gray-200"
+													}`}
+												>
+													{option}
+												</button>
+											)
+										)}
+									</div>
+								</div>
 							</div>
 						</motion.div>
 					)}
@@ -234,35 +328,174 @@ const Explore = () => {
 							)
 							.map((m, i) => (
 								<motion.div
-									key={i}
+									key={m._id}
 									whileHover={{ scale: 1.02 }}
-									className="bg-white rounded-2xl border border-gray-300 overflow-hidden transition"
+									className="bg-white rounded-2xl border border-gray-300 overflow-hidden transition flex flex-col"
 								>
+									{/* Avatar */}
 									<img
 										src={m.avatar}
 										className="h-40 w-full object-cover"
 									/>
-									<div className="p-4">
-										<h3 className="font-semibold text-gray-800">
+
+									{/* Info */}
+									<div className="p-4 flex flex-col flex-1 overflow-auto">
+										{/* Name & Position */}
+										<h3 className="text-lg font-semibold text-gray-800">
 											{m.name}
 										</h3>
 										<p className="text-sm text-gray-500">
 											{m.position}
 										</p>
-										<div className="flex flex-wrap gap-2 mt-2">
-											{m.skills.map((s) => (
-												<span
-													key={s.name}
-													className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded-full"
-												>
-													{s.name}
-												</span>
-											))}
+
+										{/* Department & Unit */}
+										<div className="flex gap-4 mt-2 text-sm text-gray-600">
+											{m.department && (
+												<span>🏢 {m.department}</span>
+											)}
+											{m.unit && <span>📌 {m.unit}</span>}
 										</div>
+
+										{/* Hire Date */}
+										{m.hireDate && (
+											<p className="mt-1 text-sm text-gray-500">
+												🗓 Joined:{" "}
+												{dayjs(m.hireDate).format(
+													"DD MMM YYYY"
+												)}
+											</p>
+										)}
+
+										{/* Skills */}
+										{m.skills.length > 0 && (
+											<div className="mt-3">
+												<p className="text-sm font-inter font-bold text-gray-500 mb-1">
+													Skills
+												</p>
+												<div className="flex flex-wrap gap-2">
+													{m.skills.map((s) => (
+														<span
+															key={s.name}
+															className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded-full"
+														>
+															{s.name}
+														</span>
+													))}
+												</div>
+											</div>
+										)}
+
+										{/* Languages */}
+										{m.languages?.length > 0 && (
+											<div className="mt-3">
+												<p className="text-sm font-inter font-bold text-gray-500 mb-1">
+													Languages
+												</p>
+												<div className="flex flex-wrap gap-2">
+													{m.languages.map((lang) => (
+														<span
+															key={lang.name}
+															className="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full"
+														>
+															{lang.name} (
+															{lang.proficiency})
+														</span>
+													))}
+												</div>
+											</div>
+										)}
+
+										{/* Strengths */}
+										{m.strengths?.length > 0 && (
+											<div className="mt-3">
+												<p className="text-sm font-inter font-bold text-gray-500 mb-1">
+													Strengths
+												</p>
+												<div className="flex flex-wrap gap-2">
+													{m.strengths.map((st) => (
+														<span
+															key={st.name}
+															className="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded-full"
+														>
+															{st.name} (
+															{st.level})
+														</span>
+													))}
+												</div>
+											</div>
+										)}
+
+										{/* Bio */}
+										<p className="text-sm text-gray-700 mt-4 flex-1 whitespace-pre-wrap">
+											{m.bio}
+										</p>
+
+										{/* Request Button */}
+										<button
+											onClick={() => {
+												if (!m._id) return;
+												setOpenMessageModal(m);
+											}}
+											className="mt-3 w-full bg-indigo-600 text-white py-2 rounded-full text-sm hover:bg-indigo-500 transition"
+										>
+											Send Request
+										</button>
 									</div>
 								</motion.div>
 							))}
 			</div>
+			<AnimatePresence>
+				{openMessageModal && (
+					<motion.div
+						className="fixed inset-0 bg-gray-900/60 flex items-center justify-center z-50"
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+					>
+						<motion.div
+							className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl flex flex-col gap-4 relative"
+							initial={{ y: 50, opacity: 0, scale: 0.95 }}
+							animate={{ y: 0, opacity: 1, scale: 1 }}
+							exit={{ y: 50, opacity: 0, scale: 0.95 }}
+							transition={{ duration: 0.3, ease: "easeInOut" }}
+						>
+							<h3 className="text-lg font-semibold">
+								Send a request message to{" "}
+								{openMessageModal.name}
+							</h3>
+
+							<textarea
+								value={message}
+								onChange={(e) => setMessage(e.target.value)}
+								placeholder="Type your message..."
+								className="border border-gray-300 rounded-xl p-3 w-full resize-none focus:outline-none focus:ring-2 focus:ring-indigo-400"
+								rows={4}
+							/>
+
+							<div className="flex justify-end gap-3 mt-2">
+								<button
+									className="px-4 py-2 bg-gray-300 rounded-xl hover:bg-gray-400 transition"
+									onClick={() => setOpenMessageModal(null)}
+								>
+									Cancel
+								</button>
+								<button
+									className="px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-600 transition"
+									onClick={() => {
+										if (!openMessageModal._id) return;
+										sendMentorRequest(
+											openMessageModal._id,
+											message
+										);
+									}}
+								>
+									Send
+								</button>
+							</div>
+						</motion.div>
+					</motion.div>
+				)}
+			</AnimatePresence>
 		</motion.div>
 	);
 };

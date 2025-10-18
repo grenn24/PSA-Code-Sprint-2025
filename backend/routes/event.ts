@@ -49,4 +49,12 @@ eventRouter.post(
 	eventController.catchErrors(eventController.leaveEvent.bind(eventController))
 );
 
+eventRouter.delete(
+	"/:ID",
+	getID(),
+	eventController.catchErrors(
+		eventController.deleteEventByID.bind(eventController)
+	)
+);
+
 export default eventRouter;

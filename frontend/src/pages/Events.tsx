@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "redux/store";
 import eventService from "services/event";
@@ -9,33 +9,61 @@ import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import EventCard from "components/event/EventCard";
 import EventSection from "components/event/EventSection";
+import { Star, Calendar, ChevronDown, User2 } from "lucide-react"; // ✅ new icons
 
 dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);
 
 const now = dayjs();
+
 const Events: React.FC = () => {
 	const navigate = useNavigate();
 	const [events, setEvents] = useState<Event[]>([]);
+	const [openDropdown, setOpenDropdown] = useState(false);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
 	const [selectedCategory, setSelectedCategory] = useState<Set<string>>(
 		new Set(["All"])
 	);
+	const [showJoinedOnly, setShowJoinedOnly] = useState<
+		"all" | "joined" | "mine"
+	>("all");
+
+	const { user } = useAppSelector((state) => state.user);
+
+	useEffect(() => {
+		setIsLoading(true);
+		eventService.getAllEvents().then((res) => {
+			setEvents(res);
+			setIsLoading(false);
+		});
+	}, []);
+
+	const filteredEvents = events
+		.filter((e) => {
+			if (showJoinedOnly === "joined") {
+				return e.participants?.some((p) => p === user?._id);
+			} else if (showJoinedOnly === "mine") {
+				return e.creator._id === user?._id;
+			} else {
+				return true;
+			}
+		})
+		.filter(
+			(e) =>
+				(selectedCategory.has("All") ||
+					e.categories.some((c) => selectedCategory.has(c))) &&
+				(e.title
+					.toLowerCase()
+					.includes(searchTerm.trim().toLowerCase()) ||
+					e.description
+						.toLowerCase()
+						.includes(searchTerm.trim().toLowerCase()))
+		);
 
 	const categories = [
 		...new Set(["All", ...events.map((e) => e.categories).flat()]),
 	];
-
-	const filteredEvents = events.filter(
-		(e) =>
-			(selectedCategory.has("All") ||
-				e.categories.some((c) => selectedCategory.has(c))) &&
-			(e.title.toLowerCase().includes(searchTerm.trim().toLowerCase()) ||
-				e.description
-					.toLowerCase()
-					.includes(searchTerm.trim().toLowerCase()))
-	);
 
 	const sections = [
 		{ title: "Recommended for You", events: filteredEvents.slice(0, 3) },
@@ -69,22 +97,87 @@ const Events: React.FC = () => {
 			),
 		},
 	];
-
-	useEffect(() => {
-		setIsLoading(true);
-		eventService.getAllEvents().then((res) => {
-			setEvents(res);
-			setIsLoading(false);
-		});
-	}, []);
+	const dropdownOptions = [
+		{
+			label: "All Events",
+			icon: <Calendar className="w-4 h-4 text-indigo-500" />,
+			value: "all",
+		},
+		{
+			label: "Joined Events",
+			icon: <Star className="w-4 h-4 text-yellow-400" />,
+			value: "joined",
+		},
+		{
+			label: "My Events",
+			icon: <User2 className="w-4 h-4 text-green-500" />,
+			value: "mine",
+		},
+	];
+	const selectedOption = dropdownOptions.find(
+		(opt) => opt.value === showJoinedOnly
+	)!;
 
 	return (
 		<div className="p-8 bg-gradient-to-br from-indigo-50 to-purple-50 min-h-screen">
+			{/* Header */}
 			<div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
 				<h1 className="text-4xl font-bold text-gray-900 font-inter">
 					Events Hub
 				</h1>
+
+				<div className="relative">
+					<div
+						onClick={() => setOpenDropdown((prev) => !prev)}
+						className={`flex items-center gap-2 px-4 py-2 rounded-2xl cursor-pointer shadow-sm border transition-all bg-white/70 backdrop-blur-sm hover:shadow-md ${
+							showJoinedOnly
+								? "border-indigo-600 text-indigo-700"
+								: "border-gray-300 text-gray-700"
+						}`}
+					>
+						{selectedOption.icon}
+						<span className="font-medium">
+							{selectedOption.label}
+						</span>
+						<motion.div
+							animate={{ rotate: openDropdown ? 180 : 0 }}
+							transition={{ duration: 0.2 }}
+						>
+							<ChevronDown className="w-4 h-4 opacity-70" />
+						</motion.div>
+					</div>
+					<AnimatePresence>
+						{openDropdown && (
+							<motion.div
+								initial={{ opacity: 0, y: -8 }}
+								animate={{ opacity: 1, y: 0 }}
+								exit={{ opacity: 0, y: -8 }}
+								transition={{ duration: 0.25 }}
+								className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-2xl shadow-lg overflow-hidden z-50"
+							>
+								{dropdownOptions.map((opt) => (
+									<div
+										key={opt.label}
+										onClick={() => {
+											setShowJoinedOnly(opt.value as any);
+											setOpenDropdown(false);
+										}}
+										className={`flex items-center gap-2 px-4 py-2 cursor-pointer transition-all ${
+											opt.value === showJoinedOnly
+												? "bg-indigo-50 text-indigo-700 font-medium"
+												: "hover:bg-gray-50 text-gray-700"
+										}`}
+									>
+										{opt.icon}
+										<span>{opt.label}</span>
+									</div>
+								))}
+							</motion.div>
+						)}
+					</AnimatePresence>
+				</div>
 			</div>
+
 			<div className="flex justify-between mb-8">
 				<div className="flex flex-wrap gap-3">
 					{categories.map((cat) => (
@@ -121,7 +214,7 @@ const Events: React.FC = () => {
 						placeholder="Search events"
 						value={searchTerm}
 						onChange={(e) => setSearchTerm(e.target.value)}
-						className="px-4 py-2 rounded-full border border-gray-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-400 w-full"
+						className="px-4 py-2 rounded-full border border-gray-300 focus:ring-2 focus:ring-indigo-400 w-full"
 					/>
 					<button
 						onClick={() => navigate("/events-hub/new")}
@@ -132,6 +225,7 @@ const Events: React.FC = () => {
 				</div>
 			</div>
 
+			{/* Content */}
 			{isLoading ? (
 				<div className="flex justify-center items-center min-h-[50vh]">
 					<motion.div

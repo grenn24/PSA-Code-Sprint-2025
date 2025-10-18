@@ -40,8 +40,8 @@ async function generateEvents(n) {
                     author: author._id,
                     content: faker.lorem.sentence({ min: 5, max: 15 }),
                     createdAt: faker.date.between({
-                        from: dayjs(start).subtract(3, "day").toDate(),
-                        to: dayjs(end).add(1, "day").toDate(),
+                        from: dayjs().subtract(1, "month").toDate(),
+                        to: dayjs().toDate(),
                     }),
                 };
             });

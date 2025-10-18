@@ -14,16 +14,15 @@ declare class UserService {
         role: "user" | "admin";
         hireDate: NativeDate;
         password: string;
-        subordinates: mongoose.Types.ObjectId[];
         mentorshipRequests: mongoose.Types.DocumentArray<{
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
@@ -282,16 +281,15 @@ declare class UserService {
         role: "user" | "admin";
         hireDate: NativeDate;
         password: string;
-        subordinates: mongoose.Types.ObjectId[];
         mentorshipRequests: mongoose.Types.DocumentArray<{
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
@@ -555,16 +553,15 @@ declare class UserService {
         role: "user" | "admin";
         hireDate: NativeDate;
         password: string;
-        subordinates: mongoose.Types.ObjectId[];
         mentorshipRequests: mongoose.Types.DocumentArray<{
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
@@ -823,16 +820,15 @@ declare class UserService {
         role: "user" | "admin";
         hireDate: NativeDate;
         password: string;
-        subordinates: mongoose.Types.ObjectId[];
         mentorshipRequests: mongoose.Types.DocumentArray<{
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
@@ -1096,16 +1092,15 @@ declare class UserService {
         role: "user" | "admin";
         hireDate: NativeDate;
         password: string;
-        subordinates: mongoose.Types.ObjectId[];
         mentorshipRequests: mongoose.Types.DocumentArray<{
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
@@ -1364,16 +1359,15 @@ declare class UserService {
         role: "user" | "admin";
         hireDate: NativeDate;
         password: string;
-        subordinates: mongoose.Types.ObjectId[];
         mentorshipRequests: mongoose.Types.DocumentArray<{
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
@@ -1637,16 +1631,15 @@ declare class UserService {
         role: "user" | "admin";
         hireDate: NativeDate;
         password: string;
-        subordinates: mongoose.Types.ObjectId[];
         mentorshipRequests: mongoose.Types.DocumentArray<{
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
@@ -1905,16 +1898,15 @@ declare class UserService {
         role: "user" | "admin";
         hireDate: NativeDate;
         password: string;
-        subordinates: mongoose.Types.ObjectId[];
         mentorshipRequests: mongoose.Types.DocumentArray<{
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
@@ -2178,16 +2170,15 @@ declare class UserService {
         role: "user" | "admin";
         hireDate: NativeDate;
         password: string;
-        subordinates: mongoose.Types.ObjectId[];
         mentorshipRequests: mongoose.Types.DocumentArray<{
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
@@ -2446,16 +2437,15 @@ declare class UserService {
         role: "user" | "admin";
         hireDate: NativeDate;
         password: string;
-        subordinates: mongoose.Types.ObjectId[];
         mentorshipRequests: mongoose.Types.DocumentArray<{
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
@@ -2720,16 +2710,15 @@ declare class UserService {
         role: "user" | "admin";
         hireDate: NativeDate;
         password: string;
-        subordinates: mongoose.Types.ObjectId[];
         mentorshipRequests: mongoose.Types.DocumentArray<{
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
@@ -2988,16 +2977,15 @@ declare class UserService {
         role: "user" | "admin";
         hireDate: NativeDate;
         password: string;
-        subordinates: mongoose.Types.ObjectId[];
         mentorshipRequests: mongoose.Types.DocumentArray<{
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }> & {
+            sender: mongoose.Types.ObjectId;
             message?: string | null | undefined;
-            sender?: mongoose.Types.ObjectId | null | undefined;
         }>;
         mentees: mongoose.Types.ObjectId[];
         notifications: mongoose.Types.DocumentArray<{
@@ -3432,7 +3420,8 @@ declare class UserService {
     getPotentialPositions(userID: string): Promise<{
         position: PositionType;
         missingSkills: Skill[];
-        recommendedCourses: any;
+        recommendedCourses: any[];
+        relevance: number;
     }[]>;
     getCurrentPosition(userID: string): Promise<(mongoose.Types.Subdocument<string | mongoose.Types.ObjectId, any, mongoose.FlattenMaps<{
         name: string;

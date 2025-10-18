@@ -52832,13 +52832,16 @@ const userSchema = new Schema$1({
     hireDate: { type: Date, required: true },
     password: { type: String, required: true },
     supervisor: { type: Schema$1.Types.ObjectId, ref: "User" },
-    subordinates: [{ type: Schema$1.Types.ObjectId, ref: "User" }],
     avatar: { type: String },
     bio: String,
     mentorshipRequests: {
         type: [
             {
-                sender: { type: Schema$1.Types.ObjectId, ref: "User" },
+                sender: {
+                    type: Schema$1.Types.ObjectId,
+                    ref: "User",
+                    required: true,
+                },
                 message: String,
             },
         ],
@@ -52900,6 +52903,11 @@ const userSchema = new Schema$1({
     lastSeen: { type: Date, default: null },
     isOnline: { type: Boolean, default: false },
 }, { timestamps: true });
+userSchema.virtual("subordinates", {
+    ref: "User",
+    localField: "_id",
+    foreignField: "supervisor",
+});
 userSchema.virtual("mentors", {
     ref: "User",
     localField: "_id",
@@ -57646,7 +57654,7 @@ function getRandomDate(start, end) {
 }
 function generateStrengths() {
     const shuffled = [...SKILL_NAMES].sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, getRandomInt(3, 6));
+    const selected = shuffled.slice(0, getRandomInt(1, 6));
     return selected.map((skill) => ({
         name: skill,
         level: ["Beginner", "Intermediate", "Advanced"][getRandomInt(0, 2)],
@@ -104876,16 +104884,19 @@ class UserService {
         return user;
     }
     async sendMentorshipRequest(senderID, mentorID, message) {
-        const sender = await User.findById(senderID);
+        const sender = await User.findById(senderID).exec();
         if (!sender)
             throw new HttpError("Sendernot found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
-        const mentor = await User.findById(mentorID);
+        const mentor = await User.findById(mentorID).exec();
         if (!mentor)
             throw new HttpError("Mentor not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
-        mentor.mentorshipRequests.push({
-            sender: senderID,
-            message,
-        });
+        mentor.mentorshipRequests = [
+            ...mentor.mentorshipRequests.filter((r) => r.sender.toString() !== senderID),
+            {
+                sender: new mongoose.Types.ObjectId(senderID),
+                message,
+            },
+        ];
         await mentor.save();
         await this.addNotification(mentorID, `${sender.name} sent you a mentorship request\n${message}`);
     }
@@ -104955,6 +104966,8 @@ class UserService {
                     position: 1,
                     department: 1,
                     unit: 1,
+                    languages: 1,
+                    strengths: 1,
                     // compute mentor experience in years
                     experience_diff: {
                         $divide: [
@@ -105036,29 +105049,35 @@ class UserService {
         if (!user) {
             throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
         }
-        // 1. Get user's current skills and current position
-        const currentSkills = user.skills || [];
         const currentPosition = await this.getCurrentPosition(userID);
+        const currentSkills = [
+            ...user.skills,
+            ...(currentPosition?.skills || []),
+        ];
         const potentialPositions = (await Position.find({
-            _id: { $ne: currentPosition?._id }, // exclude current position
+            _id: { $ne: currentPosition?._id },
+            name: { $ne: currentPosition?.name },
         })
             .lean()
             .exec());
         const potentialRoles = [];
         for (const position of potentialPositions) {
-            // 3. Compute missing skills for this role
+            const totalSkills = position.skills.length;
+            const matchedSkills = position.skills.filter((posSkill) => currentSkills.some((userSkill) => userSkill.name === posSkill.name &&
+                (userSkill.level ?? 0) >= (posSkill?.level ?? 0)));
             const missingSkills = position.skills.filter((posSkill) => !currentSkills.some((userSkill) => userSkill.name === posSkill.name &&
                 (userSkill.level ?? 0) >= (posSkill?.level ?? 0)));
-            if (missingSkills.length === 0)
-                continue;
+            const relevance = Number((matchedSkills.length / totalSkills).toFixed(2));
             const recommendedCourses = await getRecommendedCoursesHelper(missingSkills, user);
             potentialRoles.push({
                 position,
                 missingSkills,
                 recommendedCourses,
+                relevance,
             });
         }
-        potentialRoles.sort((a, b) => b.missingSkills.length - a.missingSkills.length);
+        // Sort by relevance (descending)
+        potentialRoles.sort((a, b) => b.relevance - a.relevance);
         return potentialRoles;
     }
     async getCurrentPosition(userID) {
@@ -105079,7 +105098,6 @@ async function getRecommendedCoursesHelper(skillGaps, user) {
         course.skillsTaught.forEach((cs) => {
             // Find all gaps that match this skill name
             const matchingGaps = skillGaps.filter((g) => g.name === cs.name);
-            console.log(skillGaps);
             matchingGaps.forEach((gap) => {
                 let relevance = 3; // base for skill name match
                 // Function area match
@@ -127523,7 +127541,7 @@ const Event = model("Event", eventSchema);
 
 class EventService {
     async getAllEvents(condition) {
-        const events = await Event.find(condition).exec();
+        const events = await Event.find(condition).populate("creator").exec();
         for (const event of events) {
             if (event.coverImage) {
                 event.coverImage.url = await s3Service.getPublicUrl(event.coverImage.s3Filename, event.coverImage.folder);
@@ -127578,6 +127596,13 @@ class EventService {
         await event.save();
         return await this.getEventByID(eventID);
     }
+    async deleteEventByID(eventID) {
+        const deletedEvent = await Event.findByIdAndDelete(eventID).exec();
+        if (!deletedEvent) {
+            throw new HttpError("Event not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        }
+        return deletedEvent;
+    }
 }
 const eventService = new EventService();
 
@@ -127609,6 +127634,11 @@ class EventController {
         const eventID = response.locals._id;
         const user = response.locals.user;
         const event = await eventService.leaveEvent(user.id, eventID);
+        response.status(200).send(event);
+    }
+    async deleteEventByID(request, response) {
+        const eventID = response.locals._id;
+        const event = await eventService.deleteEventByID(eventID);
         response.status(200).send(event);
     }
     catchErrors(handler) {
@@ -127647,6 +127677,7 @@ eventRouter.post("", eventController.catchErrors(eventController.createEvent.bin
 eventRouter.put("/:ID", getID(), eventController.catchErrors(eventController.updateEvent.bind(eventController)));
 eventRouter.post("/:ID/join", getID(), eventController.catchErrors(eventController.joinEvent.bind(eventController)));
 eventRouter.post("/:ID/leave", getID(), eventController.catchErrors(eventController.leaveEvent.bind(eventController)));
+eventRouter.delete("/:ID", getID(), eventController.catchErrors(eventController.deleteEventByID.bind(eventController)));
 
 const routes = (app) => {
     const apiRouter = express.Router();

@@ -6,6 +6,7 @@ declare class EventController {
     updateEvent(request: Request, response: Response): Promise<void>;
     joinEvent(request: Request, response: Response): Promise<void>;
     leaveEvent(request: Request, response: Response): Promise<void>;
+    deleteEventByID(request: Request, response: Response): Promise<void>;
     catchErrors(handler: any): (request: Request, response: Response, next: NextFunction) => Promise<void>;
 }
 declare const eventController: EventController;

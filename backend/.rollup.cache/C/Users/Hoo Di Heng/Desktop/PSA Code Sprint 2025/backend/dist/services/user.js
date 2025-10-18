@@ -86,16 +86,19 @@ class UserService {
         return user;
     }
     async sendMentorshipRequest(senderID, mentorID, message) {
-        const sender = await User.findById(senderID);
+        const sender = await User.findById(senderID).exec();
         if (!sender)
             throw new HttpError("Sendernot found", "NOT_FOUND", HttpStatusCode.NotFound);
-        const mentor = await User.findById(mentorID);
+        const mentor = await User.findById(mentorID).exec();
         if (!mentor)
             throw new HttpError("Mentor not found", "NOT_FOUND", HttpStatusCode.NotFound);
-        mentor.mentorshipRequests.push({
-            sender: senderID,
-            message,
-        });
+        mentor.mentorshipRequests = [
+            ...mentor.mentorshipRequests.filter((r) => r.sender.toString() !== senderID),
+            {
+                sender: new mongoose.Types.ObjectId(senderID),
+                message,
+            },
+        ];
         await mentor.save();
         await this.addNotification(mentorID, `${sender.name} sent you a mentorship request\n${message}`);
     }
@@ -165,6 +168,8 @@ class UserService {
                     position: 1,
                     department: 1,
                     unit: 1,
+                    languages: 1,
+                    strengths: 1,
                     // compute mentor experience in years
                     experience_diff: {
                         $divide: [
@@ -246,29 +251,35 @@ class UserService {
         if (!user) {
             throw new HttpError("User not found", "NOT_FOUND", HttpStatusCode.NotFound);
         }
-        // 1. Get user's current skills and current position
-        const currentSkills = user.skills || [];
         const currentPosition = await this.getCurrentPosition(userID);
+        const currentSkills = [
+            ...user.skills,
+            ...(currentPosition?.skills || []),
+        ];
         const potentialPositions = (await Position.find({
-            _id: { $ne: currentPosition?._id }, // exclude current position
+            _id: { $ne: currentPosition?._id },
+            name: { $ne: currentPosition?.name },
         })
             .lean()
             .exec());
         const potentialRoles = [];
         for (const position of potentialPositions) {
-            // 3. Compute missing skills for this role
+            const totalSkills = position.skills.length;
+            const matchedSkills = position.skills.filter((posSkill) => currentSkills.some((userSkill) => userSkill.name === posSkill.name &&
+                (userSkill.level ?? 0) >= (posSkill?.level ?? 0)));
             const missingSkills = position.skills.filter((posSkill) => !currentSkills.some((userSkill) => userSkill.name === posSkill.name &&
                 (userSkill.level ?? 0) >= (posSkill?.level ?? 0)));
-            if (missingSkills.length === 0)
-                continue;
+            const relevance = Number((matchedSkills.length / totalSkills).toFixed(2));
             const recommendedCourses = await getRecommendedCoursesHelper(missingSkills, user);
             potentialRoles.push({
                 position,
                 missingSkills,
                 recommendedCourses,
+                relevance,
             });
         }
-        potentialRoles.sort((a, b) => b.missingSkills.length - a.missingSkills.length);
+        // Sort by relevance (descending)
+        potentialRoles.sort((a, b) => b.relevance - a.relevance);
         return potentialRoles;
     }
     async getCurrentPosition(userID) {
@@ -290,7 +301,6 @@ async function getRecommendedCoursesHelper(skillGaps, user) {
         course.skillsTaught.forEach((cs) => {
             // Find all gaps that match this skill name
             const matchingGaps = skillGaps.filter((g) => g.name === cs.name);
-            console.log(skillGaps);
             matchingGaps.forEach((gap) => {
                 let relevance = 3; // base for skill name match
                 // Function area match

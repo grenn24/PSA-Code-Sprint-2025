@@ -15,16 +15,15 @@ declare class AuthService {
             role: "user" | "admin";
             hireDate: NativeDate;
             password: string;
-            subordinates: import("mongoose").Types.ObjectId[];
             mentorshipRequests: import("mongoose").Types.DocumentArray<{
+                sender: import("mongoose").Types.ObjectId;
                 message?: string | null | undefined;
-                sender?: import("mongoose").Types.ObjectId | null | undefined;
             }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+                sender: import("mongoose").Types.ObjectId;
                 message?: string | null | undefined;
-                sender?: import("mongoose").Types.ObjectId | null | undefined;
             }> & {
+                sender: import("mongoose").Types.ObjectId;
                 message?: string | null | undefined;
-                sender?: import("mongoose").Types.ObjectId | null | undefined;
             }>;
             mentees: import("mongoose").Types.ObjectId[];
             notifications: import("mongoose").Types.DocumentArray<{
@@ -283,16 +282,15 @@ declare class AuthService {
             role: "user" | "admin";
             hireDate: NativeDate;
             password: string;
-            subordinates: import("mongoose").Types.ObjectId[];
             mentorshipRequests: import("mongoose").Types.DocumentArray<{
+                sender: import("mongoose").Types.ObjectId;
                 message?: string | null | undefined;
-                sender?: import("mongoose").Types.ObjectId | null | undefined;
             }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+                sender: import("mongoose").Types.ObjectId;
                 message?: string | null | undefined;
-                sender?: import("mongoose").Types.ObjectId | null | undefined;
             }> & {
+                sender: import("mongoose").Types.ObjectId;
                 message?: string | null | undefined;
-                sender?: import("mongoose").Types.ObjectId | null | undefined;
             }>;
             mentees: import("mongoose").Types.ObjectId[];
             notifications: import("mongoose").Types.DocumentArray<{
@@ -559,16 +557,15 @@ declare class AuthService {
             role: "user" | "admin";
             hireDate: NativeDate;
             password: string;
-            subordinates: import("mongoose").Types.ObjectId[];
             mentorshipRequests: import("mongoose").Types.DocumentArray<{
+                sender: import("mongoose").Types.ObjectId;
                 message?: string | null | undefined;
-                sender?: import("mongoose").Types.ObjectId | null | undefined;
             }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+                sender: import("mongoose").Types.ObjectId;
                 message?: string | null | undefined;
-                sender?: import("mongoose").Types.ObjectId | null | undefined;
             }> & {
+                sender: import("mongoose").Types.ObjectId;
                 message?: string | null | undefined;
-                sender?: import("mongoose").Types.ObjectId | null | undefined;
             }>;
             mentees: import("mongoose").Types.ObjectId[];
             notifications: import("mongoose").Types.DocumentArray<{
@@ -827,16 +824,15 @@ declare class AuthService {
             role: "user" | "admin";
             hireDate: NativeDate;
             password: string;
-            subordinates: import("mongoose").Types.ObjectId[];
             mentorshipRequests: import("mongoose").Types.DocumentArray<{
+                sender: import("mongoose").Types.ObjectId;
                 message?: string | null | undefined;
-                sender?: import("mongoose").Types.ObjectId | null | undefined;
             }, import("mongoose").Types.Subdocument<import("mongoose").Types.ObjectId, any, {
+                sender: import("mongoose").Types.ObjectId;
                 message?: string | null | undefined;
-                sender?: import("mongoose").Types.ObjectId | null | undefined;
             }> & {
+                sender: import("mongoose").Types.ObjectId;
                 message?: string | null | undefined;
-                sender?: import("mongoose").Types.ObjectId | null | undefined;
             }>;
             mentees: import("mongoose").Types.ObjectId[];
             notifications: import("mongoose").Types.DocumentArray<{

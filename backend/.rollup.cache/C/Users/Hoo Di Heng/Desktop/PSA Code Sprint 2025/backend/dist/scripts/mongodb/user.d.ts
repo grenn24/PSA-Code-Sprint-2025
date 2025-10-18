@@ -61,9 +61,9 @@ export declare const generateDefaultUser: () => {
     mentorshipRequests: never[];
     skills: {
         name: string;
+        level: any;
         functionArea: string;
         specialisation: string;
-        level: number;
     }[];
     notifications: {
         message: string;

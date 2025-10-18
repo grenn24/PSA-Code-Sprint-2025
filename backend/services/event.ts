@@ -6,7 +6,7 @@ import s3Service from "../utilities/s3.js";
 
 class EventService {
 	async getAllEvents(condition) {
-		const events = await Event.find(condition).exec();
+		const events = await Event.find(condition).populate("creator").exec();
 
 		for (const event of events) {
 			if (event.coverImage) {
@@ -88,6 +88,18 @@ class EventService {
 		);
 		await event.save();
 		return await this.getEventByID(eventID);
+	}
+
+	async deleteEventByID(eventID: string) {
+		const deletedEvent = await Event.findByIdAndDelete(eventID).exec();
+		if (!deletedEvent) {
+			throw new HttpError(
+				"Event not found",
+				"NOT_FOUND",
+				HttpStatusCode.NotFound
+			);
+		}
+		return deletedEvent;
 	}
 }
 

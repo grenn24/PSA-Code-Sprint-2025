@@ -93,13 +93,16 @@ const userSchema = new Schema(
 		hireDate: { type: Date, required: true },
 		password: { type: String, required: true },
 		supervisor: { type: Schema.Types.ObjectId, ref: "User" },
-		subordinates: [{ type: Schema.Types.ObjectId, ref: "User" }],
 		avatar: { type: String },
 		bio: String,
 		mentorshipRequests: {
 			type: [
 				{
-					sender: { type: Schema.Types.ObjectId, ref: "User" },
+					sender: {
+						type: Schema.Types.ObjectId,
+						ref: "User",
+						required: true,
+					},
 					message: String,
 				},
 			],
@@ -163,6 +166,12 @@ const userSchema = new Schema(
 	},
 	{ timestamps: true }
 );
+
+userSchema.virtual("subordinates", {
+	ref: "User",
+	localField: "_id",
+	foreignField: "supervisor",
+});
 
 userSchema.virtual("mentors", {
 	ref: "User",

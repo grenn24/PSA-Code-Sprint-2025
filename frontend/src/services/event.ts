@@ -35,6 +35,11 @@ class EventService {
 		const response = await this.apiClient.post(`/${eventID}/leave`, {});
 		return response.data;
 	}
+
+	async deleteEventByID(eventID: string) {
+		const response = await this.apiClient.delete<Event>(`/${eventID}`);
+		return response.data;
+	}
 }
 
 const eventService = new EventService();
