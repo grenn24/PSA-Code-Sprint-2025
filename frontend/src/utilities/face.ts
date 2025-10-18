@@ -20,16 +20,17 @@ export async function startMoodDetection(
 	onDetection: (expression: Expression) => void
 ) {
 	await loadModels();
-    let isRunning = true;
+	let isRunning = true;
 	async function loop() {
-        if (!isRunning) {
-            return;
-        }
+		if (!isRunning) {
+			return;
+		}
 		const detections = await faceapi
 			.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
 			.withFaceExpressions();
 
 		if (detections) {
+			console.log(detections.expressions);
 			onDetection(detections.expressions);
 		}
 
@@ -38,11 +39,11 @@ export async function startMoodDetection(
 
 	loop();
 
-    return () => {
-        isRunning = false;
-    };
+	return () => {
+		isRunning = false;
+	};
 }
 
 export async function stopMoodDetection(stopFunction: () => void) {
-    stopFunction();
+	stopFunction();
 }
