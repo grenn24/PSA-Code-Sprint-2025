@@ -324,9 +324,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 					);
 					setMoodAnalysis(moodDetector);
 				} else {
-					moodAnalysis?.();
-					setMoodAnalysis(null);
-					setExpression(null);
+				
 				}
 			},
 			icon: <Activity size={24} />,

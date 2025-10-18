@@ -24,7 +24,6 @@ export async function startMoodDetection(
 	async function loop() {
 		if (!isRunning) return;
 		console.log("looping");
-
 		faceapi
 			.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
 			.withFaceExpressions()
