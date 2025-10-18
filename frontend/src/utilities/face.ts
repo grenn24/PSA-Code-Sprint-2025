@@ -1,5 +1,13 @@
 import * as faceapi from "face-api.js";
 
+export interface Expression {
+	neutral: number;
+	happy: number;
+	sad: number;
+	angry: number;
+	fearful: number;
+}
+
 async function loadModels() {
 	// path to where your models are stored
 	const MODEL_URL = "/models";
@@ -7,19 +15,34 @@ async function loadModels() {
 	await faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL);
 }
 
-export async function analyseMood(video: HTMLVideoElement) {
-    await loadModels();
+export async function startMoodDetection(
+	video: HTMLVideoElement,
+	onDetection: (expression: Expression) => void
+) {
+	await loadModels();
+    let isRunning = true;
 	async function loop() {
+        if (!isRunning) {
+            return;
+        }
 		const detections = await faceapi
 			.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
 			.withFaceExpressions();
-        console.log("looping")
+
 		if (detections) {
-			console.log("facial expressions", detections.expressions);
+			onDetection(detections.expressions);
 		}
 
 		requestAnimationFrame(loop);
 	}
 
 	loop();
+
+    return () => {
+        isRunning = false;
+    };
+}
+
+export async function stopMoodDetection(stopFunction: () => void) {
+    stopFunction();
 }

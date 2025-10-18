@@ -28,7 +28,7 @@ import { User } from "@common/types/user";
 import chatService from "services/chat";
 import { useAppSelector } from "redux/store";
 import * as faceapi from "face-api.js";
-import { analyseMood } from "utilities/face";
+import { Expression, startMoodDetection } from "utilities/face";
 
 interface VideoCallProps {
 	localStream: MediaStream | null;
@@ -111,6 +111,26 @@ const MINDFULNESS_PHASES = [
 	},
 ];
 
+function getMoodMessage(expression: Expression) {
+	const entries = Object.entries(expression) as [keyof Expression, number][];
+	const [topEmotion, score] = entries.reduce(
+		(prev, curr) => (curr[1] > prev[1] ? curr : prev),
+		entries[0]
+	);
+
+	const moodMap: Record<
+		keyof Expression,
+		{ text: string; emoji: string; color: string }
+	> = {
+		neutral: { text: "Neutral", emoji: "😐", color: "gray" },
+		happy: { text: "Happy", emoji: "😄", color: "yellow" },
+		sad: { text: "Sad", emoji: "😢", color: "blue" },
+		angry: { text: "Angry", emoji: "😠", color: "red" },
+		fearful: { text: "Fearful", emoji: "😨", color: "purple" },
+	};
+
+	return { ...moodMap[topEmotion], score };
+}
 
 const VideoCall: React.FC<VideoCallProps> = ({
 	localStream,
@@ -122,6 +142,8 @@ const VideoCall: React.FC<VideoCallProps> = ({
 	const localVideoRef = useRef<HTMLVideoElement>(null);
 	const remoteVideoRef = useRef<HTMLVideoElement>(null);
 	const [mindfulness, setMindfulness] = useState(false);
+	const [moodAnalysis, setMoodAnalysis] = useState<(() => void) | null>(null);
+	const [expression, setExpression] = useState<Expression | null>(null);
 	const [micOn, setMicOn] = useState(true);
 	const [cameraOn, setCameraOn] = useState(true);
 	const [minimized, setMinimized] = useState(false);
@@ -150,7 +172,6 @@ const VideoCall: React.FC<VideoCallProps> = ({
 		if (remoteVideoRef.current && remoteStream) {
 			remoteVideoRef.current.srcObject = remoteStream;
 			console.log("starting mood analysis");
-			analyseMood(remoteVideoRef.current);
 		}
 	}, [remoteStream]);
 
@@ -295,7 +316,19 @@ const VideoCall: React.FC<VideoCallProps> = ({
 			tooltip: "Live Captions",
 		},
 		{
-			onClick: () => alert("Analyzing mood..."),
+			onClick: async () => {
+				if (!moodAnalysis && remoteVideoRef.current) {
+					const moodDetector = await startMoodDetection(
+						remoteVideoRef.current,
+						setExpression
+					);
+					setMoodAnalysis(moodDetector);
+				} else {
+					moodAnalysis?.();
+					setMoodAnalysis(null);
+					setExpression(null);
+				}
+			},
 			icon: <Activity size={24} />,
 			tooltip: "Analyze Mood",
 		},
@@ -827,6 +860,34 @@ const VideoCall: React.FC<VideoCallProps> = ({
 						/>
 					</motion.div>
 				</AnimatePresence>
+			)}
+			{expression && (
+				<motion.div
+					initial={{ opacity: 0, y: -20 }}
+					animate={{ opacity: 1, y: 0 }}
+					exit={{ opacity: 0, y: -20 }}
+					transition={{ duration: 0.5 }}
+					className="absolute top-6 right-6 z-50 flex items-center gap-3 bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl text-white font-semibold"
+					style={{
+						borderLeft: `4px solid ${
+							getMoodMessage(expression).color
+						}`,
+					}}
+				>
+					<span className="text-2xl">
+						{getMoodMessage(expression).emoji}
+					</span>
+					<div className="flex flex-col">
+						<span>{getMoodMessage(expression).text}</span>
+						<span className="text-xs text-gray-200">
+							Confidence:{" "}
+							{(getMoodMessage(expression).score * 100).toFixed(
+								0
+							)}
+							%
+						</span>
+					</div>
+				</motion.div>
 			)}
 		</div>
 	);
