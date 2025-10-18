@@ -318,8 +318,13 @@ const VideoCall: React.FC<VideoCallProps> = ({
 		},
 		{
 			onClick: () => {
-				skipRef.current = !skipRef.current;
-				setMoodAnalysis((prev) => !prev);
+				if (moodAnalysis) {
+					setMoodAnalysis(false);
+					skipRef.current = true;
+				} else {
+					skipRef.current = false;
+					setMoodAnalysis(true);
+				}
 			},
 			icon: <Activity size={24} />,
 			tooltip: "Analyze Mood",
