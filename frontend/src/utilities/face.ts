@@ -18,12 +18,12 @@ async function loadModels() {
 export async function startMoodDetection(
 	video: HTMLVideoElement,
 	onDetection: (expression: Expression) => void,
-	skip?: boolean
+	skip?: boolean,
+	intervalMs: number = 1000
 ) {
 	await loadModels();
 
 	async function loop() {
-		if (!!skip) requestAnimationFrame(loop);
 		console.log("looping");
 		faceapi
 			.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
@@ -36,11 +36,12 @@ export async function startMoodDetection(
 				return detections;
 			})
 			.catch((err) => console.error("Detection error:", err));
-
-		requestAnimationFrame(loop);
 	}
-
-	loop();
+	const interval = setInterval(() => {
+		if (!skip) {
+			loop();
+		}
+	}, intervalMs);
 }
 
 export async function stopMoodDetection(stopFunction: () => void) {
