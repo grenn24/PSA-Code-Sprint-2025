@@ -111,7 +111,7 @@ const MINDFULNESS_PHASES = [
 	},
 ];
 
-function getMoodMessage(expression: Expression) {
+function getMoodInfo(expression: Expression) {
 	const entries = Object.entries(expression) as [keyof Expression, number][];
 	const [topEmotion, score] = entries.reduce(
 		(prev, curr) => (curr[1] > prev[1] ? curr : prev),
@@ -171,7 +171,11 @@ const VideoCall: React.FC<VideoCallProps> = ({
 	useEffect(() => {
 		if (remoteVideoRef.current && remoteStream) {
 			remoteVideoRef.current.srcObject = remoteStream;
-			startMoodDetection(remoteVideoRef.current, setExpression, !moodAnalysis);
+			startMoodDetection(
+				remoteVideoRef.current,
+				setExpression,
+				!moodAnalysis
+			);
 		}
 	}, [remoteStream]);
 
@@ -316,7 +320,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 			tooltip: "Live Captions",
 		},
 		{
-			onClick: () =>setMoodAnalysis(prev => !prev),
+			onClick: () => setMoodAnalysis((prev) => !prev),
 			icon: <Activity size={24} />,
 			tooltip: "Analyze Mood",
 		},
@@ -851,30 +855,85 @@ const VideoCall: React.FC<VideoCallProps> = ({
 			)}
 			{expression && (
 				<motion.div
-					initial={{ opacity: 0, y: -20 }}
-					animate={{ opacity: 1, y: 0 }}
-					exit={{ opacity: 0, y: -20 }}
-					transition={{ duration: 0.5 }}
-					className="absolute top-6 right-6 z-50 flex items-center gap-3 bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl text-white font-semibold"
+					initial={{ opacity: 0, scale: 0.9 }}
+					animate={{ opacity: 1, scale: 1 }}
+					exit={{ opacity: 0, scale: 0.9 }}
+					transition={{ duration: 0.4 }}
+					className="absolute top-6 right-6 z-50 flex flex-col items-center gap-4 
+			bg-gradient-to-br from-black/60 to-gray-800/60 backdrop-blur-lg 
+			px-6 py-5 rounded-2xl shadow-2xl border border-white/10 
+			text-white font-semibold w-64"
 					style={{
-						borderLeft: `4px solid ${
-							getMoodMessage(expression).color
-						}`,
+						boxShadow: `0 0 30px ${
+							getMoodInfo(expression).color
+						}80`,
 					}}
 				>
-					<span className="text-2xl">
-						{getMoodMessage(expression).emoji}
-					</span>
-					<div className="flex flex-col">
-						<span>{getMoodMessage(expression).text}</span>
-						<span className="text-xs text-gray-200">
-							Confidence:{" "}
-							{(getMoodMessage(expression).score * 100).toFixed(
-								0
-							)}
-							%
+					{/* Emoji + Mood Text */}
+					<div className="flex flex-col items-center gap-2">
+						<motion.span
+							key={getMoodInfo(expression).emoji}
+							initial={{ scale: 0 }}
+							animate={{ scale: 1 }}
+							transition={{ type: "spring", stiffness: 300 }}
+							className="text-6xl"
+							style={{
+								textShadow: `0 0 15px ${
+									getMoodInfo(expression).color
+								}`,
+							}}
+						>
+							{getMoodInfo(expression).emoji}
+						</motion.span>
+						<span
+							className="text-xl tracking-wide font-bold"
+							style={{
+								color: getMoodInfo(expression).color,
+							}}
+						>
+							{getMoodInfo(expression).text}
 						</span>
 					</div>
+
+					{/* Confidence Slider */}
+					<div className="w-full">
+						<div className="flex justify-between text-xs mb-1">
+							<span className="text-gray-300">Confidence</span>
+							<span className="text-gray-200 font-mono">
+								{(getMoodInfo(expression).score * 100).toFixed(
+									0
+								)}
+								%
+							</span>
+						</div>
+						<div className="relative w-full h-3 bg-gray-700 rounded-full overflow-hidden">
+							<motion.div
+								className="absolute top-0 left-0 h-full rounded-full"
+								initial={{ width: 0 }}
+								animate={{
+									width: `${
+										getMoodInfo(expression).score * 100
+									}%`,
+									backgroundColor:
+										getMoodInfo(expression).color,
+								}}
+								transition={{ duration: 0.5, ease: "easeOut" }}
+							/>
+						</div>
+					</div>
+
+					{/* Subtle mood ring glow */}
+					<motion.div
+						className="absolute -z-10 w-60 h-60 rounded-full blur-3xl opacity-30"
+						style={{
+							background: getMoodInfo(expression).color,
+						}}
+						animate={{
+							scale: [1, 1.1, 1],
+							opacity: [0.3, 0.5, 0.3],
+						}}
+						transition={{ duration: 3, repeat: Infinity }}
+					/>
 				</motion.div>
 			)}
 		</div>
