@@ -18,8 +18,8 @@ async function loadModels() {
 export async function startMoodDetection(
 	video: HTMLVideoElement,
 	onDetection: (expression: Expression) => void,
-	skip?: boolean,
-	intervalMs: number = 1000
+	skipRef?: React.RefObject<boolean>,
+	intervalMs: number = 500
 ) {
 	await loadModels();
 
@@ -38,7 +38,7 @@ export async function startMoodDetection(
 			.catch((err) => console.error("Detection error:", err));
 	}
 	const interval = setInterval(() => {
-		if (!skip) {
+		if (!skipRef?.current) {
 			loop();
 		}
 	}, intervalMs);

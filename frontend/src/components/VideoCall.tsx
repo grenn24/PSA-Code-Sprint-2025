@@ -143,6 +143,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 	const remoteVideoRef = useRef<HTMLVideoElement>(null);
 	const [mindfulness, setMindfulness] = useState(false);
 	const [moodAnalysis, setMoodAnalysis] = useState(false);
+	const skipRef = useRef(false);
 	const [expression, setExpression] = useState<Expression | null>(null);
 	const [micOn, setMicOn] = useState(true);
 	const [cameraOn, setCameraOn] = useState(true);
@@ -174,7 +175,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 			startMoodDetection(
 				remoteVideoRef.current,
 				setExpression,
-				!moodAnalysis
+				skipRef
 			);
 		}
 	}, [remoteStream]);
@@ -320,7 +321,10 @@ const VideoCall: React.FC<VideoCallProps> = ({
 			tooltip: "Live Captions",
 		},
 		{
-			onClick: () => setMoodAnalysis((prev) => !prev),
+			onClick: () => setMoodAnalysis((prev) => {
+				skipRef.current = !prev;
+				return !prev;
+			}),
 			icon: <Activity size={24} />,
 			tooltip: "Analyze Mood",
 		},
