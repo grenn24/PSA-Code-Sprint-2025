@@ -62,6 +62,21 @@ export interface Notification {
 	createdAt: Date;
 }
 
+export interface LeadershipReviewRatings {
+	communication: number; // 0 - 5
+	decisionMaking: number; // 0 - 5
+	strategicThinking: number; // 0 - 5
+	teamwork: number; // 0 - 5
+	adaptability: number; // 0 - 5
+}
+
+export interface LeadershipReview {
+	reviewer: User;
+	ratings: LeadershipReviewRatings;
+	comments?: string;
+	date: Date;
+}
+
 export interface User {
 	_id?: string;
 	name: string;
@@ -86,6 +101,7 @@ export interface User {
 	notifications: Notification[];
 	careerPath: Position[];
 	aspirations: Position[];
+	leadershipReviews: LeadershipReview[];
 
 	lastSeen?: Date | null;
 	isOnline: boolean;

@@ -269,7 +269,6 @@ export const generateUser = async (email: string, password: string) => {
 		role: "user",
 		hireDate: new Date("2023-01-01"),
 		password,
-		subordinates: [],
 		avatar: faker.image.avatar(),
 		bio: faker.person.bio(),
 		mentorshipRequests: [],
@@ -277,6 +276,7 @@ export const generateUser = async (email: string, password: string) => {
 		notifications: generateNotifications(),
 		careerPath: generateCareerPath(),
 		moods: generateMoodData(dayjs().subtract(12, "month").toDate()),
+		supervisor: null,
 		activities: [],
 		isOnline: false,
 		lastSeen: null,
@@ -294,11 +294,10 @@ export const generateUser = async (email: string, password: string) => {
 		education: [],
 		projects: generateProjects(),
 		mentees: [],
-		supervisor: undefined,
 	};
 };
 
-export const generateDefaultUser = () => {
+export const generateDefaultUser = async () => {
 	return {
 		name: "Di Heng",
 		organisation: "PSA Singapore",
@@ -309,10 +308,10 @@ export const generateDefaultUser = () => {
 		role: "user",
 		hireDate: new Date("2023-01-01"),
 		password: HASHED_PASSWORD,
-		subordinates: [],
 		avatar: faker.image.avatar(),
 		bio: faker.person.bio(),
 		mentorshipRequests: [],
+		supervisor: null,
 		skills: generateRandomSkills(),
 		notifications: [{ message: "Welcome to PSA Horizon!", read: false }],
 		careerPath: [
@@ -353,7 +352,6 @@ export const generateDefaultUser = () => {
 		education: [],
 		projects: generateProjects(),
 		mentees: [],
-		supervisor: undefined,
 	};
 };
 
@@ -374,18 +372,18 @@ export const generateUsers = async (
 				department: faker.person.jobArea(),
 				unit: faker.person.jobDescriptor(),
 				hireDate: faker.date.past({ years: 5 }),
-				subordinates: [],
 				mentorshipRequests: [],
 				skills: generateRandomSkills(),
 				notifications: generateNotifications(),
 				careerPath: generateCareerPath(),
 				moods: generateMoodData(dayjs().subtract(12, "month").toDate()),
 				strengths: generateStrengths(),
+				supervisor: null,
 			};
 		})
 	);
 	if (includeDefaultUser) {
-		users.push(generateDefaultUser());
+		users.push(await generateDefaultUser());
 	}
 	return users;
 };
@@ -411,8 +409,7 @@ export const generateUsersFromJSON = async (
 				hireDate: employment.hire_date
 					? new Date(employment.hire_date)
 					: faker.date.past({ years: 5 }),
-				supervisor: undefined,
-				subordinates: [],
+				supervisor: null,
 				avatar: faker.image.avatar(),
 				bio: faker.person.bio(),
 				lastSeen: null,
@@ -464,38 +461,56 @@ export const generateUsersFromJSON = async (
 	);
 
 	if (includeDefaultUser) {
-		users.push(generateDefaultUser());
+		users.push((await generateDefaultUser()) as any);
 	}
 
 	return users;
 };
 
-async function generateSupervisors() {
-	const users = await User.find().sort({ hireDate: 1 }).exec();
+export async function generateSupervisors() {
+	const users = await User.find({
+		$or: [{ supervisor: { $exists: false } }, { supervisor: null }],
+	}).sort({ hireDate: 1 });
+
+	const defaultUser = await User.findOne({ email: "gren@gmail.com" });
+	if (!defaultUser) {
+		console.log("Default supervisor not found.");
+		return;
+	}
+
 	if (users.length === 0) {
 		console.log("No users found in database.");
 		return;
 	}
 
-	for (const user of users) {
-		// Skip if already has a supervisor
-		if (user.supervisor) continue;
+	// Assign at least 3 users to default supervisor
+	const minAssignments = Math.min(3, users.length);
+	await Promise.all(
+		users.slice(0, minAssignments).map((user) => {
+			user.supervisor = defaultUser._id;
+			return user.save();
+		})
+	);
 
-		const possibleSupervisors = users.filter(
-			(u) => u.hireDate < user.hireDate
-		);
+	// Assign supervisors to remaining users
+	await Promise.all(
+		users.slice(minAssignments).map(async (user) => {
+			if (user.supervisor) return;
 
-		if (possibleSupervisors.length === 0) continue; // no one more senior
+			const supervisor = await User.findOne({
+				hireDate: { $lt: user.hireDate },
+				_id: { $ne: user._id },
+			})
+				.sort({ hireDate: 1 })
+				.exec();
 
-		// Randomly assign one supervisor
-		const supervisor =
-			possibleSupervisors[
-				Math.floor(Math.random() * possibleSupervisors.length)
-			];
+			if (!supervisor) return;
+			user.supervisor = supervisor._id;
+			await user.save();
+		})
+	);
 
-		user.supervisor = supervisor._id;
-		await user.save();
-	}
+	console.log("Supervisors seeded successfully");
 }
 
 export async function seedUsers() {
@@ -512,9 +527,8 @@ export async function seedUsers() {
 		const usersToInsert = [...jsonUsers, ...mockUsers];
 
 		await User.insertMany(usersToInsert);
-		await generateSupervisors();
 
-		console.log(`Seeded ${usersToInsert.length} users successfully`);
+		console.log(`${usersToInsert.length} users seeded successfully`);
 	} catch (err) {
 		console.error("Error inserting users:", err);
 	}

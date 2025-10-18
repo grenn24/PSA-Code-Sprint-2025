@@ -19,6 +19,7 @@ import { Course } from "../models/course.js";
 import { Position } from "../models/position.js";
 import Event from "../models/event.js";
 import s3Service from "../utilities/s3.js";
+import { predictLeadershipPotential as predictLeadership } from "../ml/predict-leadership.js";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -536,6 +537,54 @@ class UserService {
 
 		return scoredEvents;
 	};
+
+	async predictLeadershipPotential(userID: string) {
+		const user = await User.findById(userID).lean().exec();
+		if (!user) {
+			throw new HttpError(
+				"User not found",
+				"NOT_FOUND",
+				HttpStatusCode.NotFound
+			);
+		}
+		const score = await predictLeadership(user as any);
+		return score;
+	}
+
+	async submitLeadershipReview(
+		userID: string,
+		reviewerID: string,
+		review: any
+	) {
+		const user = await User.findById(userID)
+			.populate("supervisor")
+			.populate("subordinates")
+			.populate("mentors")
+			.populate("mentees")
+			.populate("mentorshipRequests.sender")
+			.exec();
+		if (!user) {
+			throw new HttpError(
+				"User not found",
+				"NOT_FOUND",
+				HttpStatusCode.NotFound
+			);
+		}
+
+		const reviewer = await User.findById(reviewerID).lean().exec();
+		if (!reviewer) {
+			throw new HttpError(
+				"Reviewer not found",
+				"NOT_FOUND",
+				HttpStatusCode.NotFound
+			);
+		}
+		user.leadershipReviews.push({
+			reviewer: reviewer._id,
+			...review,
+		});
+		return await user.save();
+	}
 }
 
 const userService = new UserService();

@@ -102,6 +102,27 @@ class UserController {
 			.send(await userService.getRecommendedEvents(userID));
 	}
 
+	async predictLeadershipPotential(request: Request, response: Response) {
+		const userID = response.locals._id;
+		const leadershipPotential =
+			await userService.predictLeadershipPotential(userID);
+		response.status(200).send({ leadershipPotential });
+	}
+
+	async submitLeadershipReview(request: Request, response: Response) {
+		const userID = response.locals._id;
+		const reviewer = response.locals.user;
+		response
+			.status(200)
+			.send(
+				await userService.submitLeadershipReview(
+					userID,
+					reviewer.id,
+					request.body
+				)
+			);
+	}
+
 	catchErrors(handler) {
 		return async (
 			request: Request,

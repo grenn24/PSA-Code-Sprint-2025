@@ -1,4 +1,4 @@
-import React, { createElement, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import {
 	HomeIcon as HomeOutline,
@@ -10,14 +10,15 @@ import {
 	ArrowRightIcon,
 	PhoneIcon,
 	XMarkIcon,
+	UserGroupIcon as UserGroupOutline,
 } from "@heroicons/react/24/outline";
-
 import {
 	HomeIcon as HomeSolid,
 	BriefcaseIcon as BriefcaseSolid,
 	UsersIcon as UsersSolid,
 	CalendarIcon as CalendarSolid,
 	ChatBubbleLeftRightIcon as ChatSolid,
+	UserGroupIcon as UserGroupSolid,
 } from "@heroicons/react/24/solid";
 import Header from "../components/Header";
 import { useAppSelector } from "../redux/store";
@@ -50,6 +51,12 @@ const routes = [
 		label: "Events Hub",
 		outline: CalendarOutline,
 		filled: CalendarSolid,
+	},
+	{
+		path: "/team",
+		label: "My Team",
+		outline: UserGroupOutline,
+		filled: UserGroupSolid,
 	},
 	{
 		path: "/mentor",

@@ -65,7 +65,7 @@ const Career: React.FC = () => {
 
 			{/* Current Positions */}
 			<section>
-				<h2 className="text-2xl font-semibold text-gray-700 mb-4 font-inter">
+				<h2 className="text-2xl font-semibold text-gray-600 mb-2 font-inter">
 					Current Positions
 				</h2>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -143,7 +143,7 @@ const Career: React.FC = () => {
 
 			{/* Potential Roles */}
 			<section>
-				<h2 className="text-2xl font-semibold text-gray-700 mb-4 font-inter">
+				<h2 className="text-2xl font-semibold text-gray-600 mb-2 font-inter">
 					Potential Next Roles
 				</h2>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">

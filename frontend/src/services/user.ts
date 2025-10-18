@@ -1,6 +1,6 @@
 import { Chat } from "@common/types/chat";
 import createApiClient from "../utilities/apiClient";
-import { User } from "@common/types/user";
+import { LeadershipReviewRatings, User } from "@common/types/user";
 import { WBConversation } from "@common/types/wb";
 import { Course } from "@common/types/course";
 import { Event } from "@common/types/event";
@@ -75,6 +75,28 @@ class UserService {
 	async getPotentialPositions(userID: string) {
 		const response = await this.apiClient.get(
 			`/${userID}/potential-positions`
+		);
+		return response.data;
+	}
+
+	async predictLeadershipPotential(userID: string) {
+		const response = await this.apiClient.get<{
+			leadershipPotential: number;
+		}>(`/${userID}/leadership-potential`);
+		return response.data?.leadershipPotential;
+	}
+
+	async submitLeadershipReview(
+		userID: string,
+		review: {
+			ratings: LeadershipReviewRatings;
+			comments?: string;
+			date: Date;
+		}
+	) {
+		const response = await this.apiClient.post(
+			`/${userID}/leadership-review`,
+			review
 		);
 		return response.data;
 	}

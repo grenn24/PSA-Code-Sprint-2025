@@ -10,7 +10,7 @@ interface Prop {
 const EventSection: React.FC<Prop> = ({index, title, events, setEvents }) => {
 	return (
 		<div className="mb-15 relative">
-			<h2 className="text-2xl font-semibold mb-2 text-gray-800">
+			<h2 className="text-3xl font-bold mb-2 text-gray-600 font-inter">
 				{title}
 			</h2>
 			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

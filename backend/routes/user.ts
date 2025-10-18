@@ -21,7 +21,9 @@ userRouter.get(
 userRouter.get(
 	"/:ID/wb",
 	getID(),
-	userController.catchErrors(userController.getWBConversations.bind(userController))
+	userController.catchErrors(
+		userController.getWBConversations.bind(userController)
+	)
 );
 
 userRouter.get(
@@ -57,11 +59,25 @@ userRouter.get(
 );
 
 userRouter.get(
-	"/:ID/chats",
+	"/:ID/leadership-potential",
 	getID(),
 	userController.catchErrors(
-		userController.getChats.bind(userController)
+		userController.predictLeadershipPotential.bind(userController)
 	)
+);
+
+userRouter.get(
+	"/:ID/leadership-review",
+	getID(),
+	userController.catchErrors(
+		userController.submitLeadershipReview.bind(userController)
+	)
+);
+
+userRouter.get(
+	"/:ID/chats",
+	getID(),
+	userController.catchErrors(userController.getChats.bind(userController))
 );
 
 userRouter.post(
@@ -88,9 +104,7 @@ userRouter.post(
 userRouter.post(
 	"/:ID/activities",
 	getID(),
-	userController.catchErrors(
-		userController.addActivity.bind(userController)
-	)
+	userController.catchErrors(userController.addActivity.bind(userController))
 );
 
 userRouter.put(

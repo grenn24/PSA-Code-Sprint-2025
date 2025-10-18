@@ -65,6 +65,22 @@ const strengthSchema = new Schema({
 	},
 });
 
+const leadershipReviewSchema = new Schema({
+	reviewer: { type: Schema.Types.ObjectId, ref: "User", required: true },
+	ratings: {
+		type: new Schema({
+			communication: { type: Number, min: 0, max: 5, required: true },
+			decisionMaking: { type: Number, min: 0, max: 5, required: true },
+			strategicThinking: { type: Number, min: 0, max: 5, required: true },
+			teamwork: { type: Number, min: 0, max: 5, required: true },
+			adaptability: { type: Number, min: 0, max: 5, required: true },
+		}),
+		required: true,
+	},
+	comments: { type: String, default: "" },
+	date: { type: Date, default: Date.now },
+});
+
 const userSchema = new Schema(
 	{
 		name: { type: String, required: true },
@@ -161,6 +177,10 @@ const userSchema = new Schema(
 			type: [positionSchema],
 			default: [],
 		},
+		leadershipReviews: {
+			type: [leadershipReviewSchema],
+			default: [],
+		},
 		lastSeen: { type: Date, default: null },
 		isOnline: { type: Boolean, default: false },
 	},
@@ -172,7 +192,6 @@ userSchema.virtual("subordinates", {
 	localField: "_id",
 	foreignField: "supervisor",
 });
-
 userSchema.virtual("mentors", {
 	ref: "User",
 	localField: "_id",

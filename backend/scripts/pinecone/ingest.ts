@@ -6,7 +6,6 @@ import path from "path";
 import openai from "../../utilities/openai.js";
 import { v4 } from "uuid";
 import fs, { readFileSync } from "fs";
-import { fileURLToPath } from "url";
 import { Document } from "langchain/document";
 
 const BASE_PATH = "./data";

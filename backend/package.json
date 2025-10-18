@@ -20,7 +20,8 @@
 		"db:clear": "tsx scripts/mongodb/clear.ts",
 		"vdb:clear": "tsx scripts/pinecone/clear.ts",
 		"vdb:createIndex": "tsx scripts/pinecone/createIndex.ts",
-		"vdb:ingest": "tsx scripts/pinecone/ingest.ts"
+		"vdb:ingest": "tsx scripts/pinecone/ingest.ts",
+		"ml:train": "tsx ml/train-leadership.ts"
 	},
 	"dependencies": {
 		"@aws-sdk/client-s3": "^3.750.0",
@@ -30,6 +31,7 @@
 		"@langchain/community": "^0.3.57",
 		"@langchain/core": "^0.3.78",
 		"@pinecone-database/pinecone": "^6.1.2",
+		"@tensorflow/tfjs-node": "^4.22.0",
 		"@types/mongoose": "^5.11.96",
 		"axios": "^1.12.2",
 		"bcryptjs": "^3.0.2",

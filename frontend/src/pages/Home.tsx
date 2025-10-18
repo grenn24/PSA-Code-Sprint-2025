@@ -1,14 +1,8 @@
 import { useEffect, useState } from "react";
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import userService from "../services/user";
 import dayjs from "dayjs";
-import {
-	ArrowRight,
-	BellIcon,
-	CheckCircleIcon,
-	CircleIcon,
-} from "lucide-react";
+import { BellIcon, CheckCircleIcon, CircleIcon } from "lucide-react";
 import {
 	DndContext,
 	closestCenter,
@@ -30,7 +24,7 @@ import { setUser } from "redux/slices/user";
 import { useNavigate } from "react-router-dom";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { User } from "@common/types/user";
-import TopMatches from "components/mentorMatch/TopMatches";
+import { RadialBar, RadialBarChart } from "recharts";
 
 const breakpointColumnsObj = {
 	default: 3,
@@ -38,21 +32,15 @@ const breakpointColumnsObj = {
 	640: 1,
 };
 
-const mentorPieData = [
-	{ name: "Matched", value: 2 },
-	{ name: "Available", value: 8 },
-];
-const COLORS = ["#1976D2", "#BBDEFB"];
-
 interface CardProp {
 	title: string;
 	children: React.ReactNode;
 	onViewMore?: () => void;
 }
 const Card = ({ title, children, onViewMore }: CardProp) => (
-	<div className="bg-white rounded-xl shadow-md p-6 h-full flex flex-col">
+	<div className="bg-white rounded-xl shadow-md p-6 flex flex-col">
 		<div className="flex justify-between items-center mb-4">
-			<h2 className="text-2xl font-bold font-inter text-gray-900">
+			<h2 className="text-2xl font-bold font-inter text-gray-800">
 				{title}
 			</h2>
 
@@ -66,7 +54,7 @@ const Card = ({ title, children, onViewMore }: CardProp) => (
 						}}
 						onMouseDown={(e) => e.preventDefault()}
 						onMouseUp={(e) => e.preventDefault()}
-						className="flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium transition cursor-pointer select-none"
+						className="flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-medium transition cursor-pointer select-none"
 					>
 						<ArrowRightIcon className="w-8 h-7 stroke-2" />
 					</button>
@@ -91,13 +79,7 @@ const SortableCard = ({ id, children }) => {
 		cursor: "grab",
 	};
 	return (
-		<div
-			ref={setNodeRef}
-			style={style}
-			{...attributes}
-			{...listeners}
-			className="h-full"
-		>
+		<div ref={setNodeRef} style={style} {...attributes} {...listeners}>
 			{children}
 		</div>
 	);
@@ -110,16 +92,20 @@ const Home = () => {
 	const sensors = useSensors(useSensor(PointerSensor));
 	const [recommendedCourses, setRecommendedCourses] = useState<Course[]>([]);
 	const [topMatches, setTopMatches] = useState<User[]>([]);
+	const [leadershipPotential, setLeadershipPotential] = useState(0);
+	const [isLeadershipPotentialLoading, setIsLeadershipPotentialLoading] =
+		useState(true);
 
 	const [cards, setCards] = useState<string[]>([
 		"Career Path",
-		"Languages",
-		"Projects",
-		"Skills",
+		"Leadership Potential",
 		"Suggested Courses",
 		"Recommended Mentors",
-		"Notifications",
+		"Skills",
+		"Projects",
 		"Strengths",
+		"Languages",
+		"Notifications",
 	]);
 
 	useEffect(() => {
@@ -130,9 +116,13 @@ const Home = () => {
 		userService
 			.getRecommendedCourses(user?._id)
 			.then(setRecommendedCourses);
-		userService.getTopMatchedMentors(user?._id, 6, 0).then((users) => {
-			setTopMatches(users);
-		});
+		userService.getTopMatchedMentors(user?._id, 6, 0).then(setTopMatches);
+		userService
+			.predictLeadershipPotential(user?._id)
+			.then((leadershipPotential) => {
+				setLeadershipPotential(leadershipPotential);
+				setIsLeadershipPotentialLoading(false);
+			});
 	}, []);
 	const handleDragEnd = (event: DragEndEvent) => {
 		const { active, over } = event;
@@ -257,14 +247,14 @@ const Home = () => {
 							if (lang.proficiency === "Fluent")
 								bgColor = "bg-green-100 text-green-800";
 							else if (lang.proficiency === "Professional")
-								bgColor = "bg-blue-100 text-blue-800";
+								bgColor = "bg-indigo-100 text-indigo-800";
 							else if (lang.proficiency === "Conversational")
 								bgColor = "bg-yellow-100 text-yellow-800";
 
 							return (
 								<div
 									key={idx}
-									className={`flex items-center gap-2 px-3 py-1 rounded-full font-medium shadow-sm ${bgColor} hover:shadow-md transition cursor-pointer`}
+									className={`flex items-center gap-2 px-3 py-1 rounded-full font-medium shadow-sm ${bgColor} transition cursor-pointer`}
 								>
 									<span>{lang.name}</span>
 									<span className="text-xs font-normal">
@@ -339,13 +329,13 @@ const Home = () => {
 							// Color coding based on level
 							let levelColor = "#FBBF24"; // Beginner (yellow)
 							if (skill.level >= 50 && skill.level < 80)
-								levelColor = "#3B82F6"; // Intermediate (blue)
+								levelColor = "#3B82F6"; // Intermediate (indigo)
 							if (skill.level >= 80) levelColor = "#10B981"; // Advanced (green)
 
 							return (
 								<div
 									key={idx}
-									className="p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition"
+									className="p-4 bg-white rounded-xl border border-gray-300 transition"
 								>
 									{/* Skill Name */}
 									<div className="font-semibold text-gray-800 mb-2">
@@ -398,7 +388,7 @@ const Home = () => {
 								</div>
 
 								{/* Course name */}
-								<h3 className="text-lg font-bold text-blue-800 mb-2">
+								<h3 className="text-lg font-bold text-indigo-800 mb-2">
 									{course.name}
 								</h3>
 
@@ -407,7 +397,7 @@ const Home = () => {
 									{course.skillsTaught.map((skill) => (
 										<span
 											key={skill.name}
-											className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full"
+											className="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full"
 										>
 											{skill.name}
 										</span>
@@ -430,10 +420,10 @@ const Home = () => {
 						{topMatches.map((mentor, idx) => (
 							<div
 								key={idx}
-								className="bg-white rounded-xl shadow-sm p-4 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center gap-2"
+								className="bg-white rounded-xl border border-gray-300 p-4 hover:bg-gray-50 transition cursor-pointer flex flex-col items-center text-center gap-2"
 							>
 								{/* Avatar */}
-								<div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-2xl font-bold text-blue-700">
+								<div className="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center text-2xl font-bold text-indigo-700">
 									{mentor.name[0]}
 								</div>
 
@@ -559,6 +549,60 @@ const Home = () => {
 						})}
 					</div>
 				);
+			case "Leadership Potential":
+				if (isLeadershipPotentialLoading) {
+					return (
+						<div className="flex justify-center items-center h-64">
+							{/* Simple spinner */}
+							<div className="w-14 h-14 border-4 border-gray-200 border-t-4 border-t-indigo-500 rounded-full animate-spin"></div>
+						</div>
+					);
+				}
+
+				const percentage = Math.round(leadershipPotential * 100);
+				const data = [
+					{
+						name: "Leadership Potential",
+						value: percentage,
+						fill:
+							percentage < 40
+								? "#EF4444"
+								: percentage < 70
+								? "#FACC15"
+								: "#10B981",
+					},
+				];
+
+				return (
+					<div className="flex justify-center w-full">
+						<div className="relative">
+							<RadialBarChart
+								width={240}
+								height={240}
+								cx="50%"
+								cy="50%"
+								innerRadius="70%"
+								outerRadius="100%"
+								barSize={18}
+								data={data}
+								startAngle={0}
+								endAngle={leadershipPotential * 360}
+							>
+								<RadialBar dataKey="value" cornerRadius={15} />
+							</RadialBarChart>
+
+							{/* Center percentage */}
+							<div className="absolute inset-0 flex flex-col items-center justify-center font-inter">
+								<span className="text-3xl font-bold text-gray-900">
+									{percentage}%
+								</span>
+								<span className="text-sm text-gray-500">
+									Potential
+								</span>
+							</div>
+						</div>
+					</div>
+				);
 			default:
 				return null;
 		}
@@ -572,7 +616,7 @@ const Home = () => {
 					<h1 className="text-4xl font-bold text-gray-900">
 						Welcome Back, {user?.name}!
 					</h1>
-					<p className="text-2xl text-gray-600 font-roboto">
+					<p className="text-2xl text-gray-500 font-inter font-semibold">
 						{user?.position}
 					</p>
 				</div>
