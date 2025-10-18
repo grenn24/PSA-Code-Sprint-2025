@@ -110,17 +110,19 @@ const MINDFULNESS_PHASES = [
 	},
 ];
 
-async function analyseMood(video: HTMLVideoElement) {
-	const detections = await faceapi
+function analyseMood(video: HTMLVideoElement) {
+	faceapi
 		.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
-		.withFaceExpressions();
+		.withFaceExpressions()
+		.then((detections) => {
+			if (detections) {
+				console.log("facial expressions", detections.expressions);
+			}
+			return detections;
+		});
 
-	if (detections) {
-		console.log("facial expressions", detections.expressions);
-	}
 	requestAnimationFrame(() => analyseMood(video));
 }
-
 const VideoCall: React.FC<VideoCallProps> = ({
 	localStream,
 	remoteStream,
