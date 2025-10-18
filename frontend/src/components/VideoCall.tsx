@@ -142,7 +142,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 	const localVideoRef = useRef<HTMLVideoElement>(null);
 	const remoteVideoRef = useRef<HTMLVideoElement>(null);
 	const [mindfulness, setMindfulness] = useState(false);
-	const [moodAnalysis, setMoodAnalysis] = useState<(() => void) | null>(null);
+	const [moodAnalysis, setMoodAnalysis] = useState(false);
 	const [expression, setExpression] = useState<Expression | null>(null);
 	const [micOn, setMicOn] = useState(true);
 	const [cameraOn, setCameraOn] = useState(true);
@@ -171,7 +171,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 	useEffect(() => {
 		if (remoteVideoRef.current && remoteStream) {
 			remoteVideoRef.current.srcObject = remoteStream;
-			console.log("starting mood analysis");
+			startMoodDetection(remoteVideoRef.current, setExpression, !moodAnalysis);
 		}
 	}, [remoteStream]);
 
@@ -316,19 +316,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 			tooltip: "Live Captions",
 		},
 		{
-			onClick: async () => {
-				if (!moodAnalysis && remoteVideoRef.current) {
-					const moodDetector = await startMoodDetection(
-						remoteVideoRef.current,
-						setExpression
-					);
-				
-				} else {
-					moodAnalysis?.();
-					setMoodAnalysis(null);
-					setExpression(null);
-				}
-			},
+			onClick: () =>setMoodAnalysis(prev => !prev),
 			icon: <Activity size={24} />,
 			tooltip: "Analyze Mood",
 		},
