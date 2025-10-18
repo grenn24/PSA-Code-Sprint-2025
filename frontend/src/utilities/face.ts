@@ -23,7 +23,7 @@ export async function startMoodDetection(
 	await loadModels();
 
 	async function loop() {
-		if (!!skip) return;
+		if (!!skip) requestAnimationFrame(loop);
 		console.log("looping");
 		faceapi
 			.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
