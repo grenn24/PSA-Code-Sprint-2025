@@ -8,16 +8,18 @@ async function loadModels() {
 }
 
 export async function analyseMood(video: HTMLVideoElement) {
-	await loadModels();
-	faceapi
-		.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
-		.withFaceExpressions()
-		.then((detections) => {
-			if (detections) {
-				console.log("facial expressions", detections.expressions);
-			}
-			return detections;
-		});
+    await loadModels();
+	async function loop() {
+		const detections = await faceapi
+			.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
+			.withFaceExpressions();
+        console.log("looping")
+		if (detections) {
+			console.log("facial expressions", detections.expressions);
+		}
 
-	requestAnimationFrame(() => analyseMood(video));
+		requestAnimationFrame(loop);
+	}
+
+	loop();
 }
