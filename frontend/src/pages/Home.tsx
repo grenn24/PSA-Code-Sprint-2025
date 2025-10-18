@@ -156,110 +156,97 @@ const Home = () => {
 		switch (cardName) {
 			case "Career Path":
 				return (
-					<div className="relative pl-8">
-						{/* Timeline line */}
-						<div className="absolute left-5 top-0 bottom-0 w-1 bg-gray-300 rounded-full"></div>
+					<div className="relative">
+						{[...(user?.careerPath || [])]
+							?.sort(
+								(x, y) =>
+									new Date(y.startDate).getTime() -
+									new Date(x.startDate).getTime()
+							)
+							.map((role, index) => {
+								const today = new Date().getTime();
+								const start = new Date(
+									role.startDate
+								).getTime();
 
-						{user?.careerPath?.map((role, index) => {
-							const today = new Date().getTime();
-							const start = new Date(role.startDate).getTime();
-							const end = role.endDate
-								? new Date(role.endDate).getTime()
-								: Infinity;
+								const isFuture = today < start;
 
-							const isCurrent = today >= start && today <= end;
-							const isFuture = today < start;
-							const isPast = today > end;
+								return (
+									<div
+										key={index}
+										className="relative flex items-start mb-4 group hover:bg-gray-50 rounded-xl p-5 transition-all border border-gray-300"
+									>
+										{/* Content */}
+										<div className="flex-1">
+											{/* Role header */}
+											<div className="flex justify-between items-center mb-3">
+												<span
+													className={`font-bold text-lg text-indigo-800`}
+												>
+													{role.name}
+												</span>
+												<span className="text-sm text-gray-500 italic">
+													{role.startDate
+														? new Date(
+																role.startDate
+														  ).toLocaleDateString()
+														: "TBD"}{" "}
+													–{" "}
+													{role.endDate
+														? new Date(
+																role.endDate
+														  ).toLocaleDateString()
+														: isFuture
+														? "Future"
+														: "Present"}
+												</span>
+											</div>
 
-							const color = isCurrent
-								? "blue"
-								: isPast
-								? "green"
-								: "gray";
+											{/* Focus Areas */}
+											{role.focusAreas?.length > 0 && (
+												<div className="mb-3">
+													<h4 className="text-xs uppercase font-bold text-gray-500 mb-1 tracking-wide">
+														Focus Areas
+													</h4>
+													<div className="flex flex-wrap gap-2">
+														{role.focusAreas.map(
+															(area, idx) => (
+																<span
+																	key={idx}
+																	className={`text-sm font-medium px-3 py-1 rounded-full bg-indigo-100 text-indigo-800`}
+																>
+																	{area}
+																</span>
+															)
+														)}
+													</div>
+												</div>
+											)}
 
-							return (
-								<div
-									key={index}
-									className="relative flex items-start mb-10 group hover:bg-gray-50 rounded-xl p-5 transition-all shadow-sm"
-								>
-									{/* Timeline dot */}
-									<div className="absolute left-4 top-5">
-										<div
-											className={`w-6 h-6 rounded-full shadow-md border-2 border-white bg-${color}-500`}
-										></div>
-									</div>
-
-									{/* Content */}
-									<div className="ml-10 flex-1">
-										{/* Role header */}
-										<div className="flex justify-between items-center mb-3">
-											<span
-												className={`font-semibold text-lg text-${color}-800`}
-											>
-												{role.name}
-											</span>
-											<span className="text-sm text-gray-500 italic">
-												{role.startDate
-													? new Date(
-															role.startDate
-													  ).toLocaleDateString()
-													: "TBD"}{" "}
-												–{" "}
-												{role.endDate
-													? new Date(
-															role.endDate
-													  ).toLocaleDateString()
-													: isFuture
-													? "Future"
-													: "Present"}
-											</span>
+											{/* Skills Used */}
+											{role.skills?.length > 0 && (
+												<div>
+													<h4 className="text-xs uppercase font-semibold text-gray-500 mb-1 tracking-wide">
+														Skills Used
+													</h4>
+													<div className="flex flex-wrap gap-2">
+														{role.skills.map(
+															(skill, idx) => (
+																<span
+																	key={idx}
+																	className={`text-sm px-3 py-1 rounded-full border border-indigo-300 text-indigo-700 bg-white hover:bg-indigo-50 transition`}
+																>
+																	{skill.name}
+																</span>
+															)
+														)}
+													</div>
+												</div>
+											)}
 										</div>
-
-										{/* Focus Areas */}
-										{role.focusAreas?.length > 0 && (
-											<div className="mb-3">
-												<h4 className="text-xs uppercase font-semibold text-gray-500 mb-1 tracking-wide">
-													Focus Areas
-												</h4>
-												<div className="flex flex-wrap gap-2">
-													{role.focusAreas.map(
-														(area, idx) => (
-															<span
-																key={idx}
-																className={`text-sm font-medium px-3 py-1 rounded-full bg-${color}-100 text-${color}-800`}
-															>
-																{area}
-															</span>
-														)
-													)}
-												</div>
-											</div>
-										)}
-
-										{/* Skills Used */}
-										{role.skills?.length > 0 && (
-											<div>
-												<h4 className="text-xs uppercase font-semibold text-gray-500 mb-1 tracking-wide">
-													Skills Used
-												</h4>
-												<div className="flex flex-wrap gap-2">
-													{role.skills.map(
-														(skill, idx) => (
-															<span
-																key={idx}
-																className={`text-sm px-3 py-1 rounded-full border border-${color}-300 text-${color}-700 bg-white hover:bg-${color}-50 transition`}
-															>
-																{skill.name}
-															</span>
-														)
-													)}
-												</div>
-											</div>
-										)}
 									</div>
-								</div>
-							);
-						})}
+								);
+							})}
 					</div>
 				);
 			case "Languages":

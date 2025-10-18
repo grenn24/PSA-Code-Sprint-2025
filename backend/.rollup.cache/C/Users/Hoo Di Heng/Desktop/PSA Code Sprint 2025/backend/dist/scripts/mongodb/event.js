@@ -32,7 +32,7 @@ async function generateEvents(n) {
                 .add(faker.number.int({ min: 1, max: 4 }), "hour")
                 .toDate();
             const creator = faker.helpers.arrayElement(users);
-            const participants = faker.helpers.arrayElements(users, faker.number.int({ min: 0, max: users.length }));
+            const participants = faker.helpers.arrayElements(users, faker.number.int({ min: 0, max: 100 }));
             const numComments = faker.number.int({ min: 0, max: 5 });
             const comments = Array.from({ length: numComments }).map(() => {
                 const author = faker.helpers.arrayElement(users);

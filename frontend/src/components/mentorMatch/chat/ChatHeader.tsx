@@ -27,7 +27,7 @@ const ChatHeader = ({ setChatID, recipient, type, chatID }: Prop) => {
 			/>
 			<div className="flex-1">
 				<h3 className="font-semibold text-gray-800">
-					{recipient.name}
+					{recipient.name} ({recipient.email})
 				</h3>
 
 				{recipient.isOnline ? (

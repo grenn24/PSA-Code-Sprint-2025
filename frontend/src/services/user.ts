@@ -3,6 +3,7 @@ import createApiClient from "../utilities/apiClient";
 import { User } from "@common/types/user";
 import { WBConversation } from "@common/types/wb";
 import { Course } from "@common/types/course";
+import { Event } from "@common/types/event";
 
 class UserService {
 	apiClient = createApiClient("/user");
@@ -60,6 +61,13 @@ class UserService {
 	async getRecommendedCourses(userID: string) {
 		const response = await this.apiClient.get<Course[]>(
 			`/${userID}/recommended-courses`
+		);
+		return response.data;
+	}
+
+	async getRecommendedEvents(userID: string) {
+		const response = await this.apiClient.get<Event[]>(
+			`/${userID}/recommended-events`
 		);
 		return response.data;
 	}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "redux/store";
@@ -10,6 +10,7 @@ import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import EventCard from "components/event/EventCard";
 import EventSection from "components/event/EventSection";
 import { Star, Calendar, ChevronDown, User2 } from "lucide-react"; // ✅ new icons
+import userService from "services/user";
 
 dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);
@@ -19,6 +20,7 @@ const now = dayjs();
 const Events: React.FC = () => {
 	const navigate = useNavigate();
 	const [events, setEvents] = useState<Event[]>([]);
+	const [recommendedEvents, setRecommendedEvents] = useState<Event[]>([]);
 	const [openDropdown, setOpenDropdown] = useState(false);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
@@ -37,42 +39,52 @@ const Events: React.FC = () => {
 			setEvents(res);
 			setIsLoading(false);
 		});
+		if (!user?._id) return;
+		userService.getRecommendedEvents(user?._id).then(setRecommendedEvents);
 	}, []);
 
-	const filteredEvents = events
-		.filter((e) => {
-			if (showJoinedOnly === "joined") {
-				return e.participants?.some((p) => p === user?._id);
-			} else if (showJoinedOnly === "mine") {
-				return e.creator._id === user?._id;
-			} else {
-				return true;
-			}
-		})
-		.filter(
-			(e) =>
-				(selectedCategory.has("All") ||
-					e.categories.some((c) => selectedCategory.has(c))) &&
-				(e.title
-					.toLowerCase()
-					.includes(searchTerm.trim().toLowerCase()) ||
-					e.description
-						.toLowerCase()
-						.includes(searchTerm.trim().toLowerCase()))
-		);
+	const filterEvents = useCallback(
+		(events) =>
+			events
+				.filter((e) => {
+					if (showJoinedOnly === "joined") {
+						return e.participants?.some((p) => p === user?._id);
+					} else if (showJoinedOnly === "mine") {
+						return e.creator._id === user?._id;
+					} else {
+						return true;
+					}
+				})
+				.filter(
+					(e) =>
+						(selectedCategory.has("All") ||
+							e.categories.some((c) =>
+								selectedCategory.has(c)
+							)) &&
+						(e.title
+							.toLowerCase()
+							.includes(searchTerm.trim().toLowerCase()) ||
+							e.description
+								.toLowerCase()
+								.includes(searchTerm.trim().toLowerCase()))
+				),
+		[showJoinedOnly, selectedCategory, searchTerm]
+	);
+
+	const filteredEvents = filterEvents(events);
 
 	const categories = [
 		...new Set(["All", ...events.map((e) => e.categories).flat()]),
 	];
 
 	const sections = [
-		{ title: "Recommended for You", events: filteredEvents.slice(0, 3) },
+		{
+			title: "Recommended for You",
+			events: filterEvents(recommendedEvents),
+		},
 		{
 			title: "Trending Now",
 			events: filteredEvents
-				.filter((event) =>
-					dayjs(event.startDate).isSameOrAfter(now, "day")
-				)
 				.sort((a, b) => {
 					const scoreA =
 						(a.participants?.length || 0) +

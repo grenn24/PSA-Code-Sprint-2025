@@ -29,18 +29,17 @@ interface PotentialRole {
 	relevance: number; // 0-100
 }
 
-
 const renderStars = (percent: number) => {
 	const fullStars = Math.floor(percent / 20); // 5 stars max
 	const halfStar = percent % 20 >= 10;
 	const stars: React.ReactNode[] = [];
 	for (let i = 0; i < fullStars; i++)
-		stars.push(<StarIcon key={i} className="h-5 w-5 text-yellow-400" />);
+		stars.push(<StarIcon key={i} className="h-7 w-7 text-yellow-400" />);
 	if (halfStar)
-		stars.push(<StarIcon key="half" className="h-5 w-5 text-yellow-200" />);
+		stars.push(<StarIcon key="half" className="h-7 w-7 text-yellow-200" />);
 	while (stars.length < 5)
 		stars.push(
-			<StarIcon key={stars.length} className="h-5 w-5 text-gray-300" />
+			<StarIcon key={stars.length} className="h-7 w-7 text-gray-300" />
 		);
 	return <div className="flex gap-1">{stars}</div>;
 };
@@ -78,10 +77,10 @@ const Career: React.FC = () => {
 						)
 						.map((pos, idx) => {
 							const startDate = dayjs(pos.startDate).format(
-								"MMM YYYY"
+								"DD MMM YYYY"
 							);
 							const endDate = pos.endDate
-								? dayjs(pos.endDate).format("MMM YYYY")
+								? dayjs(pos.endDate).format("DD MMM YYYY")
 								: "Present";
 
 							return (
@@ -89,30 +88,53 @@ const Career: React.FC = () => {
 									key={idx}
 									className="bg-white p-6 rounded-xl shadow-md border border-gray-200 hover:shadow-lg transition"
 								>
-									<div className="flex justify-between items-center mb-2">
-										<h3 className="text-lg font-bold text-gray-800">
+									<div className="flex justify-between items-center mb-2 font-inter">
+										<h3 className="text-xl font-bold text-gray-800">
 											{pos.name}
 										</h3>
-										<span className="text-sm text-gray-500">{`${startDate} – ${endDate}`}</span>
+										<span className="text-md text-gray-500">{`${startDate} – ${endDate}`}</span>
 									</div>
-									<p className="text-sm text-gray-500 mb-3">
-										Focus Areas: {pos.focusAreas.join(", ")}
-									</p>
-									<div className="mt-2">
-										<h4 className="font-medium text-gray-700 mb-1">
-											Skills
-										</h4>
-										<div className="flex flex-wrap gap-2">
-											{pos.skills.map((skill, idx) => (
-												<span
-													key={idx}
-													className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm"
-												>
-													{skill.name} ({skill.level})
-												</span>
-											))}
+									{/* Focus Areas */}
+									{pos.focusAreas?.length > 0 && (
+										<div className="mb-3">
+											<h4 className="text-xs uppercase font-bold text-gray-500 mb-1 tracking-wide">
+												Focus Areas
+											</h4>
+											<div className="flex flex-wrap gap-2">
+												{pos.focusAreas.map(
+													(area, idx) => (
+														<span
+															key={idx}
+															className={`text-sm font-medium px-3 py-1 rounded-full bg-indigo-100 text-indigo-800`}
+														>
+															{area}
+														</span>
+													)
+												)}
+											</div>
 										</div>
-									</div>
+									)}
+
+									{/* Skills Used */}
+									{pos.skills?.length > 0 && (
+										<div>
+											<h4 className="text-xs uppercase font-bold text-gray-500 mb-1 tracking-wide">
+												Skills Used
+											</h4>
+											<div className="flex flex-wrap gap-2">
+												{pos.skills.map(
+													(skill, idx) => (
+														<span
+															key={idx}
+															className={`text-sm px-3 py-1 rounded-full border border-indigo-300 text-indigo-700 bg-white hover:bg-indigo-50 transition`}
+														>
+															{skill.name}
+														</span>
+													)
+												)}
+											</div>
+										</div>
+									)}
 								</div>
 							);
 						})}
@@ -132,27 +154,42 @@ const Career: React.FC = () => {
 						>
 							<div>
 								{/* Header with stars + relevance */}
-								<div className="flex justify-between items-center mb-2">
-									<h3 className="text-lg font-bold text-gray-800">
+								<div className="flex justify-between items-center mb-2 font-inter">
+									<h3 className="text-xl font-bold text-gray-800">
 										{role.position.name}
 									</h3>
 									<div className="flex items-center gap-2">
 										{renderStars(role.relevance)}
-										<span className="text-sm text-gray-500">
+										<span className="text-md text-gray-500">
 											{role.relevance}%
 										</span>
 									</div>
 								</div>
 
 								{/* Focus Areas */}
-								<p className="text-sm text-gray-500 my-2">
-									Focus Areas:{" "}
-									{role.position.focusAreas.join(", ")}
-								</p>
+								{role.position.focusAreas?.length > 0 && (
+									<div className="mb-3">
+										<h4 className="text-xs uppercase font-bold text-gray-500 mb-1 tracking-wide">
+											Focus Areas
+										</h4>
+										<div className="flex flex-wrap gap-2">
+											{role.position.focusAreas.map(
+												(area, idx) => (
+													<span
+														key={idx}
+														className={`text-sm font-medium px-3 py-1 rounded-full bg-indigo-100 text-indigo-800`}
+													>
+														{area}
+													</span>
+												)
+											)}
+										</div>
+									</div>
+								)}
 
 								{/* Missing Skills */}
 								<div className="mt-3">
-									<h4 className="font-medium text-gray-700 mb-1">
+									<h4 className="font-bold text-gray-500 text-xs uppercase">
 										Missing Skills
 									</h4>
 									<ul className="list-disc list-inside text-gray-600">
@@ -168,7 +205,7 @@ const Career: React.FC = () => {
 
 								{/* Recommended Courses */}
 								<div className="mt-3">
-									<h4 className="font-medium text-gray-700 mb-1">
+									<h4 className="font-bold text-gray-500 text-xs uppercase">
 										Recommended Courses
 									</h4>
 									<ol className="list-decimal list-inside text-gray-600">
@@ -183,10 +220,10 @@ const Career: React.FC = () => {
 
 							{/* Action Buttons */}
 							<div className="flex gap-3 mt-5">
-								<button className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
-									Plan My Upskilling
+								<button className="flex-1 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition font-semibold">
+									Indicate Interest
 								</button>
-								<button className="flex-1 border border-blue-600 text-blue-600 py-2 rounded-lg hover:bg-blue-50 transition">
+								<button className="flex-1 border border-indigo-600 text-indigo-600 py-2 rounded-lg hover:bg-indigo-50 transition font-semibold">
 									Explore Role
 								</button>
 							</div>

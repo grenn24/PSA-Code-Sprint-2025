@@ -11,6 +11,8 @@ import utc from "dayjs/plugin/utc.js";
 import timezone from "dayjs/plugin/timezone.js";
 import { Course } from "../models/course.js";
 import { Position } from "../models/position.js";
+import Event from "../models/event.js";
+import s3Service from "../utilities/s3.js";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 class UserService {
@@ -289,6 +291,45 @@ class UserService {
         }
         return user.careerPath?.find((pos) => !pos.endDate);
     }
+    getRecommendedEvents = async (userID) => {
+        const user = await User.findById(userID)
+            .populate("mentees mentors")
+            .lean();
+        if (!user) {
+            throw new HttpError("User not found", "NOT_FOUND", HttpStatusCode.NotFound);
+        }
+        // IDs of mentors and mentees to avoid duplicates
+        const excludedUserIds = [
+            ...(user.mentees?.map((m) => m._id) || []),
+            ...(user.mentors?.map((m) => m._id) || []),
+            user._id,
+        ];
+        // Get list of event IDs the user has already joined
+        const joinedEventIds = await Event.find({
+            participants: user._id,
+        }).distinct("_id");
+        const now = new Date();
+        const events = await Event.find({
+            _id: { $nin: joinedEventIds },
+            endDate: { $gte: now },
+        })
+            .populate("creator", "name avatar")
+            .populate("participants", "name avatar")
+            .populate("comments.author", "name avatar")
+            .lean();
+        // Prioritize events where participants are mostly not in mentors/mentees
+        const scoredEvents = (await events.map((event) => {
+            const overlapCount = (event.participants || []).filter((p) => excludedUserIds.includes(p.toString())).length;
+            if (event.coverImage) {
+                event.coverImage.url = s3Service.getPublicUrl(event.coverImage.s3Filename, event.coverImage.folder);
+            }
+            return { event, score: -overlapCount };
+        }))
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 6)
+            .map((e) => e.event);
+        return scoredEvents;
+    };
 }
 const userService = new UserService();
 export default userService;

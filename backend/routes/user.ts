@@ -41,6 +41,14 @@ userRouter.get(
 );
 
 userRouter.get(
+	"/:ID/recommended-events",
+	getID(),
+	userController.catchErrors(
+		userController.getRecommendedEvents.bind(userController)
+	)
+);
+
+userRouter.get(
 	"/:ID/potential-positions",
 	getID(),
 	userController.catchErrors(

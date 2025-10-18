@@ -104809,570 +104809,6 @@ const CourseSchema = new Schema$1({
 }, { timestamps: true });
 const Course = mongoose.model("Course", CourseSchema);
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-class UserService {
-    // Get all users
-    async getAllUsers() {
-        return await User.find().populate("mentors").exec();
-    }
-    // Create a new user
-    async createUser(userData) {
-        const { name, email, password, role, position, supervisor, subordinates, avatar, experienceLevel, } = userData;
-        // Check if email already exists
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            throw new HttpError("Email already in use");
-        }
-        // Hash password
-        const hashedPassword = await bcrypt.hash(password, 10);
-        // Create new user document
-        const user = new User({
-            name,
-            email,
-            password: hashedPassword,
-            role,
-            position,
-            supervisor,
-            subordinates,
-            avatar,
-            experienceLevel,
-        });
-        return await user.save();
-    }
-    async getUserByID(userId) {
-        const user = await User.findById(userId)
-            .populate("supervisor")
-            .populate("subordinates")
-            .populate("mentors")
-            .populate("mentees")
-            .populate("mentorshipRequests.sender")
-            .exec();
-        if (!user) {
-            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
-        }
-        return user;
-    }
-    async updateUser(userId, userData) {
-        const user = await User.findById(userId);
-        if (!user) {
-            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
-        }
-        const updatedUser = await User.findByIdAndUpdate(userId, userData, {
-            new: true,
-        });
-        return updatedUser;
-    }
-    async addNotification(userId, message) {
-        const user = await User.findByIdAndUpdate(userId, {
-            $push: {
-                notifications: {
-                    message,
-                    read: false,
-                    createdAt: new Date(),
-                },
-            },
-        }, { new: true });
-        if (!user)
-            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
-        const notifications = user.notifications;
-        websocketService.sendTo(userId, {
-            type: "NEW_NOTIFICATION",
-            data: notifications.pop(),
-            timestamp: new Date().toISOString(),
-        });
-        return user;
-    }
-    async sendMentorshipRequest(senderID, mentorID, message) {
-        const sender = await User.findById(senderID).exec();
-        if (!sender)
-            throw new HttpError("Sendernot found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
-        const mentor = await User.findById(mentorID).exec();
-        if (!mentor)
-            throw new HttpError("Mentor not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
-        mentor.mentorshipRequests = [
-            ...mentor.mentorshipRequests.filter((r) => r.sender.toString() !== senderID),
-            {
-                sender: new mongoose.Types.ObjectId(senderID),
-                message,
-            },
-        ];
-        await mentor.save();
-        await this.addNotification(mentorID, `${sender.name} sent you a mentorship request\n${message}`);
-    }
-    async addActivity(userID, activity) {
-        const user = await User.findById(userID);
-        if (!user) {
-            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
-        }
-        user.activities.push(activity);
-        return await user.save();
-    }
-    async getChats(userID) {
-        const user = await User.findById(userID);
-        if (!user) {
-            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
-        }
-        const chats = Chat$2.find({
-            participants: {
-                $in: [userID],
-            },
-        })
-            .populate("participants")
-            .exec();
-        return chats;
-    }
-    async getNotifications(userID) {
-        const user = await User.findById(userID);
-        if (!user) {
-            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
-        }
-        return user.notifications;
-    }
-    async getWBConversations(userID) {
-        const conversations = await WBConversation.find({
-            user: userID,
-        }).exec();
-        return conversations;
-    }
-    async getTopMatchedMentors(userId, limit, page = 0) {
-        const mentee = await User.findById(userId).populate("mentors").exec();
-        if (!mentee)
-            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
-        const excludedMentorIds = mentee.mentors.map((m) => new mongoose.Types.ObjectId(m._id));
-        // Compute experience in years
-        const menteeExperience = (new Date().getTime() - mentee.hireDate.getTime()) /
-            (1000 * 60 * 60 * 24 * 365);
-        const candidates = await User.aggregate([
-            {
-                $match: {
-                    _id: {
-                        $ne: new mongoose.Types.ObjectId(userId),
-                        $nin: excludedMentorIds,
-                    },
-                    hireDate: { $lte: mentee.hireDate }, // only more senior mentors
-                    "mentorshipRequests.sender": {
-                        $ne: new mongoose.Types.ObjectId(userId),
-                    },
-                },
-            },
-            {
-                $project: {
-                    skills: 1,
-                    hireDate: 1,
-                    careerPath: 1,
-                    name: 1,
-                    avatar: 1,
-                    position: 1,
-                    department: 1,
-                    unit: 1,
-                    languages: 1,
-                    strengths: 1,
-                    // compute mentor experience in years
-                    experience_diff: {
-                        $divide: [
-                            { $subtract: [new Date(), "$hireDate"] },
-                            1000 * 60 * 60 * 24 * 365,
-                        ],
-                    },
-                },
-            },
-            { $limit: 200 },
-        ]);
-        const w1 = 0.4; // skill alignment
-        const w2 = 0.2; // experience difference
-        const w3 = 0.3; // career path similarity
-        const scoredMentors = candidates.map((mentor) => {
-            const skill_alignment = this.countOverlappingSkills(mentee.skills, mentor.skills);
-            const mentorExperience = (new Date().getTime() - new Date(mentor.hireDate).getTime()) /
-                (1000 * 60 * 60 * 24 * 365);
-            const experience_diff = mentorExperience - menteeExperience;
-            const career_path_similarity = this.calculateCareerPathSimilarity(mentee.careerPath, mentor.careerPath);
-            const score = w1 * skill_alignment +
-                w2 * experience_diff +
-                w3 * career_path_similarity;
-            return { mentor, score };
-        });
-        return scoredMentors
-            .sort((a, b) => b.score - a.score)
-            .slice(page * (limit || scoredMentors.length), (limit || scoredMentors.length) * (page + 1))
-            .map((m) => m.mentor);
-    }
-    // Skills overlap
-    countOverlappingSkills(menteeSkills, mentorSkills) {
-        const menteeSkillNames = new Set(menteeSkills.map((s) => s.name.toLowerCase()));
-        return mentorSkills.filter((s) => menteeSkillNames.has(s.name.toLowerCase())).length;
-    }
-    // Career path similarity
-    calculateCareerPathSimilarity(menteePath, mentorPath) {
-        const menteePositions = new Set(menteePath.map((p) => p.name));
-        const mentorPositions = new Set(mentorPath.map((p) => p.name));
-        const intersection = [...menteePositions].filter((p) => mentorPositions.has(p));
-        const union = new Set([...menteePositions, ...mentorPositions]);
-        return union.size > 0 ? intersection.length / union.size : 0;
-    }
-    async deleteAllUsers() {
-        return await User.deleteMany({}).exec();
-    }
-    async updateTodayMood(userId, level, notes = []) {
-        const todayStart = dayjs().tz("Asia/Singapore").startOf("day");
-        const user = await User.findById(userId);
-        if (!user)
-            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
-        user.moods.push({ date: todayStart, level, notes });
-        await user.save();
-        return user.moods[user.moods.length - 1];
-    }
-    async getRecommendedCourses(userID) {
-        const user = await User.findById(userID).exec();
-        if (!user)
-            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
-        // Get current position
-        const currentUserPosition = await this.getCurrentPosition(userID);
-        let skillGaps = [];
-        if (currentUserPosition) {
-            skillGaps = currentUserPosition.skills
-                .filter((posSkill) => {
-                const userSkill = user.skills.find((us) => us.name === posSkill.name);
-                return (!userSkill || (userSkill.level && userSkill.level < 100));
-            })
-                .map((posSkill) => ({
-                ...posSkill,
-                level: user.skills.find((us) => us.name === posSkill.name)
-                    ?.level ?? 0,
-            }));
-        }
-        return await getRecommendedCoursesHelper(skillGaps, user);
-    }
-    async getPotentialPositions(userID) {
-        const user = await User.findById(userID).exec();
-        if (!user) {
-            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
-        }
-        const currentPosition = await this.getCurrentPosition(userID);
-        const currentSkills = [
-            ...user.skills,
-            ...(currentPosition?.skills || []),
-        ];
-        const potentialPositions = (await Position.find({
-            _id: { $ne: currentPosition?._id },
-            name: { $ne: currentPosition?.name },
-        })
-            .lean()
-            .exec());
-        const potentialRoles = [];
-        for (const position of potentialPositions) {
-            const totalSkills = position.skills.length;
-            const matchedSkills = position.skills.filter((posSkill) => currentSkills.some((userSkill) => userSkill.name === posSkill.name &&
-                (userSkill.level ?? 0) >= (posSkill?.level ?? 0)));
-            const missingSkills = position.skills.filter((posSkill) => !currentSkills.some((userSkill) => userSkill.name === posSkill.name &&
-                (userSkill.level ?? 0) >= (posSkill?.level ?? 0)));
-            const relevance = Number((matchedSkills.length / totalSkills).toFixed(2));
-            const recommendedCourses = await getRecommendedCoursesHelper(missingSkills, user);
-            potentialRoles.push({
-                position,
-                missingSkills,
-                recommendedCourses,
-                relevance,
-            });
-        }
-        // Sort by relevance (descending)
-        potentialRoles.sort((a, b) => b.relevance - a.relevance);
-        return potentialRoles;
-    }
-    async getCurrentPosition(userID) {
-        const user = await User.findById(userID).lean().exec();
-        if (!user) {
-            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
-        }
-        return user.careerPath?.find((pos) => !pos.endDate);
-    }
-}
-const userService = new UserService();
-async function getRecommendedCoursesHelper(skillGaps, user) {
-    const courses = await Course.find().exec();
-    // Score each course and filter
-    const scoredCourses = courses
-        .map((course) => {
-        let totalRelevance = 0;
-        course.skillsTaught.forEach((cs) => {
-            // Find all gaps that match this skill name
-            const matchingGaps = skillGaps.filter((g) => g.name === cs.name);
-            matchingGaps.forEach((gap) => {
-                let relevance = 3; // base for skill name match
-                // Function area match
-                if (gap.functionArea === cs.functionArea)
-                    relevance += 2;
-                // Specialisation match
-                if (gap.specialisation === cs.specialisation)
-                    relevance += 1;
-                // Aspirations match
-                const inAspirations = user.aspirations.some((role) => role.skills.some((s) => s.name === cs.name));
-                if (inAspirations)
-                    relevance += 5;
-                // Skill level gap
-                if (gap.level)
-                    relevance += Math.max(0, 100 - gap.level) / 50;
-                totalRelevance += relevance;
-            });
-        });
-        return { course, relevance: totalRelevance };
-    })
-        .filter((c) => c.relevance > 0)
-        .sort((a, b) => b.relevance - a.relevance)
-        .map((c) => c.course);
-    return scoredCourses.slice(0, 10);
-}
-
-class UserController {
-    async getAllUsers(request, response) {
-        response.status(200).send(await userService.getAllUsers());
-    }
-    async createUser(request, response) {
-        response.status(201).send(await userService.createUser(request.body));
-    }
-    async getUserByID(request, response) {
-        const userID = response.locals._id;
-        response.status(200).send(await userService.getUserByID(userID));
-    }
-    async updateUser(request, response) {
-        const userID = response.locals._id;
-        response
-            .status(200)
-            .send(await userService.updateUser(userID, request.body));
-    }
-    async addNotification(request, response) {
-        const userID = response.locals._id;
-        response
-            .status(200)
-            .send(await userService.addNotification(userID, request.body.message));
-    }
-    async sendMentorshipRequest(request, response) {
-        const userID = response.locals.user?.id;
-        const mentorID = response.locals._id;
-        response
-            .status(200)
-            .send(await userService.sendMentorshipRequest(userID, mentorID, request.body.message));
-    }
-    async addActivity(request, response) {
-        const userID = response.locals._id;
-        response
-            .status(200)
-            .send(await userService.addActivity(userID, request.body));
-    }
-    async deleteAllUsers(request, response) {
-        response.status(200).send(await userService.deleteAllUsers());
-    }
-    async getTopMatchedMentors(request, response) {
-        const userID = response.locals._id;
-        const limit = request.query.limit
-            ? Number(request.query.limit)
-            : undefined;
-        const page = request.query.page
-            ? Number(request.query.page)
-            : undefined;
-        response
-            .status(200)
-            .send(await userService.getTopMatchedMentors(userID, limit, page));
-    }
-    async getRecommendedCourses(request, response) {
-        const userID = response.locals._id;
-        response
-            .status(200)
-            .send(await userService.getRecommendedCourses(userID));
-    }
-    async getPotentialPositions(request, response) {
-        const userID = response.locals._id;
-        response
-            .status(200)
-            .send(await userService.getPotentialPositions(userID));
-    }
-    async getChats(request, response) {
-        const userID = response.locals._id;
-        response.status(200).send(await userService.getChats(userID));
-    }
-    async getWBConversations(request, response) {
-        const userID = response.locals._id;
-        response.status(200).send(await userService.getWBConversations(userID));
-    }
-    catchErrors(handler) {
-        return async (request, response, next) => {
-            try {
-                await handler(request, response);
-            }
-            catch (err) {
-                // Custom response errors
-                if (err instanceof HttpError) {
-                    // Custom response error
-                    response.status(err.errorCode).send(err);
-                    return;
-                }
-                else if (err instanceof mongoose.Error.DocumentNotFoundError ||
-                    err instanceof mongoose.Error.ValidationError) {
-                    response.status(400).send({ message: err.message });
-                    return;
-                }
-                else {
-                    // Internal Server Errors
-                    next(err);
-                }
-            }
-        };
-    }
-}
-const userController = new UserController();
-
-const getID = (queryParams = ["ID"]) => (request, response, next) => {
-    if (queryParams.length === 0) {
-        next();
-        return;
-    }
-    for (const queryParam of queryParams) {
-        const id = request.params[queryParam];
-        if (!id || !mongoose.Types.ObjectId.isValid(id)) {
-            const err = new HttpError("Missing or invalid object id parameter", "INVALID_ID", 400);
-            response.status(400).send(err);
-            return;
-        }
-        if (queryParam === "ID") {
-            response.locals._id = id;
-        }
-        else {
-            response.locals[queryParam] = id;
-        }
-    }
-    if (!response.locals._id) {
-        response.locals._id = request.params[queryParams[0]];
-    }
-    next();
-};
-
-const auth = (role) => (request, response, next) => {
-    const accessToken = request.header("X-Access-Token");
-    // Missing access token
-    if (!accessToken) {
-        return response.status(401).json({
-            status: "MISSING_ACCESS_TOKEN",
-            message: "Missing access token",
-        });
-    }
-    try {
-        const payload = jwt.verify(accessToken, config$1.get("SECRET_KEY"));
-        if (typeof payload !== "string" &&
-            payload.role === "user" &&
-            role === "admin") ;
-        // Attach user info
-        if (typeof payload !== "string") {
-            response.locals.user = payload;
-        }
-        return next();
-    }
-    catch (err) {
-        // Invalid access token
-        return response.status(401).json({
-            status: "INVALID_ACCESS_TOKEN",
-            message: "Invalid access token",
-        });
-    }
-};
-
-const userRouter = express.Router();
-userRouter.use(auth("user"));
-// Define the route handlers
-userRouter.get("", userController.catchErrors(userController.getAllUsers.bind(userController)));
-userRouter.get("/:ID", getID(), userController.catchErrors(userController.getUserByID.bind(userController)));
-userRouter.get("/:ID/wb", getID(), userController.catchErrors(userController.getWBConversations.bind(userController)));
-userRouter.get("/:ID/top-matches", getID(), userController.catchErrors(userController.getTopMatchedMentors.bind(userController)));
-userRouter.get("/:ID/recommended-courses", getID(), userController.catchErrors(userController.getRecommendedCourses.bind(userController)));
-userRouter.get("/:ID/potential-positions", getID(), userController.catchErrors(userController.getPotentialPositions.bind(userController)));
-userRouter.get("/:ID/chats", getID(), userController.catchErrors(userController.getChats.bind(userController)));
-userRouter.post("", userController.catchErrors(userController.createUser.bind(userController)));
-userRouter.post("/:ID/notifications", getID(), userController.catchErrors(userController.addNotification.bind(userController)));
-userRouter.post("/:ID/mentor-requests", getID(), userController.catchErrors(userController.sendMentorshipRequest.bind(userController)));
-userRouter.post("/:ID/activities", getID(), userController.catchErrors(userController.addActivity.bind(userController)));
-userRouter.put("/:ID", getID(), userController.catchErrors(userController.updateUser.bind(userController)));
-userRouter.delete("", userController.catchErrors(userController.deleteAllUsers.bind(userController)));
-
-class ChatController {
-    async postMessage(request, response) {
-        const chatID = response.locals._id;
-        const message = await chatService.postMessage(chatID, request.body);
-        response.status(200).send(message);
-    }
-    async updateMessage(request, response) {
-        const updater = response.locals.user;
-        const chatID = response.locals.chatID;
-        const messageID = response.locals.messageID;
-        const message = await chatService.updateMessage(updater.id, messageID, chatID, request.body);
-        response.status(200).send(message);
-    }
-    async createChat(request, response) {
-        const chat = await chatService.createChat(request.body?.participants);
-        response.status(200).send(chat);
-    }
-    async markMessagesAsRead(request, response) {
-        const chatID = response.locals._id;
-        const userID = response.locals.user?.id;
-        const chat = await chatService.markMessagesAsRead(chatID, userID);
-        response.status(200).send(chat);
-    }
-    catchErrors(handler) {
-        return async (request, response, next) => {
-            try {
-                await handler(request, response);
-            }
-            catch (err) {
-                // Custom response errors
-                if (err instanceof HttpError) {
-                    // Custom response error
-                    response.status(err.errorCode).send(err);
-                    return;
-                }
-                else if (err instanceof mongoose.Error.DocumentNotFoundError ||
-                    err instanceof mongoose.Error.ValidationError) {
-                    response.status(400).send({ message: err.message });
-                    return;
-                }
-                else {
-                    // Internal Server Errors
-                    next(err);
-                }
-            }
-        };
-    }
-}
-const chatController = new ChatController();
-
-const chatRouter = express.Router();
-// Define the route handlers
-chatRouter.post("/:ID/message", getID(), chatController.catchErrors(chatController.postMessage.bind(chatController)));
-chatRouter.put("/:chatID/message/:messageID", getID(["chatID", "messageID"]), auth("user"), chatController.catchErrors(chatController.updateMessage.bind(chatController)));
-chatRouter.post("", chatController.catchErrors(chatController.createChat.bind(chatController)));
-chatRouter.post("/:ID/read", getID(), auth("user"), chatController.catchErrors(chatController.markMessagesAsRead.bind(chatController)));
-
-var http = {};
-
-var hasRequiredHttp;
-
-function requireHttp () {
-	if (hasRequiredHttp) return http;
-	hasRequiredHttp = 1;
-	Object.defineProperty(http, "__esModule", { value: true });
-	http.HttpError = void 0;
-	class HttpError {
-	    constructor(message, status = undefined, errorCode = 400, data) {
-	        this.message = message;
-	        this.status = status;
-	        this.errorCode = errorCode;
-	        this.data = data;
-	    }
-	}
-	http.HttpError = HttpError;
-	return http;
-}
-
-var httpExports = requireHttp();
-
 var EndpointURLScheme;
 (function (EndpointURLScheme) {
     EndpointURLScheme["HTTP"] = "http";
@@ -127342,6 +126778,708 @@ class S3Service {
 }
 const s3Service = new S3Service();
 
+const s3FileSchema = new mongoose.Schema({
+    s3Filename: {
+        type: String,
+        required: true,
+    },
+    filename: {
+        type: String,
+        default: "",
+    },
+    url: String,
+    folder: [String],
+    mimeType: String,
+    description: {
+        type: String,
+        default: "",
+    },
+});
+s3FileSchema.post("findOne", async function (s3File) {
+    if (s3File) {
+        s3File.url = s3Service.getPublicUrl(s3File.s3Filename, s3File.folder);
+    }
+});
+s3FileSchema.post("find", async function (s3Files) {
+    if (s3Files && s3Files.length) {
+        s3Files.forEach((doc) => {
+            doc.url = s3Service.getPublicUrl(doc.s3Filename, doc.folder);
+        });
+    }
+});
+
+const eventSchema = new Schema$1({
+    title: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: true,
+    },
+    startDate: {
+        type: Date,
+        required: true,
+    },
+    endDate: {
+        type: Date,
+        required: true,
+    },
+    categories: {
+        type: [String],
+        default: [],
+    },
+    mode: {
+        type: String,
+        enum: ["online", "offline"],
+        required: true,
+    },
+    location: String,
+    creator: {
+        type: Schema$1.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+    participants: [
+        {
+            type: Schema$1.Types.ObjectId,
+            ref: "User",
+        },
+    ],
+    coverImage: s3FileSchema,
+    comments: {
+        type: [
+            {
+                author: {
+                    type: Schema$1.Types.ObjectId,
+                    ref: "User",
+                    required: true,
+                },
+                content: {
+                    type: String,
+                    required: true,
+                },
+                createdAt: {
+                    type: Date,
+                    default: Date.now,
+                },
+            },
+        ],
+        default: [],
+    },
+});
+const Event = model("Event", eventSchema);
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+class UserService {
+    // Get all users
+    async getAllUsers() {
+        return await User.find().populate("mentors").exec();
+    }
+    // Create a new user
+    async createUser(userData) {
+        const { name, email, password, role, position, supervisor, subordinates, avatar, experienceLevel, } = userData;
+        // Check if email already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            throw new HttpError("Email already in use");
+        }
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
+        // Create new user document
+        const user = new User({
+            name,
+            email,
+            password: hashedPassword,
+            role,
+            position,
+            supervisor,
+            subordinates,
+            avatar,
+            experienceLevel,
+        });
+        return await user.save();
+    }
+    async getUserByID(userId) {
+        const user = await User.findById(userId)
+            .populate("supervisor")
+            .populate("subordinates")
+            .populate("mentors")
+            .populate("mentees")
+            .populate("mentorshipRequests.sender")
+            .exec();
+        if (!user) {
+            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        }
+        return user;
+    }
+    async updateUser(userId, userData) {
+        const user = await User.findById(userId);
+        if (!user) {
+            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        }
+        const updatedUser = await User.findByIdAndUpdate(userId, userData, {
+            new: true,
+        });
+        return updatedUser;
+    }
+    async addNotification(userId, message) {
+        const user = await User.findByIdAndUpdate(userId, {
+            $push: {
+                notifications: {
+                    message,
+                    read: false,
+                    createdAt: new Date(),
+                },
+            },
+        }, { new: true });
+        if (!user)
+            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        const notifications = user.notifications;
+        websocketService.sendTo(userId, {
+            type: "NEW_NOTIFICATION",
+            data: notifications.pop(),
+            timestamp: new Date().toISOString(),
+        });
+        return user;
+    }
+    async sendMentorshipRequest(senderID, mentorID, message) {
+        const sender = await User.findById(senderID).exec();
+        if (!sender)
+            throw new HttpError("Sendernot found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        const mentor = await User.findById(mentorID).exec();
+        if (!mentor)
+            throw new HttpError("Mentor not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        mentor.mentorshipRequests = [
+            ...mentor.mentorshipRequests.filter((r) => r.sender.toString() !== senderID),
+            {
+                sender: new mongoose.Types.ObjectId(senderID),
+                message,
+            },
+        ];
+        await mentor.save();
+        await this.addNotification(mentorID, `${sender.name} sent you a mentorship request\n${message}`);
+    }
+    async addActivity(userID, activity) {
+        const user = await User.findById(userID);
+        if (!user) {
+            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        }
+        user.activities.push(activity);
+        return await user.save();
+    }
+    async getChats(userID) {
+        const user = await User.findById(userID);
+        if (!user) {
+            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        }
+        const chats = Chat$2.find({
+            participants: {
+                $in: [userID],
+            },
+        })
+            .populate("participants")
+            .exec();
+        return chats;
+    }
+    async getNotifications(userID) {
+        const user = await User.findById(userID);
+        if (!user) {
+            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        }
+        return user.notifications;
+    }
+    async getWBConversations(userID) {
+        const conversations = await WBConversation.find({
+            user: userID,
+        }).exec();
+        return conversations;
+    }
+    async getTopMatchedMentors(userId, limit, page = 0) {
+        const mentee = await User.findById(userId).populate("mentors").exec();
+        if (!mentee)
+            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        const excludedMentorIds = mentee.mentors.map((m) => new mongoose.Types.ObjectId(m._id));
+        // Compute experience in years
+        const menteeExperience = (new Date().getTime() - mentee.hireDate.getTime()) /
+            (1000 * 60 * 60 * 24 * 365);
+        const candidates = await User.aggregate([
+            {
+                $match: {
+                    _id: {
+                        $ne: new mongoose.Types.ObjectId(userId),
+                        $nin: excludedMentorIds,
+                    },
+                    hireDate: { $lte: mentee.hireDate }, // only more senior mentors
+                    "mentorshipRequests.sender": {
+                        $ne: new mongoose.Types.ObjectId(userId),
+                    },
+                },
+            },
+            {
+                $project: {
+                    skills: 1,
+                    hireDate: 1,
+                    careerPath: 1,
+                    name: 1,
+                    avatar: 1,
+                    position: 1,
+                    department: 1,
+                    unit: 1,
+                    languages: 1,
+                    strengths: 1,
+                    // compute mentor experience in years
+                    experience_diff: {
+                        $divide: [
+                            { $subtract: [new Date(), "$hireDate"] },
+                            1000 * 60 * 60 * 24 * 365,
+                        ],
+                    },
+                },
+            },
+            { $limit: 200 },
+        ]);
+        const w1 = 0.4; // skill alignment
+        const w2 = 0.2; // experience difference
+        const w3 = 0.3; // career path similarity
+        const scoredMentors = candidates.map((mentor) => {
+            const skill_alignment = this.countOverlappingSkills(mentee.skills, mentor.skills);
+            const mentorExperience = (new Date().getTime() - new Date(mentor.hireDate).getTime()) /
+                (1000 * 60 * 60 * 24 * 365);
+            const experience_diff = mentorExperience - menteeExperience;
+            const career_path_similarity = this.calculateCareerPathSimilarity(mentee.careerPath, mentor.careerPath);
+            const score = w1 * skill_alignment +
+                w2 * experience_diff +
+                w3 * career_path_similarity;
+            return { mentor, score };
+        });
+        return scoredMentors
+            .sort((a, b) => b.score - a.score)
+            .slice(page * (limit || scoredMentors.length), (limit || scoredMentors.length) * (page + 1))
+            .map((m) => m.mentor);
+    }
+    // Skills overlap
+    countOverlappingSkills(menteeSkills, mentorSkills) {
+        const menteeSkillNames = new Set(menteeSkills.map((s) => s.name.toLowerCase()));
+        return mentorSkills.filter((s) => menteeSkillNames.has(s.name.toLowerCase())).length;
+    }
+    // Career path similarity
+    calculateCareerPathSimilarity(menteePath, mentorPath) {
+        const menteePositions = new Set(menteePath.map((p) => p.name));
+        const mentorPositions = new Set(mentorPath.map((p) => p.name));
+        const intersection = [...menteePositions].filter((p) => mentorPositions.has(p));
+        const union = new Set([...menteePositions, ...mentorPositions]);
+        return union.size > 0 ? intersection.length / union.size : 0;
+    }
+    async deleteAllUsers() {
+        return await User.deleteMany({}).exec();
+    }
+    async updateTodayMood(userId, level, notes = []) {
+        const todayStart = dayjs().tz("Asia/Singapore").startOf("day");
+        const user = await User.findById(userId);
+        if (!user)
+            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        user.moods.push({ date: todayStart, level, notes });
+        await user.save();
+        return user.moods[user.moods.length - 1];
+    }
+    async getRecommendedCourses(userID) {
+        const user = await User.findById(userID).exec();
+        if (!user)
+            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        // Get current position
+        const currentUserPosition = await this.getCurrentPosition(userID);
+        let skillGaps = [];
+        if (currentUserPosition) {
+            skillGaps = currentUserPosition.skills
+                .filter((posSkill) => {
+                const userSkill = user.skills.find((us) => us.name === posSkill.name);
+                return (!userSkill || (userSkill.level && userSkill.level < 100));
+            })
+                .map((posSkill) => ({
+                ...posSkill,
+                level: user.skills.find((us) => us.name === posSkill.name)
+                    ?.level ?? 0,
+            }));
+        }
+        return await getRecommendedCoursesHelper(skillGaps, user);
+    }
+    async getPotentialPositions(userID) {
+        const user = await User.findById(userID).exec();
+        if (!user) {
+            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        }
+        const currentPosition = await this.getCurrentPosition(userID);
+        const currentSkills = [
+            ...user.skills,
+            ...(currentPosition?.skills || []),
+        ];
+        const potentialPositions = (await Position.find({
+            _id: { $ne: currentPosition?._id },
+            name: { $ne: currentPosition?.name },
+        })
+            .lean()
+            .exec());
+        const potentialRoles = [];
+        for (const position of potentialPositions) {
+            const totalSkills = position.skills.length;
+            const matchedSkills = position.skills.filter((posSkill) => currentSkills.some((userSkill) => userSkill.name === posSkill.name &&
+                (userSkill.level ?? 0) >= (posSkill?.level ?? 0)));
+            const missingSkills = position.skills.filter((posSkill) => !currentSkills.some((userSkill) => userSkill.name === posSkill.name &&
+                (userSkill.level ?? 0) >= (posSkill?.level ?? 0)));
+            const relevance = Number((matchedSkills.length / totalSkills).toFixed(2));
+            const recommendedCourses = await getRecommendedCoursesHelper(missingSkills, user);
+            potentialRoles.push({
+                position,
+                missingSkills,
+                recommendedCourses,
+                relevance,
+            });
+        }
+        // Sort by relevance (descending)
+        potentialRoles.sort((a, b) => b.relevance - a.relevance);
+        return potentialRoles;
+    }
+    async getCurrentPosition(userID) {
+        const user = await User.findById(userID).lean().exec();
+        if (!user) {
+            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        }
+        return user.careerPath?.find((pos) => !pos.endDate);
+    }
+    getRecommendedEvents = async (userID) => {
+        const user = await User.findById(userID)
+            .populate("mentees mentors")
+            .lean();
+        if (!user) {
+            throw new HttpError("User not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);
+        }
+        // IDs of mentors and mentees to avoid duplicates
+        const excludedUserIds = [
+            ...(user.mentees?.map((m) => m._id) || []),
+            ...(user.mentors?.map((m) => m._id) || []),
+            user._id,
+        ];
+        // Get list of event IDs the user has already joined
+        const joinedEventIds = await Event.find({
+            participants: user._id,
+        }).distinct("_id");
+        const now = new Date();
+        const events = await Event.find({
+            _id: { $nin: joinedEventIds },
+            endDate: { $gte: now },
+        })
+            .populate("creator", "name avatar")
+            .populate("participants", "name avatar")
+            .populate("comments.author", "name avatar")
+            .lean();
+        // Prioritize events where participants are mostly not in mentors/mentees
+        const scoredEvents = (await events.map((event) => {
+            const overlapCount = (event.participants || []).filter((p) => excludedUserIds.includes(p.toString())).length;
+            if (event.coverImage) {
+                event.coverImage.url = s3Service.getPublicUrl(event.coverImage.s3Filename, event.coverImage.folder);
+            }
+            return { event, score: -overlapCount };
+        }))
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 6)
+            .map((e) => e.event);
+        return scoredEvents;
+    };
+}
+const userService = new UserService();
+async function getRecommendedCoursesHelper(skillGaps, user) {
+    const courses = await Course.find().exec();
+    // Score each course and filter
+    const scoredCourses = courses
+        .map((course) => {
+        let totalRelevance = 0;
+        course.skillsTaught.forEach((cs) => {
+            // Find all gaps that match this skill name
+            const matchingGaps = skillGaps.filter((g) => g.name === cs.name);
+            matchingGaps.forEach((gap) => {
+                let relevance = 3; // base for skill name match
+                // Function area match
+                if (gap.functionArea === cs.functionArea)
+                    relevance += 2;
+                // Specialisation match
+                if (gap.specialisation === cs.specialisation)
+                    relevance += 1;
+                // Aspirations match
+                const inAspirations = user.aspirations.some((role) => role.skills.some((s) => s.name === cs.name));
+                if (inAspirations)
+                    relevance += 5;
+                // Skill level gap
+                if (gap.level)
+                    relevance += Math.max(0, 100 - gap.level) / 50;
+                totalRelevance += relevance;
+            });
+        });
+        return { course, relevance: totalRelevance };
+    })
+        .filter((c) => c.relevance > 0)
+        .sort((a, b) => b.relevance - a.relevance)
+        .map((c) => c.course);
+    return scoredCourses.slice(0, 10);
+}
+
+class UserController {
+    async getAllUsers(request, response) {
+        response.status(200).send(await userService.getAllUsers());
+    }
+    async createUser(request, response) {
+        response.status(201).send(await userService.createUser(request.body));
+    }
+    async getUserByID(request, response) {
+        const userID = response.locals._id;
+        response.status(200).send(await userService.getUserByID(userID));
+    }
+    async updateUser(request, response) {
+        const userID = response.locals._id;
+        response
+            .status(200)
+            .send(await userService.updateUser(userID, request.body));
+    }
+    async addNotification(request, response) {
+        const userID = response.locals._id;
+        response
+            .status(200)
+            .send(await userService.addNotification(userID, request.body.message));
+    }
+    async sendMentorshipRequest(request, response) {
+        const userID = response.locals.user?.id;
+        const mentorID = response.locals._id;
+        response
+            .status(200)
+            .send(await userService.sendMentorshipRequest(userID, mentorID, request.body.message));
+    }
+    async addActivity(request, response) {
+        const userID = response.locals._id;
+        response
+            .status(200)
+            .send(await userService.addActivity(userID, request.body));
+    }
+    async deleteAllUsers(request, response) {
+        response.status(200).send(await userService.deleteAllUsers());
+    }
+    async getTopMatchedMentors(request, response) {
+        const userID = response.locals._id;
+        const limit = request.query.limit
+            ? Number(request.query.limit)
+            : undefined;
+        const page = request.query.page
+            ? Number(request.query.page)
+            : undefined;
+        response
+            .status(200)
+            .send(await userService.getTopMatchedMentors(userID, limit, page));
+    }
+    async getRecommendedCourses(request, response) {
+        const userID = response.locals._id;
+        response
+            .status(200)
+            .send(await userService.getRecommendedCourses(userID));
+    }
+    async getPotentialPositions(request, response) {
+        const userID = response.locals._id;
+        response
+            .status(200)
+            .send(await userService.getPotentialPositions(userID));
+    }
+    async getChats(request, response) {
+        const userID = response.locals._id;
+        response.status(200).send(await userService.getChats(userID));
+    }
+    async getWBConversations(request, response) {
+        const userID = response.locals._id;
+        response.status(200).send(await userService.getWBConversations(userID));
+    }
+    async getRecommendedEvents(request, response) {
+        const userID = response.locals._id;
+        response
+            .status(200)
+            .send(await userService.getRecommendedEvents(userID));
+    }
+    catchErrors(handler) {
+        return async (request, response, next) => {
+            try {
+                await handler(request, response);
+            }
+            catch (err) {
+                // Custom response errors
+                if (err instanceof HttpError) {
+                    // Custom response error
+                    response.status(err.errorCode).send(err);
+                    return;
+                }
+                else if (err instanceof mongoose.Error.DocumentNotFoundError ||
+                    err instanceof mongoose.Error.ValidationError) {
+                    response.status(400).send({ message: err.message });
+                    return;
+                }
+                else {
+                    // Internal Server Errors
+                    next(err);
+                }
+            }
+        };
+    }
+}
+const userController = new UserController();
+
+const getID = (queryParams = ["ID"]) => (request, response, next) => {
+    if (queryParams.length === 0) {
+        next();
+        return;
+    }
+    for (const queryParam of queryParams) {
+        const id = request.params[queryParam];
+        if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+            const err = new HttpError("Missing or invalid object id parameter", "INVALID_ID", 400);
+            response.status(400).send(err);
+            return;
+        }
+        if (queryParam === "ID") {
+            response.locals._id = id;
+        }
+        else {
+            response.locals[queryParam] = id;
+        }
+    }
+    if (!response.locals._id) {
+        response.locals._id = request.params[queryParams[0]];
+    }
+    next();
+};
+
+const auth = (role) => (request, response, next) => {
+    const accessToken = request.header("X-Access-Token");
+    // Missing access token
+    if (!accessToken) {
+        return response.status(401).json({
+            status: "MISSING_ACCESS_TOKEN",
+            message: "Missing access token",
+        });
+    }
+    try {
+        const payload = jwt.verify(accessToken, config$1.get("SECRET_KEY"));
+        if (typeof payload !== "string" &&
+            payload.role === "user" &&
+            role === "admin") ;
+        // Attach user info
+        if (typeof payload !== "string") {
+            response.locals.user = payload;
+        }
+        return next();
+    }
+    catch (err) {
+        // Invalid access token
+        return response.status(401).json({
+            status: "INVALID_ACCESS_TOKEN",
+            message: "Invalid access token",
+        });
+    }
+};
+
+const userRouter = express.Router();
+userRouter.use(auth("user"));
+// Define the route handlers
+userRouter.get("", userController.catchErrors(userController.getAllUsers.bind(userController)));
+userRouter.get("/:ID", getID(), userController.catchErrors(userController.getUserByID.bind(userController)));
+userRouter.get("/:ID/wb", getID(), userController.catchErrors(userController.getWBConversations.bind(userController)));
+userRouter.get("/:ID/top-matches", getID(), userController.catchErrors(userController.getTopMatchedMentors.bind(userController)));
+userRouter.get("/:ID/recommended-courses", getID(), userController.catchErrors(userController.getRecommendedCourses.bind(userController)));
+userRouter.get("/:ID/recommended-events", getID(), userController.catchErrors(userController.getRecommendedEvents.bind(userController)));
+userRouter.get("/:ID/potential-positions", getID(), userController.catchErrors(userController.getPotentialPositions.bind(userController)));
+userRouter.get("/:ID/chats", getID(), userController.catchErrors(userController.getChats.bind(userController)));
+userRouter.post("", userController.catchErrors(userController.createUser.bind(userController)));
+userRouter.post("/:ID/notifications", getID(), userController.catchErrors(userController.addNotification.bind(userController)));
+userRouter.post("/:ID/mentor-requests", getID(), userController.catchErrors(userController.sendMentorshipRequest.bind(userController)));
+userRouter.post("/:ID/activities", getID(), userController.catchErrors(userController.addActivity.bind(userController)));
+userRouter.put("/:ID", getID(), userController.catchErrors(userController.updateUser.bind(userController)));
+userRouter.delete("", userController.catchErrors(userController.deleteAllUsers.bind(userController)));
+
+class ChatController {
+    async postMessage(request, response) {
+        const chatID = response.locals._id;
+        const message = await chatService.postMessage(chatID, request.body);
+        response.status(200).send(message);
+    }
+    async updateMessage(request, response) {
+        const updater = response.locals.user;
+        const chatID = response.locals.chatID;
+        const messageID = response.locals.messageID;
+        const message = await chatService.updateMessage(updater.id, messageID, chatID, request.body);
+        response.status(200).send(message);
+    }
+    async createChat(request, response) {
+        const chat = await chatService.createChat(request.body?.participants);
+        response.status(200).send(chat);
+    }
+    async markMessagesAsRead(request, response) {
+        const chatID = response.locals._id;
+        const userID = response.locals.user?.id;
+        const chat = await chatService.markMessagesAsRead(chatID, userID);
+        response.status(200).send(chat);
+    }
+    catchErrors(handler) {
+        return async (request, response, next) => {
+            try {
+                await handler(request, response);
+            }
+            catch (err) {
+                // Custom response errors
+                if (err instanceof HttpError) {
+                    // Custom response error
+                    response.status(err.errorCode).send(err);
+                    return;
+                }
+                else if (err instanceof mongoose.Error.DocumentNotFoundError ||
+                    err instanceof mongoose.Error.ValidationError) {
+                    response.status(400).send({ message: err.message });
+                    return;
+                }
+                else {
+                    // Internal Server Errors
+                    next(err);
+                }
+            }
+        };
+    }
+}
+const chatController = new ChatController();
+
+const chatRouter = express.Router();
+// Define the route handlers
+chatRouter.post("/:ID/message", getID(), chatController.catchErrors(chatController.postMessage.bind(chatController)));
+chatRouter.put("/:chatID/message/:messageID", getID(["chatID", "messageID"]), auth("user"), chatController.catchErrors(chatController.updateMessage.bind(chatController)));
+chatRouter.post("", chatController.catchErrors(chatController.createChat.bind(chatController)));
+chatRouter.post("/:ID/read", getID(), auth("user"), chatController.catchErrors(chatController.markMessagesAsRead.bind(chatController)));
+
+var http = {};
+
+var hasRequiredHttp;
+
+function requireHttp () {
+	if (hasRequiredHttp) return http;
+	hasRequiredHttp = 1;
+	Object.defineProperty(http, "__esModule", { value: true });
+	http.HttpError = void 0;
+	class HttpError {
+	    constructor(message, status = undefined, errorCode = 400, data) {
+	        this.message = message;
+	        this.status = status;
+	        this.errorCode = errorCode;
+	        this.data = data;
+	    }
+	}
+	http.HttpError = HttpError;
+	return http;
+}
+
+var httpExports = requireHttp();
+
 class S3Controller {
     async getUploadURL(request, response) {
         const { s3Filename, folders } = request.body;
@@ -127446,98 +127584,6 @@ const wbRouter = express.Router();
 wbRouter.use(auth("user"));
 wbRouter.post("/", wbController.catchErrors(wbController.createConversation.bind(wbController)));
 wbRouter.post("/useful-tips", wbController.catchErrors(wbController.getUsefulTips.bind(wbController)));
-
-const s3FileSchema = new mongoose.Schema({
-    s3Filename: {
-        type: String,
-        required: true,
-    },
-    filename: {
-        type: String,
-        default: "",
-    },
-    url: String,
-    folder: [String],
-    mimeType: String,
-    description: {
-        type: String,
-        default: "",
-    },
-});
-s3FileSchema.post("findOne", async function (s3File) {
-    if (s3File) {
-        s3File.url = s3Service.getPublicUrl(s3File.s3Filename, s3File.folder);
-    }
-});
-s3FileSchema.post("find", async function (s3Files) {
-    if (s3Files && s3Files.length) {
-        s3Files.forEach((doc) => {
-            doc.url = s3Service.getPublicUrl(doc.s3Filename, doc.folder);
-        });
-    }
-});
-
-const eventSchema = new Schema$1({
-    title: {
-        type: String,
-        required: true,
-    },
-    description: {
-        type: String,
-        required: true,
-    },
-    startDate: {
-        type: Date,
-        required: true,
-    },
-    endDate: {
-        type: Date,
-        required: true,
-    },
-    categories: {
-        type: [String],
-        default: [],
-    },
-    mode: {
-        type: String,
-        enum: ["online", "offline"],
-        required: true,
-    },
-    location: String,
-    creator: {
-        type: Schema$1.Types.ObjectId,
-        ref: "User",
-        required: true,
-    },
-    participants: [
-        {
-            type: Schema$1.Types.ObjectId,
-            ref: "User",
-        },
-    ],
-    coverImage: s3FileSchema,
-    comments: {
-        type: [
-            {
-                author: {
-                    type: Schema$1.Types.ObjectId,
-                    ref: "User",
-                    required: true,
-                },
-                content: {
-                    type: String,
-                    required: true,
-                },
-                createdAt: {
-                    type: Date,
-                    default: Date.now,
-                },
-            },
-        ],
-        default: [],
-    },
-});
-const Event = model("Event", eventSchema);
 
 class EventService {
     async getAllEvents(condition) {

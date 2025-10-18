@@ -4,7 +4,6 @@ import dayjs from "dayjs";
 import {
 	Calendar,
 	MapPin,
-	Users,
 	Video,
 	MessageSquare,
 	LogOut,
@@ -16,6 +15,22 @@ import { Event } from "@common/types/event";
 import eventService from "services/event";
 import { useAppSelector } from "redux/store";
 import { User } from "@common/types/user";
+import utc from "dayjs/plugin/utc.js";
+import { FaGoogle } from "react-icons/fa";
+
+dayjs.extend(utc);
+const getGoogleCalendarUrl = (event: Event) => {
+	const start = dayjs(event.startDate).utc().format("YYYYMMDDTHHmmss") + "Z";
+	const end = dayjs(event.endDate).utc().format("YYYYMMDDTHHmmss") + "Z";
+
+	const url = `https://www.google.com/calendar/render?action=TEMPLATE
+		&text=${encodeURIComponent(event.title)}
+		&dates=${start}/${end}
+		&details=${encodeURIComponent(event.description || "")}
+		&location=${encodeURIComponent(event.location || "")}`;
+
+	return url;
+};
 
 const EventDetails = () => {
 	const navigate = useNavigate();
@@ -303,14 +318,44 @@ const EventDetails = () => {
 				<aside className="flex-1 w-full lg:w-80 flex-shrink-0 space-y-6">
 					<div className="bg-white rounded-4xl p-6 shadow-sm space-y-4 sticky top-6">
 						{/* Date & Time */}
-						<div className="flex items-center gap-3">
-							<Calendar className="text-indigo-500" size={24} />
-							<p className="text-xl font-semibold font-inter text-gray-800">
-								{dayjs(event.startDate).format(
-									"DD MMM YYYY, h:mm A"
-								)}{" "}
-								- {dayjs(event.endDate).format("h:mm A")}
-							</p>
+						<div className="space-y-2">
+							<div className="flex items-center gap-3">
+								<Calendar
+									className="text-indigo-500"
+									size={24}
+								/>
+								<p className="text-xl font-semibold font-inter text-gray-800">
+									{dayjs(event.startDate).format(
+										"DD MMM YYYY, h:mm A"
+									)}{" "}
+									- {dayjs(event.endDate).format("h:mm A")}
+								</p>
+							</div>
+							<a
+								href={getGoogleCalendarUrl(event)}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="
+								w-full
+								flex
+								items-center
+								justify-center
+								gap-4
+								px-4
+								py-2
+								bg-gradient-to-r from-indigo-500 to-purple-600
+								hover:from-indigo-600 hover:to-purple-700
+								text-white
+								font-semibold
+								rounded-2xl
+								shadow-lg
+								transition-all
+								duration-300
+								transform
+							"
+							>
+								<FaGoogle size={18} /> Add to Google Calendar
+							</a>
 						</div>
 						{event.mode === "offline" && (
 							<div className="flex items-center gap-3">
@@ -320,7 +365,7 @@ const EventDetails = () => {
 								</p>
 							</div>
 						)}
-
+						<div className="w-full border-1 border-gray-200 my-6"></div>
 						{/* Participants */}
 						<div className="space-y-3">
 							<div className="flex items-center justify-between">
@@ -331,7 +376,7 @@ const EventDetails = () => {
 								<input
 									type="text"
 									placeholder="Search participants"
-									className="px-3 py-1.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm font-inter"
+									className="px-3 py-1.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm font-inter"
 									onChange={(e) =>
 										setParticipantSearch(e.target.value)
 									}

@@ -10,6 +10,7 @@ userRouter.get("/:ID", getID(), userController.catchErrors(userController.getUse
 userRouter.get("/:ID/wb", getID(), userController.catchErrors(userController.getWBConversations.bind(userController)));
 userRouter.get("/:ID/top-matches", getID(), userController.catchErrors(userController.getTopMatchedMentors.bind(userController)));
 userRouter.get("/:ID/recommended-courses", getID(), userController.catchErrors(userController.getRecommendedCourses.bind(userController)));
+userRouter.get("/:ID/recommended-events", getID(), userController.catchErrors(userController.getRecommendedEvents.bind(userController)));
 userRouter.get("/:ID/potential-positions", getID(), userController.catchErrors(userController.getPotentialPositions.bind(userController)));
 userRouter.get("/:ID/chats", getID(), userController.catchErrors(userController.getChats.bind(userController)));
 userRouter.post("", userController.catchErrors(userController.createUser.bind(userController)));
