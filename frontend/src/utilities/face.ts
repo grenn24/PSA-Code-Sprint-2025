@@ -7,9 +7,8 @@ async function loadModels() {
 	await faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL);
 }
 
-await loadModels();
-
-export function analyseMood(video: HTMLVideoElement) {
+export async function analyseMood(video: HTMLVideoElement) {
+	await loadModels();
 	faceapi
 		.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
 		.withFaceExpressions()
