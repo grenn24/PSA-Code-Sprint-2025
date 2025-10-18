@@ -22,18 +22,20 @@ export async function startMoodDetection(
 	await loadModels();
 	let isRunning = true;
 	async function loop() {
-		if (!isRunning) {
-			return;
-		}
+		if (!isRunning) return;
 		console.log("looping");
-		const detections = await faceapi
-			.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
-			.withFaceExpressions();
 
-		if (detections) {
-			console.log(detections.expressions);
-			onDetection(detections.expressions);
-		}
+		faceapi
+			.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
+			.withFaceExpressions()
+			.then((detections) => {
+				if (detections) {
+					console.log(detections.expressions);
+					onDetection(detections.expressions);
+				}
+				return detections;
+			})
+			.catch((err) => console.error("Detection error:", err));
 
 		requestAnimationFrame(loop);
 	}
