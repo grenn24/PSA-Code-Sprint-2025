@@ -27,8 +27,8 @@ import websocketService from "utilities/websocket";
 import { User } from "@common/types/user";
 import chatService from "services/chat";
 import { useAppSelector } from "redux/store";
+import { startMoodDetection } from "utilities/face";
 import * as faceapi from "face-api.js";
-import { Expression, startMoodDetection } from "utilities/face";
 
 interface VideoCallProps {
 	localStream: MediaStream | null;
@@ -111,27 +111,29 @@ const MINDFULNESS_PHASES = [
 	},
 ];
 
-function getMoodInfo(expression: Expression) {
-	const entries = Object.entries(expression) as [keyof Expression, number][];
+function getMoodInfo(expression: faceapi.FaceExpressions) {
+	const entries = Object.entries(expression) as [
+		keyof faceapi.FaceExpressions,
+		number
+	][];
+
 	const [topEmotion, score] = entries.reduce(
 		(prev, curr) => (curr[1] > prev[1] ? curr : prev),
 		entries[0]
 	);
 
-	const moodMap: Record<
-		keyof Expression,
-		{ text: string; emoji: string; color: string }
-	> = {
+	const moodMap = {
 		neutral: { text: "Neutral", emoji: "😐", color: "gray" },
 		happy: { text: "Happy", emoji: "😄", color: "yellow" },
 		sad: { text: "Sad", emoji: "😢", color: "blue" },
 		angry: { text: "Angry", emoji: "😠", color: "red" },
 		fearful: { text: "Fearful", emoji: "😨", color: "purple" },
+		disgusted: { text: "Disgusted", emoji: "🤢", color: "green" },
+		surprised: { text: "Surprised", emoji: "😲", color: "orange" },
 	};
 
-	return { ...moodMap[topEmotion], score };
+	return moodMap[topEmotion] ? { ...moodMap[topEmotion], score } : null;
 }
-
 const VideoCall: React.FC<VideoCallProps> = ({
 	localStream,
 	remoteStream,
@@ -144,7 +146,8 @@ const VideoCall: React.FC<VideoCallProps> = ({
 	const [mindfulness, setMindfulness] = useState(false);
 	const [moodAnalysis, setMoodAnalysis] = useState(false);
 	const skipRef = useRef(false);
-	const [expression, setExpression] = useState<Expression | null>(null);
+	const [expression, setExpression] =
+		useState<faceapi.FaceExpressions | null>(null);
 	const [micOn, setMicOn] = useState(true);
 	const [cameraOn, setCameraOn] = useState(true);
 	const [minimized, setMinimized] = useState(false);
@@ -865,11 +868,11 @@ const VideoCall: React.FC<VideoCallProps> = ({
 					exit={{ opacity: 0, scale: 0.9 }}
 					transition={{ duration: 0.4 }}
 					className="absolute top-6 right-6 z-50 flex flex-col items-center gap-4 
-        bg-gradient-to-br from-black/60 to-gray-800/60 backdrop-blur-lg 
-        px-6 py-5 rounded-2xl shadow-2xl border border-white/10 
-        text-white font-semibold w-64"
+						bg-gradient-to-br from-black/60 to-gray-800/60 backdrop-blur-lg 
+						px-6 py-5 rounded-2xl shadow-2xl border border-white/10 
+						text-white font-semibold w-64"
 				>
-					{expression ? (
+					{expression && !!getMoodInfo(expression) ? (
 						<>
 							{/* Emoji + Mood Text */}
 							<div className="flex flex-col items-center gap-2">
@@ -933,7 +936,6 @@ const VideoCall: React.FC<VideoCallProps> = ({
 								</div>
 							</div>
 
-							{/* Subtle mood ring glow */}
 							<motion.div
 								className="absolute -z-10 w-60 h-60 rounded-full blur-3xl opacity-30"
 								style={{

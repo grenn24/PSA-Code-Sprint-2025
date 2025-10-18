@@ -1,13 +1,5 @@
 import * as faceapi from "face-api.js";
 
-export interface Expression {
-	neutral: number;
-	happy: number;
-	sad: number;
-	angry: number;
-	fearful: number;
-}
-
 async function loadModels() {
 	// path to where your models are stored
 	const MODEL_URL = "/models";
@@ -17,21 +9,19 @@ async function loadModels() {
 
 export async function startMoodDetection(
 	video: HTMLVideoElement,
-	onDetection: (expression: Expression) => void,
+	onDetection: (expression: faceapi.FaceExpressions) => void,
 	skipRef?: React.RefObject<boolean>,
 	intervalMs: number = 500
 ) {
 	await loadModels();
 
 	async function loop() {
-		console.log("looping");
 		if (skipRef && skipRef.current) return;
 		faceapi
 			.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
 			.withFaceExpressions()
 			.then((detections) => {
 				if (detections) {
-					console.log(detections.expressions);
 					onDetection(detections.expressions);
 				}
 				return detections;
