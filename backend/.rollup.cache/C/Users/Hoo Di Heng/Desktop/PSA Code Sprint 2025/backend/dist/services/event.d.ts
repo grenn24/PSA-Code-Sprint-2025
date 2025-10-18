@@ -1,26 +1,26 @@
 import mongoose from "mongoose";
 declare class EventService {
     getAllEvents(condition: any): Promise<(mongoose.Document<unknown, {}, {
+        title: string;
+        description: string;
         startDate: NativeDate;
         endDate: NativeDate;
-        description: string;
-        participants: mongoose.Types.ObjectId[];
-        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
+        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }>;
         location?: string | null | undefined;
         coverImage?: {
@@ -32,26 +32,26 @@ declare class EventService {
             mimeType?: string | null | undefined;
         } | null | undefined;
     }> & {
+        title: string;
+        description: string;
         startDate: NativeDate;
         endDate: NativeDate;
-        description: string;
-        participants: mongoose.Types.ObjectId[];
-        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
+        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }>;
         location?: string | null | undefined;
         coverImage?: {
@@ -68,26 +68,26 @@ declare class EventService {
         __v: number;
     })[]>;
     getEventByID(eventID: string): Promise<mongoose.Document<unknown, {}, {
+        title: string;
+        description: string;
         startDate: NativeDate;
         endDate: NativeDate;
-        description: string;
-        participants: mongoose.Types.ObjectId[];
-        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
+        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }>;
         location?: string | null | undefined;
         coverImage?: {
@@ -99,26 +99,26 @@ declare class EventService {
             mimeType?: string | null | undefined;
         } | null | undefined;
     }> & {
+        title: string;
+        description: string;
         startDate: NativeDate;
         endDate: NativeDate;
-        description: string;
-        participants: mongoose.Types.ObjectId[];
-        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
+        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }>;
         location?: string | null | undefined;
         coverImage?: {
@@ -135,26 +135,26 @@ declare class EventService {
         __v: number;
     }>;
     createEvent(event: any): Promise<mongoose.Document<unknown, {}, {
+        title: string;
+        description: string;
         startDate: NativeDate;
         endDate: NativeDate;
-        description: string;
-        participants: mongoose.Types.ObjectId[];
-        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
+        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }>;
         location?: string | null | undefined;
         coverImage?: {
@@ -166,26 +166,26 @@ declare class EventService {
             mimeType?: string | null | undefined;
         } | null | undefined;
     }> & {
+        title: string;
+        description: string;
         startDate: NativeDate;
         endDate: NativeDate;
-        description: string;
-        participants: mongoose.Types.ObjectId[];
-        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
+        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }>;
         location?: string | null | undefined;
         coverImage?: {
@@ -202,26 +202,26 @@ declare class EventService {
         __v: number;
     }>;
     updateEvent(eventID: string, event: any): Promise<mongoose.Document<unknown, {}, {
+        title: string;
+        description: string;
         startDate: NativeDate;
         endDate: NativeDate;
-        description: string;
-        participants: mongoose.Types.ObjectId[];
-        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
+        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }>;
         location?: string | null | undefined;
         coverImage?: {
@@ -233,26 +233,26 @@ declare class EventService {
             mimeType?: string | null | undefined;
         } | null | undefined;
     }> & {
+        title: string;
+        description: string;
         startDate: NativeDate;
         endDate: NativeDate;
-        description: string;
-        participants: mongoose.Types.ObjectId[];
-        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
+        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }>;
         location?: string | null | undefined;
         coverImage?: {
@@ -269,26 +269,26 @@ declare class EventService {
         __v: number;
     }>;
     joinEvent(userID: string, eventID: string): Promise<mongoose.Document<unknown, {}, {
+        title: string;
+        description: string;
         startDate: NativeDate;
         endDate: NativeDate;
-        description: string;
-        participants: mongoose.Types.ObjectId[];
-        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
+        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }>;
         location?: string | null | undefined;
         coverImage?: {
@@ -300,26 +300,26 @@ declare class EventService {
             mimeType?: string | null | undefined;
         } | null | undefined;
     }> & {
+        title: string;
+        description: string;
         startDate: NativeDate;
         endDate: NativeDate;
-        description: string;
-        participants: mongoose.Types.ObjectId[];
-        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
+        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }>;
         location?: string | null | undefined;
         coverImage?: {
@@ -336,26 +336,26 @@ declare class EventService {
         __v: number;
     }>;
     leaveEvent(userID: string, eventID: string): Promise<mongoose.Document<unknown, {}, {
+        title: string;
+        description: string;
         startDate: NativeDate;
         endDate: NativeDate;
-        description: string;
-        participants: mongoose.Types.ObjectId[];
-        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
+        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }>;
         location?: string | null | undefined;
         coverImage?: {
@@ -367,26 +367,26 @@ declare class EventService {
             mimeType?: string | null | undefined;
         } | null | undefined;
     }> & {
+        title: string;
+        description: string;
         startDate: NativeDate;
         endDate: NativeDate;
-        description: string;
-        participants: mongoose.Types.ObjectId[];
-        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
+        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }>;
         location?: string | null | undefined;
         coverImage?: {
@@ -403,26 +403,26 @@ declare class EventService {
         __v: number;
     }>;
     deleteEventByID(eventID: string): Promise<mongoose.Document<unknown, {}, {
+        title: string;
+        description: string;
         startDate: NativeDate;
         endDate: NativeDate;
-        description: string;
-        participants: mongoose.Types.ObjectId[];
-        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
+        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }>;
         location?: string | null | undefined;
         coverImage?: {
@@ -434,26 +434,26 @@ declare class EventService {
             mimeType?: string | null | undefined;
         } | null | undefined;
     }> & {
+        title: string;
+        description: string;
         startDate: NativeDate;
         endDate: NativeDate;
-        description: string;
-        participants: mongoose.Types.ObjectId[];
-        title: string;
         categories: string[];
         mode: "online" | "offline";
         creator: mongoose.Types.ObjectId;
+        participants: mongoose.Types.ObjectId[];
         comments: mongoose.Types.DocumentArray<{
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }, mongoose.Types.Subdocument<mongoose.Types.ObjectId, any, {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }> & {
-            createdAt: NativeDate;
-            content: string;
             author: mongoose.Types.ObjectId;
+            content: string;
+            createdAt: NativeDate;
         }>;
         location?: string | null | undefined;
         coverImage?: {

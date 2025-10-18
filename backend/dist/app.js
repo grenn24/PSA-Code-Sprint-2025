@@ -127551,7 +127551,9 @@ class EventService {
     }
     async getEventByID(eventID) {
         const event = await Event.findById(eventID)
-            .populate("creator participants comments.author")
+            .populate("creator", "name avatar")
+            .populate("participants", "name avatar")
+            .populate("comments.author", "name avatar")
             .exec();
         if (!event) {
             throw new HttpError("Event not found", "NOT_FOUND", statusCodeExports.HttpStatusCode.NotFound);

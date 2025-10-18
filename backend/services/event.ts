@@ -21,7 +21,9 @@ class EventService {
 	}
 	async getEventByID(eventID: string) {
 		const event = await Event.findById(eventID)
-			.populate("creator participants comments.author")
+			.populate("creator", "name avatar")
+			.populate("participants", "name avatar")
+			.populate("comments.author", "name avatar")
 			.exec();
 
 		if (!event) {

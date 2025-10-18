@@ -40,7 +40,7 @@ async function generateEvents(n: number) {
 			const creator = faker.helpers.arrayElement(users);
 			const participants = faker.helpers.arrayElements(
 				users,
-				faker.number.int({ min: 0, max: users.length })
+				faker.number.int({ min: 0, max: 100 })
 			);
 
 			const numComments = faker.number.int({ min: 0, max: 5 });
