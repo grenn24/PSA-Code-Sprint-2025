@@ -604,6 +604,42 @@ const Home = () => {
 						</div>
 					</div>
 				);
+			case "Education":
+				return (
+					<div className="space-y-4">
+						{user?.education.map((edu, index) => (
+							<div
+								key={index}
+								className="bg-white rounded-xl border border-gray-300 p-3 transition-shadow duration-200 font-inter"
+							>
+								<h3 className="text-lg font-medium mb-2">
+									{edu.institution}
+								</h3>
+								<p className="text-right font-semibold text-gray-500">
+									{edu.degree}
+								</p>
+								<p className="text-right text-sm">
+									{new Date(edu.startDate).toLocaleDateString(
+										"en-US",
+										{
+											month: "short",
+											year: "numeric",
+										}
+									)}
+									{" - "}
+									{edu.endDate
+										? new Date(
+												edu.endDate
+										  ).toLocaleDateString("en-US", {
+												month: "short",
+												year: "numeric",
+										  })
+										: "Present"}
+								</p>
+							</div>
+						))}
+					</div>
+				);
 			default:
 				return null;
 		}

@@ -2,7 +2,6 @@ import { faker } from "@faker-js/faker";
 import User from "../../models/user.js";
 import dayjs from "dayjs";
 import fs from "fs/promises";
-import { Project } from "@common/types/user.js";
 
 const SKILL_NAMES = [
 	"Python",
@@ -130,11 +129,11 @@ const OUTCOMES = [
 const HASHED_PASSWORD =
 	"$2b$10$TS8eBH1GUf7F3haX1WnX9uqVCzYW9f4ig5abjp4fEMUVkdrqrh91a";
 
-function getRandomInt(min, max) {
+function getRandomInt(min: number, max: number) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function getRandomDate(start, end) {
+function getRandomDate(start: Date, end: Date) {
 	const date = new Date(
 		start.getTime() + Math.random() * (end.getTime() - start.getTime())
 	);
@@ -218,6 +217,41 @@ function generateMoodData(start: Date, skipProbability = 0.3) {
 	return data;
 }
 
+export function generateEducation(count: number = 2) {
+	const degrees = [
+		"Bachelor of Science",
+		"Bachelor of Arts",
+		"Master of Science",
+		"Master of Arts",
+		"PhD",
+		"Diploma",
+		"Certificate",
+	];
+
+	const educationArray = [];
+
+	for (let i = 0; i < count; i++) {
+		const startYear = getRandomInt(2000, 2025);
+		const duration = getRandomInt(2, 6);
+		const startDate = faker.date.between({
+			from: `${startYear}-01-01`,
+			to: `${startYear}-12-31`,
+		});
+		const endDate = faker.date.between({
+			from: `${startYear + duration}-01-01`,
+			to: `${startYear + duration}-12-31`,
+		});
+
+		educationArray.push({
+			institution: faker.company.name() + " University",
+			degree: faker.helpers.arrayElement(degrees),
+			startDate,
+			endDate,
+		});
+	}
+	return educationArray;
+}
+
 function generateNotifications() {
 	const count = getRandomInt(1, 3);
 	return Array.from({ length: count }).map(() => ({
@@ -227,7 +261,7 @@ function generateNotifications() {
 }
 
 export function generateProjects(count = getRandomInt(3, 5)) {
-	const projects: Project[] = [];
+	const projects = [];
 	for (let i = 0; i < count; i++) {
 		const projectName =
 			PROJECT_NAMES[getRandomInt(0, PROJECT_NAMES.length - 1)];
@@ -291,7 +325,7 @@ export const generateUser = async (email: string, password: string) => {
 			},
 		],
 		strengths: generateStrengths(),
-		education: [],
+		education: generateEducation(),
 		projects: generateProjects(),
 		mentees: [],
 	};
@@ -349,7 +383,7 @@ export const generateDefaultUser = async () => {
 			},
 		],
 		strengths: generateStrengths(),
-		education: [],
+		education: generateEducation(),
 		projects: generateProjects(),
 		mentees: [],
 	};
@@ -379,6 +413,7 @@ export const generateUsers = async (
 				moods: generateMoodData(dayjs().subtract(12, "month").toDate()),
 				strengths: generateStrengths(),
 				supervisor: null,
+				education: generateEducation(),
 			};
 		})
 	);
