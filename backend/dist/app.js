@@ -28,9 +28,6 @@ import require$$3$2 from 'mock-aws-s3';
 import require$$5$3 from 'aws-sdk';
 import require$$6$1 from 'nock';
 import require$$0$a from 'child_process';
-import { createRequire } from 'module';
-import { dirname } from 'path';
-const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const require = createRequire(import.meta.url);
 
@@ -126659,6 +126656,7 @@ const getFileType = async (file) => {
     }
 };
 
+const __filename = fileURLToPath(import.meta.url);
 const __dirname$1 = require$$1$3.dirname(__filename);
 const s3Client = new S3Client({
     region: "auto",
