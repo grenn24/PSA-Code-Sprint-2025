@@ -5,6 +5,7 @@ import { WebsocketMessage } from "@common/types/http";
 import userService from "services/user";
 import { useAppSelector } from "redux/store";
 import { User } from "@common/types/user";
+import dayjs from "dayjs";
 
 const Notifications = () => {
 	const { user } = useAppSelector((state) => state.user);
@@ -56,25 +57,35 @@ const Notifications = () => {
 						</div>
 					) : (
 						<ul className="flex flex-col">
-							{notifications.map((n, idx) => (
-								<li
-									key={idx}
-									className={`px-4 py-3 transition hover:bg-white/20 cursor-pointer ${
-										n.read ? "bg-white/10" : "bg-white/20"
-									} ${
-										idx !== notifications.length - 1
-											? "border-b border-white/20"
-											: ""
-									}`}
-								>
-									<p className="text-sm text-gray-900 font-medium">
-										{n.message}
-									</p>
-									<span className="text-xs text-gray-400">
-										{new Date(n.createdAt).toLocaleString()}
-									</span>
-								</li>
-							))}
+							{notifications
+								.sort(
+									(x, y) =>
+										dayjs(y.createdAt).unix() -
+										dayjs(x.createdAt).unix()
+								)
+								.map((n, idx) => (
+									<li
+										key={idx}
+										className={`px-4 py-3 transition hover:bg-white/20 cursor-pointer ${
+											n.read
+												? "bg-white/10"
+												: "bg-white/20"
+										} ${
+											idx !== notifications.length - 1
+												? "border-b border-white/20"
+												: ""
+										}`}
+									>
+										<p className="text-sm text-gray-900 font-medium">
+											{n.message}
+										</p>
+										<span className="text-xs text-gray-400">
+											{new Date(
+												n.createdAt
+											).toLocaleString()}
+										</span>
+									</li>
+								))}
 						</ul>
 					)}
 				</div>

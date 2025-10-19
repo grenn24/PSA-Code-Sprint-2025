@@ -628,6 +628,7 @@ class UserService {
 		user.mentorshipRequests = user.mentorshipRequests.filter(
 			(r) => r._id.toString() !== requestID
 		) as any;
+		console.log(mentorshipRequest.sender.toString());
 		await this.addNotification(
 			mentorshipRequest.sender.toString(),
 			`${user.name} has accepted your mentorship request`

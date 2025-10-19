@@ -125,6 +125,10 @@ const Home = () => {
 				setIsLeadershipPotentialLoading(false);
 			});
 	}, []);
+
+	if (!user) {
+		return null;
+	}
 	const handleDragEnd = (event: DragEndEvent) => {
 		const { active, over } = event;
 		if (over?.id && active.id !== over?.id) {
@@ -527,7 +531,7 @@ const Home = () => {
 			case "Strengths":
 				return (
 					<div className="flex flex-wrap gap-3">
-						{user?.strengths.map((strength, idx) => {
+						{user?.strengths?.map((strength, idx) => {
 							const levelColors: Record<string, string> = {
 								Advanced: "bg-green-100 text-green-800",
 								Intermediate: "bg-yellow-100 text-yellow-800",
@@ -698,7 +702,7 @@ const Home = () => {
 			case "Education":
 				return (
 					<div className="space-y-4">
-						{user?.education.map((edu, index) => (
+						{user?.education?.map((edu, index) => (
 							<div
 								key={index}
 								className="bg-white rounded-xl border border-gray-300 p-3 transition-shadow duration-200 font-inter"
