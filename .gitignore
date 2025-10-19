@@ -14,7 +14,27 @@ Wellness Buddy Architecture Diagram.drawio
 Wellness Buddy Architecture Diagram 1.png
 Wellness Buddy Architecture Diagram 2.png
 Video Call Architecture Diagram.drawio
-.$Video Call Architecture Diagram.drawio.dtmp
+.$Video Call Architecture Diagram.drawio.dtmp\
 
-!admin
+\!admin/
+\!admin/**
+\!admin/Adobe Premiere Pro Auto-Save/
+\!admin/Adobe Premiere Pro Captured Audio/
+\!admin/Adobe Premiere Pro Preview Files/
+\!admin/Adobe Premiere Pro Render Files/
+
+!admin/Adobe Premiere Pro Auto-Save/
+!admin/Adobe Premiere Pro Captured Audio/
+!admin/Adobe Premiere Pro Preview Files/
+!admin/Adobe Premiere Pro Render Files/
+
+# Ignore media files (optional)
+*.prproj
+*.wav
+*.mp4
+*.mov
+*.jpg
+*.png
+
+
 !admin/data/~$Functions & Skills.xlsx

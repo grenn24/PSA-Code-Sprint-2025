@@ -45,10 +45,8 @@ const SignUp = () => {
 
 	return (
 		<div className="min-h-screen flex">
-			{/* Left: Sign-up form */}
 			<div className="flex flex-1 justify-center items-center bg-gray-50 p-8">
 				<div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-10 space-y-8 relative">
-					{/* Logo */}
 					<div className="flex justify-center">
 						<img
 							src="/images/psa-logo.png"
@@ -56,24 +54,19 @@ const SignUp = () => {
 							className="h-14 w-auto"
 						/>
 					</div>
-
 					<h2 className="text-center text-2xl font-bold text-gray-900">
 						Create your account
 					</h2>
 					<p className="text-center text-gray-500 text-sm">
 						Join PSA Horizon today
 					</p>
-
-					{/* Error / Success messages */}
 					{error && (
 						<div className="flex items-center justify-center gap-2 text-red-600 bg-red-50 border border-red-200 rounded-xl p-3 text-sm">
 							<ExclamationCircleIcon className="h-5 w-5" />
 							<span>{error}</span>
 						</div>
 					)}
-
 					<form className="space-y-6" onSubmit={handleSubmit}>
-						{/* Email */}
 						<div className="relative">
 							<UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
 							<input
@@ -93,8 +86,6 @@ const SignUp = () => {
 								} ${error ? "text-red-500" : "text-gray-700"}`}
 							/>
 						</div>
-
-						{/* Password */}
 						<div className="relative">
 							<LockClosedIcon className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
 							<input
@@ -120,8 +111,6 @@ const SignUp = () => {
 								At least 8 characters, with letters and numbers.
 							</p>
 						</div>
-
-						{/* Submit */}
 						<button
 							type="submit"
 							className="w-full py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-lg transition"
@@ -138,7 +127,6 @@ const SignUp = () => {
 							Log in here
 						</button>
 					</div>
-
 					<div className="text-center text-gray-400 text-sm">
 						© 2025 PSA. All rights reserved.
 					</div>

@@ -130,6 +130,14 @@ class UserController {
 			.send(await userService.indicateInterest(userID, request.body));
 	}
 
+	async acceptMentorshipRequest(request: Request, response: Response) {
+		const userID = response.locals._id;
+		const requestID = request.body?.requestID;
+		response
+			.status(200)
+			.send(await userService.acceptMentorshipRequest(userID, requestID));
+	}
+
 	catchErrors(handler) {
 		return async (
 			request: Request,

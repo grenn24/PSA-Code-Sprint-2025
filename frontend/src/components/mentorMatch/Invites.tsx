@@ -19,12 +19,8 @@ const PendingInvites = () => {
 	const acceptInvite = async (
 		request: User["mentorshipRequests"][number]
 	) => {
-		const newUser = await userService.updateUser(user?._id, {
-			mentorshipRequests: user?.mentorshipRequests?.filter(
-				(req) => req._id !== request._id
-			),
-			mentees: [...(user?.mentees || []), (request.sender as User)?._id],
-		});
+		if (!user?._id || !request._id) return;
+		const newUser = await userService.acceptRequest(user?._id, request._id);
 		dispatch(setUser(newUser));
 	};
 

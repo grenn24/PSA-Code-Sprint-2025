@@ -110,7 +110,17 @@ userRouter.post(
 userRouter.post(
 	"/:ID/indicate-interest",
 	getID(),
-	userController.catchErrors(userController.indicateInterest.bind(userController))
+	userController.catchErrors(
+		userController.indicateInterest.bind(userController)
+	)
+);
+
+userRouter.post(
+	"/:ID/accept-request",
+	getID(),
+	userController.catchErrors(
+		userController.acceptMentorshipRequest.bind(userController)
+	)
 );
 
 userRouter.put(

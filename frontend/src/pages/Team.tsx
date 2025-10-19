@@ -74,7 +74,6 @@ const Team = () => {
 						key={sub._id}
 						className="bg-white rounded-2xl shadow-lg p-6 flex flex-col gap-4 transition-transform duration-300 justify-between"
 					>
-						{/* Header: Avatar + Name + Position */}
 						<div className="flex items-center gap-4">
 							<img
 								src={
@@ -101,8 +100,6 @@ const Team = () => {
 								)}
 							</div>
 						</div>
-
-						{/* Hire Date & Education */}
 						<div className="flex flex-col gap-1 text-sm text-gray-600">
 							<p>
 								<span className="font-medium">Hire Date:</span>{" "}
@@ -134,8 +131,6 @@ const Team = () => {
 								</div>
 							)}
 						</div>
-
-						{/* Skills as tags */}
 						{sub.skills.length > 0 && (
 							<div className="flex flex-col">
 								<p className="font-medium text-gray-600">
@@ -206,8 +201,6 @@ const Team = () => {
 									</div>
 								</div>
 							)}
-
-						{/* Projects & Mood */}
 						<div className="flex justify-between items-center text-sm text-gray-600 mt-2">
 							<span>{sub.projects?.length || 0} Projects</span>
 							{sub.moods.length > 0 && (
@@ -229,8 +222,6 @@ const Team = () => {
 								</span>
 							)}
 						</div>
-
-						{/* Review Button */}
 						<div className="mt-3">
 							<button
 								className="w-full px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition font-medium"
@@ -242,8 +233,6 @@ const Team = () => {
 					</div>
 				))}
 			</div>
-
-			{/* Review Modal */}
 			<Dialog
 				open={isModalOpen}
 				onClose={() => setIsModalOpen(false)}
@@ -288,7 +277,6 @@ const Team = () => {
 								</div>
 							)
 						)}
-
 						<div>
 							<label className="block text-base font-medium text-gray-800 mb-1">
 								Comments
@@ -302,7 +290,6 @@ const Team = () => {
 							/>
 						</div>
 					</div>
-
 					<div className="flex justify-end gap-3 mt-6">
 						<button
 							className="px-5 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"

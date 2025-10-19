@@ -94,6 +94,14 @@ class UserService {
 		return response.data;
 	}
 
+	async acceptRequest(userID: string, requestID: string) {
+		const response = await this.apiClient.post(
+			`/${userID}/accept-request`,
+			{ requestID }
+		);
+		return response.data;
+	}
+
 	async submitLeadershipReview(
 		userID: string,
 		review: {

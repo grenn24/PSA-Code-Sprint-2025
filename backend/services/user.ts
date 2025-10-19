@@ -604,6 +604,37 @@ class UserService {
 		await user.save();
 		return await this.getUserByID(userID);
 	}
+
+	async acceptMentorshipRequest(userID: string, requestID: string) {
+		const user = await User.findById(userID).exec();
+		if (!user) {
+			throw new HttpError(
+				"User not found",
+				"NOT_FOUND",
+				HttpStatusCode.NotFound
+			);
+		}
+		const mentorshipRequest = user.mentorshipRequests.find(
+			(r) => r._id.toString() === requestID
+		);
+		if (!mentorshipRequest) {
+			throw new HttpError(
+				"Mentorship request not found",
+				"NOT_FOUND",
+				HttpStatusCode.NotFound
+			);
+		}
+		user.mentees.push(mentorshipRequest.sender);
+		user.mentorshipRequests = user.mentorshipRequests.filter(
+			(r) => r._id.toString() !== requestID
+		) as any;
+		await this.addNotification(
+			mentorshipRequest.sender.toString(),
+			`${user.name} has accepted your mentorship request`
+		);
+		await user.save();
+		return await this.getUserByID(userID);
+	}
 }
 
 const userService = new UserService();
