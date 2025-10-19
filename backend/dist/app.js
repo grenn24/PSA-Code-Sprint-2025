@@ -25,8 +25,6 @@ import require$$3$2, { Readable } from 'node:stream';
 import require$$4$4 from 'assert';
 import { versions, env } from 'process';
 import * as tf from '@tensorflow/tfjs-node';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
 
 var config$3 = {};
 

@@ -7,6 +7,7 @@ import configStartup from "./config.js";
 import middlewares from "./middlewares.js";
 import routes from "./routes.js";
 import websocket from "./websocket.js";
+import ml from "./ml.js";
 
 const appDebug = createDebug("app:startup");
 const startup = (app: Express) => {
@@ -15,6 +16,7 @@ const startup = (app: Express) => {
 	db(app);
 	middlewares(app);
 	routes(app);
+	ml(app);
 
 	const server = websocket(app);
 	const port = process.env.PORT || config.get("PORT") || 3000;
