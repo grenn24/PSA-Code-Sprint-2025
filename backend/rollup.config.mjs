@@ -24,5 +24,5 @@ export default {
         resolve(),
         commonjs({ ignoreDynamicRequires: true }),
     ],
-    external: [...builtins, 'mongodb', 'mongoose', 'winston', 'semver', "mock-aws-s3", 'aws-sdk', 'nock', 'sqlite3', 'canvas', 'grpc'],
+    external: [...builtins, 'mongodb', 'mongoose', 'winston', 'semver', "mock-aws-s3", 'aws-sdk', 'nock', 'sqlite3', 'canvas', 'grpc', '@tensorflow/tfjs-node'],
 };
