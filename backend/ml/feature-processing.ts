@@ -1,9 +1,22 @@
 import openai from "../utilities/openai.js";
 
+function getLeadershipScore(review) {
+	const ratings = review.ratings;
+	const values = Object.values(ratings).filter((v) => typeof v === "number");
+	const sum = values.reduce((acc, val) => acc + val, 0);
+
+	return sum / values.length;
+}
+
 export async function encodeUser(user) {
 	const menteeCount = user.mentees?.length || 0;
-	const supervisorReview = Math.random(); // placeholder
-
+	const leadershipReviewScore =
+		user.leadershipReviews.length > 0
+			? user.leadershipReviews.reduce(
+					(acc, review) => acc + getLeadershipScore(review),
+					0
+			  ) / user.leadershipReviews.length
+			: 0;
 	const eduMap = {
 		"high school": 0.2,
 		polytechnic: 0.3,
@@ -35,12 +48,14 @@ export async function encodeUser(user) {
 	const outcomesText = user.projects.flatMap((p) => p.outcomes).join(", ");
 	const outcomesEmb = await openai.getEmbedding(outcomesText);
 
-	const numericFeatures = [menteeCount, supervisorReview, educationScore];
+	let numericFeatures = [menteeCount, leadershipReviewScore, educationScore];
 
-	return numericFeatures.concat(
+	numericFeatures = numericFeatures.concat(
 		departmentEmb,
 		unitEmb,
 		skillEmb,
 		outcomesEmb
 	);
+
+	return numericFeatures;
 }

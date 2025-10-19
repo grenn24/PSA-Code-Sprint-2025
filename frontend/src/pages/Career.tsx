@@ -22,13 +22,6 @@ interface Position {
 	endDate?: string | null;
 }
 
-interface PotentialRole {
-	position: Position;
-	missingSkills: Skill[];
-	recommendedCourses: Course[];
-	relevance: number; // 0-100
-}
-
 const renderStars = (percent: number) => {
 	const fullStars = Math.floor(percent / 20); // 5 stars max
 	const halfStar = percent % 20 >= 10;
@@ -220,7 +213,16 @@ const Career: React.FC = () => {
 
 							{/* Action Buttons */}
 							<div className="flex gap-3 mt-5">
-								<button className="flex-1 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition font-semibold">
+								<button
+									onClick={() => {
+										if (!user?._id) return;
+										userService.indicateInterest(
+											user._id,
+											role.position
+										);
+									}}
+									className="flex-1 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition font-semibold"
+								>
 									Indicate Interest
 								</button>
 								<button className="flex-1 border border-indigo-600 text-indigo-600 py-2 rounded-lg hover:bg-indigo-50 transition font-semibold">

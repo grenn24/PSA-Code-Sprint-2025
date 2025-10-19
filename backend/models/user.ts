@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { positionSchema } from "./position.js";
+import { interestPositionSchema, positionSchema } from "./position.js";
 
 const moodSchema = new Schema({
 	level: { type: Number, min: 0, max: 10, required: true },
@@ -180,6 +180,10 @@ const userSchema = new Schema(
 		leadershipReviews: {
 			type: [leadershipReviewSchema],
 			default: [],
+		},
+		interestedPositions:{
+			type:[interestPositionSchema],
+			default:[]
 		},
 		lastSeen: { type: Date, default: null },
 		isOnline: { type: Boolean, default: false },

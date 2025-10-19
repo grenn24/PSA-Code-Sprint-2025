@@ -24,6 +24,12 @@ export interface Position {
 	endDate: Date | null;
 }
 
+export interface InterestedPosition {
+	name: string;
+	focusAreas: string[];
+	skills: Skill[];
+}
+
 export interface Education {
 	institution: string;
 	degree: string;
@@ -112,6 +118,7 @@ export interface User {
 	strengths: Strength[];
 	education: Education[];
 	projects: Project[];
+	interestedPositions: InterestedPosition[];
 
 	createdAt?: Date;
 	updatedAt: Date;

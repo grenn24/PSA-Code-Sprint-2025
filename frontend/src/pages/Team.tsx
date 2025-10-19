@@ -5,6 +5,7 @@ import userService from "services/user";
 import { LeadershipReviewRatings, User } from "@common/types/user";
 import { Dialog } from "@headlessui/react";
 import { StarIcon } from "@heroicons/react/24/solid";
+import dayjs from "dayjs";
 
 const defaultRatings: LeadershipReviewRatings = {
 	communication: 0,
@@ -71,18 +72,19 @@ const Team = () => {
 				{subordinates.map((sub) => (
 					<div
 						key={sub._id}
-						className="bg-white rounded-xl shadow-md transition p-5 flex flex-col gap-4"
+						className="bg-white rounded-2xl shadow-lg p-6 flex flex-col gap-4 transition-transform duration-300 justify-between"
 					>
-						<div className="flex items-center gap-3">
+						{/* Header: Avatar + Name + Position */}
+						<div className="flex items-center gap-4">
 							<img
 								src={
 									sub.avatar ||
-									`https://ui-avatars.com/api/?name=${sub.name}&background=6366f1&color=fff`
+									`https://ui-avatars.com/api/?name=${sub.name}&background=6366F1&color=fff`
 								}
 								alt={sub.name}
-								className="w-12 h-12 rounded-full object-cover"
+								className="w-19 h-19 rounded-full object-cover border-2 border-indigo-500"
 							/>
-							<div className="flex-1">
+							<div className="flex-1 flex flex-col gap-1">
 								<p className="text-lg font-semibold text-gray-900">
 									{sub.name}
 								</p>
@@ -100,9 +102,132 @@ const Team = () => {
 							</div>
 						</div>
 
-						<div className="mt-2 flex justify-between items-center text-sm text-gray-600">
-							<span>{sub.skills?.length || 0} Skills</span>
+						{/* Hire Date & Education */}
+						<div className="flex flex-col gap-1 text-sm text-gray-600">
+							<p>
+								<span className="font-medium">Hire Date:</span>{" "}
+								{dayjs(sub.hireDate).format("DD MMM YYYY")}
+							</p>
+							{sub.education.length > 0 && (
+								<div className="flex flex-col">
+									<span className="font-medium">
+										Education:
+									</span>
+									{sub.education.map((edu, i) => (
+										<p
+											key={i}
+											className="text-gray-700 text-sm"
+										>
+											{edu.degree} - {edu.institution} (
+											{dayjs(edu.startDate).format(
+												"YYYY"
+											)}{" "}
+											-{" "}
+											{edu.endDate
+												? dayjs(edu.endDate).format(
+														"YYYY"
+												  )
+												: "Present"}
+											)
+										</p>
+									))}
+								</div>
+							)}
+						</div>
+
+						{/* Skills as tags */}
+						{sub.skills.length > 0 && (
+							<div className="flex flex-col">
+								<p className="font-medium text-gray-600">
+									Skills
+								</p>
+								<div className="flex flex-wrap gap-2">
+									{sub.skills.map((skill, idx) => (
+										<span
+											key={idx}
+											className="bg-indigo-100 text-indigo-800 text-xs font-medium px-2 py-1 rounded-full"
+										>
+											{skill.name}
+										</span>
+									))}
+								</div>
+							</div>
+						)}
+
+						{sub.interestedPositions &&
+							sub.interestedPositions.length > 0 && (
+								<div className="flex flex-col">
+									<p className="font-medium text-gray-600">
+										Interested Positions
+									</p>
+									<div className="flex flex-col gap-2">
+										{sub.interestedPositions.map(
+											(pos, idx) => (
+												<div
+													key={idx}
+													className="border border-gray-200 rounded-lg p-3 bg-gray-50"
+												>
+													<p className="text-sm font-semibold text-gray-800">
+														{pos.name}
+													</p>
+													{pos.focusAreas?.length >
+														0 && (
+														<p className="text-xs text-gray-600">
+															Focus:{" "}
+															{pos.focusAreas.join(
+																", "
+															)}
+														</p>
+													)}
+													{pos.skills?.length > 0 && (
+														<div className="flex flex-wrap gap-1 mt-1">
+															{pos.skills.map(
+																(
+																	skill,
+																	sIdx
+																) => (
+																	<span
+																		key={
+																			sIdx
+																		}
+																		className="bg-indigo-100 text-indigo-700 text-xs px-2 py-0.5 rounded-full"
+																	>
+																		{
+																			skill.name
+																		}
+																	</span>
+																)
+															)}
+														</div>
+													)}
+												</div>
+											)
+										)}
+									</div>
+								</div>
+							)}
+
+						{/* Projects & Mood */}
+						<div className="flex justify-between items-center text-sm text-gray-600 mt-2">
 							<span>{sub.projects?.length || 0} Projects</span>
+							{sub.moods.length > 0 && (
+								<span className="flex items-center gap-1">
+									<span
+										className={`w-3 h-3 rounded-full ${
+											sub.moods[sub.moods.length - 1]
+												.level > 70
+												? "bg-green-500"
+												: sub.moods[
+														sub.moods.length - 1
+												  ].level > 40
+												? "bg-yellow-400"
+												: "bg-red-500"
+										}`}
+									></span>
+									Recent Mood:{" "}
+									{sub.moods[sub.moods.length - 1].level}%
+								</span>
+							)}
 						</div>
 
 						{/* Review Button */}
@@ -173,7 +298,7 @@ const Team = () => {
 								rows={4}
 								value={comments}
 								onChange={(e) => setComments(e.target.value)}
-								placeholder="Add your feedback here..."
+								placeholder="Add your feedback here"
 							/>
 						</div>
 					</div>

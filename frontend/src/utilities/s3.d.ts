@@ -12,6 +12,10 @@ declare class S3Service {
     getDownloadURL(s3File: S3File, contentDisposition?: "inline" | "attachment"): Promise<any>;
     getRemoveURL(s3Filename: string, folders: string[]): Promise<any>;
     getPublicURL(s3Filename: string, folders: string[]): Promise<any>;
+    getTURNCredentials(): Promise<{
+        username: string;
+        credential: string;
+    }>;
 }
 declare const s3Service: S3Service;
 export default s3Service;

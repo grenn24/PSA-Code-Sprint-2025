@@ -86,6 +86,14 @@ class UserService {
 		return response.data?.leadershipPotential;
 	}
 
+	async indicateInterest(userID: string, position) {
+		const response = await this.apiClient.post(
+			`/${userID}/indicate-interest`,
+			position
+		);
+		return response.data;
+	}
+
 	async submitLeadershipReview(
 		userID: string,
 		review: {

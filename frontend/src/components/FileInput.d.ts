@@ -4,8 +4,8 @@ interface Prop {
     onFileSubmit: (files: FileList) => void;
     acceptedFileTypes?: string;
     multiple?: boolean;
-    openInput: boolean;
-    setOpenInput: (value: boolean) => void;
+    open: boolean;
+    setOpen: (value: boolean) => void;
 }
-export default function FileInput({ children, onFileSubmit, multiple, acceptedFileTypes, openInput, setOpenInput, }: Prop): import("react/jsx-runtime").JSX.Element;
+export default function FileInput({ children, onFileSubmit, multiple, acceptedFileTypes, open, setOpen, }: Prop): import("react/jsx-runtime").JSX.Element;
 export {};

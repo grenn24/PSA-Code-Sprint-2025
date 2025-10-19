@@ -76,6 +76,7 @@ class UserService {
 			.populate("mentors")
 			.populate("mentees")
 			.populate("mentorshipRequests.sender")
+			.populate("leadershipReviews.reviewer")
 			.exec();
 		if (!user) {
 			throw new HttpError(
@@ -583,7 +584,25 @@ class UserService {
 			reviewer: reviewer._id,
 			...review,
 		});
-		return await user.save();
+		await user.save();
+		return await this.getUserByID(userID);
+	}
+
+	async indicateInterest(userID: string, position) {
+		const user = await User.findById(userID).exec();
+		if (!user) {
+			throw new HttpError(
+				"User not found",
+				"NOT_FOUND",
+				HttpStatusCode.NotFound
+			);
+		}
+		user.interestedPositions = [
+			...user.interestedPositions.filter((p) => p.name !== position.name),
+			position,
+		] as any;
+		await user.save();
+		return await this.getUserByID(userID);
 	}
 }
 

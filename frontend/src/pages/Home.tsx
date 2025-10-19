@@ -424,9 +424,11 @@ const Home = () => {
 								className="bg-white rounded-xl border border-gray-300 p-4 hover:bg-gray-50 transition cursor-pointer flex flex-col items-center text-center gap-2"
 							>
 								{/* Avatar */}
-								<div className="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center text-2xl font-bold text-indigo-700">
-									{mentor.name[0]}
-								</div>
+								<img
+									src={mentor.avatar}
+									alt={mentor.name}
+									className="w-16 h-16 rounded-full object-cover"
+								/>
 
 								{/* Name */}
 								<p className="font-semibold text-gray-800 text-lg leading-4.5">
@@ -554,7 +556,6 @@ const Home = () => {
 				if (isLeadershipPotentialLoading) {
 					return (
 						<div className="flex justify-center items-center h-64">
-							{/* Simple spinner */}
 							<div className="w-14 h-14 border-4 border-gray-200 border-t-4 border-t-indigo-500 rounded-full animate-spin"></div>
 						</div>
 					);
@@ -575,7 +576,8 @@ const Home = () => {
 				];
 
 				return (
-					<div className="flex justify-center w-full">
+					<div className="flex flex-col items-center w-full gap-8">
+						{/* Leadership Ring */}
 						<div className="relative">
 							<RadialBarChart
 								width={240}
@@ -592,7 +594,6 @@ const Home = () => {
 								<RadialBar dataKey="value" cornerRadius={15} />
 							</RadialBarChart>
 
-							{/* Center percentage */}
 							<div className="absolute inset-0 flex flex-col items-center justify-center font-inter">
 								<span className="text-3xl font-bold text-gray-900">
 									{percentage}%
@@ -601,6 +602,96 @@ const Home = () => {
 									Potential
 								</span>
 							</div>
+						</div>
+
+						{/* Leadership Reviews */}
+						<div className="w-full max-w-2xl flex flex-col gap-2">
+							{user?.leadershipReviews.length === 0 ? (
+								<p className="text-gray-500 text-center">
+									No leadership reviews yet
+								</p>
+							) : (
+								user?.leadershipReviews.map((review, idx) => (
+									<div
+										key={idx}
+										className="bg-white rounded-2xl shadow-lg p-6 flex flex-col gap-4 transition-transform duration-300"
+									>
+										{/* Reviewer Info */}
+										<div className="flex items-center gap-4">
+											<img
+												src={
+													review.reviewer.avatar ||
+													`https://ui-avatars.com/api/?name=${review.reviewer.name}&background=6366F1&color=fff`
+												}
+												alt={review.reviewer.name}
+												className="w-12 h-12 rounded-full border-2 border-indigo-500"
+											/>
+											<div className="flex flex-col">
+												<p className="font-semibold text-gray-900">
+													{review.reviewer.name}
+												</p>
+												<p className="text-sm text-gray-500">
+													{dayjs(review.date).format(
+														"DD MMM YYYY"
+													)}
+												</p>
+											</div>
+										</div>
+
+										{/* Ratings */}
+										<div className="grid grid-cols-3 gap-3 text-sm">
+											{Object.entries(review.ratings)
+												.filter(
+													([key]) =>
+														key !== "_id" &&
+														key !== "id"
+												)
+												.map(([key, value]) => (
+													<div
+														key={key}
+														className="flex flex-col gap-1"
+													>
+														<span className="capitalize text-gray-600 text-xs">
+															{key.replace(
+																/([A-Z])/g,
+																" $1"
+															)}
+														</span>
+														<div className="flex items-center gap-1">
+															{Array.from({
+																length: 5,
+															}).map((_, i) => (
+																<svg
+																	key={i}
+																	className={`w-4 h-4 ${
+																		i <
+																		value
+																			? "text-yellow-400"
+																			: "text-gray-300"
+																	}`}
+																	fill="currentColor"
+																	viewBox="0 0 20 20"
+																>
+																	<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.974a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.38 2.455a1 1 0 00-.364 1.118l1.287 3.974c.3.921-.755 1.688-1.54 1.118l-3.38-2.454a1 1 0 00-1.175 0l-3.38 2.454c-.784.57-1.838-.197-1.539-1.118l1.286-3.974a1 1 0 00-.364-1.118L2.047 9.4c-.783-.57-.38-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.974z" />
+																</svg>
+															))}
+															<span className="text-gray-800 font-semibold ml-1">
+																{value}/5
+															</span>
+														</div>
+													</div>
+												))}
+										</div>
+
+										{/* Comments */}
+										{review.comments && (
+											<blockquote className="border-l-2 border-indigo-500 pl-4 text-gray-700 italic mt-2">
+												{review.comments}
+											</blockquote>
+										)}
+									</div>
+								))
+							)}
 						</div>
 					</div>
 				);

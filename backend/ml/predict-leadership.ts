@@ -15,9 +15,7 @@ export async function predictLeadershipPotential(user: any) {
 	const X = await encodeUser(user);
 
 	const pca = PCA.load(pcaData as any);
-	const X_reduced = pca
-		.predict([X], { nComponents: 84 })
-		.to1DArray();
+	const X_reduced = pca.predict([X], { nComponents: 85 }).to1DArray();
 
 	const inputTensor = tf.tensor2d([X_reduced]);
 	const prediction = model.predict(inputTensor) as tf.Tensor;

@@ -7,6 +7,7 @@ declare class ChatService {
     private pendingCandidates;
     onLocalStream?: (stream: MediaStream | null) => void;
     onRemoteStream?: (stream: MediaStream | null) => void;
+    private ICE_SERVERS;
     createChat(participantIDs: string[]): Promise<Chat>;
     postMessage(chatID: string, { sender: senderID, content, type, metadata, createdAt, }: {
         sender: string;
@@ -25,6 +26,11 @@ declare class ChatService {
     offerVideoCall(targetUserID: string, chatID: string): Promise<void>;
     answerVideoCall(targetUserID: string, chatID: string, offer: RTCSessionDescriptionInit): Promise<void>;
     endVideoCall(targetUserID: string): Promise<void>;
+    onVideoCallMindfulnessSession(targetUserID: string): Promise<void>;
+    offVideoCallMindfulnessSession(targetUserID: string): Promise<void>;
+    startVideoCallMindfulnessSession(targetUserID: string): Promise<void>;
+    pauseVideoCallMindfulnessSession(targetUserID: string): Promise<void>;
+    resumeVideoCallMindfulnessSession(targetUserID: string): Promise<void>;
 }
 declare const chatService: ChatService;
 export default chatService;

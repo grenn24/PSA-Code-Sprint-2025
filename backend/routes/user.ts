@@ -66,7 +66,7 @@ userRouter.get(
 	)
 );
 
-userRouter.get(
+userRouter.post(
 	"/:ID/leadership-review",
 	getID(),
 	userController.catchErrors(
@@ -105,6 +105,12 @@ userRouter.post(
 	"/:ID/activities",
 	getID(),
 	userController.catchErrors(userController.addActivity.bind(userController))
+);
+
+userRouter.post(
+	"/:ID/indicate-interest",
+	getID(),
+	userController.catchErrors(userController.indicateInterest.bind(userController))
 );
 
 userRouter.put(

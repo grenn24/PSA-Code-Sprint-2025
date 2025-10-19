@@ -6,5 +6,5 @@ interface Prop {
     chats: Chat[];
     setChats: React.Dispatch<React.SetStateAction<Chat[]>>;
 }
-declare const ChatWindow: ({ setSelectedChatID, selectedChatID, chats, setChats }: Prop) => import("react/jsx-runtime").JSX.Element;
+declare const ChatWindow: ({ setSelectedChatID, selectedChatID, chats, setChats, }: Prop) => import("react/jsx-runtime").JSX.Element;
 export default ChatWindow;

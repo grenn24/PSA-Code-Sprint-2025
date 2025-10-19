@@ -117,6 +117,7 @@ npm run vdb:seed
 | Log In                  | /log-in         | Sign in to account                                          |
 | Sign Up                 | /sign-up        | Create new account                                          |
 | Home (Career Dashboard) | /               | Career path progress, recommended courses and notifications |
+| My Team                 | /team           | View subordinates info, conduct leadership review           |
 | Mentor Matching         | /mentor         | Chat, explore and connect with mentors                      |
 | Wellness Buddy          | /wellness-buddy | AI-powered emotional support chatbot                        |
 | Profile Page            | /profile        | User profile page                                           |

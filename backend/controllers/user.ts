@@ -123,6 +123,13 @@ class UserController {
 			);
 	}
 
+	async indicateInterest(request: Request, response: Response) {
+		const userID = response.locals._id;
+		response
+			.status(200)
+			.send(await userService.indicateInterest(userID, request.body));
+	}
+
 	catchErrors(handler) {
 		return async (
 			request: Request,

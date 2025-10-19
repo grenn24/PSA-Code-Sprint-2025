@@ -6,6 +6,7 @@ import { PCA } from "ml-pca";
 import { encodeUser } from "./feature-processing.js";
 import fs from "fs"
 
+const EPS = 1e-8;
 async function trainLeadershipModel() {
 	const conn = await db();
 	const users = await User.find().lean();
@@ -26,6 +27,23 @@ async function trainLeadershipModel() {
 
 	console.log("Original input dimension:", X[0]?.length);
 
+
+	for (let j = 0; j < X[0].length; j++) {
+		let allSame = true;
+		const first = X[0][j];
+		for (let i = 1; i < X.length; i++) {
+			if (X[i][j] !== first) {
+				allSame = false;
+				break;
+			}
+		}
+		if (allSame) {
+			for (let i = 0; i < X.length; i++) {
+				X[i][j] = first + EPS;
+			}
+		}
+	}
+
 	// Apply PCA
 	const pca = new PCA(X, { center: true, scale: true });
 	const explained = pca.getExplainedVariance();
@@ -39,6 +57,7 @@ async function trainLeadershipModel() {
 			break;
 		}
 	}
+	console.log(`cumulative: ${cumulative}\nnumComponents: ${numComponents}`);
 	const X_reduced = pca.predict(X, { nComponents: numComponents }).to2DArray();
 
 	console.log("Reduced input dimension:", X_reduced[0].length);

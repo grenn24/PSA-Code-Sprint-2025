@@ -164,7 +164,7 @@ function generateRandomSkills() {
 		specialisation: shuffledSpecialisations[index],
 	}));
 }
-function generateCareerPath() {
+function generateCareerPath(excludeDate = false) {
 	const pathLength = 3;
 	const path: any[] = [];
 
@@ -186,8 +186,8 @@ function generateCareerPath() {
 			name: faker.person.jobTitle(),
 			focusAreas,
 			skills: generateRandomSkills(),
-			startDate,
-			endDate,
+			startDate: excludeDate ? undefined : startDate,
+			endDate: excludeDate ? undefined : endDate,
 		});
 	}
 
@@ -250,6 +250,51 @@ export function generateEducation(count: number = 2) {
 		});
 	}
 	return educationArray;
+}
+
+export async function generateLeadershipReviews() {
+	const sampleComments = [
+		"Great potential in strategic thinking.",
+		"Shows strong leadership skills.",
+		"Needs improvement in decision making.",
+		"Excellent teamwork and communication.",
+		"Very adaptable in changing situations.",
+	];
+	const users = await User.find();
+
+	for (const user of users) {
+		if (user.leadershipReviews && user.leadershipReviews.length > 0)
+			continue;
+
+		const otherUsers = users.filter(
+			(u) => u._id.toString() !== user._id.toString()
+		);
+		if (otherUsers.length === 0) continue; 
+		const reviewer = otherUsers[getRandomInt(0, otherUsers.length - 1)];
+
+		const ratings = {
+			communication: getRandomInt(0, 5),
+			decisionMaking: getRandomInt(0, 5),
+			strategicThinking: getRandomInt(0, 5),
+			teamwork: getRandomInt(0, 5),
+			adaptability: getRandomInt(0, 5),
+		};
+
+		const comments =
+			sampleComments[getRandomInt(0, sampleComments.length - 1)];
+
+		const review = {
+			reviewer: reviewer._id,
+			ratings,
+			comments,
+			date: new Date(),
+		};
+
+		user.leadershipReviews.push(review);
+		await user.save();
+	}
+
+	console.log("Seeded leadership reviews successfully");
 }
 
 function generateNotifications() {
@@ -414,6 +459,7 @@ export const generateUsers = async (
 				strengths: generateStrengths(),
 				supervisor: null,
 				education: generateEducation(),
+				interestedPositions: generateCareerPath(true)
 			};
 		})
 	);
@@ -489,6 +535,7 @@ export const generateUsersFromJSON = async (
 				moods: generateMoodData(dayjs().subtract(12, "month").toDate()),
 				activities: [],
 				isOnline: false,
+				interestedPositions: generateCareerPath(true),
 			};
 
 			return user;
