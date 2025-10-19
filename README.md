@@ -12,8 +12,11 @@ PSA Horizon is an integrated employee development platform designed to empower P
 
 ### Career Dashboard
 
--   Track your career path and skill progress
--   View recommended courses and event opportunities
+-   Visualise key accomplishments and potential transitions in career path
+-   View recommended upskilling/reskilling courses based on identified skill gaps in current role
+-   View predicted leadership potential based on AI-driven insights
+-   Showcase education, language abilities and project contributions
+-   Receive suggestions for suitable future positions aligned with your current strengths and career trajectory
 
 ### Events Hub
 
@@ -183,6 +186,16 @@ npm run vdb:seed
 │   ├─ skills: Skill[]
 │   ├─ startDate: Date
 │   └─ endDate: Date | null
+├─ LeadershipReviews: LeadershipReview[]
+│   ├─ reviewer: User
+│   ├─ ratings: LeadershipReviewRatings
+│   │            ├─ communication: number
+│   │            ├─ decisionMaking: number
+│   │            ├─ strategicThinking: number
+│   │            ├─ teamwork: number
+│   │            ├─ adaptability: number
+│   ├─ comments: string
+│   └─ date: Date
 ├─ Projects: Project[]
 │   ├─ name: string
 │   ├─ role: string

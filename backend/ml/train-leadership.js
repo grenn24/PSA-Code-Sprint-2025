@@ -4,6 +4,7 @@ import db from "../startup/db.js";
 import tf from "@tensorflow/tfjs-node";
 import { PCA } from "ml-pca";
 import { encodeUser } from "./feature-processing.js";
+import fs from "fs"
 
 async function trainLeadershipModel() {
 	const conn = await db();
@@ -26,11 +27,24 @@ async function trainLeadershipModel() {
 	console.log("Original input dimension:", X[0]?.length);
 
 	// Apply PCA
-	const pca = new PCA(X);
-	const numComponents = Math.min(50, X[0].length); // or choose based on explained variance
+	const pca = new PCA(X, { center: true, scale: true });
+	const explained = pca.getExplainedVariance();
+
+	let cumulative = 0;
+	let numComponents = 0;
+	for (let i = 0; i < explained.length; i++) {
+		cumulative += explained[i];
+		if (cumulative >= 0.95) { // keep 95% of variance
+			numComponents = i + 1;
+			break;
+		}
+	}
 	const X_reduced = pca.predict(X, { nComponents: numComponents }).to2DArray();
 
 	console.log("Reduced input dimension:", X_reduced[0].length);
+
+	const pcaJSON = pca.toJSON();
+	fs.writeFileSync('./ml/pca.json', JSON.stringify(pcaJSON));
 
 	const xs = tf.tensor2d(X_reduced);
 	const ys = tf.tensor2d(y, [y.length, 1]);

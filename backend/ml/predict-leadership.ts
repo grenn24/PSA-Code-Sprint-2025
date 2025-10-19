@@ -1,5 +1,7 @@
 import * as tf from "@tensorflow/tfjs-node";
 import { encodeUser } from "./feature-processing.js";
+import { PCA } from "ml-pca";
+import pcaData from "./pca.json";
 
 async function loadModel() {
 	const model = await tf.loadLayersModel(
@@ -8,11 +10,16 @@ async function loadModel() {
 	return model;
 }
 
-export async function predictLeadershipPotential(user) {
+export async function predictLeadershipPotential(user: any) {
 	const model = await loadModel();
-	const features = await encodeUser(user);
+	const X = await encodeUser(user);
 
-	const inputTensor = tf.tensor2d([features]);
+	const pca = PCA.load(pcaData as any);
+	const X_reduced = pca
+		.predict([X], { nComponents: 84 })
+		.to1DArray();
+
+	const inputTensor = tf.tensor2d([X_reduced]);
 	const prediction = model.predict(inputTensor) as tf.Tensor;
 
 	const score = (await prediction.data())?.[0];

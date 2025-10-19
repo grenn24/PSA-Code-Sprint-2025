@@ -103,6 +103,7 @@ const Home = () => {
 		"Recommended Mentors",
 		"Skills",
 		"Projects",
+		"Education",
 		"Strengths",
 		"Languages",
 		"Notifications",
