@@ -29,7 +29,6 @@ import require$$5$3 from 'aws-sdk';
 import require$$6$1 from 'nock';
 import require$$0$a from 'child_process';
 import { createRequire } from 'module';
-import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
