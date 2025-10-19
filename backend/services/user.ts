@@ -606,6 +606,7 @@ class UserService {
 	}
 
 	async acceptMentorshipRequest(userID: string, requestID: string) {
+		console.log("accepting request")
 		const user = await User.findById(userID).exec();
 		if (!user) {
 			throw new HttpError(
