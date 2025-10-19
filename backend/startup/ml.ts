@@ -2,7 +2,7 @@ import { Express } from "express";
 import fetch from "node-fetch";
 import fs from "fs";
 import path from "path";
-import s3Service from "../utilities/s3";
+import s3Service from "../utilities/s3.js";
 
 const ml = async (app: Express) => {
 	if (app.get("env") === "development") return;

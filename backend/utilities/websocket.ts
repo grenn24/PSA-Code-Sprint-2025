@@ -11,6 +11,7 @@ import websocketRouter from "../routes/websocket.js";
 
 const wsDebug = createDebug("websocket");
 const wsStartupDebug = createDebug("websocket:startup");
+
 class WebsocketService {
 	private backendWSS: WebSocketServer | null = null;
 	private frontendWS = new Map<string, WebSocket>(); // userID - frontend websocket

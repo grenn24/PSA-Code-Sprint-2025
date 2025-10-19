@@ -228,7 +228,7 @@ export function generateEducation(count: number = 2) {
 		"Certificate",
 	];
 
-	const educationArray = [];
+	const educationArray: any[] = [];
 
 	for (let i = 0; i < count; i++) {
 		const startYear = getRandomInt(2000, 2025);
@@ -269,7 +269,7 @@ export async function generateLeadershipReviews() {
 		const otherUsers = users.filter(
 			(u) => u._id.toString() !== user._id.toString()
 		);
-		if (otherUsers.length === 0) continue; 
+		if (otherUsers.length === 0) continue;
 		const reviewer = otherUsers[getRandomInt(0, otherUsers.length - 1)];
 
 		const ratings = {
@@ -306,7 +306,7 @@ function generateNotifications() {
 }
 
 export function generateProjects(count = getRandomInt(3, 5)) {
-	const projects = [];
+	const projects: any[] = [];
 	for (let i = 0; i < count; i++) {
 		const projectName =
 			PROJECT_NAMES[getRandomInt(0, PROJECT_NAMES.length - 1)];
@@ -430,6 +430,7 @@ export const generateDefaultUser = async () => {
 		strengths: generateStrengths(),
 		education: generateEducation(),
 		projects: generateProjects(),
+		interestedPositions: generateCareerPath(true),
 		mentees: [],
 	};
 };
@@ -459,7 +460,7 @@ export const generateUsers = async (
 				strengths: generateStrengths(),
 				supervisor: null,
 				education: generateEducation(),
-				interestedPositions: generateCareerPath(true)
+				interestedPositions: generateCareerPath(true),
 			};
 		})
 	);

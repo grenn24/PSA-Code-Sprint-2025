@@ -11,7 +11,7 @@
 		"prestart": "npm run build",
 		"start": "node --max-old-space-size=4096 dist/app.js",
 		"dev": "cross-env NODE_ENV=development&& nodemon app.ts",
-		"build": "cross-env NODE_ENV=production&& node node_modules/rollup/dist/bin/rollup -c",
+		"build": "cross-env NODE_ENV=production NODE_OPTIONS='--max-old-space-size=8192' node node_modules/rollup/dist/bin/rollup -c",
 		"lint": "npx eslint .",
 		"lint:fix": "npx eslint . --fix",
 		"format": "npx prettier --check \"**/*.{js,ts,jsx,tsx}\"",
@@ -88,6 +88,7 @@
 		"nodemon": "^3.1.9",
 		"rollup": "^4.52.4",
 		"rollup-plugin-alias": "^2.2.0",
+		"rollup-plugin-esbuild": "^6.2.1",
 		"rollup-plugin-tsconfig-paths": "^1.5.2",
 		"tsx": "^4.20.6",
 		"typescript": "^5.9.3"

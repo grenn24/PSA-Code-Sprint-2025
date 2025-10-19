@@ -14,7 +14,6 @@ import {
 	Skill,
 	User as UserType,
 } from "@common/types/user.js";
-
 import { Course } from "../models/course.js";
 import { Position } from "../models/position.js";
 import Event from "../models/event.js";
